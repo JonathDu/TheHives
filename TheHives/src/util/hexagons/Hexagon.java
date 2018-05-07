@@ -12,7 +12,7 @@ package util.hexagons;
  */
 public class Hexagon<E>
 {
-    E value;
+    E value; //une pile de Tile ?
     Hexagon<E> a, b, c, d, e, f;
     
     public Hexagon()
@@ -51,7 +51,14 @@ public class Hexagon<E>
     
     public void setNeighbor(HexagonSide side, Hexagon<E> h)
     {
-        Hexagon<E> n = getNeighbor(side);
-        n = (Hexagon<E>) h;
+        switch(side)
+        {
+        case A: a = h;
+        case B: b = h;
+        case C: c = h;
+        case D: d = h;
+        case E: e = h;
+        case F: f = h;
+        }
     }
 }

@@ -25,13 +25,13 @@ public class StoppingIterator<E> implements Iterator<E>
         this.iterator = iterator;
         this.predicate = predicate;
         
-        found = findNext(value);
+        found = findNext();
     }
     
     @Override
     public boolean hasNext()
     {
-        return iterator.hasNext() || found;
+        return found;
     }
     
     @Override
@@ -39,11 +39,11 @@ public class StoppingIterator<E> implements Iterator<E>
     {
         assert hasNext();
         E res = value;
-        found = findNext(value);
+        found = findNext();
         return res;
     }
     
-    private boolean findNext(E value)
+    private boolean findNext()
     {
         if(iterator.hasNext())
             value = iterator.next();
