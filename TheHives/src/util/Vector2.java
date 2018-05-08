@@ -40,6 +40,6 @@ public abstract class Vector2<T>
         if (!(other instanceof Vector2))
             return false;
         Vector2 otherMyClass =(Vector2)other;
-        return !(otherMyClass.x.equals(x) || otherMyClass.y.equals(y));
+        return otherMyClass.x.equals(x) && otherMyClass.y.equals(y);
     }
 }

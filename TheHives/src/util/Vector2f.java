@@ -54,4 +54,11 @@ public class Vector2f extends Vector2<Float>
         this.y *= coef;
         return this;
     }
+    
+    public Vector2f multiply(Vector2<Float> coefs)
+    {
+        this.x *= coefs.x;
+        this.y *= coefs.y;
+        return this;
+    }
 }

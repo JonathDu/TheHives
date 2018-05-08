@@ -11,7 +11,7 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public abstract class NeighborsOffsetGetter
+public abstract class NeighborsShifter
 {
-    abstract public Vector2i getOffset(HexagonSide side);
+    abstract public Vector2i shift(Vector2i p, HexagonSide side);
 }

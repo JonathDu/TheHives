@@ -19,7 +19,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
 {
-    util.hexagons.HexagonsGraphTest.class, util.hexagons.HexagonsTest.class, util.hexagons.CircularHexagonsGraphTest.class, util.hexagons.iterators.IteratorsSuite.class, util.hexagons.HexagonFactoryTest.class, util.hexagons.HexagonTest.class,
+    util.hexagons.HexagonsGraphTest.class, util.hexagons.HexagonsTest.class, util.hexagons.CircularHexagonsGraphTest.class, util.hexagons.iterators.IteratorsSuite.class, util.hexagons.HexagonTest.class,
 })
 public class HexagonsSuite
 {

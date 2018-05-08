@@ -45,14 +45,20 @@ public class Vector2i extends Vector2<Integer>
         x = -x;
         y = -y;
         return this;
-    }
-    
+    }    
     
     @Override
     public Vector2i multiply(int coef)
     {
         this.x *= coef;
         this.y *= coef;
+        return this;
+    }
+    
+    public Vector2i multiply(Vector2<Integer> coefs)
+    {
+        this.x *= coefs.x;
+        this.y *= coefs.y;
         return this;
     }
 }
