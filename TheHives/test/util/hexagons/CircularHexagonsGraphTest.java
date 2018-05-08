@@ -21,6 +21,8 @@ import util.Vector2i;
  */
 public class CircularHexagonsGraphTest
 {
+    private Matrix<Integer> m;  
+    private CircularHexagonsGraph<Integer> c;
     
     public CircularHexagonsGraphTest()
     {
@@ -39,6 +41,17 @@ public class CircularHexagonsGraphTest
     @Before
     public void setUp()
     {
+        Integer[][] tab = 
+        {
+            {1,2,3,4},
+            {5,6,7,8},
+            {9,10,11,12},
+            {13,14,15,16}
+        };
+        HiveNeighborsShifter getter = new HiveNeighborsShifter();
+        
+        m = new Matrix<>(tab);
+        c = new CircularHexagonsGraph(m, getter);
     }
     
     @After
@@ -48,20 +61,7 @@ public class CircularHexagonsGraphTest
 
     @Test
     public void testCreateCircular()
-    {
-        Integer[][] tab = 
-        {
-            {1,2,3,4},
-            {5,6,7,8},
-            {9,10,11,12},
-            {13,14,15,16},
-            {17,18,19,20}
-        };
-        Matrix<Integer> m = new Matrix<>(tab);
-        
-        HiveNeighborsShifter getter = new HiveNeighborsShifter();
-        CircularHexagonsGraph<Integer> c = new CircularHexagonsGraph(m, getter);
-        
+    {   
         for(int y = 0; y < m.sizeY(); y++)
         {
             for(int x = 0; x < m.sizeX(); x++)
@@ -69,7 +69,13 @@ public class CircularHexagonsGraphTest
                 assertEquals(c.getHexagon(new Vector2i(x,y)).getValue() ,m.getAt(x, y));
             }
         }
-        assert c.getHexagon(new Vector2i(28,50)).getValue() == 1;    
+    }
+    
+    @Test
+    public void testToString()
+    {
+        System.out.println(c);
+        assert true;
     }
     
 }
