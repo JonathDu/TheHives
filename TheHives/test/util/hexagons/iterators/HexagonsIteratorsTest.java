@@ -8,6 +8,7 @@ package util.hexagons.iterators;
 import hive.model.board.HiveNeighborsShifter;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -88,5 +89,26 @@ public class HexagonsIteratorsTest
         testLineAtSideIteratorForSide(HexagonSide.D, 4, "5 9 13 1 ");
         testLineAtSideIteratorForSide(HexagonSide.E, 5, "4 7 6 9 12 ");
         testLineAtSideIteratorForSide(HexagonSide.F, 5, "16 15 10 9 8 ");
+    }
+    
+        /**
+     * Test of next method, of class LineAtSideIterator.
+     */
+    @Test
+    public void testNeighborsIterator()
+    {
+        System.out.println(c);
+        
+        NeighborsIterator<Integer> neighIterator = new NeighborsIterator<>(c.getHexagon(new Vector2i(1,1)));
+        
+        String chaineAttendue = "2 3 7 10 5 1";
+        String chaineObtenue = "";
+        
+        while (neighIterator.hasNext())
+        {
+            chaineObtenue += neighIterator.next().getValue().toString() + " ";
+        }
+        
+        Assert.assertEquals(chaineAttendue, chaineObtenue);
     }
 }
