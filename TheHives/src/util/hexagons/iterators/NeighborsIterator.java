@@ -14,7 +14,7 @@ import java.util.Iterator;
  * @author Thomas
  * @param <E>
  */
-public class NeighborsIterator<E> implements Iterator<E>
+public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
 {
     Hexagon<E> center;
     HexagonSide current;
@@ -39,11 +39,11 @@ public class NeighborsIterator<E> implements Iterator<E>
     }
     
     @Override
-    public E next()
+    public Hexagon<E> next()
     {
         assert hasNext();
-        E value = center.getNeighbor(current).getValue();
+        Hexagon<E> res = center.getNeighbor(current);
         current = current != last ? current.getAfter() : null;
-        return value;
+        return res;
     }
 }

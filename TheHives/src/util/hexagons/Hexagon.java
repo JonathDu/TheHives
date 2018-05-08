@@ -12,7 +12,7 @@ package util.hexagons;
  */
 public class Hexagon<E>
 {
-    E value; //une pile de Tile ?
+    E value;
     Hexagon<E> a, b, c, d, e, f;
     
     public Hexagon()

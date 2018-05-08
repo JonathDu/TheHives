@@ -14,14 +14,14 @@ import java.util.Iterator;
  * @author Thomas
  * @param <E>
  */
-public class LineAtSideIterator<E> implements Iterator<E>
+public class LineAtSideIterator<E> implements Iterator<Hexagon<E>>
 {
     Hexagon<E> current;
     HexagonSide side;
     
     public LineAtSideIterator(Hexagon<E> first, HexagonSide side)
     {
-        this.current = first;
+        this.current = first.getNeighbor(side);
         this.side = side;
     }
     
@@ -32,11 +32,11 @@ public class LineAtSideIterator<E> implements Iterator<E>
     }
 
     @Override
-    public E next()
+    public Hexagon<E> next()
     {
         assert hasNext();
-        E value = current.getValue();
+        Hexagon<E> res = current;
         current = current.getNeighbor(side);
-        return value;
+        return res;
     }
 }

@@ -21,6 +21,6 @@ public class Board extends CircularHexagonsGraph<TilesStack>
     
     public Board(Matrix<TilesStack> matrix)
     {
-        super(matrix, new NeighborsOffsetGetter(), new EmptyTilesStackFactory());
+        super(matrix, new NeighborsOffsetGetter());
     }
 }

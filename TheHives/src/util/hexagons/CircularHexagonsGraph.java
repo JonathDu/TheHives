@@ -5,7 +5,6 @@
  */
 package util.hexagons;
 
-import util.Factory;
 import util.Matrix;
 import util.Vector2i;
 
@@ -16,17 +15,15 @@ import util.Vector2i;
  */
 public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
 {
-
     Matrix<E> matrix;
     Matrix<Hexagon<E>> hexagons;
-
-    public CircularHexagonsGraph(Matrix<E> matrix, NeighborsOffsetGetter getter, Factory<E> factory)
+    
+    public CircularHexagonsGraph(Matrix<E> matrix, NeighborsOffsetGetter getter)
     {
         super();
         this.matrix = matrix;
         Vector2i dim = matrix.dimensions();
         hexagons = new Matrix<>(dim.x, dim.y);
-        hexagons.setAll(new HexagonFactory<>(factory));
         for (int y = 0; y < dim.y; ++y)
         {
             for (int x = 0; x < dim.x; ++x)
@@ -43,7 +40,12 @@ public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
         }
         setCenter(hexagons.getAt(dim.x / 2, dim.y / 2));
     }
-
+    
+    public Hexagon<E> getHexagon(int x, int y)
+    {
+        return hexagons.getAt(x, y);
+    }
+    
     private Vector2i circular(Vector2i p, Vector2i dim)
     {
         if (p.x < 0)
