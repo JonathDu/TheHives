@@ -13,16 +13,9 @@ import util.hexagons.CircularHexagonsGraph;
  * @author Thomas
  */
 public class Board extends CircularHexagonsGraph<TilesStack>
-{
-    public Board(int nbTiles)
-    {
-        Matrix<TilesStack> m = new Matrix<>(nbTiles + 1, nbTiles + 1);
-        m.setAll(() -> new TilesStack());
-        this(m);
-    }
-    
+{   
     public Board(Matrix<TilesStack> matrix)
     {
-        super(matrix, new HiveNeighborsOffsetGetter());
+        super(matrix, new HiveNeighborsShifter());
     }
 }

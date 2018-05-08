@@ -13,12 +13,12 @@ import java.util.Stack;
  */
 public class TilesStack extends Stack<Tile>
 {
-    TilesStack()
+    public TilesStack()
     {
         super();
     }
     
-    TilesStack(Tile tile)
+    public TilesStack(Tile tile)
     {
         this();
         push(tile);
