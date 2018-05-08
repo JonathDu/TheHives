@@ -6,20 +6,15 @@
 package util.hexagons.iterators;
 
 import hive.model.board.HiveNeighborsShifter;
-import java.util.ArrayList;
-import java.util.Vector;
-import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import util.Matrix;
 import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
 import util.hexagons.HexagonSide;
-import util.iterators.StoppingIterator;
 
 /**
  *
@@ -66,9 +61,12 @@ public class LineAtSideIteratorTest
             {13,14,15,16}
         };
         Matrix<Integer> m = new Matrix<>(tab);
+        
         HiveNeighborsShifter getter = new HiveNeighborsShifter();
         CircularHexagonsGraph<Integer> c = new CircularHexagonsGraph(m, getter);
 
+        System.out.println(c);
+        
         LineAtSideIterator<Integer> lineIterator = new LineAtSideIterator(c.getHexagon(new Vector2i(0,0)), HexagonSide.B);
 
         int i = 0;
