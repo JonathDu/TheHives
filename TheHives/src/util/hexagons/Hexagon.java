@@ -53,12 +53,12 @@ public class Hexagon<E>
     {
         switch(side)
         {
-        case A: a = h;
-        case B: b = h;
-        case C: c = h;
-        case D: d = h;
-        case E: e = h;
-        case F: f = h;
+        case A: a = h; break;
+        case B: b = h; break;
+        case C: c = h; break;
+        case D: d = h; break;
+        case E: e = h; break;
+        case F: f = h; break;
         }
     }
 }
