@@ -5,7 +5,6 @@
  */
 package util.hexagons;
 
-import util.Factory;
 import util.Matrix;
 import util.Vector2i;
 
@@ -25,6 +24,7 @@ public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
     {
         super();
         this.matrix = matrix;
+        assert matrix.sizeX() % 2 == 0 && matrix.sizeY() % 2 == 0;
 
         Vector2i dim = matrix.getDimensions();
 
@@ -55,6 +55,11 @@ public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
     public Hexagon<E> getHexagon(Vector2i pos)
     {
         return hexagons.getAt(maker.circular(pos));
+    }
+    
+    public Matrix<E> getData()
+    {
+        return matrix;
     }
 
     @Override

@@ -16,6 +16,7 @@ import hive.model.board.TilePosition;
 public class PutAction implements Action
 {
     public TilePosition where;
+    public Tile tile;
     
     @Override
     public void accept(ActionVisitor visitor)

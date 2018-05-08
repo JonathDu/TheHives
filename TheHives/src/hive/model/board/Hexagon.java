@@ -5,8 +5,6 @@
  */
 package hive.model.board;
 
-import hive.model.board.TilesStack;
-
 /**
  *
  * @author Thomas
@@ -16,5 +14,15 @@ public class Hexagon extends util.hexagons.Hexagon<TilesStack>
     public Hexagon(TilesStack e)
     {
         super(e);
+    }
+    
+    public void addTile(TilePosition pos)
+    {
+        
+    }
+    
+    public void removeTile(TilePosition pos)
+    {
+        
     }
 }

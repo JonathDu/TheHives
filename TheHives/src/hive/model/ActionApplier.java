@@ -20,7 +20,7 @@ public class ActionApplier implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.getValue();
+        TilesStack stack = action.where.hexagon.getValue();
         assert stack.isEmpty();
         stack.push(action.tile);
     }
@@ -28,24 +28,8 @@ public class ActionApplier implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        Tile t = action.destination.next();
-        action.destination.remove();
-        action.source.add(t);
-    }
-    
-    @Override
-    public void visit(PutAction action)
-    {
-        TilesStack stack = action.where.hexagon.getValue();
-        stack.pop();
-        assert stack.isEmpty();
-    }
-    
-    @Override
-    public void visit(MoveAction action)
-    {
-        TilesStack stack = action.destination.hexagon.getValue();
-        Tile t = stack.remove(action.destination.index);
-        stack.add(action.source.index, t);
+        TilesStack stack = action.source.hexagon.getValue();
+        Tile t = stack.remove(action.source.index);
+        action.destination.hexagon.getValue().add(action.destination.index, t);
     }
 }

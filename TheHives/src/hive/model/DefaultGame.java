@@ -5,6 +5,8 @@
  */
 package hive.model;
 
+import hive.model.board.Board;
+import hive.model.board.TilesStack;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
 import hive.model.insects.behaviors.BeetleBehavior;
@@ -12,12 +14,13 @@ import hive.model.insects.behaviors.GrasshopperBehavior;
 import hive.model.insects.behaviors.QueenBeeBehavior;
 import hive.model.insects.behaviors.SoldierAntBehavior;
 import hive.model.insects.behaviors.SpiderBehavior;
+import util.Matrix;
 
 /**
  *
  * @author Thomas
  */
-public class DefaultGameState
+public class DefaultGame
 {
     public static InsectsBehaviors getInsectBehaviors(InsectType type)
     {
@@ -32,8 +35,10 @@ public class DefaultGameState
         return behaviors;
     }
     
-    public static getBoard()
+    public static Board getBoard()
     {
-        return new Board()
+        Matrix<TilesStack> m = new Matrix<>(14, 14);
+        m.setAll(() -> new TilesStack());
+        return new Board(m);
     }
 }
