@@ -16,7 +16,9 @@ public class Board extends CircularHexagonsGraph<TilesStack>
 {
     public Board(int nbTiles)
     {
-        this(new Matrix<>(nbTiles + 1, nbTiles + 1));
+        Matrix<TilesStack> m = new Matrix<>(nbTiles + 1, nbTiles + 1);
+        m.setAll(() -> new TilesStack());
+        this(m);
     }
     
     public Board(Matrix<TilesStack> matrix)

@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.insects.behaviours;
+package hive.model.insects.behaviors;
 
 import util.hexagons.Hexagon;
-import hive.model.insects.InsectBehaviour;
+import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class SpiderBehaviour implements InsectBehaviour
+public class SpiderBehavior implements InsectBehavior
 {
 
     @Override

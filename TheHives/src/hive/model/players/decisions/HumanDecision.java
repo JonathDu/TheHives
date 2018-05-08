@@ -5,7 +5,7 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.board.Board;
+import hive.model.GameState;
 import hive.model.players.Action;
 import hive.model.players.Decision;
 
@@ -18,7 +18,7 @@ public class HumanDecision implements Decision
     Action action;
     
     @Override
-    public Action getAction(Board board)
+    public Action getAction(GameState state)
     {
         return action;
     }
