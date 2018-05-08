@@ -32,4 +32,20 @@ public class ActionApplier implements ActionVisitor
         action.destination.remove();
         action.source.add(t);
     }
+    
+    @Override
+    public void visit(PutAction action)
+    {
+        TilesStack stack = action.where.hexagon.getValue();
+        stack.pop();
+        assert stack.isEmpty();
+    }
+    
+    @Override
+    public void visit(MoveAction action)
+    {
+        TilesStack stack = action.destination.hexagon.getValue();
+        Tile t = stack.remove(action.destination.index);
+        stack.add(action.source.index, t);
+    }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Thomas
  */
-public interface InsectBehaviour
+public interface InsectBehavior
 {
     public ArrayList<Hexagon> getPossibleDestinations(Hexagon source);
 }

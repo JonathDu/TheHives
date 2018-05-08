@@ -7,6 +7,7 @@ package hive.model.players;
 
 import hive.model.board.Hexagon;
 import hive.model.board.Tile;
+import hive.model.board.TilePosition;
 
 /**
  *
@@ -14,8 +15,7 @@ import hive.model.board.Tile;
  */
 public class PutAction implements Action
 {
-    public Hexagon where;
-    public Tile tile;
+    public TilePosition where;
     
     @Override
     public void accept(ActionVisitor visitor)

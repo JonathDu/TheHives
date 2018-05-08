@@ -5,8 +5,7 @@
  */
 package hive.model.players;
 
-import hive.model.board.Tile;
-import java.util.ListIterator;
+import hive.model.board.TilePosition;
 
 /**
  *
@@ -14,8 +13,8 @@ import java.util.ListIterator;
  */
 public class MoveAction implements Action
 {
-    public ListIterator<Tile> source;
-    public ListIterator<Tile> destination;
+    public TilePosition source;
+    public TilePosition destination;
     
     @Override
     public void accept(ActionVisitor visitor)
