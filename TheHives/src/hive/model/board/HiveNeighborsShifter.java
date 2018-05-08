@@ -7,7 +7,7 @@ package hive.model.board;
 
 import util.Vector2i;
 import util.hexagons.HexagonSide;
-import util.hexagons.NeighborsSymetricOffsetGetter;
+import util.hexagons.NeighborsSymetricShifter;
 
 /**
  *     A
@@ -28,17 +28,17 @@ import util.hexagons.NeighborsSymetricOffsetGetter;
  * 
  * @author Thomas
  */
-public class NeighborsOffsetGetter extends NeighborsSymetricOffsetGetter
+public class HiveNeighborsShifter extends NeighborsSymetricShifter
 {
     @Override
-    public Vector2i getOffsetABC(HexagonSide side)
+    public Vector2i shiftABC(Vector2i p, HexagonSide side)
     {
         assert isABC(side);
         switch(side)
         {
-        case A: return new Vector2i(0, -1);
-        case B: return new Vector2i(1, -1);
-        case C: return new Vector2i(1, 0);
+        case A: return p.add(new Vector2i(0, -1));
+        case B: return p.add(p.x % 2 == 0 ? new Vector2i(1, -1) : new Vector2i(1, 0));
+        case C: return p.add(p.x % 2 == 0 ? new Vector2i(1, 0) : new Vector2i(1, 1));
         }
         return null;
     }

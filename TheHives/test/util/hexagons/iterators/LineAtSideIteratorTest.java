@@ -5,12 +5,21 @@
  */
 package util.hexagons.iterators;
 
+import hive.model.board.HiveNeighborsShifter;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import util.Matrix;
+import util.Vector2i;
+import util.hexagons.CircularHexagonsGraph;
+import util.hexagons.HexagonSide;
+import util.iterators.StoppingIterator;
 
 /**
  *
@@ -44,33 +53,32 @@ public class LineAtSideIteratorTest
     }
 
     /**
-     * Test of hasNext method, of class LineAtSideIterator.
-     */
-    @Test
-    public void testHasNext()
-    {
-        System.out.println("hasNext");
-        LineAtSideIterator instance = null;
-        boolean expResult = false;
-        boolean result = instance.hasNext();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of next method, of class LineAtSideIterator.
      */
     @Test
     public void testNext()
     {
-        System.out.println("next");
-        LineAtSideIterator instance = null;
-        Object expResult = null;
-        Object result = instance.next();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Integer[][] tab = 
+        {
+            {1,2,3,4},
+            {5,6,7,8},
+            {9,10,11,12},
+            {13,14,15,16}
+        };
+        Matrix<Integer> m = new Matrix<>(tab);
+        HiveNeighborsShifter getter = new HiveNeighborsShifter();
+        CircularHexagonsGraph<Integer> c = new CircularHexagonsGraph(m, getter);
+
+        LineAtSideIterator<Integer> lineIterator = new LineAtSideIterator(c.getHexagon(new Vector2i(0,0)), HexagonSide.B);
+
+        int i = 0;
+        while (lineIterator.hasNext() && i++ < 50)
+        {
+            System.out.println(lineIterator.next().getValue());
+            //assert p.test(f.next());
+        }
+
+        assert true;
     }
     
 }

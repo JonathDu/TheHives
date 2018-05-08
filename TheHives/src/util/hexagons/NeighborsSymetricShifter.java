@@ -11,20 +11,20 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public abstract class NeighborsSymetricOffsetGetter extends NeighborsOffsetGetter
+public abstract class NeighborsSymetricShifter extends NeighborsShifter
 {
     @Override
-    public Vector2i getOffset(HexagonSide side)
+    public Vector2i shift(Vector2i p, HexagonSide side)
     {
-        return isABC(side) ? getOffsetABC(side) : getOffsetDEF(side);
+        return isABC(side) ? shiftABC(p, side) : shiftDEF(p, side);
     }
     
-    abstract public Vector2i getOffsetABC(HexagonSide side);
+    abstract public Vector2i shiftABC(Vector2i p, HexagonSide side);
     
-    public Vector2i getOffsetDEF(HexagonSide side)
+    public Vector2i shiftDEF(Vector2i p, HexagonSide side)
     {
         assert !isABC(side);
-        return getOffsetABC(side).opposite();
+        return shiftABC(p, side.getOpposite());
     }
     
     

@@ -75,7 +75,7 @@ public class Matrix<E>
         return data.length;
     }
     
-    public Vector2i dimensions()
+    public Vector2i getDimensions()
     {
         return new Vector2i(sizeX(), sizeY());
     }
