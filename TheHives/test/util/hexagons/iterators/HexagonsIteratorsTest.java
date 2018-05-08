@@ -6,6 +6,7 @@
 package util.hexagons.iterators;
 
 import hive.model.board.HiveNeighborsShifter;
+import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -91,9 +92,6 @@ public class HexagonsIteratorsTest
         testLineAtSideIteratorForSide(HexagonSide.F, 5, "16 15 10 9 8 ");
     }
     
-        /**
-     * Test of next method, of class LineAtSideIterator.
-     */
     @Test
     public void testNeighborsIterator()
     {
@@ -101,7 +99,7 @@ public class HexagonsIteratorsTest
         
         NeighborsIterator<Integer> neighIterator = new NeighborsIterator<>(c.getHexagon(new Vector2i(1,1)));
         
-        String chaineAttendue = "2 3 7 10 5 1";
+        String chaineAttendue = "2 7 11 10 9 5 ";
         String chaineObtenue = "";
         
         while (neighIterator.hasNext())
@@ -110,5 +108,25 @@ public class HexagonsIteratorsTest
         }
         
         Assert.assertEquals(chaineAttendue, chaineObtenue);
+    }
+    
+    @Test
+    public void testBreadthIterator()
+    {
+        System.out.println(c);
+        
+        Predicate<Integer> p = (t) -> t > 0;
+        
+        BreadthIterator<Integer> breadthIterator = new BreadthIterator<>(c.getHexagon(new Vector2i(1,1)), p);
+        
+        String chaineAttendue = "2 7 11 10 9 5 ";
+        String chaineObtenue = "";
+        
+        while (breadthIterator.hasNext())
+        {
+            chaineObtenue += breadthIterator.next().toString() + " ";
+        }
+        
+        assert true;
     }
 }
