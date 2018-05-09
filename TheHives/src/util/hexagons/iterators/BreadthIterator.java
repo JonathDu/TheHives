@@ -5,10 +5,12 @@
  */
 package util.hexagons.iterators;
 
+import java.util.ArrayDeque;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Queue;
 import java.util.Stack;
 import java.util.function.Predicate;
 
@@ -21,14 +23,14 @@ import java.util.function.Predicate;
  */
 public class BreadthIterator<E> implements Iterator<E>
 {
-    Stack<Hexagon<E>> stack;
+    Queue<Hexagon<E>> queue;
     HashMap<Hexagon<E>, Boolean> seen;
     Predicate<E> predicate;
     
     public BreadthIterator(Hexagon<E> center, Predicate<E> predicate)
     {
-        this.stack = new Stack<>();
-        stack.push(center);
+        this.queue = new ArrayDeque<>();
+        queue.add(center);
         
         this.seen = new HashMap<>();
         this.predicate = predicate;
@@ -37,7 +39,7 @@ public class BreadthIterator<E> implements Iterator<E>
     @Override
     public boolean hasNext()
     {
-        return !stack.empty();
+        return !queue.isEmpty();
     }
 
     @Override
@@ -45,7 +47,7 @@ public class BreadthIterator<E> implements Iterator<E>
     {
         assert hasNext();
         
-        Hexagon<E> h = stack.pop();
+        Hexagon<E> h = queue.remove();
         seen.put(h, Boolean.TRUE);
         
         for(HexagonSide side : HexagonSide.values())
@@ -54,7 +56,7 @@ public class BreadthIterator<E> implements Iterator<E>
             assert n != null;
             if(seen.get(n) == null && predicate.test(n.getValue()))
             {
-                stack.push(n);
+                queue.add(n);
                 seen.put(n, Boolean.TRUE);
             }
         }
