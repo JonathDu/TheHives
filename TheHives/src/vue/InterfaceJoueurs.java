@@ -70,45 +70,7 @@ public class InterfaceJoueurs extends Parent{
         TextField Name1 = new TextField();
         Name1.setPromptText("Votre prenom");
         final ToggleGroup ia1 = new ToggleGroup();
-<<<<<<< HEAD
-        j1.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) -> {
-            if (j1.getSelectedToggle() != null) {
-                if(humain1.isSelected()){
-                    Name1.setLayoutX(width/2-width/20);
-                    Name1.setLayoutY(height/3);
-                    Name1.setMinSize(width/10, 30);
-                    Name1.setAlignment(Pos.CENTER);
-                    J1.getChildren().add(Name1);
-                }
-                else if(IA1.isSelected()){
-                    ToggleButton facile = new RadioButton("Facile");
-                    facile.setUserData("facile");
-                    facile.setFont(new Font("Arial", tailleDeCase/9));
-                    facile.setLayoutX(width/2-width/4);
-                    facile.setLayoutY(height/3);
-                    facile.setToggleGroup(ia1);
-                    ToggleButton moyenne = new RadioButton("Moyenne");
-                    moyenne.setUserData("moyenne");
-                    moyenne.setFont(new Font("Arial", tailleDeCase/9));
-                    moyenne.setLayoutX(width/2);
-                    moyenne.setLayoutY(height/3);
-                    moyenne.setToggleGroup(ia1);
-                    ToggleButton difficile = new RadioButton("Difficile");
-                    difficile.setUserData("difficile");
-                    difficile.setFont(new Font("Arial", tailleDeCase/9));
-                    difficile.setLayoutX(width/2+width/4);
-                    difficile.setLayoutY(height/3);
-                    difficile.setToggleGroup(ia1);
-                    ia1.selectedToggleProperty().addListener((ObservableValue<? extends Toggle> ov1, Toggle old_toggle1, Toggle new_toggle1) -> {
-                        if (ia1.getSelectedToggle() != null) {
-                            versionIA1 = ia1.getSelectedToggle().getUserData().toString();
-                        }
-                    });
 
-                    J1.getChildren().add(facile);
-                    J1.getChildren().add(moyenne);
-                    J1.getChildren().add(difficile);
-=======
         j1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                 Toggle old_toggle, Toggle new_toggle) {
@@ -166,7 +128,6 @@ public class InterfaceJoueurs extends Parent{
                         J1.getChildren().add(moyenne);
                         J1.getChildren().add(difficile);
                     }
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
                 }
             }
         });
@@ -200,29 +161,17 @@ public class InterfaceJoueurs extends Parent{
         IA2.setToggleGroup(j2);
         TextField Name2 = new TextField();
         Name2.setPromptText("Votre prenom");
-<<<<<<< HEAD
-        RadioButton facile = new RadioButton("Facile");
-        RadioButton moyenne = new RadioButton("Moyenne");
-        RadioButton difficile = new RadioButton("Difficile");
-        final ToggleGroup ia2 = new ToggleGroup();
-=======
+
         final ToggleGroup ia2 = new ToggleGroup();
 
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
+
         j2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                 Toggle old_toggle, Toggle new_toggle) {
                 if (j2.getSelectedToggle() != null) {
                     if(humain2.isSelected()){
-<<<<<<< HEAD
-                        if(J2.getChildren().get(J2.getChildren().size())==difficile){
-                            J2.getChildren().remove(difficile);
-                            J2.getChildren().remove(moyenne);
-                            J2.getChildren().remove(facile);
-                        }
-                        Name2.setLayoutX(width/2-width/20);
-                        Name2.setLayoutY(height/1.2);
-=======
+
+
                         if(est_ai2==1){
                             J2.getChildren().remove(J2.getChildren().size()-3, J2.getChildren().size());
                             est_ai2=0;
@@ -230,7 +179,7 @@ public class InterfaceJoueurs extends Parent{
                         est_h2=1;
                         Name2.setLayoutX(width/2-width/10);
                         Name2.setLayoutY(height/1.5+30);
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
+
                         Name2.setMinSize(width/10, 30);
                         Name2.setAlignment(Pos.CENTER);
                         Name2.setMinSize(width/10, 30);
@@ -238,12 +187,7 @@ public class InterfaceJoueurs extends Parent{
                         J2.getChildren().add(Name2);
                     }
                     else if(IA2.isSelected()){
-<<<<<<< HEAD
-                        facile.setUserData("facile");
-                        facile.setFont(new Font("Arial", tailleDeCase/9));
-                        facile.setLayoutX(width/2-width/4);
-                        facile.setLayoutY(height/1.4);
-=======
+
                         if(est_h2==1){
                             J2.getChildren().remove(J2.getChildren().size()-1);
                             est_h2=0;
@@ -256,39 +200,31 @@ public class InterfaceJoueurs extends Parent{
                         facile.setLayoutY(height/1.5+30);
                         facile.setMinSize(width/10, 30);
                         facile.setMaxHeight(40);
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
                         facile.setToggleGroup(ia2);
+                        RadioButton moyenne = new RadioButton("Moyenne");
                         moyenne.setUserData("moyenne");
                         moyenne.setFont(new Font("Arial", tailleDeCase/9));
                         moyenne.setLayoutX(width/2);
-<<<<<<< HEAD
-                        moyenne.setLayoutY(height/1.4);
-=======
+
                         moyenne.setLayoutY(height/1.5+30);
                         moyenne.setMinSize(width/10, 30);
                         moyenne.setMaxHeight(40);
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
                         moyenne.setToggleGroup(ia2);
+                        RadioButton difficile = new RadioButton("Difficile");
                         difficile.setUserData("difficile");
                         difficile.setFont(new Font("Arial", tailleDeCase/9));
                         difficile.setLayoutX(width/2+width/4);
-<<<<<<< HEAD
-                        difficile.setLayoutY(height/1.4);
-=======
                         difficile.setLayoutY(height/1.5+30);
                         difficile.setMinSize(width/10, 30);
                         difficile.setMaxHeight(40);
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
                         difficile.setToggleGroup(ia2);
                         ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
                                 public void changed(ObservableValue<? extends Toggle> ov,
                                     Toggle old_toggle, Toggle new_toggle) {
                                     if (ia2.getSelectedToggle() != null) {
                                         versionIA2 = ia2.getSelectedToggle().getUserData().toString();
-<<<<<<< HEAD
-=======
+
                                         System.out.println("IA2 : " + versionIA2);
->>>>>>> b9ae22c52f0ed2122438d8687c61a1748e386282
                                     }
 
                                 }
