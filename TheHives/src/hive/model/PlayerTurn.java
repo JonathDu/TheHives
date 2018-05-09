@@ -15,8 +15,30 @@ import hive.model.players.Players;
  */
 public class PlayerTurn extends CircularListIterator<Player>
 {
+    Player current;
     public PlayerTurn(Players players)
     {
         super(players);
+        assert hasNext();
+        current = super.next();
+    }
+    
+    public Player getCurrent()
+    {
+        return current;
+    }
+    
+    @Override
+    public Player next()
+    {
+        current = super.next();
+        return current;
+    }
+    
+    @Override
+    public Player previous()
+    {
+        current = super.previous();
+        return current;
     }
 }

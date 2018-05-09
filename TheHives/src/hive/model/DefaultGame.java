@@ -6,6 +6,7 @@
 package hive.model;
 
 import hive.model.board.Board;
+import hive.model.board.PositionsPerTeamInsect;
 import hive.model.board.TilesStack;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
@@ -17,7 +18,12 @@ import hive.model.insects.behaviors.PillBugBehavior;
 import hive.model.insects.behaviors.QueenBeeBehavior;
 import hive.model.insects.behaviors.SoldierAntBehavior;
 import hive.model.insects.behaviors.SpiderBehavior;
+import hive.model.players.Decision;
+import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
+import hive.model.players.Players;
+import hive.model.players.TeamColor;
+import hive.model.players.decisions.example.HumanDecision;
 import util.Matrix;
 
 /**
@@ -28,6 +34,18 @@ public class DefaultGame
 {
     public static int nbTiles = 11;
     public static int nbPlayers = 2;
+    
+    public static GameState getGameState()
+    {
+        Board board = getBoard();
+        Players players = getPlayers(new HumanDecision(), new HumanDecision());
+        PlayerTurn turn = new PlayerTurn(players);
+    
+        ActionsTrace trace = new ActionsTrace();
+        AlgorithmsData data = new AlgorithmsData(new PositionsPerTeamInsect());
+        
+        return new GameState(board, players, turn, trace, data);
+    }
     
     public static Board getBoard()
     {
@@ -53,7 +71,7 @@ public class DefaultGame
         return behaviors;
     }
     
-    public static PlayerCollection getDefault()
+    public static PlayerCollection getCollection()
     {
         PlayerCollection collection = new PlayerCollection();
         
@@ -67,5 +85,15 @@ public class DefaultGame
         collection.put(InsectType.PILL_BUG, 1);
         
         return collection;
+    }
+    
+    public static Player getPlayer(TeamColor color, Decision decision)
+    {
+        return new Player(color, decision, getCollection());
+    }
+    
+    public static Players getPlayers(Decision d1, Decision d2)
+    {
+        return new Players(getPlayer(TeamColor.WHITE, d1), getPlayer(TeamColor.BLACK, d2));
     }
 }

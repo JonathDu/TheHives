@@ -6,7 +6,7 @@
 package hive.model;
 
 import hive.model.board.Board;
-import hive.model.board.TilesPerInsect;
+import hive.model.board.PositionsPerTeamInsect;
 
 /**
  *
@@ -14,9 +14,9 @@ import hive.model.board.TilesPerInsect;
  */
 public class AlgorithmsData
 {
-    public TilesPerInsect tiles; // to get tiles of a specific insect in constant time
+    public PositionsPerTeamInsect tiles; // to get tiles of a specific insect in constant time
     
-    public AlgorithmsData(TilesPerInsect tiles)
+    public AlgorithmsData(PositionsPerTeamInsect tiles)
     {
         this.tiles = tiles;
     }

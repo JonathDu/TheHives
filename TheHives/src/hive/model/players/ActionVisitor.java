@@ -13,4 +13,5 @@ public interface ActionVisitor
 {
     public void visit(PutAction action);
     public void visit(MoveAction action);
+    public void visit(NoAction action);
 }

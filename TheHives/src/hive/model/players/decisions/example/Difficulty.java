@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.players.decisions.example;
 
 /**
  *
  * @author Thomas
  */
-public interface Action
+public enum Difficulty
 {
-    public void accept(ActionVisitor visitor);
+    EASY,
+    MEDIUM,
+    HARD;
 }

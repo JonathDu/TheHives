@@ -18,6 +18,12 @@ public class PutAction implements Action
     public TilePosition where;
     public Tile tile;
     
+    public PutAction(TilePosition where, Tile tile)
+    {
+        this.where = where;
+        this.tile = tile;
+    }
+    
     @Override
     public void accept(ActionVisitor visitor)
     {

@@ -9,8 +9,13 @@ package hive.model.players;
  *
  * @author Thomas
  */
-public enum ActionType
+public class NoAction implements Action
 {
-    PUT,
-    MOVE;
+
+    @Override
+    public void accept(ActionVisitor visitor)
+    {
+        visitor.visit(this);
+    }
+    
 }

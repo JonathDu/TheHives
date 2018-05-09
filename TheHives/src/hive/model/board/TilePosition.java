@@ -13,4 +13,11 @@ public class TilePosition
 {
     public Hexagon hexagon;
     public int index;
+    
+    public TilePosition(Hexagon hexagon, int index)
+    {
+        this.hexagon = hexagon;
+        this.index = index;
+    }
+    
 }

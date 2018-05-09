@@ -5,11 +5,10 @@
  */
 package hive.model;
 
-import hive.model.board.Board;
+import hive.model.updates.ActionDisapplier;
+import hive.model.updates.ActionApplier;
 import hive.model.players.Action;
-import hive.model.players.ActionType;
 import hive.model.players.Decision;
-import hive.model.players.Players;
 
 /**
  *
@@ -17,33 +16,31 @@ import hive.model.players.Players;
  */
 public class GameProgress
 {
-    PlayerTurn turn;
     GameState state;
+    
     ActionApplier applier;
     ActionDisapplier disapplier;
-    AlgorithmsDataUpdater updater;
-    ActionsTrace trace;
     
     
-    public GameProgress(Board board, Players players, ActionsTrace trace)
+    public GameProgress(GameState state)
     {
-        this.turn = new PlayerTurn(players);
-        this.state = new GameState(board, players, turn.next(), AlgorithmsData.getFrom(board));
-        this.applier = new ActionApplier();
-        this.disapplier = new ActionDisapplier();
-        //this.updater = new AlgorithmsDataUpdater();
-        this.trace = trace;
+        this.state = state;
+        
+        this.applier = new ActionApplier(state);
+        this.disapplier = new ActionDisapplier(state);
     }
     
-    // TODO
-    void playAction(ActionType type)
+    void doAction()
     {
-        Decision decision = state.current.decisions.get(type);
+        Decision decision = state.turn.getCurrent().decision;
         Action action = decision.getAction(state);
-        
         action.accept(applier);
-        action.accept(updater);
-        
-        trace.push(action);
+    }
+    
+    void undoAction()
+    {
+        // unapply stack TODO
+        // Action action = new Action();
+        // action.accept(disapplier);
     }
 }

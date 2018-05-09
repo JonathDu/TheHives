@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.players.decisions.example;
 
 /**
  *
  * @author Thomas
  */
-public interface Action
+class MediumIADecision
 {
-    public void accept(ActionVisitor visitor);
+    
 }

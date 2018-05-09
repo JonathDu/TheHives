@@ -12,13 +12,13 @@ package hive.model.players;
 public class Player
 {
     public TeamColor color;
-    public PlayerDecisions decisions;
+    public Decision decision;
     public PlayerCollection collection;
     
-    public Player(TeamColor color, PlayerDecisions decisions, PlayerCollection collection)
+    public Player(TeamColor color, Decision decision, PlayerCollection collection)
     {
         this.color = color;
-        this.decisions = decisions;
+        this.decision = decision;
         this.collection = collection;
     }
 }
