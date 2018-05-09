@@ -5,6 +5,7 @@
  */
 package util.hexagons.iterators;
 
+import hive.model.board.Hexagon;
 import java.util.Iterator;
 
 /**
@@ -14,6 +15,12 @@ import java.util.Iterator;
  */
 public class BorderIterator<E> implements Iterator<E>
 {
+    Hexagon hexagon;
+    
+    public BorderIterator(Hexagon hexagon)
+    {
+        this.hexagon = hexagon;
+    }
     @Override
     public boolean hasNext()
     {

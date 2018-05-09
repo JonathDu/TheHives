@@ -34,7 +34,7 @@ public class HexagonsGraph<E>
         this.center = center;
     }
     
-    boolean isEmpty()
+    public boolean isEmpty()
     {
         return center == null;
     }
