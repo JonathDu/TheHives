@@ -18,11 +18,13 @@ public class GameState
     public Board board;
     public Players players;
     public Player current;
+    public AlgorithmsData data;
     
-    public GameState(Board board, Players players, Player current)
+    public GameState(Board board, Players players, Player current, AlgorithmsData data)
     {
         this.board = board;
         this.players = players;
         this.current = current;
+        this.data = data;
     }
 }

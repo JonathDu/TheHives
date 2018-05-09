@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.players;
 
-import util.Factory;
+import java.util.EnumMap;
 
 /**
  *
  * @author Thomas
  */
-public class EmptyTilesStackFactory implements Factory<TilesStack>
+public class PlayerDecisions extends EnumMap<ActionType, Decision>
 {
-    @Override
-    public TilesStack create()
+    public PlayerDecisions()
     {
-        return new TilesStack();
+        super(ActionType.class);
     }
 }
