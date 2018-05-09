@@ -5,17 +5,13 @@
  */
 package vue;
 
-import vue.InterfacePion;
-import javafx.beans.property.DoubleProperty;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -23,31 +19,28 @@ import javafx.scene.shape.Rectangle;
  */
 public class InterfacePlateauMain extends Parent {
 
-    GridPane grille;
+    VBox pions;
+    Label nomJoueur;
 
-    public InterfacePlateauMain(DoubleProperty p, String nomJoueur, Color couleur) {
-        grille = new GridPane();
-        //grille.setPrefHeight(600 - 0.05*600);
-        grille.prefWidthProperty().bind(p);
-        //grille.setMinHeight(Region.USE_COMPUTED_SIZE);
+    public InterfacePlateauMain(String nomJoueur, Color couleur) {
+        pions = new VBox();
+        pions.setAlignment(Pos.TOP_CENTER);
+        this.nomJoueur = new Label(nomJoueur);
+        this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
+        
+        BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
 
-        for (int i = 0; i < 10; i++) {
-            RowConstraints r = new RowConstraints();
-            r.setPercentHeight(10);
-            r.setFillHeight(true);
-
-            grille.getRowConstraints().add(r);
-        }
-        grille.add(new Label(nomJoueur), 0, 5);
-
-        grille.add(new InterfacePion(couleur), 0, 0);
-        grille.add(new InterfacePion(couleur), 0, 1);
-        grille.add(new InterfacePion(couleur), 0, 2);
-        grille.add(new InterfacePion(couleur), 0, 3);
-        grille.add(new InterfacePion(couleur), 0, 4);
-
-        this.getChildren().add(grille);
-
+        
+        pions.setOpacity(0.1);
+        pions.setBackground(new Background(bf));
+        pions.setPrefHeight(100);
+        pions.getChildren().add(new InterfacePion(couleur));
+        pions.getChildren().add(new InterfacePion(couleur));
+        pions.getChildren().add(new InterfacePion(couleur));
+        
+        pions.getChildren().add(this.nomJoueur);
+        
+        pions.getChildren().get(0).setOpacity(1);
+        this.getChildren().add(pions);
     }
-
 }

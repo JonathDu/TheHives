@@ -5,25 +5,11 @@
  */
 package vue;
 
-import vue.CacheImage;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import javafx.animation.AnimationTimer;
-import javafx.scene.CacheHint;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import thehives.TheHives;
 
 /**
  *
@@ -31,35 +17,31 @@ import thehives.TheHives;
  */
 public class InterfacePlateau extends Parent {
 
-    GridPane grille;
+    AnchorPane pane;
 
-    Stage stage;
-    String nomJoueur1;
-    String nomJoueur2;
+    public InterfacePlateau(Stage stage) {
+        pane = new AnchorPane();
+        pane.prefWidthProperty().bind(stage.widthProperty());
+        InterfacePlateauMain main1 = new InterfacePlateauMain("Joueur1", Color.AZURE);
+        InterfacePlateauMain main2 = new InterfacePlateauMain("Autre joueur", Color.AZURE);
 
-    public InterfacePlateau(TheHives i, Stage stage, String nomJoueur1, String nomJoueur2) {
-        this.nomJoueur1 = nomJoueur1;
-        this.nomJoueur2 = nomJoueur2;
+        AnchorPane.setTopAnchor(main1, 0.0);
+        AnchorPane.setLeftAnchor(main1, 0.0);
+        AnchorPane.setTopAnchor(main2, 0.0);
+        AnchorPane.setRightAnchor(main2, 0.0);
 
-        grille = new GridPane();
-        //grille.setHgap(10);
-        //grille.setVgap(10);
+        Node p = Outils.separation();
 
-        grille.add(new InterfacePlateauTool(new CacheImage(), stage), 0, 0, 5, 1);
+        AnchorPane.setTopAnchor(p, 0.0);
+        AnchorPane.setLeftAnchor(p, 0.0);
+        AnchorPane.setBottomAnchor(p, 0.0);
+        AnchorPane.setRightAnchor(p, 0.0);
+        
+        pane.getChildren().add(p);
+        pane.getChildren().add(main1);
+        pane.getChildren().add(main2);
 
-        Outils.fixerRepartition(grille, Outils.VERTICAL, 10, 0.5, 79, 0.5, 10);
-        Outils.fixerRepartition(grille, Outils.HORIZONTAL, 5, 0.5, 94.5);
-        grille.add(new InterfacePlateauMain(grille.getColumnConstraints().get(0).prefWidthProperty(), nomJoueur1, Color.WHITE), 0, 2);
-        grille.add(new InterfacePlateauMain(grille.getColumnConstraints().get(0).prefWidthProperty(), nomJoueur2, Color.GRAY), 4, 2);
-
-        //grille.add(separation(), 0, 2);
-        grille.prefHeightProperty().bind(stage.heightProperty());
-        grille.prefWidthProperty().bind(stage.widthProperty());
-        grille.add(Outils.separation(), 0, 1, 5, 1);
-        grille.add(Outils.separation(), 1, 1, 1, 2);
-        grille.add(Outils.separation(), 3, 1, 1, 2);
-        this.getChildren().add(grille);
-
+        this.getChildren().add(pane);
     }
 
 }

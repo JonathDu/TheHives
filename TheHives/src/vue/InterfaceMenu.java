@@ -26,7 +26,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import thehives.TheHives;
+import hive.thehives.TheHives;
 
 /**
  *

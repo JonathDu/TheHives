@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package thehives;
-import vue.InterfacePlateau;
+package hive.thehives;
+
+import vue.InterfaceJeu;
 import vue.InterfaceMenu;
 import vue.InterfaceJoueurs;
 import java.awt.Dimension;
@@ -47,15 +48,13 @@ public class TheHives extends Application {
         root = new Group();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
-        //goToPlateau("Joueur1", "Joueur2");
-        goToMenu();
-        
-        
+        goToPlateau("Joueur1", "Joueur2");
+        //goToMenu();
+
         //PLEIN ECRAN
         //primaryStage.setFullScreen(true); //passer en affichage plein écran
         //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
         //root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
-
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();
         primaryStage.show();
@@ -73,15 +72,13 @@ public class TheHives extends Application {
     }
 
     public void goToChoixJoueur() {
-
         this.scene = new Scene(new InterfaceJoueurs(HEIGHT, WIDTH, primaryStage, this), WIDTH, HEIGHT, Color.LIGHTBLUE);
         changeScene();
     }
-    
-    public void goToPlateau(String nomJoueur1, String nomJoueur2){
-        this.scene = new Scene(new InterfacePlateau(this, primaryStage, nomJoueur1, nomJoueur2), 800, 600, Color.LIGHTBLUE);
-        changeScene();
 
+    public void goToPlateau(String nomJoueur1, String nomJoueur2) {
+        this.scene = new Scene(new InterfaceJeu(this, primaryStage, nomJoueur1, nomJoueur2), WIDTH, HEIGHT, Color.LIGHTBLUE);
+        changeScene();
     }
 
     public void changeScene() {

@@ -60,7 +60,7 @@ public class InterfacePlateauTool extends Parent {
         }
         grille.add(bouton, 0, 0, 1, 1);
         grille.add(bouton1, 9, 0, 1, 1);
-
+        
         this.getChildren().add(grille);
     }
 
