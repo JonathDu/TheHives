@@ -34,7 +34,9 @@ public class InterfaceJoueurs extends Parent{
 
     String versionIA1;
     String versionIA2;
-    int est_h1, est_h2, est_ai1, est_ai2;
+    int est_h1=0, est_h2=0, est_ai1=0, est_ai2=0;
+    TextField Name1 = new TextField();
+    TextField Name2 = new TextField();
     public InterfaceJoueurs(int height, int width, Stage primaryStage, TheHives i) {
 
         DropShadow shadow = new DropShadow();
@@ -44,6 +46,16 @@ public class InterfaceJoueurs extends Parent{
         InterfaceUtiles u = new InterfaceUtiles(height, width, primaryStage, i);
         this.getChildren().add(u);
 
+
+        //Image imageHumain = new Image("vue/rsc/images/humain1.png");
+        //Image imageHumain = new Image("vue/rsc/images/humain2.png");
+        //Image imageHumain = new Image("vue/rsc/images/humain3.png");
+        //Image imageHumain = new Image("vue/rsc/images/humain4.png");
+        Image imageHumain = new Image("vue/rsc/images/humain5.png");
+
+
+        //Image imageIA = new Image("vue/rsc/images/ai1.png");
+        Image imageIA = new Image("vue/rsc/images/ai2.png");
 
         Group J1 =new Group();
         Label joueur1 = new Label("Joueur 1");
@@ -56,18 +68,30 @@ public class InterfaceJoueurs extends Parent{
         joueur1.setLayoutY(height/6);
         this.getChildren().add(joueur1);
         final ToggleGroup j1 = new ToggleGroup();
-        ToggleButton humain1 = new RadioButton("Humain");
+        //ToggleButton humain1 = new RadioButton("Humain");
+        ToggleButton humain1 = new RadioButton("");
+        humain1.setUserData("Humain");
+        ImageView humainIm1 = new ImageView(imageHumain);
+        humainIm1.setFitHeight(width/10);
+        humainIm1.setFitWidth(width/12);
+        humain1.setGraphic(humainIm1);
         humain1.setFont(new Font("Arial", tailleDeCase/5));
-        humain1.setLayoutX(width/2-(tailleDeCase/5)*6);
+        humain1.setLayoutX(width/2-width/4);
         humain1.setLayoutY(height/4);
+        //humain1.setPrefSize(tailleDeCase/2, tailleDeCase/2);
         humain1.setToggleGroup(j1);
-        ToggleButton IA1 = new RadioButton("IA");
+        //ToggleButton IA1 = new RadioButton("IA");
+        ToggleButton IA1 = new RadioButton("");
+        IA1.setUserData("IA");
+        ImageView IAIm1 = new ImageView(imageIA);
+        IAIm1.setFitHeight(width/10);
+        IAIm1.setFitWidth(width/10);
+        IA1.setGraphic(IAIm1);
         IA1.setFont(new Font("Arial", tailleDeCase/5));
-        IA1.setLayoutX(width/2+(tailleDeCase/5)*3);
+        IA1.setLayoutX(width/2+width/4-width/10);
         IA1.setLayoutY(height/4);
         IA1.setToggleGroup(j1);
 
-        TextField Name1 = new TextField();
         Name1.setPromptText("Votre prenom");
         final ToggleGroup ia1 = new ToggleGroup();
 
@@ -79,10 +103,11 @@ public class InterfaceJoueurs extends Parent{
                         if(est_ai1==1){
                             J1.getChildren().remove(J1.getChildren().size()-3, J1.getChildren().size());
                             est_ai1=0;
+                            versionIA1=null;
                         }
                         est_h1=1;
                         Name1.setLayoutX(width/2-width/10);
-                        Name1.setLayoutY(height/4+40);
+                        Name1.setLayoutY(height/4+width/9);
                         Name1.setMinSize(width/10, 30);
                         Name1.setMaxHeight(40);
                         Name1.setAlignment(Pos.CENTER);
@@ -92,26 +117,30 @@ public class InterfaceJoueurs extends Parent{
                         if(est_h1==1){
                             J1.getChildren().remove(J1.getChildren().size()-1);
                             est_h1=0;
+                            Name1 = new TextField();
                         }
                         est_ai1=1;
                         ToggleButton facile = new RadioButton("Facile");
+                        facile.setUserData("facile");
                         facile.setFont(new Font("Arial", tailleDeCase/9));
                         facile.setLayoutX(width/2-width/4);
-                        facile.setLayoutY(height/4+30);
+                        facile.setLayoutY(height/4+width/9);
                         facile.setMinSize(width/10, 30);
                         facile.setMaxHeight(40);
                         facile.setToggleGroup(ia1);
                         ToggleButton moyenne = new RadioButton("Moyenne");
+                        moyenne.setUserData("moyenne");
                         moyenne.setFont(new Font("Arial", tailleDeCase/9));
                         moyenne.setLayoutX(width/2);
-                        moyenne.setLayoutY(height/4+30);
+                        moyenne.setLayoutY(height/4+width/9);
                         moyenne.setMinSize(width/10, 30);
                         moyenne.setMaxHeight(40);
                         moyenne.setToggleGroup(ia1);
                         ToggleButton difficile = new RadioButton("Difficile");
+                        difficile.setUserData("difficile");
                         difficile.setFont(new Font("Arial", tailleDeCase/9));
                         difficile.setLayoutX(width/2+width/4);
-                        difficile.setLayoutY(height/4+30);
+                        difficile.setLayoutY(height/4+width/9);
                         difficile.setMinSize(width/10, 30);
                         difficile.setMaxHeight(40);
                         difficile.setToggleGroup(ia1);
@@ -147,19 +176,28 @@ public class InterfaceJoueurs extends Parent{
         joueur2.setLayoutY(height/2);
         this.getChildren().add(joueur2);
         final ToggleGroup j2 = new ToggleGroup();
-        RadioButton humain2 = new RadioButton("Humain");
+        //RadioButton humain2 = new RadioButton("Humain");
+        RadioButton humain2 = new RadioButton("");
         humain2.setUserData("Humain");
+        ImageView humainIm2 = new ImageView(imageHumain);
+        humainIm2.setFitHeight(width/10);
+        humainIm2.setFitWidth(width/12);
+        humain2.setGraphic(humainIm2);
         humain2.setFont(new Font("Arial", tailleDeCase/9));
         humain2.setLayoutX(width/2-width/4);
-        humain2.setLayoutY(height/1.5);
+        humain2.setLayoutY(height/1.8);
         humain2.setToggleGroup(j2);
-        RadioButton IA2 = new RadioButton("IA");
+        //RadioButton IA2 = new RadioButton("IA");
+        RadioButton IA2 = new RadioButton("");
         humain2.setUserData("IA2");
+        ImageView IAIm2 = new ImageView(imageIA);
+        IAIm2.setFitHeight(width/10);
+        IAIm2.setFitWidth(width/10);
+        IA2.setGraphic(IAIm2);
         IA2.setFont(new Font("Arial", tailleDeCase/9));
-        IA2.setLayoutX(width/2+width/4);
-        IA2.setLayoutY(height/1.5);
+        IA2.setLayoutX(width/2+width/4-width/12);
+        IA2.setLayoutY(height/1.8);
         IA2.setToggleGroup(j2);
-        TextField Name2 = new TextField();
         Name2.setPromptText("Votre prenom");
 
         final ToggleGroup ia2 = new ToggleGroup();
@@ -175,11 +213,11 @@ public class InterfaceJoueurs extends Parent{
                         if(est_ai2==1){
                             J2.getChildren().remove(J2.getChildren().size()-3, J2.getChildren().size());
                             est_ai2=0;
+                            versionIA2=null;
                         }
                         est_h2=1;
                         Name2.setLayoutX(width/2-width/10);
-                        Name2.setLayoutY(height/1.5+30);
-
+                        Name2.setLayoutY(height/1.8+width/9);
                         Name2.setMinSize(width/10, 30);
                         Name2.setAlignment(Pos.CENTER);
                         Name2.setMinSize(width/10, 30);
@@ -191,13 +229,15 @@ public class InterfaceJoueurs extends Parent{
                         if(est_h2==1){
                             J2.getChildren().remove(J2.getChildren().size()-1);
                             est_h2=0;
+                            Name2 = new TextField();
+
                         }
                         est_ai2=1;
                         RadioButton facile = new RadioButton("Facile");
                         facile.setUserData("facile");
                         facile.setFont(new Font("Arial", tailleDeCase/9));
                         facile.setLayoutX(width/2-width/4);
-                        facile.setLayoutY(height/1.5+30);
+                        facile.setLayoutY(height/1.8+width/9);
                         facile.setMinSize(width/10, 30);
                         facile.setMaxHeight(40);
                         facile.setToggleGroup(ia2);
@@ -205,8 +245,7 @@ public class InterfaceJoueurs extends Parent{
                         moyenne.setUserData("moyenne");
                         moyenne.setFont(new Font("Arial", tailleDeCase/9));
                         moyenne.setLayoutX(width/2);
-
-                        moyenne.setLayoutY(height/1.5+30);
+                        moyenne.setLayoutY(height/1.8+width/9);
                         moyenne.setMinSize(width/10, 30);
                         moyenne.setMaxHeight(40);
                         moyenne.setToggleGroup(ia2);
@@ -214,7 +253,7 @@ public class InterfaceJoueurs extends Parent{
                         difficile.setUserData("difficile");
                         difficile.setFont(new Font("Arial", tailleDeCase/9));
                         difficile.setLayoutX(width/2+width/4);
-                        difficile.setLayoutY(height/1.5+30);
+                        difficile.setLayoutY(height/1.8+width/9);
                         difficile.setMinSize(width/10, 30);
                         difficile.setMaxHeight(40);
                         difficile.setToggleGroup(ia2);
@@ -265,7 +304,7 @@ public class InterfaceJoueurs extends Parent{
             i.goToPlateau(versionIA1, versionIA2);
         });
         valider.setLayoutX(width/2-width/20);
-        valider.setLayoutY(height/1.1);
+        valider.setLayoutY(height/1.3);
         valider.setMinSize(width/10, 30);
         this.getChildren().add(valider);
 
