@@ -11,12 +11,12 @@ package hive.model.board;
  */
 public class TilePosition
 {
-    public Hexagon hexagon;
+    public Cell cell;
     public int index;
     
-    public TilePosition(Hexagon hexagon, int index)
+    public TilePosition(Cell cell, int index)
     {
-        this.hexagon = hexagon;
+        this.cell = cell;
         this.index = index;
     }
     

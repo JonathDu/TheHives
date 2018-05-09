@@ -5,31 +5,31 @@
  */
 package hive.model.updates;
 
-import hive.model.GameState;
-import hive.model.players.PutAction;
-import hive.model.players.MoveAction;
+import hive.model.board.Board;
+import hive.model.players.actions.PutAction;
+import hive.model.players.actions.MoveAction;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
-import hive.model.players.ActionVisitor;
-import hive.model.players.NoAction;
+import hive.model.players.actions.ActionVisitor;
+import hive.model.players.actions.NoAction;
 
 /**
  *
  * @author Thomas
  */
-public class BoardUpdateApplier implements ActionVisitor
+public class BoardDoUpdater implements ActionVisitor
 {
-    GameState state;
+    Board board;
     
-    public BoardUpdateApplier(GameState state)
+    public BoardDoUpdater(Board board)
     {
-        this.state = state;
+        this.board = board;
     }
     
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.hexagon.getValue();
+        TilesStack stack = action.where.cell.getValue();
         assert stack.isEmpty();
         stack.push(action.tile);
     }
@@ -37,9 +37,9 @@ public class BoardUpdateApplier implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.source.hexagon.getValue();
+        TilesStack stack = action.source.cell.getValue();
         Tile t = stack.remove(action.source.index);
-        action.destination.hexagon.getValue().add(action.destination.index, t);
+        action.destination.cell.getValue().add(action.destination.index, t);
     }
 
     @Override

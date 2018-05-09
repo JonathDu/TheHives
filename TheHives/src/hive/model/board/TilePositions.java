@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates;
+package hive.model.board;
 
 /**
  *
  * @author Thomas
  */
-public class TraceUpdateDisapplier
+public class TilePositions
 {
     
+    
+    // public static boolean isSurrounded(TilePosition) // Beetles
 }

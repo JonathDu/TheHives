@@ -3,19 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.players.decisions;
+
+import hive.model.game.Game;
+import hive.model.players.actions.Action;
 
 /**
  *
  * @author Thomas
  */
-public class NoAction implements Action
+public interface Decision
 {
-
-    @Override
-    public void accept(ActionVisitor visitor)
-    {
-        visitor.visit(this);
-    }
-    
+    public Action getAction(Game game);
 }

@@ -3,26 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.players.actions;
 
-import hive.model.board.Hexagon;
-import hive.model.board.Tile;
 import hive.model.board.TilePosition;
 
 /**
  *
  * @author Thomas
  */
-public class PutAction implements Action
+public class MoveAction implements Action
 {
-    public TilePosition where;
-    public Tile tile;
-    
-    public PutAction(TilePosition where, Tile tile)
-    {
-        this.where = where;
-        this.tile = tile;
-    }
+    public TilePosition source;
+    public TilePosition destination;
     
     @Override
     public void accept(ActionVisitor visitor)

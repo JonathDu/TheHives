@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model;
+package hive.model.game;
 
 import hive.model.board.Board;
+import hive.model.board.TilePositions;
 import hive.model.players.Player;
 import hive.model.players.Players;
 
@@ -30,12 +31,5 @@ public class GameState
         
         this.trace = trace;
         this.data = data;
-    }
-    
-    public Player getCurrentPlayer()
-    {
-        Player p = turn.next();
-        turn.previous();
-        return p;
     }
 }

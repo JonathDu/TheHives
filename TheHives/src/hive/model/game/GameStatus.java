@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.example;
+package hive.model.game;
 
 /**
  *
  * @author Thomas
  */
-class MediumIADecision
+public enum GameStatus
 {
-    
+    CURRENT_WINS,
+    OPPONENT_WINS,
+    CONTINUES;
 }

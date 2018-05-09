@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.example;
+package hive.model.game;
+
+import hive.model.players.actions.Action;
+import java.util.Stack;
 
 /**
  *
  * @author Thomas
  */
-public enum Difficulty
+public class ActionsTrace extends Stack<Action>
 {
-    EASY,
-    MEDIUM,
-    HARD;
+    public ActionsTrace()
+    {
+        super();
+    }
 }

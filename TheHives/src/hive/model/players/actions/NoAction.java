@@ -3,13 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates;
+package hive.model.players.actions;
 
 /**
  *
  * @author Thomas
  */
-public class TraceUpdateApplier
+public class NoAction implements Action
 {
+
+    @Override
+    public void accept(ActionVisitor visitor)
+    {
+        visitor.visit(this);
+    }
     
 }

@@ -5,14 +5,11 @@
  */
 package hive.model.updates;
 
-import hive.model.GameState;
-import hive.model.updates.AlgorithmsDataUpdateApplier;
-import hive.model.updates.BoardUpdateApplier;
-import hive.model.updates.BoardUpdateDisapplier;
-import hive.model.players.ActionVisitor;
-import hive.model.players.MoveAction;
-import hive.model.players.NoAction;
-import hive.model.players.PutAction;
+import hive.model.game.GameState;
+import hive.model.players.actions.ActionVisitor;
+import hive.model.players.actions.MoveAction;
+import hive.model.players.actions.NoAction;
+import hive.model.players.actions.PutAction;
 
 /**
  *
@@ -20,31 +17,43 @@ import hive.model.players.PutAction;
  */
 public class ActionApplier implements ActionVisitor
 {
-    BoardUpdateApplier applier;
-    BoardUpdateDisapplier disapplier;
-    AlgorithmsDataUpdateApplier updater;
+    BoardDoUpdater board_do;
+    PlayerDoUpdater player_do;
+    AlgorithmsDataDoUpdater algo_do;
+    TraceDoUpdater trace_do;
 
     public ActionApplier(GameState state)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.board_do = new BoardDoUpdater(state.board);
+        this.player_do = new PlayerDoUpdater(state.turn);
+        this.algo_do = new AlgorithmsDataDoUpdater(state.data);
+        this.trace_do = new TraceDoUpdater(state.trace);
     }
     
     @Override
     public void visit(PutAction action)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        action.accept(board_do);
+        action.accept(player_do);
+        action.accept(algo_do);
+        action.accept(trace_do);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        action.accept(board_do);
+        action.accept(player_do);
+        action.accept(algo_do);
+        action.accept(trace_do);
     }
 
     @Override
     public void visit(NoAction action)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        action.accept(board_do);
+        action.accept(player_do);
+        action.accept(algo_do);
+        action.accept(trace_do);
     }
-    
 }

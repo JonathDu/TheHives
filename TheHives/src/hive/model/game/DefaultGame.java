@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model;
+package hive.model.game;
 
 import hive.model.board.Board;
 import hive.model.board.PositionsPerTeamInsect;
@@ -18,12 +18,12 @@ import hive.model.insects.behaviors.PillBugBehavior;
 import hive.model.insects.behaviors.QueenBeeBehavior;
 import hive.model.insects.behaviors.SoldierAntBehavior;
 import hive.model.insects.behaviors.SpiderBehavior;
-import hive.model.players.Decision;
+import hive.model.players.decisions.Decision;
 import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
 import hive.model.players.Players;
 import hive.model.players.TeamColor;
-import hive.model.players.decisions.example.HumanDecision;
+import hive.model.players.decisions.HumanDecision;
 import util.Matrix;
 
 /**
@@ -35,16 +35,16 @@ public class DefaultGame
     public static int nbTiles = 11;
     public static int nbPlayers = 2;
     
-    public static GameState getGameState()
+    public static Game get(Decision d1, Decision d2)
     {
         Board board = getBoard();
-        Players players = getPlayers(new HumanDecision(), new HumanDecision());
+        Players players = getPlayers(d1, d2);
         PlayerTurn turn = new PlayerTurn(players);
     
         ActionsTrace trace = new ActionsTrace();
         AlgorithmsData data = new AlgorithmsData(new PositionsPerTeamInsect());
         
-        return new GameState(board, players, turn, trace, data);
+        return new Game(new GameState(board, players, turn, trace, data), new HiveRules());
     }
     
     public static Board getBoard()
@@ -53,22 +53,6 @@ public class DefaultGame
         Matrix<TilesStack> m = new Matrix<>(size, size);
         m.setAll(() -> new TilesStack());
         return new Board(m);
-    }
-    
-    public static InsectsBehaviors getInsectBehaviors(InsectType type)
-    {
-        InsectsBehaviors behaviors = new InsectsBehaviors();
-        
-        behaviors.put(InsectType.QUEEN_BEE, new QueenBeeBehavior());
-        behaviors.put(InsectType.SPIDER, new SpiderBehavior());
-        behaviors.put(InsectType.BEETLE, new BeetleBehavior());
-        behaviors.put(InsectType.GRASSHOPPER, new GrasshopperBehavior());
-        behaviors.put(InsectType.SOLDIER_ANT, new SoldierAntBehavior());
-        behaviors.put(InsectType.MOSQUITO, new MosquitoBehavior());
-        behaviors.put(InsectType.LADYBUG, new LadybugBehavior());
-        behaviors.put(InsectType.PILL_BUG, new PillBugBehavior());
-        
-        return behaviors;
     }
     
     public static PlayerCollection getCollection()

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.example;
+package hive.model.game;
 
-import hive.model.players.Decision;
+import hive.model.insects.InsectsBehaviors;
 
 /**
  *
  * @author Thomas
  */
-public interface IADecision extends Decision
+public interface Rules
 {
-    public void accept(IADecisionVisitor visitor);
+    public InsectsBehaviors getInsectsBehaviors();
+    public GameStatus getStatus(GameState state);
+    public int getMaxQueenTurn();
 }

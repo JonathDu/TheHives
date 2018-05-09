@@ -5,21 +5,21 @@
  */
 package hive.model.updates;
 
-import hive.model.AlgorithmsData;
-import hive.model.players.ActionVisitor;
-import hive.model.players.MoveAction;
-import hive.model.players.NoAction;
-import hive.model.players.PutAction;
+import hive.model.game.AlgorithmsData;
+import hive.model.players.actions.ActionVisitor;
+import hive.model.players.actions.MoveAction;
+import hive.model.players.actions.NoAction;
+import hive.model.players.actions.PutAction;
 
 /**
  *
  * @author Thomas
  */
-public class AlgorithmsDataUpdateApplier implements ActionVisitor
+public class AlgorithmsDataDoUpdater implements ActionVisitor
 {
     AlgorithmsData data;
     
-    AlgorithmsDataUpdateApplier(AlgorithmsData data)
+    AlgorithmsDataDoUpdater(AlgorithmsData data)
     {
         this.data = data;
     }
@@ -39,6 +39,6 @@ public class AlgorithmsDataUpdateApplier implements ActionVisitor
     @Override
     public void visit(NoAction action)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }

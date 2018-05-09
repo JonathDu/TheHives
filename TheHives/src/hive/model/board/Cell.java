@@ -9,9 +9,9 @@ package hive.model.board;
  *
  * @author Thomas
  */
-public class Hexagon extends util.hexagons.Hexagon<TilesStack>
+public class Cell extends util.hexagons.Hexagon<TilesStack>
 {
-    public Hexagon(TilesStack e)
+    public Cell(TilesStack e)
     {
         super(e);
     }

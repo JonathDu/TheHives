@@ -5,6 +5,8 @@
  */
 package hive.model.players;
 
+import hive.model.players.decisions.Decision;
+
 /**
  *
  * @author Thomas

@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model;
+package hive.model.board;
 
 /**
  *
  * @author Thomas
  */
-public class HiveGame
+public class Cells
 {
-    public static boolean isEnded()
+    public static boolean isSurrounded(Cell cell)
     {
         return true;
     }
