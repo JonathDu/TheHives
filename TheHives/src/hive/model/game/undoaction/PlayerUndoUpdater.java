@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates;
+package hive.model.game.undoaction;
 
-import hive.model.game.AlgorithmsData;
+import hive.model.game.PlayerTurn;
+import hive.model.players.Player;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
@@ -15,31 +16,32 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class AlgorithmsDataUndoUpdater implements ActionVisitor
+public class PlayerUndoUpdater implements ActionVisitor
 {
-    AlgorithmsData data;
+    PlayerTurn turn;
     
-    AlgorithmsDataUndoUpdater(AlgorithmsData data)
+    PlayerUndoUpdater(PlayerTurn turn)
     {
-        this.data = data;
+        this.turn = turn;
     }
     
     @Override
     public void visit(PutAction action)
     {
-        data.tiles.get(action.tile.color).get(action.tile.type).remove(action.where);
-        data.nbTiles -= 1;
+        Player current = turn.previous();
+        int n = current.collection.get(action.tile.type);
+        current.collection.put(action.tile.type, n + 1);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        
+        turn.previous();
     }
 
     @Override
     public void visit(NoAction action)
     {
-        
+        turn.previous();
     }
 }

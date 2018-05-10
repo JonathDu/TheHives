@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game.utildata;
 
+import hive.model.board.TilePosition;
 import hive.model.insects.InsectType;
 import java.util.ArrayList;
 import java.util.EnumMap;

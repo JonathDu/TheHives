@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates;
+package hive.model.game.doaction;
 
-import hive.model.game.AlgorithmsData;
+import hive.model.game.ActionsTrace;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
@@ -15,31 +15,30 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class AlgorithmsDataDoUpdater implements ActionVisitor
+public class TraceDoUpdater implements ActionVisitor
 {
-    AlgorithmsData data;
+    ActionsTrace trace;
     
-    AlgorithmsDataDoUpdater(AlgorithmsData data)
+    TraceDoUpdater(ActionsTrace trace)
     {
-        this.data = data;
+        this.trace = trace;
     }
-
+    
     @Override
     public void visit(PutAction action)
     {
-        data.tiles.get(action.tile.color).get(action.tile.type).add(action.where);
-        data.nbTiles += 1;
+        trace.push(action);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        
+        trace.push(action);
     }
 
     @Override
     public void visit(NoAction action)
     {
-        
+        trace.push(action);
     }
 }

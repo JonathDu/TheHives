@@ -3,23 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game;
+package hive.model.game.utildata;
 
 import hive.model.board.Board;
-import hive.model.board.PositionsPerTeamInsect;
 
 /**
  *
  * @author Thomas
  */
-public class AlgorithmsData
+public class PrecalculatedData
 {
     public PositionsPerTeamInsect tiles; // to get tiles of a specific insect in constant time
-    public int nbTiles;
     
-    public AlgorithmsData(PositionsPerTeamInsect tiles, int nbTiles)
+    public PrecalculatedData(PositionsPerTeamInsect tiles)
     {
         this.tiles = tiles;
-        this.nbTiles = nbTiles;
+    }
+    
+    public static PrecalculatedData getFrom(Board board)
+    {
+        PrecalculatedData data = null;
+        
+        return data;
     }
 }

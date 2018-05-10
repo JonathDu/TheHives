@@ -7,8 +7,8 @@ package hive.model;
 
 import hive.model.game.Game;
 import hive.model.game.GameState;
-import hive.model.updates.ActionDisapplier;
-import hive.model.updates.ActionApplier;
+import hive.model.game.undoaction.ActionDisapplier;
+import hive.model.game.doaction.ActionApplier;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 
