@@ -33,7 +33,7 @@ public class DefaultGame
         PlayerTurn turn = new PlayerTurn(players);
     
         ActionsTrace trace = new ActionsTrace();
-        PrecalculatedData data = new PrecalculatedData(new PositionsPerTeamInsect());
+        PrecalculatedData data = new PrecalculatedData(new PositionsPerTeamInsect(), 0);
         
         return new Game(new GameState(board, players, turn, trace, data), new HiveRules());
     }

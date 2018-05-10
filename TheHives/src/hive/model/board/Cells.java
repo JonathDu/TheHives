@@ -48,13 +48,14 @@ public class Cells
     // (size=2 count getvalue = pile vide -> parcours largeur sur pile non vide == nbTiles - 1 vrai sinon faux + remettre la pile
     public static boolean isConnex(Cell cell, int nbTiles)
     {
+        if(cell.stack.size() > 1)
+            return true;
         ArrayList<ArrayList<Cell>> groups = getNeighborsGroups(cell);
         int size = groups.size();
         if(size <= 1)
             return true;
-        else if(size == 2)
-            return !(groups.get(0).size() == 2 && groups.get(1).size() == 2);
-        assert size == 3;
+        else if(size >= 2)
+            return true; //TODO
         return false;
     }
     
