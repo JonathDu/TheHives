@@ -28,10 +28,11 @@ public class BeetleBehavior implements InsectBehavior
     @Override
     public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
     {
-        /*
+        
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isConnex(cell, game.state.data.))
+        if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_tiles))
+            return list;
         
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(cell.hexagon);
 
@@ -43,7 +44,7 @@ public class BeetleBehavior implements InsectBehavior
                 list.add(new Cell(currentHexagon)); //le scarabée peut "grimper" sur cette cellule, ne prend pas en compte la hauteur de l'esclade
             } else
             {
-                Tile scarabe = currentHexagon.getValue().pop();
+                Tile scarabe = cell.hexagon.getValue().pop();
                 NeighborsIterator neighbors = new NeighborsIterator<>(currentHexagon);
                 FilteringIterator<Hexagon<TilesStack>> fiter = new FilteringIterator<Hexagon<TilesStack>>(neighbors, n -> !n.getValue().isEmpty());
 
@@ -51,10 +52,9 @@ public class BeetleBehavior implements InsectBehavior
                 {
                     list.add(new Cell(fiter.next()));
                 }
-                currentHexagon.getValue().add(scarabe);
+                cell.hexagon.getValue().add(scarabe);
             }
         }
-        return list;*/
-        return null;
+        return list;
     }
 }

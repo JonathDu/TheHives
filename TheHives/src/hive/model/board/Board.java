@@ -64,8 +64,8 @@ public class Board extends CircularHexagonsGraph<TilesStack>
         boolean isCase = true;
         for (Object item : getData().getData()[y])
         {
-            String str = item != null && !item.toString().equals("[]") ? item.toString() : "       ";
-            res += isCase ? "/ " + str + " \\" : "_______";
+            String str = item != null && !item.toString().equals("[]") ? item.toString() : "     ";
+            res += isCase ? "/  " + str + "  \\" : "_______";
             isCase = !isCase;
         }
         return res;

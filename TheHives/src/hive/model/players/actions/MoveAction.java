@@ -16,6 +16,12 @@ public class MoveAction implements Action
     public Cell source;
     public Cell destination;
     
+    public MoveAction(Cell source, Cell destination)
+    {
+        this.source = source;
+        this.destination = destination;
+    }
+    
     @Override
     public void accept(ActionVisitor visitor)
     {
