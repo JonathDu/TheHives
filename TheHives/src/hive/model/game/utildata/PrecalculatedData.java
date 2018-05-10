@@ -14,10 +14,12 @@ import hive.model.board.Board;
 public class PrecalculatedData
 {
     public PositionsPerTeamInsect tiles; // to get tiles of a specific insect in constant time
+    public int nb_tiles;
     
-    public PrecalculatedData(PositionsPerTeamInsect tiles)
+    public PrecalculatedData(PositionsPerTeamInsect tiles, int nb_tiles)
     {
         this.tiles = tiles;
+        this.nb_tiles = nb_tiles;
     }
     
     public static PrecalculatedData getFrom(Board board)

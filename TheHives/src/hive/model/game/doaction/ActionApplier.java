@@ -19,14 +19,14 @@ public class ActionApplier implements ActionVisitor
 {
     BoardDoUpdater board_do;
     PlayerDoUpdater player_do;
-    AlgorithmsDataDoUpdater algo_do;
+    PrecalculatedDataDoUpdater algo_do;
     TraceDoUpdater trace_do;
 
     public ActionApplier(GameState state)
     {
         this.board_do = new BoardDoUpdater(state.board);
         this.player_do = new PlayerDoUpdater(state.turn);
-        this.algo_do = new AlgorithmsDataDoUpdater(state.data);
+        this.algo_do = new PrecalculatedDataDoUpdater(state.data);
         this.trace_do = new TraceDoUpdater(state.trace);
     }
     

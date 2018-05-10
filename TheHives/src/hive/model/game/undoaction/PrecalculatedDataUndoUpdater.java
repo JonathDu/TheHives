@@ -15,11 +15,11 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class AlgorithmsDataUndoUpdater implements ActionVisitor
+public class PrecalculatedDataUndoUpdater implements ActionVisitor
 {
     PrecalculatedData data;
     
-    AlgorithmsDataUndoUpdater(PrecalculatedData data)
+    PrecalculatedDataUndoUpdater(PrecalculatedData data)
     {
         this.data = data;
     }
@@ -28,6 +28,7 @@ public class AlgorithmsDataUndoUpdater implements ActionVisitor
     public void visit(PutAction action)
     {
         data.tiles.get(action.tile.color).get(action.tile.type).remove(action.where);
+        data.nb_tiles -= 1;
     }
 
     @Override
