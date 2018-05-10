@@ -43,6 +43,11 @@ public class StoppingIterator<E> implements Iterator<E>
         return res;
     }
     
+    public E getStoppingValue()
+    {
+        return value;
+    }
+    
     private boolean findNext()
     {
         if(iterator.hasNext())
