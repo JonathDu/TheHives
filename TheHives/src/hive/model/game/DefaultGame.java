@@ -9,21 +9,11 @@ import hive.model.board.Board;
 import hive.model.board.PositionsPerTeamInsect;
 import hive.model.board.TilesStack;
 import hive.model.insects.InsectType;
-import hive.model.insects.InsectsBehaviors;
-import hive.model.insects.behaviors.BeetleBehavior;
-import hive.model.insects.behaviors.GrasshopperBehavior;
-import hive.model.insects.behaviors.LadybugBehavior;
-import hive.model.insects.behaviors.MosquitoBehavior;
-import hive.model.insects.behaviors.PillBugBehavior;
-import hive.model.insects.behaviors.QueenBeeBehavior;
-import hive.model.insects.behaviors.SoldierAntBehavior;
-import hive.model.insects.behaviors.SpiderBehavior;
 import hive.model.players.decisions.Decision;
 import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
 import hive.model.players.Players;
 import hive.model.players.TeamColor;
-import hive.model.players.decisions.HumanDecision;
 import util.Matrix;
 
 /**

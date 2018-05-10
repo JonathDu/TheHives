@@ -3,25 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates;
+package hive.model.updates.doAction;
 
 import hive.model.board.Board;
+import hive.model.players.actions.PutAction;
+import hive.model.players.actions.MoveAction;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.players.actions.ActionVisitor;
-import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
-import hive.model.players.actions.PutAction;
 
 /**
  *
  * @author Thomas
  */
-public class BoardUndoUpdater implements ActionVisitor
-{   
+public class BoardDoUpdater implements ActionVisitor
+{
     Board board;
     
-    public BoardUndoUpdater(Board board)
+    public BoardDoUpdater(Board board)
     {
         this.board = board;
     }
@@ -30,16 +30,16 @@ public class BoardUndoUpdater implements ActionVisitor
     public void visit(PutAction action)
     {
         TilesStack stack = action.where.cell.getValue();
-        stack.pop();
         assert stack.isEmpty();
+        stack.push(action.tile);
     }
     
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.destination.cell.getValue();
-        Tile t = stack.remove(action.destination.index);
-        stack.add(action.source.index, t);
+        TilesStack stack = action.source.cell.getValue();
+        Tile t = stack.remove(action.source.index);
+        action.destination.cell.getValue().add(action.destination.index, t);
     }
 
     @Override

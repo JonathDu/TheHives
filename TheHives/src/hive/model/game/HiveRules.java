@@ -31,7 +31,7 @@ public class HiveRules implements Rules
     
     public HiveRules()
     {
-        InsectsBehaviors behaviors = new InsectsBehaviors();
+        behaviors = new InsectsBehaviors();
         
         behaviors.put(InsectType.QUEEN_BEE, new QueenBeeBehavior());
         behaviors.put(InsectType.SPIDER, new SpiderBehavior());
