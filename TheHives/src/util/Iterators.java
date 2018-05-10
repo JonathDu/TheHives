@@ -12,14 +12,23 @@ import java.util.Iterator;
  *
  * @author Thomas
  */
-public class IteratorToCollection
+public class Iterators
 {
     public static <E> Collection<E> fill(Collection<E> collection, Iterator<E> iterator)
     {
         while(iterator.hasNext())
-        {
             collection.add(iterator.next());
-        }
         return collection;
+    }
+    
+    public static <E> int count(Iterator<E> iterator)
+    {
+        int i = 0;
+        while(iterator.hasNext())
+        {
+            ++i;
+            iterator.next();
+        }
+        return i;
     }
 }

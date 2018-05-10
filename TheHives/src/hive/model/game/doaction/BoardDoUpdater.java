@@ -29,7 +29,7 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.cell.getValue();
+        TilesStack stack = action.where.hexagon.getValue();
         assert stack.isEmpty();
         stack.push(action.tile);
     }
@@ -37,9 +37,9 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.source.cell.getValue();
+        TilesStack stack = action.source.hexagon.getValue();
         Tile t = stack.remove(action.source.index);
-        action.destination.cell.getValue().add(action.destination.index, t);
+        action.destination.hexagon.getValue().add(action.destination.index, t);
     }
 
     @Override

@@ -20,17 +20,6 @@ public class Board extends CircularHexagonsGraph<TilesStack>
         super(matrix, new HiveNeighborsShifter());
     }
     
-    public Cell getHexagon(int x, int y)
-    {
-        return getHexagon(new Vector2i(x, y));
-    }
-    
-    @Override
-    public Cell getHexagon(Vector2i pos)
-    {
-        return new Cell(super.getHexagon(pos).getValue());
-    }
-    
     @Override
     public String toString()
     {

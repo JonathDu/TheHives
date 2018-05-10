@@ -8,7 +8,7 @@ package hive.main;
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
 import hive.model.board.Tile;
-import hive.model.board.TilePosition;
+import hive.model.board.Cell;
 import hive.model.game.Game;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -48,7 +48,7 @@ public class HiveConsole
             System.out.println("Position : ");
             Vector2i pos = new Vector2i(sc.nextInt(), sc.nextInt());
             
-            decision.setAction(new PutAction(new TilePosition(game.state.board.getHexagon(pos), 0), new Tile(InsectType.BEETLE, player.color)));
+            decision.setAction(new PutAction(new Cell(game.state.board.getHexagon(pos), 0), new Tile(InsectType.BEETLE, player.color)));
             progress.doAction();
         
             System.out.println(game.state.board);

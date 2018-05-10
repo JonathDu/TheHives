@@ -5,24 +5,20 @@
  */
 package hive.model.board;
 
+import util.hexagons.Hexagon;
+
 /**
  *
  * @author Thomas
  */
-public class Cell extends util.hexagons.Hexagon<TilesStack>
+public class Cell
 {
-    public Cell(TilesStack e)
-    {
-        super(e);
-    }
+    public Hexagon<TilesStack> hexagon;
+    public int index;
     
-    public void addTile(TilePosition pos)
+    public Cell(Hexagon<TilesStack> hexagon, int index)
     {
-        
-    }
-    
-    public void removeTile(TilePosition pos)
-    {
-        
+        this.hexagon = hexagon;
+        this.index = index;
     }
 }
