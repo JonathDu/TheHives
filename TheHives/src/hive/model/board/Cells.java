@@ -8,8 +8,8 @@ package hive.model.board;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import util.Iterators;
+import util.hexagons.iterators.BreadthIterator;
 import util.hexagons.iterators.NeighborsValueIterator;
-import util.iterators.FilteringIterator;
 import util.iterators.StoppingIterator;
 
 /**
@@ -44,19 +44,36 @@ public class Cells
         return false;
     }
     
+    public static boolean isConnexWithout(Cell cell, int nb_tiles)
+    {
+        if(cell.stack.size() > 0)
+            return true;
+        else
+        {
+            boolean res = false;
+            TilesStack removed_stack = cell.hexagon.getValue();
+            cell.hexagon.setValue(new TilesStack());
+            
+            ArrayList<ArrayList<Cell>> groups = getNeighborsGroups(cell);
+            int size = groups.size();
+            if(size <= 1)
+                res = true;
+            else if(size >= 2)
+            {
+                res = isConnex(groups.get(0).get(0), nb_tiles);
+            }
+            
+            cell.hexagon.setValue(removed_stack);
+            return res;
+        }
+    }
+    
     // groupes de voisins (size=0 vrai) (size=1 vrai)
     // (size=2 count getvalue = pile vide -> parcours largeur sur pile non vide == nbTiles - 1 vrai sinon faux + remettre la pile
-    public static boolean isConnex(Cell cell, int nbTiles)
+    public static boolean isConnex(Cell cell, int nb_tiles)
     {
-        if(cell.stack.size() > 1)
-            return true;
-        ArrayList<ArrayList<Cell>> groups = getNeighborsGroups(cell);
-        int size = groups.size();
-        if(size <= 1)
-            return true;
-        else if(size >= 2)
-            return true; //TODO
-        return false;
+        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(cell.hexagon, stack -> !stack.isEmpty());
+        return Iterators.count(iterator) == nb_tiles - 1;
     }
     
     public static TeamColor stackColor(TilesStack stack)
