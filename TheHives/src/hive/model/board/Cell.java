@@ -15,8 +15,15 @@ public class Cell
 {
     public Hexagon<TilesStack> hexagon;
     public int index;
-    TilesStack stack;
+    public TilesStack stack;
     
+    public Cell(Hexagon<TilesStack> hexagon)
+    {
+        this.hexagon = hexagon;
+        this.index = hexagon.getValue().size();
+        this.stack = hexagon.getValue();
+    }
+
     public Cell(Hexagon<TilesStack> hexagon, int index)
     {
         this.hexagon = hexagon;
