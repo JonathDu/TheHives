@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates.undoAction;
+package hive.model.game.undoaction;
 
 import hive.model.game.PlayerTurn;
 import hive.model.players.Player;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game.utildata;
 
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
