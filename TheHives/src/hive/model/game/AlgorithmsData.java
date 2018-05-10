@@ -15,16 +15,11 @@ import hive.model.board.PositionsPerTeamInsect;
 public class AlgorithmsData
 {
     public PositionsPerTeamInsect tiles; // to get tiles of a specific insect in constant time
+    public int nbTiles;
     
-    public AlgorithmsData(PositionsPerTeamInsect tiles)
+    public AlgorithmsData(PositionsPerTeamInsect tiles, int nbTiles)
     {
         this.tiles = tiles;
-    }
-    
-    public static AlgorithmsData getFrom(Board board)
-    {
-        AlgorithmsData data = null;
-        
-        return data;
+        this.nbTiles = nbTiles;
     }
 }

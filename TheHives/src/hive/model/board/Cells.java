@@ -15,4 +15,14 @@ public class Cells
     {
         return true;
     }
+    
+    public static boolean isCrushed(Cell cell)
+    {
+        return true;
+    }
+    
+    public static boolean isBlocked(Cell cell)
+    {
+        return isSurrounded(cell) && isCrushed(cell);
+    }
 }

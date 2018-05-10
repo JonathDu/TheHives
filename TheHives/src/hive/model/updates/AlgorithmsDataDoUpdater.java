@@ -28,6 +28,7 @@ public class AlgorithmsDataDoUpdater implements ActionVisitor
     public void visit(PutAction action)
     {
         data.tiles.get(action.tile.color).get(action.tile.type).add(action.where);
+        data.nbTiles += 1;
     }
 
     @Override

@@ -28,6 +28,7 @@ public class AlgorithmsDataUndoUpdater implements ActionVisitor
     public void visit(PutAction action)
     {
         data.tiles.get(action.tile.color).get(action.tile.type).remove(action.where);
+        data.nbTiles -= 1;
     }
 
     @Override
