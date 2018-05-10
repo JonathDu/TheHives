@@ -3,16 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model;
+package hive.model.players.decisions;
+
+import hive.model.game.Game;
+import hive.model.players.actions.Action;
 
 /**
  *
  * @author Thomas
  */
-public class HiveGame
+public interface Decision
 {
-    public static boolean isEnded()
-    {
-        return true;
-    }
+    public Action getAction(Game game);
 }

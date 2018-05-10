@@ -13,9 +13,9 @@ import java.util.EnumMap;
  *
  * @author Thomas
  */
-public class TilesPerInsect extends EnumMap<InsectType, ArrayList<TilePosition>>
+public class PositionsPerInsect extends EnumMap<InsectType, ArrayList<TilePosition>>
 {
-    public TilesPerInsect()
+    public PositionsPerInsect()
     {
         super(InsectType.class);
         for(InsectType type : InsectType.values())

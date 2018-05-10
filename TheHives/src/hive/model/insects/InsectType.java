@@ -28,4 +28,30 @@ public enum InsectType
     // x1 (Red)
     PILL_BUG;
     // x1 (Cyan)
+    
+    @Override
+    public String toString()
+    {
+        switch(this)
+        {
+        case QUEEN_BEE:
+            return "Q";
+        case SPIDER:
+            return "S";
+        case BEETLE:
+            return "B";
+        case GRASSHOPPER:
+            return "G";
+        case SOLDIER_ANT:
+            return "A";
+        case MOSQUITO:
+            return "M";
+        case LADYBUG:
+            return "L";
+        case PILL_BUG:
+            return "P";
+        }
+        assert false;
+        return "";
+    }
 }

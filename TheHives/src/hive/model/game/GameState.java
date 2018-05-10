@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model;
+package hive.model.game;
 
 import hive.model.board.Board;
+import hive.model.board.TilePositions;
 import hive.model.players.Player;
 import hive.model.players.Players;
 
@@ -17,14 +18,18 @@ public class GameState
 {
     public Board board;
     public Players players;
-    public Player current;
+    public PlayerTurn turn;
+    
+    public ActionsTrace trace;
     public AlgorithmsData data;
     
-    public GameState(Board board, Players players, Player current, AlgorithmsData data)
+    public GameState(Board board, Players players, PlayerTurn turn, ActionsTrace trace, AlgorithmsData data)
     {
         this.board = board;
         this.players = players;
-        this.current = current;
+        this.turn = turn;
+        
+        this.trace = trace;
         this.data = data;
     }
 }

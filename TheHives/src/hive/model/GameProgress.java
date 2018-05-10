@@ -5,11 +5,12 @@
  */
 package hive.model;
 
-import hive.model.board.Board;
-import hive.model.players.Action;
-import hive.model.players.ActionType;
-import hive.model.players.Decision;
-import hive.model.players.Players;
+import hive.model.game.Game;
+import hive.model.game.GameState;
+import hive.model.updates.undoAction.ActionDisapplier;
+import hive.model.updates.doAction.ActionApplier;
+import hive.model.players.actions.Action;
+import hive.model.players.decisions.Decision;
 
 /**
  *
@@ -17,33 +18,30 @@ import hive.model.players.Players;
  */
 public class GameProgress
 {
-    PlayerTurn turn;
-    GameState state;
+    Game game;
+    
     ActionApplier applier;
     ActionDisapplier disapplier;
-    AlgorithmsDataUpdater updater;
-    ActionsTrace trace;
     
     
-    public GameProgress(Board board, Players players, ActionsTrace trace)
+    public GameProgress(Game game)
     {
-        this.turn = new PlayerTurn(players);
-        this.state = new GameState(board, players, turn.next(), AlgorithmsData.getFrom(board));
-        this.applier = new ActionApplier();
-        this.disapplier = new ActionDisapplier();
-        //this.updater = new AlgorithmsDataUpdater();
-        this.trace = trace;
+        this.game = game;
+        
+        this.applier = new ActionApplier(game.state);
+        this.disapplier = new ActionDisapplier(game.state);
     }
     
-    // TODO
-    void playAction(ActionType type)
+    public void doAction()
     {
-        Decision decision = state.current.decisions.get(type);
-        Action action = decision.getAction(state);
-        
+        Decision decision = game.state.turn.getCurrent().decision;
+        Action action = decision.getAction(game);
         action.accept(applier);
-        action.accept(updater);
-        
-        trace.push(action);
+    }
+    
+    public void undoAction()
+    {
+        Action action = game.state.trace.peek();
+        action.accept(disapplier);
     }
 }

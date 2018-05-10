@@ -13,4 +13,10 @@ public enum TeamColor
 {
     WHITE,
     BLACK;
+    
+    @Override
+    public String toString()
+    {
+        return this == WHITE ? "W" : "B";
+    }
 }

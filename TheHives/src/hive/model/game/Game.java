@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.game;
 
 /**
  *
  * @author Thomas
  */
-public interface ActionVisitor
+public class Game
 {
-    public void visit(PutAction action);
-    public void visit(MoveAction action);
+    public GameState state;
+    public Rules rules;
+    
+    public Game(GameState state, Rules rules)
+    {
+        this.state = state;
+        this.rules = rules;
+    }
 }

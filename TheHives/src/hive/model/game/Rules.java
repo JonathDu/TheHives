@@ -3,18 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players;
+package hive.model.game;
 
-import java.util.EnumMap;
+import hive.model.insects.InsectsBehaviors;
 
 /**
  *
  * @author Thomas
  */
-public class PlayerDecisions extends EnumMap<ActionType, Decision>
+public interface Rules
 {
-    public PlayerDecisions()
-    {
-        super(ActionType.class);
-    }
+    public InsectsBehaviors getInsectsBehaviors();
+    public GameStatus getStatus(GameState state);
+    public int getMaxQueenTurn();
 }
