@@ -22,4 +22,10 @@ public class Tile
         this.type = type;
         this.color = color;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "" + type + " " + color;
+    }
 }

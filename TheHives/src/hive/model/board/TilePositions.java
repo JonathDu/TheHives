@@ -9,15 +9,9 @@ package hive.model.board;
  *
  * @author Thomas
  */
-public class TilePosition
+public class TilePositions
 {
-    public Cell cell;
-    public int index;
     
-    public TilePosition(Cell cell, int index)
-    {
-        this.cell = cell;
-        this.index = index;
-    }
     
+    // public static boolean isSurrounded(TilePosition) // Beetles
 }

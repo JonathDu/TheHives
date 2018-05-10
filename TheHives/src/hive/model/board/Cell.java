@@ -9,15 +9,20 @@ package hive.model.board;
  *
  * @author Thomas
  */
-public class TilePosition
+public class Cell extends util.hexagons.Hexagon<TilesStack>
 {
-    public Cell cell;
-    public int index;
-    
-    public TilePosition(Cell cell, int index)
+    public Cell(TilesStack e)
     {
-        this.cell = cell;
-        this.index = index;
+        super(e);
     }
     
+    public void addTile(TilePosition pos)
+    {
+        
+    }
+    
+    public void removeTile(TilePosition pos)
+    {
+        
+    }
 }

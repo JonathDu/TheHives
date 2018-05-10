@@ -3,21 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game;
+
+import hive.model.players.actions.Action;
+import java.util.Stack;
 
 /**
  *
  * @author Thomas
  */
-public class TilePosition
+public class ActionsTrace extends Stack<Action>
 {
-    public Cell cell;
-    public int index;
-    
-    public TilePosition(Cell cell, int index)
+    public ActionsTrace()
     {
-        this.cell = cell;
-        this.index = index;
+        super();
     }
-    
 }

@@ -3,21 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.players.decisions;
+
+import hive.model.game.Game;
+import hive.model.players.actions.Action;
 
 /**
  *
  * @author Thomas
  */
-public class TilePosition
+public interface Decision
 {
-    public Cell cell;
-    public int index;
-    
-    public TilePosition(Cell cell, int index)
-    {
-        this.cell = cell;
-        this.index = index;
-    }
-    
+    public Action getAction(Game game);
 }

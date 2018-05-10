@@ -3,21 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game;
 
 /**
  *
  * @author Thomas
  */
-public class TilePosition
+public class Game
 {
-    public Cell cell;
-    public int index;
+    public GameState state;
+    public Rules rules;
     
-    public TilePosition(Cell cell, int index)
+    public Game(GameState state, Rules rules)
     {
-        this.cell = cell;
-        this.index = index;
+        this.state = state;
+        this.rules = rules;
     }
-    
 }

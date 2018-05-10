@@ -3,21 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.players.decisions;
 
 /**
  *
  * @author Thomas
  */
-public class TilePosition
+public interface IADecision extends Decision
 {
-    public Cell cell;
-    public int index;
-    
-    public TilePosition(Cell cell, int index)
-    {
-        this.cell = cell;
-        this.index = index;
-    }
     
 }
