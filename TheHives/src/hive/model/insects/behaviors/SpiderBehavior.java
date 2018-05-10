@@ -5,6 +5,8 @@
  */
 package hive.model.insects.behaviors;
 
+import hive.model.board.Cell;
+import hive.model.game.Game;
 import util.hexagons.Hexagon;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ public class SpiderBehavior implements InsectBehavior
 {
 
     @Override
-    public ArrayList<Hexagon> getPossibleDestinations(Hexagon from)
+    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
