@@ -8,8 +8,12 @@ package hive.model.board;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import util.Iterators;
+import util.hexagons.Hexagon;
+import util.hexagons.HexagonSide;
 import util.hexagons.iterators.BreadthIterator;
+import util.hexagons.iterators.NeighborsIterator;
 import util.hexagons.iterators.NeighborsValueIterator;
+import util.iterators.FilteringIterator;
 import util.iterators.StoppingIterator;
 
 /**
@@ -32,15 +36,19 @@ public class Cells
     // groupes de voisins (size=0 vrai) (size=1 et nb <= 4 vrai) (size=2 et nb 2 et 2 faux sinon vrai) (size=3 faux)
     public static boolean isFree(Cell cell)
     {
-        ArrayList<ArrayList<Cell>> groups = getNeighborsGroups(cell);
-        int size = groups.size();
-        if(size == 0)
-            return true;
-        else if(size == 1)
-            return groups.get(0).size() <= 4;
-        else if(size ==  2)
-            return !(groups.get(0).size() == 2 && groups.get(1).size() == 2);
-        assert size == 3;
+        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.hexagon, HexagonSide.A, HexagonSide.F);
+        
+        int i = 0;
+        while(neighbors.hasNext())
+        {
+            Hexagon<TilesStack> n = neighbors.next();
+            if(n.getValue().isEmpty())
+                ++i;
+            else
+                i = 0;
+            if(i == 2)
+                return true;
+        }
         return false;
     }
     
@@ -54,13 +62,18 @@ public class Cells
             TilesStack removed_stack = cell.hexagon.getValue();
             cell.hexagon.setValue(new TilesStack());
             
-            ArrayList<ArrayList<Cell>> groups = getNeighborsGroups(cell);
-            int size = groups.size();
-            if(size <= 1)
-                res = true;
-            else if(size >= 2)
+            NeighborsValueIterator<TilesStack> neighbors = new NeighborsValueIterator<>(cell.hexagon);
+        
+            int i = 0;
+            while(neighbors.hasNext())
             {
-                res = isConnex(groups.get(0).get(0), nb_tiles);
+                TilesStack stack = neighbors.next();
+                if(stack.isEmpty())
+                    ++i;
+                else
+                    i = 0;
+                if(i == 2)
+                    return true;
             }
             
             cell.hexagon.setValue(removed_stack);
@@ -88,11 +101,5 @@ public class Cells
         return Iterators.count(new StoppingIterator<TilesStack>(neighbors, stack -> stack.isEmpty() && stackColor(stack) == stackColor(cell.stack))) == 6;
     }
     
-    public static ArrayList<ArrayList<Cell>> getNeighborsGroups(Cell cell)
-    {
-        ArrayList<ArrayList<Cell>> groups = null;
-        assert groups.size() <= 3;
-        return null;
-    }
 }
 
