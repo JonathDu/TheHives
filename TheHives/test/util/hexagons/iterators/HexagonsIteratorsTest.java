@@ -16,6 +16,7 @@ import org.junit.Test;
 import util.Matrix;
 import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
+import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 
 /**
@@ -26,7 +27,7 @@ public class HexagonsIteratorsTest
 {
 
     private Matrix<Integer> m;  
-    private CircularHexagonsGraph<Integer> c;
+    private CircularHexagonsGraph<Integer, Hexagon<Integer>> c;
     
     public HexagonsIteratorsTest()
     {
@@ -55,7 +56,7 @@ public class HexagonsIteratorsTest
         HiveNeighborsShifter getter = new HiveNeighborsShifter();
         
         m = new Matrix<>(tab);
-        c = new CircularHexagonsGraph(m, getter);
+        c = new CircularHexagonsGraph(m, getter, (x, y) -> new Hexagon());
     }
     
     @After

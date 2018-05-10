@@ -13,13 +13,17 @@ import util.hexagons.CircularHexagonsGraph;
  *
  * @author Thomas
  */
-public class Board extends CircularHexagonsGraph<TilesStack>
+public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
 {   
     public Board(Matrix<TilesStack> matrix)
     {
-        super(matrix, new HiveNeighborsShifter());
+        super(matrix, new HiveNeighborsShifter(), (x, y) -> new Honeycomb(new Vector2i(x, y)));
     }
     
+    
+    
+    
+    // to string
     @Override
     public String toString()
     {

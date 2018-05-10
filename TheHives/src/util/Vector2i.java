@@ -61,4 +61,10 @@ public class Vector2i extends Vector2<Integer>
         this.y *= coefs.y;
         return this;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "(" + x + ", " + y + ")";
+    }
 }

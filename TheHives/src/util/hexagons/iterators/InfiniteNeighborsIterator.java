@@ -12,37 +12,41 @@ import util.hexagons.HexagonSide;
 /**
  *
  * @author Thomas
+ * @param <E>
  */
-public class NeighborsValueIterator<E> implements Iterator<E>
+public class InfiniteNeighborsIterator<E> implements Iterator<Hexagon<E>>
 {
     Hexagon<E> center;
     HexagonSide current;
-    HexagonSide last;
     
-    public NeighborsValueIterator(Hexagon<E> center)
+    public InfiniteNeighborsIterator(Hexagon<E> center)
     {
         this(center, HexagonSide.A);
     }
     
-    public NeighborsValueIterator(Hexagon<E> center, HexagonSide side)
+    public InfiniteNeighborsIterator(Hexagon<E> center, HexagonSide first)
     {
         this.center = center;
-        this.current = side;
-        this.last = side.getBefore();
+        this.current = first;
+    }
+    
+    public HexagonSide getNextSide()
+    {
+        return current;
     }
     
     @Override
     public boolean hasNext()
     {
-        return current != null;
+        return true;
     }
     
     @Override
-    public E next()
+    public Hexagon<E> next()
     {
         assert hasNext();
-        E res = center.getNeighbor(current).getValue();
-        current = current != last ? current.getAfter() : null;
+        Hexagon<E> res = center.getNeighbor(current);
+        current = current.getAfter();
         return res;
     }
 }

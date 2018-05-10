@@ -29,7 +29,7 @@ public class BoardUndoUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.hexagon.getValue();
+        TilesStack stack = action.where.comb.getValue();
         stack.pop();
         assert stack.isEmpty();
     }
@@ -37,7 +37,7 @@ public class BoardUndoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.destination.hexagon.getValue();
+        TilesStack stack = action.destination.comb.getValue();
         Tile t = stack.remove(action.destination.index);
         stack.add(action.source.index, t);
     }

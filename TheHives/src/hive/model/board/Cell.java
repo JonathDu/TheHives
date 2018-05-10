@@ -13,21 +13,24 @@ import util.hexagons.Hexagon;
  */
 public class Cell
 {
-    public Hexagon<TilesStack> hexagon;
+    public Honeycomb comb;
     public int index;
-    public TilesStack stack;
     
-    public Cell(Hexagon<TilesStack> hexagon)
+    public Cell(Honeycomb comb)
     {
-        this.hexagon = hexagon;
-        this.index = hexagon.getValue().size();
-        this.stack = hexagon.getValue();
+        this.comb = comb;
+        this.index = comb.stack().size();
     }
 
-    public Cell(Hexagon<TilesStack> hexagon, int index)
+    public Cell(Honeycomb comb, int index)
     {
-        this.hexagon = hexagon;
+        this.comb = comb;
         this.index = index;
-        this.stack = hexagon.getValue();
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "( " + comb + " : " + comb.stack() + " at " + index + " )";
     }
 }

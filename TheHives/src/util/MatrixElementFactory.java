@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util.hexagons.iterators;
+package util;
 
 /**
  *
  * @author Thomas
+ * @param <E>
  */
-public class CountingNeighborsIterator
+public interface MatrixElementFactory<E>
 {
-    
+    public E create(int x, int y);
 }

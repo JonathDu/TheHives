@@ -10,6 +10,7 @@ import hive.model.GameProgress;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
+import hive.model.game.GameStatus;
 import hive.model.insects.InsectBehavior;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -39,7 +40,7 @@ public class HiveConsole
 
         Scanner sc = new Scanner(System.in);
         int i = 0;
-        while (i++ < 5)
+        while (game.rules.getStatus(game.state) == GameStatus.CONTINUES)
         {
             Player player = game.state.turn.getCurrent();
             if (player == game.state.players.get(0))
@@ -102,15 +103,18 @@ public class HiveConsole
 
         System.out.println("Position depart : ");
         Vector2i startPos = new Vector2i(sc.nextInt(), sc.nextInt());
-        Cell start = new Cell(game.state.board.getHexagon(startPos), game.state.board.getHexagon(startPos).getValue().size()-1);
+        Cell start = new Cell(game.state.board.getHexagon(startPos), game.state.board.getHexagon(startPos).stack().size()-1);
         
-        InsectBehavior behavior = game.rules.getInsectsBehaviors().get(game.state.board.getHexagon(startPos).getValue().peek().type);
+        InsectBehavior behavior = game.rules.getInsectsBehaviors().get(game.state.board.getHexagon(startPos).stack().peek().type);
         ArrayList<Cell> listPossibleDestinations = behavior.getPossibleDestinations(game, start);
         System.out.println("Positions d'arrive possibles :");
-        listPossibleDestinations.forEach((c) ->
+        
+        System.out.println(listPossibleDestinations);
+        /*listPossibleDestinations.forEach((c) ->
         {
             System.out.print(c.hexagon.getValue().peek() + " "); //TODO : recupérer la position d'un hexagone dans la matrice
-        });
+        });*/
+        
         System.out.println("");
         
         System.out.println("Position d'arrive : ");

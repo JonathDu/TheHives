@@ -49,6 +49,17 @@ public class Matrix<E>
             }
         }
     }
+    
+    public void setAll(MatrixElementFactory<E> factory)
+    {
+        for (int y = 0; y < sizeY(); y++)
+        {
+            for (int x = 0; x < sizeX(); x++)
+            {
+                data[y][x] = factory.create(x, y);
+            }
+        }
+    }
 
     public E getAt(int x, int y)
     {

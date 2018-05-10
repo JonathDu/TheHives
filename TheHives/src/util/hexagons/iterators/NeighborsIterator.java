@@ -37,7 +37,7 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
         this.last = last;
     }
     
-    public HexagonSide getSide()
+    public HexagonSide getNextSide()
     {
         return current;
     }

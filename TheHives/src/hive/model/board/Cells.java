@@ -6,13 +6,12 @@
 package hive.model.board;
 
 import hive.model.players.TeamColor;
-import java.util.ArrayList;
 import util.Iterators;
-import util.hexagons.Hexagon;
-import util.hexagons.HexagonSide;
 import util.hexagons.iterators.BreadthIterator;
+import util.hexagons.iterators.InfiniteNeighborsIterator;
 import util.hexagons.iterators.NeighborsIterator;
-import util.hexagons.iterators.NeighborsValueIterator;
+import util.hexagons.iterators.ValueIterator;
+import util.iterators.CountingIterator;
 import util.iterators.FilteringIterator;
 import util.iterators.StoppingIterator;
 
@@ -22,83 +21,119 @@ import util.iterators.StoppingIterator;
  */
 public class Cells
 {
+    // check if the tile is surrounded by 6 cells (at level 0)
     public static boolean isSurrounded(Cell cell)
     {
-        NeighborsValueIterator<TilesStack> neighbors = new NeighborsValueIterator<>(cell.hexagon);
+        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator(cell.comb));
         return Iterators.count(new StoppingIterator<TilesStack>(neighbors, stack -> !stack.isEmpty())) == 6;
     }
     
+    // check if the tile is below an other one
     public static boolean isCrushed(Cell cell)
     {
-        return cell.index < cell.hexagon.getValue().size() - 1;
+        return cell.index < cell.comb.getValue().size() - 1;
     }
     
-    // groupes de voisins (size=0 vrai) (size=1 et nb <= 4 vrai) (size=2 et nb 2 et 2 faux sinon vrai) (size=3 faux)
+    // check if the tile is free to move outside the cell
     public static boolean isFree(Cell cell)
     {
-        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.hexagon, HexagonSide.A, HexagonSide.F);
+        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
+        ValueIterator<TilesStack> counting = new ValueIterator(new CountingIterator(neighbors, 7));
         
-        int i = 0;
-        while(neighbors.hasNext())
+        // turn 7 times to detect 2 adjacents empty neighbors
+        int nb_adja = 0;
+        while(counting.hasNext())
         {
-            Hexagon<TilesStack> n = neighbors.next();
-            if(n.getValue().isEmpty())
-                ++i;
+            TilesStack stack = counting.next();
+            if(stack.isEmpty())
+                ++nb_adja;
             else
-                i = 0;
-            if(i == 2)
+                nb_adja = 0;
+            if(nb_adja == 2)
                 return true;
         }
         return false;
     }
     
+    // check the connexity when the cell is removed
     public static boolean isConnexWithout(Cell cell, int nb_tiles)
     {
-        if(cell.stack.size() > 0)
+        if(cell.comb.stack().size() > 1)
             return true;
-        else
-        {
-            boolean res = false;
-            TilesStack removed_stack = cell.hexagon.getValue();
-            cell.hexagon.setValue(new TilesStack());
-            
-            NeighborsValueIterator<TilesStack> neighbors = new NeighborsValueIterator<>(cell.hexagon);
         
-            int i = 0;
-            while(neighbors.hasNext())
+        // neighbors iterator to turn twice around
+        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
+        CountingIterator<Honeycomb> counting = new CountingIterator(neighbors, 12);
+
+        // turn twice around the neighbors gives the number or connex groups
+        boolean visiting_group = false;
+        int nb_groups = 0;
+        Honeycomb to_see = null;
+        while(counting.hasNext())
+        {
+            Honeycomb n = counting.next();
+            TilesStack stack = n.getValue();
+            if(stack.isEmpty())
             {
-                TilesStack stack = neighbors.next();
-                if(stack.isEmpty())
-                    ++i;
-                else
-                    i = 0;
-                if(i == 2)
-                    return true;
+                if(visiting_group)
+                    visiting_group = false;
             }
-            
-            cell.hexagon.setValue(removed_stack);
-            return res;
+            else
+            {
+                to_see = n;
+                if(!visiting_group)
+                {
+                    visiting_group = true;
+                    ++nb_groups;
+                }
+            }
         }
+        
+        System.out.println("nb = " + nb_groups);
+        // dividing by 2 gives the real number of connex groups
+        nb_groups /= 2;
+        // would mean it has no neighbors which is impossible
+        assert nb_groups != 0;
+        // if there is one group connex, it is connex anyway
+        if(nb_groups == 1)
+            return true;
+        
+        // otherwise we initialized a neighbor to see
+        assert to_see != null;
+
+        // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
+        Tile tile = cell.comb.stack().pop();
+        cell.comb.setValue(new TilesStack());
+
+        boolean res = isConnex(to_see, nb_tiles);
+
+        cell.comb.stack().push(tile);
+
+        return res;
     }
     
-    // groupes de voisins (size=0 vrai) (size=1 vrai)
-    // (size=2 count getvalue = pile vide -> parcours largeur sur pile non vide == nbTiles - 1 vrai sinon faux + remettre la pile
-    public static boolean isConnex(Cell cell, int nb_tiles)
+    // check connexity starting at cell by breath first search : connex if we counts all the tiles
+    public static boolean isConnex(Honeycomb hexagon, int nb_tiles)
     {
-        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(cell.hexagon, stack -> !stack.isEmpty());
+        System.out.println("connex ?");
+        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(hexagon, stack -> !stack.isEmpty());
         return Iterators.count(iterator) == nb_tiles - 1;
     }
     
+    // color of a stack is the color of the tile at the top
     public static TeamColor stackColor(TilesStack stack)
     {
+        assert !stack.isEmpty();
         return stack.peek().color;
     }
     
-    // count -> filtre -> voisins qui ont une couleur différente    == 0
-    public static boolean neighborsHaveSameColor(Cell cell)
+    // check if neighbors of an hexagon have the same color given in parameter
+    public static boolean neighborsHaveSameColor(Honeycomb hexagon, TeamColor color)
     {
-        NeighborsValueIterator<TilesStack> neighbors = new NeighborsValueIterator<>(cell.hexagon);
-        return Iterators.count(new StoppingIterator<TilesStack>(neighbors, stack -> stack.isEmpty() && stackColor(stack) == stackColor(cell.stack))) == 6;
+        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator<>(hexagon));
+        FilteringIterator<TilesStack> existing_neighbors = new FilteringIterator<>(neighbors, stack -> !stack.isEmpty());
+        FilteringIterator<TilesStack> other_color_neighbors = new FilteringIterator<>(existing_neighbors, stack -> color != stackColor(stack));
+        return Iterators.count(other_color_neighbors) == 0;
     }
     
 }

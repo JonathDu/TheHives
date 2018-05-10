@@ -5,7 +5,6 @@
  */
 package hive.model.players.actions;
 
-import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 
