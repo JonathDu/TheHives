@@ -6,9 +6,11 @@
 package hive.vue;
 
 import hive.model.players.PlayerCollection;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.AnchorPane; 
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,14 +33,17 @@ public class InterfacePlateau extends Parent {
         AnchorPane.setTopAnchor(main2, 0.0);
         AnchorPane.setRightAnchor(main2, 0.0);
 
-//        Node p = Outils.separation();
-//
-//        AnchorPane.setTopAnchor(p, 0.0);
-//        AnchorPane.setLeftAnchor(p, 0.0);
-//        AnchorPane.setBottomAnchor(p, 0.0);
-//        AnchorPane.setRightAnchor(p, 0.0);
-//        
-//        pane.getChildren().add(p);
+        StackPane centerPane = new StackPane();
+        
+        InterfaceRuche p = new InterfaceRuche(c);
+        
+        AnchorPane.setTopAnchor(centerPane, 0.0);
+        AnchorPane.setLeftAnchor(centerPane, 0.0);
+        AnchorPane.setBottomAnchor(centerPane, 0.0);
+        AnchorPane.setRightAnchor(centerPane, 0.0);
+        centerPane.getChildren().add(p);
+        StackPane.setAlignment(p, Pos.CENTER);
+        pane.getChildren().add(centerPane);
         pane.getChildren().add(main1);
         pane.getChildren().add(main2);
 
