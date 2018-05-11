@@ -5,6 +5,11 @@
  */
 package hive.thehives;
 
+import hive.model.board.Board;
+import hive.model.board.TilesStack;
+import hive.model.game.DefaultGame;
+import hive.model.players.Player;
+import hive.model.players.PlayerCollection;
 import vue.InterfaceJeu;
 import vue.InterfaceMenu;
 import vue.InterfaceJoueurs;
@@ -27,6 +32,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.stage.Stage;
+import util.Matrix;
+import util.Vector2i;
 
 /**
  *
@@ -45,11 +52,26 @@ public class TheHives extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        
+        Board board = new Board(new Matrix<TilesStack>(14, 14));
+        board.getHexagon(new Vector2i(2, 2));
+        PlayerCollection player = new PlayerCollection();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         root = new Group();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
-        //goToPlateau("Joueur1", "Joueur2");
-        goToMenu();
+        goToPlateau("Joueur1", "Joueur2");
+        //goToMenu();
 
         //PLEIN ECRAN
         //primaryStage.setFullScreen(true); //passer en affichage plein écran
@@ -77,7 +99,7 @@ public class TheHives extends Application {
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
-        this.scene = new Scene(new InterfaceJeu(this, primaryStage, nomJoueur1, nomJoueur2), WIDTH, HEIGHT, Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), WIDTH, HEIGHT, Color.LIGHTBLUE);
         changeScene();
     }
 

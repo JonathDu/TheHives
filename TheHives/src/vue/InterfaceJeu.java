@@ -5,6 +5,7 @@
  */
 package vue;
 
+import hive.model.players.PlayerCollection;
 import hive.thehives.TheHives;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
@@ -22,23 +23,23 @@ public class InterfaceJeu extends Parent {
     String nomJoueur1;
     String nomJoueur2;
 
-    public InterfaceJeu(TheHives i, Stage stage, String nomJoueur1, String nomJoueur2) {
+    public InterfaceJeu(PlayerCollection col, TheHives i, Stage stage, String nomJoueur1, String nomJoueur2) {
         this.nomJoueur1 = nomJoueur1;
         this.nomJoueur2 = nomJoueur2;
 
         grille = new GridPane();
         //grille.setHgap(10);
         //grille.setVgap(10);
-
+        CacheImage c = new CacheImage();
 
         
         grille.prefHeightProperty().bind(stage.heightProperty());
         grille.prefWidthProperty().bind(stage.widthProperty());
         Outils.fixerRepartition(grille, Outils.HORIZONTAL, 10, 90);
         Outils.fixerRepartition(grille, Outils.VERTICAL, 100);
-        grille.add(new InterfacePlateauTool(new CacheImage(), stage), 0, 0);
+        grille.add(new InterfacePlateauTool(c,  stage), 0, 0);
         
-        grille.add(new InterfacePlateau(stage), 0, 1);
+        grille.add(new InterfacePlateau(col, c, stage), 0, 1);
 
         this.getChildren().add(grille);
 
