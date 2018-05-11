@@ -14,6 +14,7 @@ import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.PutAction;
+import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import java.util.ArrayList;
 import org.junit.After;
@@ -154,11 +155,11 @@ public class HiveInterfaceIATest
     @Test
     public void testCurrentPlayerPossibilities()
     {
-
+        ArrayList<Action> possibilities = inter.currentPlayerPossibilities(game); 
         
+        assert possibilities.size() == 11;
         
-        
-        assert true;
+        //TODO : a compléter
     }
 
     @Test
@@ -182,10 +183,14 @@ public class HiveInterfaceIATest
 
     @Test
     public void testDoAction()
-    {
+    {   
+        ArrayList<Decision> tmp = inter.startSimulation(game);
+        
         Action putAction = createPutActionCurrentPlayer(game, InsectType.BEETLE, new Vector2i(0,0));
         
         inter.doAction(game, putAction);
+        
+        inter.endSimulation(game, tmp);
         
         System.out.println(game.state.board);
         
@@ -195,6 +200,21 @@ public class HiveInterfaceIATest
     @Test
     public void testUndoAction()
     {
-        assert true;
+        ArrayList<Decision> tmp = inter.startSimulation(game);
+        
+        Action putAction = createPutActionCurrentPlayer(game, InsectType.BEETLE, new Vector2i(0,0));
+        
+        String boardBeforeDo = game.state.board.toString();
+        
+        inter.doAction(game, putAction);
+        
+        String boardAfterDo = game.state.board.toString();
+        
+        inter.undoAction(game);
+        
+        String boardAfterUndo = game.state.board.toString();
+        
+        assert !boardBeforeDo.equals(boardAfterDo);
+        assert boardBeforeDo.equals(boardAfterUndo);
     }
 }
