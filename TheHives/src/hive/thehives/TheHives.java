@@ -10,9 +10,9 @@ import hive.model.board.TilesStack;
 import hive.model.game.DefaultGame;
 import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
-import vue.InterfaceJeu;
-import vue.InterfaceMenu;
-import vue.InterfaceJoueurs;
+import hive.vue.InterfaceJeu;
+import hive.vue.InterfaceMenu;
+import hive.vue.InterfaceJoueurs;
 import java.awt.Dimension;
 import java.awt.MultipleGradientPaint.CycleMethod;
 import java.util.ArrayList;
@@ -70,8 +70,8 @@ public class TheHives extends Application {
         root = new Group();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
-        goToPlateau("Joueur1", "Joueur2");
-        //goToMenu();
+        //goToPlateau("Joueur1", "Joueur2");
+        goToMenu();
 
         //PLEIN ECRAN
         //primaryStage.setFullScreen(true); //passer en affichage plein écran
