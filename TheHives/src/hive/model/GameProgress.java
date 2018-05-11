@@ -23,7 +23,6 @@ public class GameProgress
     ActionApplier applier;
     ActionDisapplier disapplier;
     
-    
     public GameProgress(Game game)
     {
         this.game = game;
