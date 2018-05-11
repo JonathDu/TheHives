@@ -12,11 +12,9 @@ import hive.model.game.Game;
 import hive.model.game.GameStatus;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
-import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
-import hive.model.players.decisions.IADecision;
 import java.util.ArrayList;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -44,7 +42,7 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         ArrayList<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
         assert queen_positions.size() == 1;
-        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.get(0).hexagon);
+        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.get(0).comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
         {
