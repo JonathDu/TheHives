@@ -9,6 +9,6 @@ package hive.vue;
  *
  * @author jonathan
  */
-public class InterfaceHive {
+public class InterfaceRuche {
     
 }
