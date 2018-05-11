@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates.undoAction;
+package hive.model.game.undoaction;
 
 import hive.model.game.GameState;
 import hive.model.players.actions.ActionVisitor;
@@ -19,14 +19,14 @@ public class ActionDisapplier implements ActionVisitor
 {
     BoardUndoUpdater board_undo;
     PlayerUndoUpdater player_undo;
-    AlgorithmsDataUndoUpdater algo_undo;
+    PrecalculatedDataUndoUpdater algo_undo;
     TraceUndoUpdater trace_undo;
     
     public ActionDisapplier(GameState state)
     {
         this.board_undo = new BoardUndoUpdater(state.board);
         this.player_undo = new PlayerUndoUpdater(state.turn);
-        this.algo_undo = new AlgorithmsDataUndoUpdater(state.data);
+        this.algo_undo = new PrecalculatedDataUndoUpdater(state.data);
         this.trace_undo = new TraceUndoUpdater(state.trace);
     }
 

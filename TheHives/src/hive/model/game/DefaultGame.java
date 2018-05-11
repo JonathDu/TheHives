@@ -5,8 +5,9 @@
  */
 package hive.model.game;
 
+import hive.model.game.utildata.PrecalculatedData;
 import hive.model.board.Board;
-import hive.model.board.PositionsPerTeamInsect;
+import hive.model.game.utildata.PositionsPerTeamInsect;
 import hive.model.board.TilesStack;
 import hive.model.insects.InsectType;
 import hive.model.players.decisions.Decision;
@@ -32,7 +33,7 @@ public class DefaultGame
         PlayerTurn turn = new PlayerTurn(players);
     
         ActionsTrace trace = new ActionsTrace();
-        AlgorithmsData data = new AlgorithmsData(new PositionsPerTeamInsect());
+        PrecalculatedData data = new PrecalculatedData(new PositionsPerTeamInsect(), 0);
         
         return new Game(new GameState(board, players, turn, trace, data), new HiveRules());
     }

@@ -6,21 +6,23 @@
 package util.hexagons;
 
 import util.Matrix;
+import util.MatrixElementFactory;
 import util.Vector2i;
 
 /**
  *
  * @author Thomas
  * @param <E>
+ * @param <H>
  */
-public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
+public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<E>
 {
 
     Matrix<E> matrix;
-    Matrix<Hexagon<E>> hexagons;
+    Matrix<H> hexagons;
     CircularPositionMaker maker;
 
-    public CircularHexagonsGraph(Matrix<E> matrix, NeighborsShifter shifter)
+    public CircularHexagonsGraph(Matrix<E> matrix, NeighborsShifter shifter, MatrixElementFactory<H> factory)
     {
         super();
         this.matrix = matrix;
@@ -31,14 +33,14 @@ public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
         this.maker = new CircularPositionMaker(dim);
 
         hexagons = new Matrix<>(dim.x, dim.y);
-        hexagons.setAll(() -> new Hexagon<>());
+        hexagons.setAll(factory);
 
         for (int y = 0; y < dim.y; ++y)
         {
             for (int x = 0; x < dim.x; ++x)
             {
                 Vector2i pos = new Vector2i(x, y);
-
+                
                 Hexagon<E> h = hexagons.getAt(pos);
                 h.setValue(matrix.getAt(pos));
 
@@ -52,7 +54,7 @@ public class CircularHexagonsGraph<E> extends HexagonsGraph<E>
         setCenter(hexagons.getAt(dim.x / 2, dim.y / 2));
     }
 
-    public Hexagon<E> getHexagon(Vector2i pos)
+    public H getHexagon(Vector2i pos)
     {
         return hexagons.getAt(maker.circular(pos));
     }

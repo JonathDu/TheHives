@@ -54,4 +54,28 @@ public enum InsectType
         assert false;
         return "";
     }
+    
+    public static InsectType toInsectType(String insect)
+    {
+        switch(insect)
+        {
+            case "Q":
+                return QUEEN_BEE;
+            case "S":
+                return SPIDER;
+            case "B":
+                return BEETLE;
+            case "G":
+                return GRASSHOPPER;
+            case "A":
+                return SOLDIER_ANT;
+            case "M":
+                return MOSQUITO;
+            case "L":
+                return LADYBUG;
+            case "P":
+                return PILL_BUG;
+        }
+        return null;
+    }
 }

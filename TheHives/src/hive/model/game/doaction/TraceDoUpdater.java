@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates.doAction;
+package hive.model.game.doaction;
 
 import hive.model.game.ActionsTrace;
 import hive.model.players.actions.ActionVisitor;

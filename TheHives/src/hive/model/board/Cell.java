@@ -5,24 +5,32 @@
  */
 package hive.model.board;
 
+import util.hexagons.Hexagon;
+
 /**
  *
  * @author Thomas
  */
-public class Cell extends util.hexagons.Hexagon<TilesStack>
+public class Cell
 {
-    public Cell(TilesStack e)
+    public Honeycomb comb;
+    public int index;
+    
+    public Cell(Honeycomb comb)
     {
-        super(e);
+        this.comb = comb;
+        this.index = comb.stack().size();
+    }
+
+    public Cell(Honeycomb comb, int index)
+    {
+        this.comb = comb;
+        this.index = index;
     }
     
-    public void addTile(TilePosition pos)
+    @Override
+    public String toString()
     {
-        
-    }
-    
-    public void removeTile(TilePosition pos)
-    {
-        
+        return "( " + comb + " : " + comb.stack() + " at " + index + " )";
     }
 }

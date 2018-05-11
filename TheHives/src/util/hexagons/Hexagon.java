@@ -6,7 +6,7 @@
 package util.hexagons;
 
 /**
- *
+ * 
  * @author Thomas
  * @param <E>
  */

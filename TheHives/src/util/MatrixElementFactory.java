@@ -10,7 +10,7 @@ package util;
  * @author Thomas
  * @param <E>
  */
-public interface Cloner<E>
+public interface MatrixElementFactory<E>
 {
-    public E clone(E e);
+    public E create(int x, int y);
 }

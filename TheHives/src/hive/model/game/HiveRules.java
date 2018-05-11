@@ -7,7 +7,7 @@ package hive.model.game;
 
 import hive.model.board.Cell;
 import hive.model.board.Cells;
-import hive.model.board.TilePosition;
+import hive.model.board.Cell;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
 import hive.model.insects.behaviors.BeetleBehavior;
@@ -56,15 +56,15 @@ public class HiveRules implements Rules
     
     private boolean queenIsSurrounded(GameState state, Player player)
     {
-        ArrayList<TilePosition> queen_positions = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
+        ArrayList<Cell> queen_positions = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
         
         // Queen already put
         if(!queen_positions.isEmpty())
         {
             assert queen_positions.size() == 1;
-            Cell cell = queen_positions.get(0).cell;
+            Cell pos = queen_positions.get(0);
             
-            return Cells.isSurrounded(cell);
+            return Cells.isSurrounded(pos);
         }
         else
             return false;

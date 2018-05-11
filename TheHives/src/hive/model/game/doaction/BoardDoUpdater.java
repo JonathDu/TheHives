@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.updates.doAction;
+package hive.model.game.doaction;
 
 import hive.model.board.Board;
 import hive.model.players.actions.PutAction;
@@ -29,7 +29,7 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.cell.getValue();
+        TilesStack stack = action.where.comb.stack();
         assert stack.isEmpty();
         stack.push(action.tile);
     }
@@ -37,9 +37,9 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.source.cell.getValue();
+        TilesStack stack = action.source.comb.stack();
         Tile t = stack.remove(action.source.index);
-        action.destination.cell.getValue().add(action.destination.index, t);
+        action.destination.comb.stack().add(action.destination.index, t);
     }
 
     @Override

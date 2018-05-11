@@ -5,36 +5,29 @@
  */
 package util.hexagons.iterators;
 
+import java.util.Iterator;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
-import java.util.Iterator;
 
 /**
- * Iterate over all the neighbors of a hexagon (all the neighbors must exist)
+ *
  * @author Thomas
  * @param <E>
  */
-public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
+public class InfiniteNeighborsIterator<E> implements Iterator<Hexagon<E>>
 {
     Hexagon<E> center;
     HexagonSide current;
-    HexagonSide last;
     
-    public NeighborsIterator(Hexagon<E> center)
+    public InfiniteNeighborsIterator(Hexagon<E> center)
     {
         this(center, HexagonSide.A);
     }
     
-    public NeighborsIterator(Hexagon<E> center, HexagonSide side)
-    {
-        this(center, side, side.getBefore());
-    }
-    
-    public NeighborsIterator(Hexagon<E> center, HexagonSide first, HexagonSide last)
+    public InfiniteNeighborsIterator(Hexagon<E> center, HexagonSide first)
     {
         this.center = center;
         this.current = first;
-        this.last = last;
     }
     
     public HexagonSide getNextSide()
@@ -45,7 +38,7 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
     @Override
     public boolean hasNext()
     {
-        return current != null;
+        return true;
     }
     
     @Override
@@ -53,7 +46,7 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
     {
         assert hasNext();
         Hexagon<E> res = center.getNeighbor(current);
-        current = current != last ? current.getAfter() : null;
+        current = current.getAfter();
         return res;
     }
 }

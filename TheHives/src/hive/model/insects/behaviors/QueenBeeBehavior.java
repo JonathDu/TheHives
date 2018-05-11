@@ -5,9 +5,18 @@
  */
 package hive.model.insects.behaviors;
 
-import util.hexagons.Hexagon;
+import hive.model.board.Cell;
+import hive.model.board.Cells;
+import hive.model.board.Honeycomb;
+import hive.model.board.TilesStack;
+import hive.model.game.Game;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
+import java.util.function.Predicate;
+import util.Iterators;
+import util.hexagons.Hexagon;
+import util.hexagons.iterators.NeighborsIterator;
+import util.iterators.FilteringIterator;
 
 /**
  *
@@ -15,11 +24,29 @@ import java.util.ArrayList;
  */
 public class QueenBeeBehavior implements InsectBehavior
 {
-
     @Override
-    public ArrayList<Hexagon> getPossibleDestinations(Hexagon from)
+    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        assert cell.index == 0;
+        
+        ArrayList<Cell> list = new ArrayList<>();
+        
+        if(Cells.isCrushed(cell) || !Cells.isFree(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_tiles))
+            return list;
+        
+        FilteringIterator neighbors = new FilteringIterator(new NeighborsIterator(cell.comb), hexagon -> ((Honeycomb)hexagon).stack().isEmpty());
+
+        while (neighbors.hasNext())
+        {
+            Honeycomb neighbor = (Honeycomb)neighbors.next();
+            FilteringIterator neighbor_neighbors = new FilteringIterator(
+                    new NeighborsIterator<>((Hexagon)neighbor),
+                    hexagon -> !((Honeycomb)hexagon).stack().isEmpty());
+
+            // it must have at least two neighbors (we already count the cell itself
+            if(Iterators.count(neighbor_neighbors) > 1)
+                list.add(new Cell(neighbor));
+        }
+        return list;
     }
-    
 }

@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game.utildata;
 
+import hive.model.board.Cell;
 import hive.model.insects.InsectType;
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -13,7 +14,7 @@ import java.util.EnumMap;
  *
  * @author Thomas
  */
-public class PositionsPerInsect extends EnumMap<InsectType, ArrayList<TilePosition>>
+public class PositionsPerInsect extends EnumMap<InsectType, ArrayList<Cell>>
 {
     public PositionsPerInsect()
     {
