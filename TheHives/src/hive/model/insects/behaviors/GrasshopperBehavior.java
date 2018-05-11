@@ -28,7 +28,7 @@ public class GrasshopperBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_tiles))
+        if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
             return list;
         
         for(HexagonSide side : HexagonSide.values())

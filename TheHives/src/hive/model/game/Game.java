@@ -5,6 +5,8 @@
  */
 package hive.model.game;
 
+import hive.model.game.rules.Rules;
+
 /**
  *
  * @author Thomas

@@ -15,17 +15,12 @@ public class PrecalculatedData
 {
     public PositionsPerTeamInsect tiles; // to get tiles of a specific insect in constant time
     public int nb_tiles;
+    public int nb_combs;
     
-    public PrecalculatedData(PositionsPerTeamInsect tiles, int nb_tiles)
+    public PrecalculatedData(PositionsPerTeamInsect tiles, int nb_tiles, int nb_combs)
     {
         this.tiles = tiles;
         this.nb_tiles = nb_tiles;
-    }
-    
-    public static PrecalculatedData getFrom(Board board)
-    {
-        PrecalculatedData data = null;
-        
-        return data;
+        this.nb_combs = nb_combs;
     }
 }

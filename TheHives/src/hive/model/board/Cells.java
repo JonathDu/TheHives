@@ -56,7 +56,7 @@ public class Cells
     }
     
     // check the connexity when the cell is removed
-    public static boolean isConnexWithout(Cell cell, int nb_tiles)
+    public static boolean isConnexWithout(Cell cell, int nb_combs)
     {
         if(cell.comb.stack().size() > 1)
             return true;
@@ -105,7 +105,7 @@ public class Cells
         Tile tile = cell.comb.stack().pop();
         cell.comb.setValue(new TilesStack());
 
-        boolean res = isConnex(to_see, nb_tiles);
+        boolean res = isConnex(to_see, nb_combs);
 
         cell.comb.stack().push(tile);
 
@@ -113,11 +113,11 @@ public class Cells
     }
     
     // check connexity starting at cell by breath first search : connex if we counts all the tiles
-    public static boolean isConnex(Honeycomb hexagon, int nb_tiles)
+    public static boolean isConnex(Honeycomb comb, int nb_combs)
     {
         System.out.println("connex ?");
-        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(hexagon, stack -> !stack.isEmpty());
-        return Iterators.count(iterator) == nb_tiles - 1;
+        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(comb, stack -> !stack.isEmpty());
+        return Iterators.count(iterator) == nb_combs - 1;
     }
     
     // color of a stack is the color of the tile at the top
@@ -128,13 +128,18 @@ public class Cells
     }
     
     // check if neighbors of an hexagon have the same color given in parameter
-    public static boolean neighborsHaveSameColor(Honeycomb hexagon, TeamColor color)
+    public static boolean neighborsHaveSameColor(Honeycomb comb, TeamColor color)
     {
-        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator<>(hexagon));
+        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator<>(comb));
         FilteringIterator<TilesStack> existing_neighbors = new FilteringIterator<>(neighbors, stack -> !stack.isEmpty());
         FilteringIterator<TilesStack> other_color_neighbors = new FilteringIterator<>(existing_neighbors, stack -> color != stackColor(stack));
         return Iterators.count(other_color_neighbors) == 0;
     }
     
+    public static boolean hasNeighbors(Honeycomb comb)
+    {
+        FilteringIterator neighbors = new FilteringIterator(new NeighborsIterator(comb), hexagon -> !((Honeycomb)hexagon).stack().empty());
+        return Iterators.count(neighbors) > 0;
+    }
 }
 

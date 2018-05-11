@@ -27,19 +27,39 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
+        // tiles
         data.tiles.get(action.tile.color).get(action.tile.type).remove(action.where);
+        
+        // nb_tiles
         data.nb_tiles -= 1;
+        
+        // nb_combs (according to hive put rules (tiles put at level 0))
+        data.nb_combs -= 1;
     }
 
     @Override
     public void visit(MoveAction action)
     {
+        // tiles
         
+        // nb_tiles
+        
+        // nb_combs
+        if(action.source.comb.stack().size() == 1 && action.destination.comb.stack().size() >= 1)
+            data.nb_combs += 1;
+        // if the tile shares a comb but will occupy an empty comb
+        else if(action.source.comb.stack().size() > 1 && action.destination.comb.stack().size() == 0)
+            data.nb_combs -= 1;
     }
 
     @Override
     public void visit(NoAction action)
     {
+        // tiles
+        
+        // nb_tiles
+        
+        // nb_combs
         
     }
 }

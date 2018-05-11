@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game;
+package hive.model.game.rules;
 
 import hive.model.board.Cell;
 import hive.model.board.Cells;
 import hive.model.board.Cell;
+import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
 import hive.model.insects.behaviors.BeetleBehavior;
@@ -27,11 +28,13 @@ import java.util.ArrayList;
  */
 public class HiveRules implements Rules
 {
+    HivePutRules put_rules;
     InsectsBehaviors behaviors;
     
     public HiveRules()
     {
-        behaviors = new InsectsBehaviors();
+        this.put_rules = new HivePutRules();
+        this.behaviors = new InsectsBehaviors();
         
         behaviors.put(InsectType.QUEEN_BEE, new QueenBeeBehavior());
         behaviors.put(InsectType.SPIDER, new SpiderBehavior());
@@ -41,6 +44,18 @@ public class HiveRules implements Rules
         behaviors.put(InsectType.MOSQUITO, new MosquitoBehavior());
         behaviors.put(InsectType.LADYBUG, new LadybugBehavior());
         behaviors.put(InsectType.PILL_BUG, new PillBugBehavior());
+    }
+    
+    @Override
+    public HivePutRules getPutRules()
+    {
+        return put_rules;
+    }
+    
+    @Override
+    public InsectsBehaviors getInsectsBehaviors()
+    {
+        return behaviors;
     }
     
     @Override
@@ -68,17 +83,5 @@ public class HiveRules implements Rules
         }
         else
             return false;
-    }
-
-    @Override
-    public InsectsBehaviors getInsectsBehaviors()
-    {
-        return behaviors;
-    }
-
-    @Override
-    public int getMaxQueenTurn()
-    {
-        return 4;
     }
 }
