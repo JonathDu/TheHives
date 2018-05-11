@@ -30,7 +30,7 @@ public class SpiderBehavior implements InsectBehavior
     {
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isFree(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_tiles))
+        if(Cells.isCrushed(cell) || !Cells.isFree(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
             return list;
         
         NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);

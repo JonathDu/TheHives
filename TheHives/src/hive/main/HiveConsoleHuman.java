@@ -10,7 +10,7 @@ import hive.model.GameProgress;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
-import hive.model.game.GameStatus;
+import hive.model.game.rules.GameStatus;
 import hive.model.insects.InsectBehavior;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -27,7 +27,7 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class HiveConsole
+public class HiveConsoleHuman
 {
 
     /**
@@ -87,6 +87,10 @@ public class HiveConsole
                 insectType = InsectType.toInsectType(sc.next());
             } while (insectType == null);
         } while (game.state.turn.getCurrent().collection.get(insectType) <= 0);
+        
+        ArrayList<Cell> listPossibleDestinations = game.rules.getPutRules().getPossibleDestinations(game);
+        System.out.println("Positions d'arrive possibles :");
+        System.out.println(listPossibleDestinations);
         
         System.out.println("Position de l'insecte : ");
         Vector2i pos = new Vector2i(sc.nextInt(), sc.nextInt());

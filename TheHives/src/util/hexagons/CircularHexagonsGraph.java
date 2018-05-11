@@ -15,7 +15,7 @@ import util.Vector2i;
  * @param <E>
  * @param <H>
  */
-public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<E>
+public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<H>
 {
 
     Matrix<E> matrix;
