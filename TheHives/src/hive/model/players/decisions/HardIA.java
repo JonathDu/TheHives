@@ -5,8 +5,8 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.GameState;
-import hive.model.players.Action;
+import hive.model.game.GameState;
+import hive.model.players.actions.Action;
 import static hive.model.players.decisions.UtileIA.ArrayAction;
 import static hive.model.players.decisions.UtileIA.newStateApply;
 import java.util.ArrayList;

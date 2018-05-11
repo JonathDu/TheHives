@@ -5,9 +5,9 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.GameState;
-import hive.model.players.Action;
-import hive.model.players.Decision;
+import hive.model.game.GameState;
+import hive.model.players.actions.Action;
+import hive.model.players.decisions.Decision;
 
 /**
  *

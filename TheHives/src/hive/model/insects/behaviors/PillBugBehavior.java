@@ -5,9 +5,10 @@
  */
 package hive.model.insects.behaviors;
 
+import hive.model.board.Cell;
+import hive.model.game.Game;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
-import util.hexagons.Hexagon;
 
 /**
  *
@@ -17,7 +18,7 @@ public class PillBugBehavior implements InsectBehavior
 {
 
     @Override
-    public ArrayList<Hexagon> getPossibleDestinations(Hexagon source)
+    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

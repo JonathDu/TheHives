@@ -5,8 +5,8 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.GameState;
-import hive.model.players.Action;
+import hive.model.game.GameState;
+import hive.model.players.actions.Action;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;

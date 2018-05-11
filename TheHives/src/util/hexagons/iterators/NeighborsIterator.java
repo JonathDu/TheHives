@@ -27,9 +27,19 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
     
     public NeighborsIterator(Hexagon<E> center, HexagonSide side)
     {
+        this(center, side, side.getBefore());
+    }
+    
+    public NeighborsIterator(Hexagon<E> center, HexagonSide first, HexagonSide last)
+    {
         this.center = center;
-        this.current = side;
-        this.last = side.getBefore();
+        this.current = first;
+        this.last = last;
+    }
+    
+    public HexagonSide getNextSide()
+    {
+        return current;
     }
     
     @Override
