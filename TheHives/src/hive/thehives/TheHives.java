@@ -70,8 +70,8 @@ public class TheHives extends Application {
         root = new Group();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
-        //goToPlateau("Joueur1", "Joueur2");
-        goToMenu();
+        goToPlateau("Joueur1", "Joueur2");
+        //goToMenu();
 
         //PLEIN ECRAN
         //primaryStage.setFullScreen(true); //passer en affichage plein écran
