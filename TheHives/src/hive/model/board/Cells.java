@@ -8,11 +8,12 @@ package hive.model.board;
 import hive.model.players.TeamColor;
 import java.util.function.Predicate;
 import util.Iterators;
+import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 import util.hexagons.iterators.BreadthIterator;
 import util.hexagons.iterators.InfiniteNeighborsIterator;
+import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
-import util.hexagons.iterators.ValueIterator;
 import util.iterators.CountingIterator;
 import util.iterators.FilteringIterator;
 import util.iterators.StoppingIterator;
@@ -26,8 +27,7 @@ public class Cells
     // check if the tile is surrounded by 6 cells (at level 0)
     public static boolean isSurrounded(Cell cell)
     {
-        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator(cell.comb));
-        return Iterators.count(new StoppingIterator<TilesStack>(neighbors, stack -> !stack.isEmpty())) == 6;
+        return Iterators.count(new StoppingIterator<Neighbor<TilesStack>>(new NeighborsIterator(cell.comb), n -> !n.hexagon.getValue().isEmpty())) == 6;
     }
     
     // check if the tile is below an other one
@@ -37,10 +37,10 @@ public class Cells
     }
     
     // check if the tile is free to move outside (next to him or under)
-    public static boolean isFree(Honeycomb comb, Predicate<TilesStack> is_free)
+    public static boolean isFree(Cell cell, Predicate<TilesStack> is_free)
     {
-        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(comb);
-        ValueIterator<TilesStack> counting = new ValueIterator(new CountingIterator(neighbors, 7));
+        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
+        CountingIterator<TilesStack> counting = new CountingIterator(neighbors, 7);
         
         // turn 7 times to detect 2 adjacents empty neighbors
         int nb_adja = 0;
@@ -143,9 +143,9 @@ public class Cells
     // check if neighbors of an hexagon have the same color given in parameter
     public static boolean neighborsHaveSameColor(Honeycomb comb, TeamColor color)
     {
-        ValueIterator<TilesStack> neighbors = new ValueIterator<>(new NeighborsIterator<>(comb));
-        FilteringIterator<TilesStack> existing_neighbors = new FilteringIterator<>(neighbors, stack -> !stack.isEmpty());
-        FilteringIterator<TilesStack> other_color_neighbors = new FilteringIterator<>(existing_neighbors, stack -> color != stackColor(stack));
+        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator(comb);
+        FilteringIterator<Neighbor<TilesStack>> existing_neighbors = new FilteringIterator<>(neighbors, n -> !n.hexagon.getValue().isEmpty());
+        FilteringIterator<Neighbor<TilesStack>> other_color_neighbors = new FilteringIterator<>(existing_neighbors, n -> color != stackColor(n.hexagon.getValue()));
         return Iterators.count(other_color_neighbors) == 0;
     }
     

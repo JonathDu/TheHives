@@ -17,7 +17,6 @@ import java.util.function.Predicate;
 import util.Iterators;
 import util.hexagons.Hexagon;
 import util.hexagons.iterators.NeighborsIterator;
-import util.hexagons.iterators.ValueIterator;
 import util.iterators.FilteringIterator;
 
 /**
@@ -41,7 +40,7 @@ public class BeetleBehavior implements InsectBehavior
         // for each neighbor
         while (neighbors.hasNext())
         {
-            Honeycomb neighbor = (Honeycomb)neighbors.next();
+            Honeycomb neighbor = (Honeycomb)neighbors.next().hexagon;
             // if it is higher than the beetle
             if (neighbor.getValue().size() > cell.comb.getValue().size()) 
             {
@@ -51,6 +50,12 @@ public class BeetleBehavior implements InsectBehavior
             else
             {
                 // otherwise the beetle must be free to move
+                Predicate<Hexagon> is_free_under =
+                hexagon ->
+                {
+                    Honeycomb comb = (Honeycomb)hexagon;
+                    return comb.stack().isEmpty() && Cells.isFree(cell, s -> s.size() <= cell.index);
+                };
                 FilteringIterator neighbor_neighbors = new FilteringIterator(
                         new NeighborsIterator<>((Hexagon)neighbor),
                         hexagon -> !((Honeycomb)hexagon).stack().isEmpty());

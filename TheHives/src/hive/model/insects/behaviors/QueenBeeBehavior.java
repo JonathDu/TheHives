@@ -32,14 +32,14 @@ public class QueenBeeBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isFree(cell.comb, s -> s.isEmpty()) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
+        if(Cells.isCrushed(cell) || !Cells.isFree(cell, s -> s.isEmpty()) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
             return list;
         
         Predicate<Hexagon> is_empty_and_free =
         hexagon ->
         {
             Honeycomb comb = (Honeycomb)hexagon;
-            return comb.stack().isEmpty() && Cells.isFree(comb, s -> s.isEmpty());
+            return comb.stack().isEmpty() && Cells.isFree(cell, s -> s.isEmpty());
         };
         
         FilteringIterator neighbors = new FilteringIterator(
@@ -49,6 +49,7 @@ public class QueenBeeBehavior implements InsectBehavior
         while (neighbors.hasNext())
         {
             Honeycomb neighbor = (Honeycomb)neighbors.next();
+            
             FilteringIterator neighbor_neighbors = new FilteringIterator(
                     new NeighborsIterator<>((Hexagon)neighbor),
                     hexagon -> !((Honeycomb)hexagon).stack().isEmpty());

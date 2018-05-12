@@ -39,7 +39,7 @@ public class HivePutRules implements PutRules
             // return center neighbors
             NeighborsIterator neighbors = new NeighborsIterator(game.state.board.getCenter());
             while(neighbors.hasNext())
-                list.add(new Cell((Honeycomb)neighbors.next()));
+                list.add(new Cell((Honeycomb)neighbors.next().hexagon));
             return list;
         }
         

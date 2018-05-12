@@ -37,7 +37,7 @@ public class SpiderBehavior implements InsectBehavior
 
         while (neighbors.hasNext()) //parcours des voisins du scarabe
         {
-            Honeycomb neighbor = (Honeycomb) neighbors.next();
+            Honeycomb neighbor = (Honeycomb) neighbors.next().hexagon;
             if (!neighbor.getValue().empty()) 
             {
                 list.add(new Cell(neighbor)); //le scarabée peut "grimper" sur cette cellule, ne prend pas en compte la hauteur de l'escalade ou de la descente

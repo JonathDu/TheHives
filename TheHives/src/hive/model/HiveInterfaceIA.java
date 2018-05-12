@@ -59,7 +59,7 @@ public class HiveInterfaceIA implements InterfaceIA
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.get(0).comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
-            if (neighIter.next().getValue().isEmpty())
+            if (neighIter.next().hexagon.getValue().isEmpty())
                 nbNeighbor++;
         return nbNeighbor;
     }
