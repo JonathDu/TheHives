@@ -31,13 +31,8 @@ public class UtileIA {
         }
         else{
             ArrayList<Tile> freeTile = hia.freeTiles(state,current );
-            Tile currentTile;
-            while(!freeTile.isEmpty()){
-                currentTile = freeTile.remove(0);
-                switch (currentTile.type) 
-                {
-                    case  QUEEN_BEE:
-            }
+            
+            
         }
     }
     static int evaluationOpponent(Game state){
@@ -88,8 +83,14 @@ public class UtileIA {
         }
     }
     
-    static int insectValue(ArrayList<Tile> listTile){
-        
+    static int insectValue(ArrayList<Tile> freeTile){
+        Tile currentTile;
+            while(!freeTile.isEmpty()){
+                currentTile = freeTile.remove(0);
+                switch (currentTile.type) 
+                {
+                    case  QUEEN_BEE:
+            }
     }
        
     
