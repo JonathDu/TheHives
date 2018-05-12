@@ -7,6 +7,7 @@ package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
 import hive.model.board.Cells;
+import static hive.model.board.Cells.cellAtSameLevel;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
@@ -31,10 +32,19 @@ public class QueenBeeBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isFree(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
+        if(Cells.isCrushed(cell) || !Cells.isFree(cell.comb, s -> s.isEmpty()) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
             return list;
         
-        FilteringIterator neighbors = new FilteringIterator(new NeighborsIterator(cell.comb), hexagon -> ((Honeycomb)hexagon).stack().isEmpty());
+        Predicate<Hexagon> is_empty_and_free =
+        hexagon ->
+        {
+            Honeycomb comb = (Honeycomb)hexagon;
+            return comb.stack().isEmpty() && Cells.isFree(comb, s -> s.isEmpty());
+        };
+        
+        FilteringIterator neighbors = new FilteringIterator(
+                new NeighborsIterator(cell.comb), is_empty_and_free);
+                
 
         while (neighbors.hasNext())
         {
@@ -43,8 +53,8 @@ public class QueenBeeBehavior implements InsectBehavior
                     new NeighborsIterator<>((Hexagon)neighbor),
                     hexagon -> !((Honeycomb)hexagon).stack().isEmpty());
 
-            // it must have at least two neighbors (we already count the cell itself
-            if(Iterators.count(neighbor_neighbors) > 1)
+            // it must have at least two neighbors (we already count the cell itself)
+            if(Iterators.count(neighbor_neighbors) >= 2)
                 list.add(new Cell(neighbor));
         }
         return list;

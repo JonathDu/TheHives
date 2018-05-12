@@ -10,7 +10,22 @@ import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
 
 /**
- *
+ *     A
+ *     _
+ * F /   \ B
+ * E \ _ / C
+ *     D
+ * 
+ *   _       _
+ * /   \ _ /   \ _  . . .
+ * \ _ /   \ _ /    . . .
+ * /   \ _ /   \ _  . . .
+ * \ _ /   \ _ /    . . .
+ * /   \ _ /   \    . . .
+ *  . . . . . . . . . . .
+ *  . . . . . . . . . . .
+ *  . . . . . . . . . . .
+ * 
  * @author Thomas
  */
 public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>

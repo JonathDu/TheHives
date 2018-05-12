@@ -6,7 +6,9 @@
 package hive.model.board;
 
 import hive.model.players.TeamColor;
+import java.util.function.Predicate;
 import util.Iterators;
+import util.hexagons.HexagonSide;
 import util.hexagons.iterators.BreadthIterator;
 import util.hexagons.iterators.InfiniteNeighborsIterator;
 import util.hexagons.iterators.NeighborsIterator;
@@ -34,10 +36,10 @@ public class Cells
         return cell.index < cell.comb.getValue().size() - 1;
     }
     
-    // check if the tile is free to move outside the cell
-    public static boolean isFree(Cell cell)
+    // check if the tile is free to move outside (next to him or under)
+    public static boolean isFree(Honeycomb comb, Predicate<TilesStack> is_free)
     {
-        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
+        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(comb);
         ValueIterator<TilesStack> counting = new ValueIterator(new CountingIterator(neighbors, 7));
         
         // turn 7 times to detect 2 adjacents empty neighbors
@@ -45,7 +47,8 @@ public class Cells
         while(counting.hasNext())
         {
             TilesStack stack = counting.next();
-            if(stack.isEmpty())
+            // crateria to be free
+            if(is_free.test(stack))
                 ++nb_adja;
             else
                 nb_adja = 0;
@@ -53,6 +56,16 @@ public class Cells
                 return true;
         }
         return false;
+    }
+    
+    public static Cell cellAtSameLevel(Honeycomb comb, Cell cell)
+    {
+        return new Cell(comb, cell.index);
+    }
+    
+    public static Cell neighbor(Cell cell, HexagonSide side)
+    {
+        return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.index);
     }
     
     // check the connexity when the cell is removed
