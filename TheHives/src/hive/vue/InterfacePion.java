@@ -24,7 +24,7 @@ public class InterfacePion extends Parent {
 
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c) {
         Group g = new Group();
-        ImageView img;
+        ImageView img = null;
 
         Polygon hexagon = new Polygon();
 
@@ -38,33 +38,31 @@ public class InterfacePion extends Parent {
             LARGEUR + 10.0, 60.0 - LARGEUR});
         hexagon.setFill(couleur);
         hexagon.setStroke(Color.BLACK);
-
-        switch (typePions) {
-            case QUEEN_BEE:
-                img = c.getImage("hive/vue/rsc/images/bee.png");
-                break;
-            case GRASSHOPPER:
-                img = c.getImage("hive/vue/rsc/images/grasshopper.png");
-                break;
-            case BEETLE:
-                img = c.getImage("hive/vue/rsc/images/beetle.png");
-                break;
-            default:
-                img = c.getImage("hive/vue/rsc/images/beetle.png");
-                hexagon.setFill(Color.TRANSPARENT);
-                img.setVisible(false);
-
-                break;
-
-        }
-
-        img.setFitHeight(25);
-        img.setLayoutX(40);
-        img.setLayoutY(50);
-        img.setPreserveRatio(true);
         g.getChildren().add(hexagon);
 
-        g.getChildren().add(img);
+        if (typePions != null) {
+            switch (typePions) {
+                case QUEEN_BEE:
+                    img = c.getImage("hive/vue/rsc/images/bee.png");
+                    break;
+                case GRASSHOPPER:
+                    img = c.getImage("hive/vue/rsc/images/grasshopper.png");
+                    break;
+                case BEETLE:
+                    img = c.getImage("hive/vue/rsc/images/beetle.png");
+                    break;
+                default:
+                    break;
+
+            }
+            img.setFitHeight(25);
+            img.setLayoutX(40);
+            img.setLayoutY(50);
+            img.setPreserveRatio(true);
+
+            g.getChildren().add(img);
+        }
+
         this.getChildren().add(g);
     }
 }

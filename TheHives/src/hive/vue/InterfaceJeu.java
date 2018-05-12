@@ -35,7 +35,7 @@ public class InterfaceJeu extends Parent {
         
         grille.prefHeightProperty().bind(stage.heightProperty());
         grille.prefWidthProperty().bind(stage.widthProperty());
-        Outils.fixerRepartition(grille, Outils.HORIZONTAL, 10, 90);
+        Outils.fixerRepartition(grille, Outils.HORIZONTAL, 5, 95);
         Outils.fixerRepartition(grille, Outils.VERTICAL, 100);
         grille.add(new InterfacePlateauTool(c,  stage), 0, 0);
         
