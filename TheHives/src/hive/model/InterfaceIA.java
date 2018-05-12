@@ -18,6 +18,8 @@ import java.util.ArrayList;
  */
 public interface InterfaceIA
 {
+    public Player currentPlayer(Game game);
+    public Player opponentPlayer(Game game);
     public boolean winCurrent(Game game);
     public boolean winOpponent(Game game);
     public int queenFreeNeighbour(Player p, Game game);

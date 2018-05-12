@@ -16,7 +16,6 @@ import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.Decision;
-import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,7 +27,18 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class HiveInterfaceIA implements InterfaceIA
 {
-
+    @Override
+    public Player currentPlayer(Game game)
+    {
+        return game.state.turn.getCurrent();
+    }
+    
+    @Override
+    public Player opponentPlayer(Game game)
+    {
+        return game.state.turn.getOpponent();
+    }
+    
     @Override
     public boolean winCurrent(Game game)
     {
@@ -49,12 +59,8 @@ public class HiveInterfaceIA implements InterfaceIA
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.get(0).comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
-        {
             if (neighIter.next().getValue().isEmpty())
-            {
                 nbNeighbor++;
-            }
-        }
         return nbNeighbor;
     }
     
@@ -68,37 +74,31 @@ public class HiveInterfaceIA implements InterfaceIA
         // PutAction
         {
             ArrayList<Cell> destinations = game.rules.getPutRules().getPossibleDestinations(game);
-            for(InsectType type : InsectType.values())
+            for(InsectType type : InsectType.default_insects)
             {
-                if(isDefaultInsect(type))
+                Tile tile = new Tile(type, current.color);
+                for(int i = 0; i < current.collection.get(type); ++i)
                 {
-                    Tile tile = new Tile(type, current.color);
-                    for(int i = 0; i < current.collection.get(type); ++i)
-                    {
-                        Iterator<Cell> dest = destinations.iterator();
-                        while(dest.hasNext())
-                            actions.add(new PutAction(dest.next(), tile));
-                    }
+                    Iterator<Cell> dest = destinations.iterator();
+                    while(dest.hasNext())
+                        actions.add(new PutAction(dest.next(), tile));
                 }
             }
         }
         
         
         // MoveAction
-        for(InsectType type : InsectType.values())
+        for(InsectType type : InsectType.default_insects)
         {
-            if(isDefaultInsect(type))
+            ArrayList<Cell> sources = game.state.data.tiles.get(current.color).get(type);
+            Iterator<Cell> source_iterator = sources.iterator();
+            while(source_iterator.hasNext())
             {
-                ArrayList<Cell> sources = game.state.data.tiles.get(current.color).get(type);
-                Iterator<Cell> source_iterator = sources.iterator();
-                while(source_iterator.hasNext())
-                {
-                    Cell source = source_iterator.next();
-                    ArrayList<Cell> destinations = game.rules.getInsectsBehaviors().get(type).getPossibleDestinations(game, source);
-                    Iterator<Cell> dest_iterator = destinations.iterator();
-                    while(dest_iterator.hasNext())
-                        actions.add(new MoveAction(source, dest_iterator.next()));
-                }
+                Cell source = source_iterator.next();
+                ArrayList<Cell> destinations = game.rules.getInsectsBehaviors().get(type).getPossibleDestinations(game, source);
+                Iterator<Cell> dest_iterator = destinations.iterator();
+                while(dest_iterator.hasNext())
+                    actions.add(new MoveAction(source, dest_iterator.next()));
             }
         }
         
@@ -109,15 +109,12 @@ public class HiveInterfaceIA implements InterfaceIA
     public ArrayList<Tile> freeTiles(Game game, Player p)
     {
         ArrayList<Tile> tiles = new ArrayList<>();
-        for (InsectType type : InsectType.values())
+        for (InsectType type : InsectType.default_insects)
         {
-            if(isDefaultInsect(type))
+            for (int i = 0; i < p.collection.get(type); i++)
             {
-                for (int i = 0; i < p.collection.get(type); i++)
-                {
-                    Tile tile = new Tile(type, p.color);
-                    tiles.add(tile);
-                }
+                Tile tile = new Tile(type, p.color);
+                tiles.add(tile);
             }
         }
         return tiles;
@@ -138,6 +135,7 @@ public class HiveInterfaceIA implements InterfaceIA
         gameprogress.undoAction();
     }
     
+    @Override
     public ArrayList<Decision> startSimulation(Game game)
     {
         ArrayList<Decision> decisions = new ArrayList<>();
@@ -151,6 +149,7 @@ public class HiveInterfaceIA implements InterfaceIA
         return decisions;
     }
     
+    @Override
     public void endSimulation(Game game, ArrayList<Decision> decisions)
     {
         Iterator<Player> player_iterator = game.state.players.iterator();
@@ -160,10 +159,5 @@ public class HiveInterfaceIA implements InterfaceIA
             Player player = player_iterator.next();
             player.decision = decision_iterator.next();
         }
-    }
-    
-    private boolean isDefaultInsect(InsectType type)
-    {
-        return type != InsectType.LADYBUG && type != InsectType.MOSQUITO && type != InsectType.PILL_BUG;
     }
 }
