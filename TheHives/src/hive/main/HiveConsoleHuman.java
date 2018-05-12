@@ -114,10 +114,6 @@ public class HiveConsoleHuman
         System.out.println("Positions d'arrive possibles :");
         
         System.out.println(listPossibleDestinations);
-        /*listPossibleDestinations.forEach((c) ->
-        {
-            System.out.print(c.hexagon.getValue().peek() + " "); //TODO : recupérer la position d'un hexagone dans la matrice
-        });*/
         
         System.out.println("");
         

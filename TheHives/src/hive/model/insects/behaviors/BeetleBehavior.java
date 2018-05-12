@@ -37,22 +37,28 @@ public class BeetleBehavior implements InsectBehavior
             return list;
         
         NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
-
+        
+        // for each neighbor
         while (neighbors.hasNext())
         {
             Honeycomb neighbor = (Honeycomb)neighbors.next();
-            if (!neighbor.getValue().empty()) 
+            // if it is higher than the beetle
+            if (neighbor.getValue().size() > cell.comb.getValue().size()) 
             {
-                list.add(new Cell(neighbor)); //le scarabée peut "grimper" sur cette cellule, ne prend pas en compte la hauteur de l'escalade ou de la descente
+                // the beetle can climb over it
+                list.add(new Cell(neighbor));
             }
             else
             {
+                // otherwise the beetle must be free to move
                 FilteringIterator neighbor_neighbors = new FilteringIterator(
                         new NeighborsIterator<>((Hexagon)neighbor),
                         hexagon -> !((Honeycomb)hexagon).stack().isEmpty());
                 
-                // s'il y a au moins deux voisins (il a forcément au moins un voisin, celui qu'on étudie)
-                if(Iterators.count(neighbor_neighbors) > 1)
+                
+                // the neight must have at least two neighbors (we already count the cell itself)
+                // otherwise it would not be connex
+                if(Iterators.count(neighbor_neighbors) >= 2)
                     list.add(new Cell(neighbor));
             }
         }

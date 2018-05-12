@@ -16,7 +16,6 @@ import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.Decision;
-import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -28,7 +27,18 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class HiveInterfaceIA implements InterfaceIA
 {
-
+    @Override
+    public Player currentPlayer(Game game)
+    {
+        return game.state.turn.getCurrent();
+    }
+    
+    @Override
+    public Player opponentPlayer(Game game)
+    {
+        return game.state.turn.getOpponent();
+    }
+    
     @Override
     public boolean winCurrent(Game game)
     {
@@ -49,12 +59,8 @@ public class HiveInterfaceIA implements InterfaceIA
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.get(0).comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
-        {
             if (neighIter.next().getValue().isEmpty())
-            {
                 nbNeighbor++;
-            }
-        }
         return nbNeighbor;
     }
     
@@ -68,7 +74,7 @@ public class HiveInterfaceIA implements InterfaceIA
         // PutAction
         {
             ArrayList<Cell> destinations = game.rules.getPutRules().getPossibleDestinations(game);
-            for(InsectType type : InsectType.values())
+            for(InsectType type : InsectType.default_insects)
             {
                 Tile tile = new Tile(type, current.color);
                 for(int i = 0; i < current.collection.get(type); ++i)
@@ -82,7 +88,7 @@ public class HiveInterfaceIA implements InterfaceIA
         
         
         // MoveAction
-        for(InsectType type : InsectType.values())
+        for(InsectType type : InsectType.default_insects)
         {
             ArrayList<Cell> sources = game.state.data.tiles.get(current.color).get(type);
             Iterator<Cell> source_iterator = sources.iterator();
@@ -103,7 +109,7 @@ public class HiveInterfaceIA implements InterfaceIA
     public ArrayList<Tile> freeTiles(Game game, Player p)
     {
         ArrayList<Tile> tiles = new ArrayList<>();
-        for (InsectType type : InsectType.values())
+        for (InsectType type : InsectType.default_insects)
         {
             for (int i = 0; i < p.collection.get(type); i++)
             {
@@ -117,12 +123,9 @@ public class HiveInterfaceIA implements InterfaceIA
     @Override
     public void doAction(Game game, Action action) // a completer
     {
-        Decision tmp = game.state.turn.getCurrent().decision;
-        game.state.turn.getCurrent().decision = new SimulatedDecision();
-        ((HumanDecision)game.state.turn.getCurrent().decision).setAction(action);
+        ((SimulatedDecision)game.state.turn.getCurrent().decision).setAction(action);
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.doAction();
-        game.state.turn.getCurrent().decision = tmp;
     }
 
     @Override
@@ -131,5 +134,30 @@ public class HiveInterfaceIA implements InterfaceIA
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.undoAction();
     }
-
+    
+    @Override
+    public ArrayList<Decision> startSimulation(Game game)
+    {
+        ArrayList<Decision> decisions = new ArrayList<>();
+        Iterator<Player> player_iterator = game.state.players.iterator();
+        while(player_iterator.hasNext())
+        {
+            Player player = player_iterator.next();
+            decisions.add(player.decision);
+            player.decision = new SimulatedDecision();
+        }
+        return decisions;
+    }
+    
+    @Override
+    public void endSimulation(Game game, ArrayList<Decision> decisions)
+    {
+        Iterator<Player> player_iterator = game.state.players.iterator();
+        Iterator<Decision> decision_iterator = decisions.iterator();
+        while(player_iterator.hasNext())
+        {
+            Player player = player_iterator.next();
+            player.decision = decision_iterator.next();
+        }
+    }
 }
