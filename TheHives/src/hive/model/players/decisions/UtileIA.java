@@ -21,8 +21,9 @@ import java.util.ArrayList;
 public class UtileIA {
     static int evaluationCurrentPlayer(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        Player current = state.state.turn.getCurrent();
-        int value=0;
+        Player current = hia.currentPlayer(state);
+        Player opponent = hia.opponentPlayer(state);
+        int value;
         if(hia.winOpponent(state)){
             return -10000;
         }
@@ -30,13 +31,33 @@ public class UtileIA {
             return 10000;
         }
         else{
-            ArrayList<Tile> freeTile = hia.freeTiles(state,current );
-            
-            
+            ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
+            value = insectsValue(currentFreeTile);
+            ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
+            value -= insectsValue(opponentFreeTile);
+            value +=evalFreeQueen( state);
         }
+        return value;
     }
     static int evaluationOpponent(Game state){
-        return 0;
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        Player current = hia.currentPlayer(state);
+        Player opponent = hia.opponentPlayer(state);
+        int value;
+        if(hia.winOpponent(state)){
+            return 10000;
+        }
+        else if(hia.winCurrent(state)){
+            return -10000;
+        }
+        else{
+            ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
+            value = -(insectsValue(currentFreeTile));
+            ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
+            value += insectsValue(opponentFreeTile);
+            value -=evalFreeQueen( state);
+        }
+        return value;
     }
     static int miniMaxCurrentPlayer(Game state, int depth, int min){
         HiveInterfaceIA hia = new HiveInterfaceIA();
@@ -83,14 +104,41 @@ public class UtileIA {
         }
     }
     
-    static int insectValue(ArrayList<Tile> freeTile){
+    static int evalFreeQueen( Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        Player opponent = hia.opponentPlayer(state);
+        Player current = hia.currentPlayer(state);
+        int currentNeighbour = hia.queenFreeNeighbour(current, state);
+        int opponentNeighbour = hia.queenFreeNeighbour(opponent, state);
+        return (opponentNeighbour-currentNeighbour)*10;
+    }
+    
+    static int insectsValue(ArrayList<Tile> freeTile){
         Tile currentTile;
+        int value = 0;
             while(!freeTile.isEmpty()){
                 currentTile = freeTile.remove(0);
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
+                        value += 40;
+                        break;
+                    case  GRASSHOPPER:
+                        value += 10;
+                        break;
+                    case  SOLDIER_ANT:
+                        value += 20;
+                        break;
+                    case  SPIDER:
+                        value += 3;
+                        break;
+                    case  BEETLE:
+                        value += 5;
+                        break;
+                }
+                
             }
+            return value;
     }
        
     
