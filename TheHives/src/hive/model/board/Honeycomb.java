@@ -28,11 +28,6 @@ public class Honeycomb extends Hexagon<TilesStack>
         this.pos = pos;
     }
     
-    public TilesStack stack()
-    {
-        return getValue();
-    }
-    
     @Override
     public String toString()
     {

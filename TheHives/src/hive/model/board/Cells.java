@@ -27,19 +27,19 @@ public class Cells
     // check if the tile is surrounded by 6 cells (at level 0)
     public static boolean isSurrounded(Cell cell)
     {
-        return Iterators.count(new StoppingIterator<Neighbor<TilesStack>>(new NeighborsIterator(cell.comb), n -> !n.hexagon.getValue().isEmpty())) == 6;
+        return Iterators.count(new StoppingIterator<Neighbor<TilesStack>>(new NeighborsIterator(cell.comb), n -> !n.hexagon.value().isEmpty())) == 6;
     }
     
     // check if the tile is below an other one
     public static boolean isCrushed(Cell cell)
     {
-        return cell.index < cell.comb.getValue().size() - 1;
+        return cell.level < cell.comb.value().size() - 1;
     }
     
     // check if the tile is free to move outside (next to him or under)
-    public static boolean isFree(Cell cell, Predicate<TilesStack> is_free)
+    public static boolean isFree(Honeycomb comb, int level)
     {
-        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
+        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(comb);
         CountingIterator<TilesStack> counting = new CountingIterator(neighbors, 7);
         
         // turn 7 times to detect 2 adjacents empty neighbors
@@ -48,7 +48,7 @@ public class Cells
         {
             TilesStack stack = counting.next();
             // crateria to be free
-            if(is_free.test(stack))
+            if(stack.size() <= level)
                 ++nb_adja;
             else
                 nb_adja = 0;
@@ -58,20 +58,23 @@ public class Cells
         return false;
     }
     
-    public static Cell cellAtSameLevel(Honeycomb comb, Cell cell)
+    public static Cell neighborCell(Cell cell, HexagonSide side)
     {
-        return new Cell(comb, cell.index);
+        return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.level);
     }
     
-    public static Cell neighbor(Cell cell, HexagonSide side)
+    // check if the tile can move at side direction
+    public static boolean isFreeAtSide(Cell cell, HexagonSide side)
     {
-        return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.index);
+        return cell.comb.getNeighbor(side).value().size() <= cell.level &&
+                (cell.comb.getNeighbor(side.getBefore()).value().size() <= cell.level ||
+                cell.comb.getNeighbor(side.getAfter()).value().size() <= cell.level);
     }
     
     // check the connexity when the cell is removed
     public static boolean isConnexWithout(Cell cell, int nb_combs)
     {
-        if(cell.comb.stack().size() > 1)
+        if(cell.comb.value().size() > 1)
             return true;
         
         // neighbors iterator to turn twice around
@@ -85,7 +88,7 @@ public class Cells
         while(counting.hasNext())
         {
             Honeycomb n = counting.next();
-            TilesStack stack = n.getValue();
+            TilesStack stack = n.value();
             if(stack.isEmpty())
             {
                 if(visiting_group)
@@ -102,7 +105,6 @@ public class Cells
             }
         }
         
-        System.out.println("nb = " + nb_groups);
         // dividing by 2 gives the real number of connex groups
         nb_groups /= 2;
         // would mean it has no neighbors which is impossible
@@ -115,12 +117,12 @@ public class Cells
         assert to_see != null;
 
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
-        Tile tile = cell.comb.stack().pop();
+        TilesStack tmp = cell.comb.value();
         cell.comb.setValue(new TilesStack());
 
         boolean res = isConnex(to_see, nb_combs);
 
-        cell.comb.stack().push(tile);
+        cell.comb.setValue(tmp);
 
         return res;
     }
@@ -144,14 +146,14 @@ public class Cells
     public static boolean neighborsHaveSameColor(Honeycomb comb, TeamColor color)
     {
         NeighborsIterator<TilesStack> neighbors = new NeighborsIterator(comb);
-        FilteringIterator<Neighbor<TilesStack>> existing_neighbors = new FilteringIterator<>(neighbors, n -> !n.hexagon.getValue().isEmpty());
-        FilteringIterator<Neighbor<TilesStack>> other_color_neighbors = new FilteringIterator<>(existing_neighbors, n -> color != stackColor(n.hexagon.getValue()));
+        FilteringIterator<Neighbor<TilesStack>> existing_neighbors = new FilteringIterator<>(neighbors, n -> !n.hexagon.value().isEmpty());
+        FilteringIterator<Neighbor<TilesStack>> other_color_neighbors = new FilteringIterator<>(existing_neighbors, n -> color != stackColor(n.hexagon.value()));
         return Iterators.count(other_color_neighbors) == 0;
     }
     
     public static boolean hasNeighbors(Honeycomb comb)
     {
-        FilteringIterator neighbors = new FilteringIterator(new NeighborsIterator(comb), hexagon -> !((Honeycomb)hexagon).stack().empty());
+        FilteringIterator<Neighbor<TilesStack>> neighbors = new FilteringIterator<>(new NeighborsIterator<TilesStack>(comb), neighbor -> !neighbor.hexagon.value().empty());
         return Iterators.count(neighbors) > 0;
     }
 }

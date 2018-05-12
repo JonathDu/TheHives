@@ -5,6 +5,7 @@
  */
 package hive.model.game.undoaction;
 
+import hive.model.board.Tile;
 import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
@@ -41,14 +42,17 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
     public void visit(MoveAction action)
     {
         // tiles
+        Tile tile = action.destination.getTile();
+        data.tiles.get(tile.color).get(tile.type).remove(action.destination);
+        data.tiles.get(tile.color).get(tile.type).add(action.source);
         
         // nb_tiles
         
         // nb_combs
-        if(action.source.comb.stack().size() == 1 && action.destination.comb.stack().size() >= 1)
+        if(action.source.comb.value().size() == 1 && action.destination.comb.value().size() >= 1)
             data.nb_combs += 1;
         // if the tile shares a comb but will occupy an empty comb
-        else if(action.source.comb.stack().size() > 1 && action.destination.comb.stack().size() == 0)
+        else if(action.source.comb.value().size() > 1 && action.destination.comb.value().size() == 0)
             data.nb_combs -= 1;
     }
 

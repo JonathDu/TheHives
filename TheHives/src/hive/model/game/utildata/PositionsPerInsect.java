@@ -7,21 +7,21 @@ package hive.model.game.utildata;
 
 import hive.model.board.Cell;
 import hive.model.insects.InsectType;
-import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 
 /**
  *
  * @author Thomas
  */
-public class PositionsPerInsect extends EnumMap<InsectType, ArrayList<Cell>>
+public class PositionsPerInsect extends EnumMap<InsectType, HashSet<Cell>>
 {
     public PositionsPerInsect()
     {
         super(InsectType.class);
         for(InsectType type : InsectType.values())
         {
-            put(type, new ArrayList<>());
+            put(type, new HashSet<>());
         }
     }
     

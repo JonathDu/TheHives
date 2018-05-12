@@ -31,13 +31,13 @@ public class InterfaceCell extends Parent {
         Color couleur = null;
         this.cellule = cellule;
 
-        if (this.cellule.getValue().get(0).color == TeamColor.BLACK) {
+        if (this.cellule.comb.value().get(0).color == TeamColor.BLACK) {
             couleur = Color.GRAY;
         } else {
             couleur = Color.WHITE;
         }
 
-        this.pion = new InterfacePion(couleur, this.cellule.getValue().get(0).type, c);
+        this.pion = new InterfacePion(couleur, this.cellule.comb.value().get(0).type, c);
         this.getChildren().add(pion);
     }
 

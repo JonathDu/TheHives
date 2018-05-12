@@ -66,7 +66,7 @@ public class CircularHexagonsGraphTest
         {
             for(int x = 0; x < m.sizeX(); x++)
             {
-                assertEquals(c.getHexagon(new Vector2i(x,y)).getValue() ,m.getAt(x, y));
+                assertEquals(c.getHexagon(new Vector2i(x,y)).value() ,m.getAt(x, y));
             }
         }
     }

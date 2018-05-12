@@ -29,7 +29,7 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        TilesStack stack = action.where.comb.stack();
+        TilesStack stack = action.where.comb.value();
         assert stack.isEmpty();
         stack.push(action.tile);
     }
@@ -37,9 +37,9 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.source.comb.stack();
-        Tile t = stack.remove(action.source.index);
-        action.destination.comb.stack().add(action.destination.index, t);
+        TilesStack stack = action.source.comb.value();
+        Tile t = stack.remove(action.source.level);
+        action.destination.comb.value().add(action.destination.level, t);
     }
 
     @Override
