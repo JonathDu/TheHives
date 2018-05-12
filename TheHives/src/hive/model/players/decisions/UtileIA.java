@@ -5,7 +5,10 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.HiveInterfaceIA;
+import hive.model.board.Tile;
+import hive.model.game.Game;
+import hive.model.players.Player;
 import hive.model.players.actions.Action;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
@@ -16,24 +19,45 @@ import java.util.ArrayList;
  * @author Coralie
  */
 public class UtileIA {
-    static int evaluationCurrentPlayer(GameState state){
+    static int evaluationCurrentPlayer(Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        Player current = state.state.turn.getCurrent();
+        int value=0;
+        if(hia.winOpponent(state)){
+            return -10000;
+        }
+        else if(hia.winCurrent(state)){
+            return 10000;
+        }
+        else{
+            ArrayList<Tile> freeTile = hia.freeTiles(state,current );
+            Tile currentTile;
+            while(!freeTile.isEmpty()){
+                currentTile = freeTile.remove(0);
+                switch (currentTile.type) 
+                {
+                    case  QUEEN_BEE:
+            }
+        }
+    }
+    static int evaluationOpponent(Game state){
         return 0;
     }
-    static int evaluationOpponent(GameState state){
-        return 0;
-    }
-    static int miniMaxCurrentPlayer(GameState state, int depth, int min){
-        if(depth == 0 || !state.gameOver()){
+    static int miniMaxCurrentPlayer(Game state, int depth, int min){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
             return evaluationCurrentPlayer(state);
         }
         else{
             int vMax = -50000;
-            ArrayList<Action> actionList = ArrayAction(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
             int tmp;
             Action currentAction;
             while(!actionList.isEmpty()){
                 currentAction = actionList.remove(0);
-                tmp = miniMaxOpponent(newStateApply(state,currentAction), depth-1, vMax);
+                hia.doAction(state,currentAction);
+                tmp = miniMaxOpponent(state, depth-1, vMax);
+                hia.undoAction(state);
                 vMax = max(tmp,vMax);
                 if(vMax > min)
                     return vMax;
@@ -41,18 +65,21 @@ public class UtileIA {
             return vMax;
         }
     }
-    static int miniMaxOpponent(GameState state, int depth, int max){
-        if(depth == 0 || !state.gameOver()){
+    static int miniMaxOpponent(Game state, int depth, int max){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        if(depth == 0 || hia.winCurrent(state)|| hia.winOpponent(state)){
             return evaluationCurrentPlayer(state);
         }
         else{
             int vMin = 50000;
-            ArrayList<Action> actionList = ArrayAction(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
             int tmp;
             Action currentAction;
             while(!actionList.isEmpty()){
                 currentAction = actionList.remove(0);
-                tmp = miniMaxOpponent(newStateApply(state,currentAction), depth-1, vMin);
+                hia.doAction(state,currentAction);
+                tmp = miniMaxOpponent(state, depth-1, vMin);
+                hia.undoAction(state);
                 vMin = min(tmp,vMin);
                 if(vMin < max)
                     return vMin;
@@ -60,12 +87,10 @@ public class UtileIA {
             return vMin;
         }
     }
-    static ArrayList<Action> ArrayAction(GameState state){
-        return new ArrayList<>();
-    }
-    static GameState newStateApply(GameState state,Action action){
-        return state;
-    }
     
+    static int insectValue(ArrayList<Tile> listTile){
+        
+    }
+       
     
 }

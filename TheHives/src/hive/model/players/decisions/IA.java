@@ -5,7 +5,7 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.game.Game;
 import hive.model.players.actions.Action;
 
 /**
@@ -13,5 +13,5 @@ import hive.model.players.actions.Action;
  * @author Coralie
  */
 public interface IA {
-    public Action SearchAction(GameState state);
+    public Action SearchAction(Game state);
 }

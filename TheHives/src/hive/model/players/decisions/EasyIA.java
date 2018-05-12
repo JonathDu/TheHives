@@ -5,9 +5,9 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.HiveInterfaceIA;
+import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import static hive.model.players.decisions.UtileIA.ArrayAction;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,22 +17,28 @@ import java.util.Random;
  */
 public class EasyIA implements IA{
     @Override
-    public Action SearchAction(GameState state){
-        ArrayList<Action> actionList = ArrayAction(state);
+    public Action SearchAction(Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
         Action currentAction;
         int i=0;
         while(i<actionList.size()){
             currentAction = actionList.get(i);
-            if(currentAction.isWon()){
+            hia.doAction(state, currentAction);
+            if(hia.winCurrent(state)){
+                hia.undoAction(state);
                 return currentAction;
             }
-            else if(currentAction.isLost()){
+            else if(hia.winOpponent(state)){
+                hia.undoAction(state);
                 actionList.remove(i);
-                 if(actionList.isEmpty())
+                if(actionList.isEmpty())
                     return currentAction;
             }
-            else
+            else{
+                hia.undoAction(state);
                 i++; 
+            }
         }
         Random rnd = new Random();
         return actionList.get(rnd.nextInt(actionList.size()));

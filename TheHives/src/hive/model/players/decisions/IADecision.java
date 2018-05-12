@@ -5,9 +5,8 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import hive.model.players.decisions.Decision;
 
 /**
  *
@@ -21,10 +20,26 @@ public class IADecision implements Decision
         this.qI = qI;
     }
     
+    public void changeQI(Level qI){
+        this.qI = qI;
+    }
+    
     @Override
-    public Action getAction(GameState state)
+    public Action getAction(Game state)
     {
-        
+        IA ia;
+        switch (qI) 
+        {
+            case HARD :
+                ia = new HardIA();
+                break;
+            case MEDIUM :
+                ia = new MediumIA();
+                break;
+            default :
+                ia = new EasyIA();
+                break;
+        }
         return ia.SearchAction(state);
     }
     

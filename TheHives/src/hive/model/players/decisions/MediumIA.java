@@ -5,9 +5,9 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.HiveInterfaceIA;
+import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import static hive.model.players.decisions.UtileIA.ArrayAction;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,32 +18,42 @@ import java.util.Random;
 public class MediumIA implements IA{
     
     @Override
-    public Action SearchAction(GameState state){
-        ArrayList<Action> actionList = ArrayAction(state);
+    public Action SearchAction(Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
         int value=0, nbValue=0, res;
         Action currentAction;
         int i=0;
         while(i<actionList.size()){
             currentAction = actionList.get(i);
+            hia.doAction(state, currentAction);
             res = UtileIA.evaluationOpponent(state);
-            if(currentAction.isWon()){
+            if(hia.winCurrent(state)){
+                hia.undoAction(state);
                 return currentAction;
             }
-            else if(currentAction.isLost()){
+            else if(hia.winOpponent(state)){
+                hia.undoAction(state);
                 actionList.remove(i);
                 if(actionList.isEmpty())
                     return currentAction;
             }
             else{
+                hia.undoAction(state);
                 value += res;
                 nbValue++;
                 i++; 
             }
         }
         Random rnd = new Random();
-        do{
+        currentAction = actionList.get(rnd.nextInt(actionList.size()));
+        hia.doAction(state, currentAction);
+        while(UtileIA.evaluationOpponent(state)<(value/nbValue)){
+            hia.undoAction(state);
             currentAction = actionList.get(rnd.nextInt(actionList.size()));
-        }while(UtileIA.evaluationOpponent(state)<(value/nbValue));
+            hia.doAction(state, currentAction);
+        }
+        hia.undoAction(state);
         return currentAction;
     }
 }

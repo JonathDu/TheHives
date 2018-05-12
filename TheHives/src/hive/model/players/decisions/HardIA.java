@@ -5,10 +5,9 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.game.GameState;
+import hive.model.HiveInterfaceIA;
+import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import static hive.model.players.decisions.UtileIA.ArrayAction;
-import static hive.model.players.decisions.UtileIA.newStateApply;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,19 +18,23 @@ import java.util.Random;
 public class HardIA implements IA{   
     
     @Override
-    public Action SearchAction(GameState state){
-        ArrayList<Action> actionList = ArrayAction(state);
+    public Action SearchAction(Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
         ArrayList<Action> maxActionList = new ArrayList<>();
         int max=-50000, tmp;
         Action currentAction;
         int depth =4;
         while(!actionList.isEmpty()){
             currentAction = actionList.remove(0);
-            if(currentAction.isWon()){
+            hia.doAction(state, currentAction);
+            if(hia.winCurrent(state)){
+                hia.undoAction(state);
                 return currentAction;
             }
-            else if(!currentAction.isLost()){
-                tmp = UtileIA.miniMaxOpponent(UtileIA.newStateApply(state, currentAction), depth-1, max);
+            else if(!hia.winOpponent(state)){
+                tmp = UtileIA.miniMaxOpponent(state, depth-1, max);
+                hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
                     maxActionList = new ArrayList<>();
