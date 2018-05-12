@@ -23,45 +23,15 @@ public class InterfacePions extends Parent {
 
     public InterfacePions(Color couleur, int nbPions, InsectType typePions, CacheImage c) {
         Group g = new Group();
-        ImageView img = null;
-
-        switch (typePions) {
-            case QUEEN_BEE:
-                img = c.getImage("hive/vue/rsc/images/bee.png");
-                break;
-            case GRASSHOPPER:
-                img = c.getImage("hive/vue/rsc/images/grasshopper.png");
-                break;
-            case BEETLE:
-                img = c.getImage("hive/vue/rsc/images/beetle.png");
-                break;
-            default:
-                img = c.getImage("hive/vue/rsc/images/ant.png");
+        for(int i=0; i<nbPions; i++){
+            InterfacePion pion = new InterfacePion(couleur, typePions, c);
+            pion.setLayoutX(i*10);
+            g.getChildren().add(pion);
         }
 
-        for (int i = 0; i < nbPions; i++) {
-            Polygon hexagon = new Polygon();
 
-            //Adding coordinates to the polygon 
-            hexagon.getPoints().addAll(new Double[]{
-                10.0 + i * 10.0, 60.0,
-                30.0 + i * 10.0, 80.0,
-                60.0 + i * 10.0, 80.0,
-                80.0 + i * 10.0, 60.0,
-                60.0 + i * 10.0, 40.0,
-                30.0 + i * 10.0, 40.0});
-            hexagon.setFill(couleur);
-            hexagon.setStroke(Color.BLACK);
+        
 
-            img.setFitHeight(25);
-            img.setLayoutX(30 + i * 10);
-            img.setLayoutY(50);
-            img.setPreserveRatio(true);
-
-            g.getChildren().add(hexagon);
-        }
-
-        g.getChildren().add(img);
         this.getChildren().add(g);
     }
 
