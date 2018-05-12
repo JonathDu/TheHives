@@ -5,8 +5,10 @@
  */
 package hive.model.players.decisions;
 
+import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,7 +29,10 @@ public class IADecision implements Decision
     @Override
     public Action getAction(Game state)
     {
+        HiveInterfaceIA hia = new HiveInterfaceIA();
         IA ia;
+        ArrayList<Decision> decisions;
+        decisions = hia.startSimulation(state);
         switch (qI) 
         {
             case HARD :
@@ -40,7 +45,11 @@ public class IADecision implements Decision
                 ia = new EasyIA();
                 break;
         }
-        return ia.SearchAction(state);
+        
+        Action a = ia.SearchAction(state);
+        hia.endSimulation(state, decisions);
+        return a;
+        
     }
     
 }

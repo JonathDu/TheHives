@@ -7,6 +7,7 @@ package hive.main;
 
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
+import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
@@ -44,7 +45,7 @@ public class HiveConsoleIA
         
         
         GameProgress progress = new GameProgress(game);
-
+        
         Scanner sc = new Scanner(System.in);
         int i = 0;
         while (game.rules.getStatus(game.state) == GameStatus.CONTINUES)
