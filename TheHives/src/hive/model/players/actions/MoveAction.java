@@ -27,4 +27,10 @@ public class MoveAction implements Action
     {
         visitor.visit(this);
     }
+    
+    @Override
+    public String toString()
+    {
+        return "(" + source + " move to " + destination + ")";
+    }
 }

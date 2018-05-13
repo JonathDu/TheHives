@@ -17,43 +17,43 @@ import hive.model.players.actions.PutAction;
  */
 public class ActionApplier implements ActionVisitor
 {
-    BoardDoUpdater board_do;
     PlayerDoUpdater player_do;
     PrecalculatedDataDoUpdater algo_do;
     TraceDoUpdater trace_do;
+    BoardDoUpdater board_do;
 
     public ActionApplier(GameState state)
     {
-        this.board_do = new BoardDoUpdater(state.board);
         this.player_do = new PlayerDoUpdater(state.turn);
         this.algo_do = new PrecalculatedDataDoUpdater(state.data);
         this.trace_do = new TraceDoUpdater(state.trace);
+        this.board_do = new BoardDoUpdater(state.board);
     }
     
     @Override
     public void visit(PutAction action)
     {
-        action.accept(board_do);
         action.accept(player_do);
         action.accept(algo_do);
         action.accept(trace_do);
+        action.accept(board_do);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        action.accept(board_do);
         action.accept(player_do);
         action.accept(algo_do);
         action.accept(trace_do);
+        action.accept(board_do);
     }
 
     @Override
     public void visit(NoAction action)
     {
-        action.accept(board_do);
         action.accept(player_do);
         action.accept(algo_do);
         action.accept(trace_do);
+        action.accept(board_do);
     }
 }

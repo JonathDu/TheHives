@@ -5,6 +5,8 @@
  */
 package hive.model.insects;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Thomas
@@ -28,6 +30,36 @@ public enum InsectType
     // x1 (Red)
     PILL_BUG;
     // x1 (Cyan)
+    
+    public static final ArrayList<InsectType> implemented_insects;
+    public static final ArrayList<InsectType> default_insects;
+    public static final ArrayList<InsectType> extension_insects;
+    
+    static
+    {
+        implemented_insects = new ArrayList<>();
+        implemented_insects.add(QUEEN_BEE);
+        implemented_insects.add(BEETLE);
+        implemented_insects.add(GRASSHOPPER);
+        
+        default_insects = new ArrayList<>();
+        default_insects.add(QUEEN_BEE);
+        default_insects.add(SPIDER);
+        default_insects.add(BEETLE);
+        default_insects.add(GRASSHOPPER);
+        default_insects.add(SOLDIER_ANT);
+        
+        
+        extension_insects = new ArrayList<>();
+        extension_insects.add(QUEEN_BEE);
+        extension_insects.add(SPIDER);
+        extension_insects.add(BEETLE);
+        extension_insects.add(GRASSHOPPER);
+        extension_insects.add(SOLDIER_ANT);
+        extension_insects.add(MOSQUITO);
+        extension_insects.add(LADYBUG);
+        extension_insects.add(PILL_BUG);
+    }
     
     @Override
     public String toString()

@@ -6,12 +6,13 @@
 package hive.model.board;
 
 import util.Vector2i;
+import util.hexagons.Hexagon;
 
 /**
  * 
  * @author Thomas
  */
-public class Honeycomb extends util.hexagons.Hexagon<TilesStack>
+public class Honeycomb extends Hexagon<TilesStack>
 {
     public Vector2i pos;
     
@@ -25,11 +26,6 @@ public class Honeycomb extends util.hexagons.Hexagon<TilesStack>
     {
         super(stack);
         this.pos = pos;
-    }
-    
-    public TilesStack stack()
-    {
-        return getValue();
     }
     
     @Override

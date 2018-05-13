@@ -17,16 +17,23 @@ import util.hexagons.HexagonSide;
 public class InfiniteNeighborsIterator<E> implements Iterator<Hexagon<E>>
 {
     Hexagon<E> center;
+    boolean clockwise;
     HexagonSide current;
     
     public InfiniteNeighborsIterator(Hexagon<E> center)
     {
-        this(center, HexagonSide.A);
+        this(center, true);
     }
     
-    public InfiniteNeighborsIterator(Hexagon<E> center, HexagonSide first)
+    public InfiniteNeighborsIterator(Hexagon<E> center, boolean clockwise)
+    {
+        this(center, clockwise, clockwise ? HexagonSide.A : HexagonSide.F);
+    }
+    
+    public InfiniteNeighborsIterator(Hexagon<E> center, boolean clockwise, HexagonSide first)
     {
         this.center = center;
+        this.clockwise = clockwise;
         this.current = first;
     }
     
@@ -46,7 +53,7 @@ public class InfiniteNeighborsIterator<E> implements Iterator<Hexagon<E>>
     {
         assert hasNext();
         Hexagon<E> res = center.getNeighbor(current);
-        current = current.getAfter();
+        current = clockwise ? current.getAfter() : current.getBefore();
         return res;
     }
 }

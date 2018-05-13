@@ -17,43 +17,43 @@ import hive.model.players.actions.PutAction;
  */
 public class ActionDisapplier implements ActionVisitor
 {
-    BoardUndoUpdater board_undo;
     PlayerUndoUpdater player_undo;
     PrecalculatedDataUndoUpdater algo_undo;
     TraceUndoUpdater trace_undo;
+    BoardUndoUpdater board_undo;
     
     public ActionDisapplier(GameState state)
     {
-        this.board_undo = new BoardUndoUpdater(state.board);
         this.player_undo = new PlayerUndoUpdater(state.turn);
         this.algo_undo = new PrecalculatedDataUndoUpdater(state.data);
         this.trace_undo = new TraceUndoUpdater(state.trace);
+        this.board_undo = new BoardUndoUpdater(state.board);
     }
 
     @Override
     public void visit(PutAction action)
     {
-        action.accept(board_undo);
         action.accept(player_undo);
         action.accept(algo_undo);
         action.accept(trace_undo);
+        action.accept(board_undo);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        action.accept(board_undo);
         action.accept(player_undo);
         action.accept(algo_undo);
         action.accept(trace_undo);
+        action.accept(board_undo);
     }
 
     @Override
     public void visit(NoAction action)
     {
-        action.accept(board_undo);
         action.accept(player_undo);
         action.accept(algo_undo);
         action.accept(trace_undo);
+        action.accept(board_undo);
     }
 }

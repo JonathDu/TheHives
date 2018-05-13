@@ -8,17 +8,12 @@ package hive.model.insects.behaviors;
 import hive.model.board.Cell;
 import hive.model.board.Cells;
 import hive.model.board.Honeycomb;
-import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
-import java.util.function.Predicate;
-import util.Iterators;
-import util.hexagons.Hexagon;
+import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
-import util.hexagons.iterators.ValueIterator;
-import util.iterators.FilteringIterator;
 
 /**
  *
@@ -37,23 +32,47 @@ public class BeetleBehavior implements InsectBehavior
             return list;
         
         NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
-
+        
+        // for each neighbor
         while (neighbors.hasNext())
         {
-            Honeycomb neighbor = (Honeycomb)neighbors.next();
-            if (!neighbor.getValue().empty()) 
+            Neighbor<TilesStack> neighbor = neighbors.next();
+            // if the beetle is below (or same level)
+            if (cell.comb.value().size() <= neighbor.hexagon.value().size()) 
             {
-                list.add(new Cell(neighbor)); //le scarabée peut "grimper" sur cette cellule, ne prend pas en compte la hauteur de l'escalade ou de la descente
+                // the beetle can climb over it
+                list.add(new Cell((Honeycomb)neighbor.hexagon));
             }
+           // otherwise the beetle is above
             else
             {
-                FilteringIterator neighbor_neighbors = new FilteringIterator(
-                        new NeighborsIterator<>((Hexagon)neighbor),
-                        hexagon -> !((Honeycomb)hexagon).stack().isEmpty());
-                
-                // s'il y a au moins deux voisins (il a forcément au moins un voisin, celui qu'on étudie)
-                if(Iterators.count(neighbor_neighbors) > 1)
-                    list.add(new Cell(neighbor));
+                // if the beetle is free to slide or go down
+                if (Cells.isFreeAtSide(cell, neighbor.from))
+                {
+                    // if the beetle is on the floor
+                    if(cell.level == 0)
+                    {
+                        
+                        // the beetle can slide but the queen has to stay connected with other tiles
+                        NeighborsIterator<TilesStack> around_neighbor = new NeighborsIterator<>(neighbor.hexagon);
+                        int k = 0;
+                        while(around_neighbor.hasNext())
+                        {
+                            if(!around_neighbor.next().hexagon.value().isEmpty())
+                                ++k;
+                            // if we have found 2 neighbors, it will stay connex anyway (we already count the queen in it)
+                            if(k == 2)
+                            {
+                                list.add(new Cell((Honeycomb)neighbor.hexagon));
+                                break;
+                            }
+                        }
+                    }
+                    // otherwise it will stay connex anyway
+                    else
+                        list.add(new Cell((Honeycomb)neighbor.hexagon));
+                }
+                // otherwise the beetle can't move
             }
         }
         return list;
