@@ -51,6 +51,12 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         return game.rules.getStatus(game.state) == GameStatus.OPPONENT_WINS;
     }
+    
+    @Override
+    public boolean winBoth(Game game)
+    {
+        return game.rules.getStatus(game.state) == GameStatus.DRAW;
+    }
 
     @Override
     public int queenFreeNeighbour(Player p, Game game)
@@ -78,7 +84,13 @@ public class HiveInterfaceIA implements InterfaceIA
             for(InsectType type : InsectType.implemented_insects)
             {
                 Tile tile = new Tile(type, current.color);
-                for(int i = 0; i < current.collection.get(type); ++i)
+                /*for(int i = 0; i < current.collection.get(type); ++i)
+                {
+                    Iterator<Cell> dest = destinations.iterator();
+                    while(dest.hasNext())
+                        actions.add(new PutAction(dest.next(), tile));
+                }*/
+                if(current.collection.get(type) > 0)
                 {
                     Iterator<Cell> dest = destinations.iterator();
                     while(dest.hasNext())
@@ -89,17 +101,20 @@ public class HiveInterfaceIA implements InterfaceIA
         
         
         // MoveAction
-        for(InsectType type : InsectType.implemented_insects)
+        if(!game.state.data.tiles.get(game.state.turn.getCurrent().color).get(InsectType.QUEEN_BEE).isEmpty())
         {
-            HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
-            Iterator<Cell> source_iterator = sources.iterator();
-            while(source_iterator.hasNext())
+            for(InsectType type : InsectType.implemented_insects)
             {
-                Cell source = source_iterator.next();
-                ArrayList<Cell> destinations = game.rules.getInsectsBehaviors().get(type).getPossibleDestinations(game, source);
-                Iterator<Cell> dest_iterator = destinations.iterator();
-                while(dest_iterator.hasNext())
-                    actions.add(new MoveAction(source, dest_iterator.next()));
+                HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
+                Iterator<Cell> source_iterator = sources.iterator();
+                while(source_iterator.hasNext())
+                {
+                    Cell source = source_iterator.next();
+                    ArrayList<Cell> destinations = game.rules.getInsectsBehaviors().get(type).getPossibleDestinations(game, source);
+                    Iterator<Cell> dest_iterator = destinations.iterator();
+                    while(dest_iterator.hasNext())
+                        actions.add(new MoveAction(source, dest_iterator.next()));
+                }
             }
         }
         

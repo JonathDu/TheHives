@@ -39,8 +39,10 @@ public enum InsectType
     {
         implemented_insects = new ArrayList<>();
         implemented_insects.add(QUEEN_BEE);
+        //implemented_insects.add(SPIDER);
         implemented_insects.add(BEETLE);
         implemented_insects.add(GRASSHOPPER);
+        //implemented_insects.add(SOLDIER_ANT);
         
         default_insects = new ArrayList<>();
         default_insects.add(QUEEN_BEE);
@@ -48,7 +50,6 @@ public enum InsectType
         default_insects.add(BEETLE);
         default_insects.add(GRASSHOPPER);
         default_insects.add(SOLDIER_ANT);
-        
         
         extension_insects = new ArrayList<>();
         extension_insects.add(QUEEN_BEE);

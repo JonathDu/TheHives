@@ -63,15 +63,20 @@ public class HiveConsoleHuman
             String actionChoose;
             do
             {
-                System.out.println("Choix de l'action (PUT ou MOVE) :");
+                System.out.println("Choix de l'action (PUT ou MOVE) (ou UNDO) :");
                 actionChoose = sc.next();
-            } while (!actionChoose.equals("PUT") && !actionChoose.equals("MOVE"));
-
-            Action a = actionChoose.equals("PUT") ? put(game) : move(game);
-
-            decision.setAction(a);
-            progress.doAction();
-
+            } while (!actionChoose.equals("PUT") && !actionChoose.equals("MOVE") && !actionChoose.equals("UNDO"));
+            
+            if(actionChoose.equals("UNDO"))
+            {
+                progress.undoAction();
+            }
+            else
+            {
+                Action a = (actionChoose.equals("PUT") ? put(game) : move(game));
+                decision.setAction(a);
+                progress.doAction();
+            }
             System.out.println(game.state.board);
         }
     }

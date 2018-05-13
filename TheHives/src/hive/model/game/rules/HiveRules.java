@@ -29,8 +29,8 @@ import java.util.HashSet;
  */
 public class HiveRules implements Rules
 {
-    HivePutRules put_rules;
-    InsectsBehaviors behaviors;
+    public HivePutRules put_rules;
+    public InsectsBehaviors behaviors;
     
     public HiveRules()
     {
@@ -62,10 +62,15 @@ public class HiveRules implements Rules
     @Override
     public GameStatus getStatus(GameState state)
     {
-        if(queenIsSurrounded(state, state.turn.getCurrent()))
-            return GameStatus.OPPONENT_WINS;
-        else if(queenIsSurrounded(state, state.turn.getOpponent()))
+        boolean current_wins = queenIsSurrounded(state, state.turn.getOpponent());
+        boolean opponent_wins = queenIsSurrounded(state, state.turn.getCurrent());
+        
+        if(current_wins && opponent_wins)
+            return GameStatus.DRAW;
+        else if(current_wins)
             return GameStatus.CURRENT_WINS;
+        else if(opponent_wins)
+            return GameStatus.OPPONENT_WINS;
         else
             return GameStatus.CONTINUES;
     }

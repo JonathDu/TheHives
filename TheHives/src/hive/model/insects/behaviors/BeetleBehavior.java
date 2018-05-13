@@ -12,6 +12,7 @@ import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
+import util.Iterators;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -25,7 +26,6 @@ public class BeetleBehavior implements InsectBehavior
     @Override
     public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
     {
-        
         ArrayList<Cell> list = new ArrayList<>();
         
         if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
@@ -52,21 +52,12 @@ public class BeetleBehavior implements InsectBehavior
                     // if the beetle is on the floor
                     if(cell.level == 0)
                     {
-                        
                         // the beetle can slide but the queen has to stay connected with other tiles
                         NeighborsIterator<TilesStack> around_neighbor = new NeighborsIterator<>(neighbor.hexagon);
-                        int k = 0;
-                        while(around_neighbor.hasNext())
-                        {
-                            if(!around_neighbor.next().hexagon.value().isEmpty())
-                                ++k;
-                            // if we have found 2 neighbors, it will stay connex anyway (we already count the queen in it)
-                            if(k == 2)
-                            {
-                                list.add(new Cell((Honeycomb)neighbor.hexagon));
-                                break;
-                            }
-                        }
+                        
+                        // if we have found 2 neighbors, it will stay connex anyway (we already count the queen in it)
+                        if(Iterators.searchN(around_neighbor, n -> !n.hexagon.value().isEmpty(), 2))
+                            list.add(new Cell((Honeycomb)neighbor.hexagon));
                     }
                     // otherwise it will stay connex anyway
                     else

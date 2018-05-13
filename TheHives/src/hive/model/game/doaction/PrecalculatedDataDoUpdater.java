@@ -24,7 +24,7 @@ public class PrecalculatedDataDoUpdater implements ActionVisitor
     {
         this.data = data;
     }
-
+    
     @Override
     public void visit(PutAction action)
     {

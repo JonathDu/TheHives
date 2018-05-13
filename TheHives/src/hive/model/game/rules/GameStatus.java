@@ -13,5 +13,6 @@ public enum GameStatus
 {
     CURRENT_WINS,
     OPPONENT_WINS,
-    CONTINUES;
+    CONTINUES,
+    DRAW;
 }

@@ -74,6 +74,8 @@ public class Cells
     // check the connexity when the cell is removed
     public static boolean isConnexWithout(Cell cell, int nb_combs)
     {
+        assert !cell.comb.value().isEmpty();
+        
         if(cell.comb.value().size() > 1)
             return true;
         
@@ -117,12 +119,11 @@ public class Cells
         assert to_see != null;
 
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
-        TilesStack tmp = cell.comb.value();
-        cell.comb.setValue(new TilesStack());
+        Tile tmp = cell.comb.value().pop();
 
         boolean res = isConnex(to_see, nb_combs);
 
-        cell.comb.setValue(tmp);
+        cell.comb.value().push(tmp);
 
         return res;
     }
@@ -130,8 +131,7 @@ public class Cells
     // check connexity starting at cell by breath first search : connex if we counts all the tiles
     public static boolean isConnex(Honeycomb comb, int nb_combs)
     {
-        System.out.println("connex ?");
-        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(comb, stack -> !stack.isEmpty());
+        BreadthIterator<TilesStack> iterator = new BreadthIterator<>(comb, hexagon -> !hexagon.value().isEmpty());
         return Iterators.count(iterator) == nb_combs - 1;
     }
     

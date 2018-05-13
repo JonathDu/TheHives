@@ -116,7 +116,7 @@ public class HexagonsIteratorsTest
     {
         System.out.println(c);
         
-        Predicate<Integer> p = (t) -> t > 0;
+        Predicate<Hexagon<Integer>> p = (h) -> h.value() > 0;
         
         BreadthIterator<Integer> breadthIterator = new BreadthIterator<>(c.getHexagon(new Vector2i(1,1)), p);
         

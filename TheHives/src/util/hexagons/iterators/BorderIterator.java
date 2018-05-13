@@ -6,38 +6,31 @@
 package util.hexagons.iterators;
 
 import java.util.ArrayDeque;
-import util.hexagons.Hexagon;
-import util.hexagons.HexagonSide;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Predicate;
+import util.hexagons.Hexagon;
+import util.hexagons.HexagonSide;
 
 /**
- * Iterates over the graph from a hexagon in breadth search
- * and by looking at a predicate that elements in hexagon must verify
- * (the graph must be circled by elements that does not verify the predicate)
+ *
  * @author Thomas
- * @param <E>
  */
-public class BreadthIterator<E> implements Iterator<Hexagon<E>>
+public class BorderIterator<E> implements Iterator<Hexagon<E>>
 {
     Queue<Hexagon<E>> queue;
     Set<Hexagon<E>> seen;
     Predicate<Hexagon<E>> predicate;
     
-    public BreadthIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate)
+    public BorderIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate)
     {
         this.queue = new ArrayDeque<>();
+        queue.add(center);
+        
         this.seen = new HashSet<>();
         this.predicate = predicate;
-        
-        if(predicate.test(center))
-        {
-            queue.add(center);
-            seen.add(center);
-        }
     }
 
     @Override
@@ -52,6 +45,7 @@ public class BreadthIterator<E> implements Iterator<Hexagon<E>>
         assert hasNext();
         
         Hexagon<E> h = queue.remove();
+        seen.add(h);
         
         for(HexagonSide side : HexagonSide.values())
         {
