@@ -5,7 +5,6 @@
  */
 package hive.vue;
 
-import com.sun.javafx.sg.prism.NGNode;
 import hive.model.insects.InsectType;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -19,13 +18,12 @@ import javafx.scene.shape.Polygon;
  */
 public class InterfacePion extends Parent {
 
-    public static int LONGUEUR = 40;
+    public static int LONGUEUR = 30;
     public static int LARGEUR = (int) (LONGUEUR / 1.4);
 
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c) {
         Group g = new Group();
         ImageView img = null;
-
         Polygon hexagon = new Polygon();
 
         //Adding coordinates to the polygon 
@@ -56,7 +54,7 @@ public class InterfacePion extends Parent {
 
             }
             img.setFitHeight(25);
-            img.setLayoutX(40);
+            img.setLayoutX(30);
             img.setLayoutY(50);
             img.setPreserveRatio(true);
 

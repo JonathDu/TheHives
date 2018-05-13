@@ -19,7 +19,7 @@ public class InterfaceRuche extends Parent {
 
     private final Matrix<InterfaceCell> tab;
     private final int largeur = 24;
-    private final int hauteur = 10;
+    private final int hauteur = 24;
 
     public InterfaceRuche(CacheImage c) {
         tab = new Matrix<>(hauteur, largeur);
