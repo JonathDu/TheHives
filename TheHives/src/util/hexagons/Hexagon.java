@@ -25,7 +25,7 @@ public class Hexagon<E>
         this.value = e;
     }
 
-    public E getValue()
+    public E value()
     {
         return value;
     }

@@ -21,6 +21,7 @@ import hive.model.insects.behaviors.SoldierAntBehavior;
 import hive.model.insects.behaviors.SpiderBehavior;
 import hive.model.players.Player;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -71,15 +72,13 @@ public class HiveRules implements Rules
     
     private boolean queenIsSurrounded(GameState state, Player player)
     {
-        ArrayList<Cell> queen_positions = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
+        HashSet<Cell> queen_cells = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
         
         // Queen already put
-        if(!queen_positions.isEmpty())
+        if(!queen_cells.isEmpty())
         {
-            assert queen_positions.size() == 1;
-            Cell pos = queen_positions.get(0);
-            
-            return Cells.isSurrounded(pos);
+            assert queen_cells.size() == 1;
+            return Cells.isSurrounded(queen_cells.iterator().next());
         }
         else
             return false;

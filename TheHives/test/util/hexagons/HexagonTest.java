@@ -44,7 +44,7 @@ public class HexagonTest
     }
 
     /**
-     * Test of getValue method, of class Hexagon.
+     * Test of value method, of class Hexagon.
      */
     @Test
     public void testGetSetNeighbor()

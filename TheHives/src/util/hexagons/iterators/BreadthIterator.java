@@ -53,12 +53,12 @@ public class BreadthIterator<E> implements Iterator<E>
         {
             Hexagon<E> n = h.getNeighbor(side);
             assert n != null;
-            if(seen.get(n) == null && predicate.test(n.getValue()))
+            if(seen.get(n) == null && predicate.test(n.value()))
             {
                 queue.add(n);
                 seen.put(n, Boolean.TRUE);
             }
         }
-        return h.getValue();
+        return h.value();
     }
 }

@@ -31,11 +31,17 @@ public enum InsectType
     PILL_BUG;
     // x1 (Cyan)
     
+    public static final ArrayList<InsectType> implemented_insects;
     public static final ArrayList<InsectType> default_insects;
     public static final ArrayList<InsectType> extension_insects;
     
     static
     {
+        implemented_insects = new ArrayList<>();
+        implemented_insects.add(QUEEN_BEE);
+        implemented_insects.add(BEETLE);
+        implemented_insects.add(GRASSHOPPER);
+        
         default_insects = new ArrayList<>();
         default_insects.add(QUEEN_BEE);
         default_insects.add(SPIDER);
