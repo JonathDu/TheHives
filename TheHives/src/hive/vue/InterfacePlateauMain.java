@@ -8,6 +8,8 @@ package hive.vue;
 import hive.model.game.DefaultGame;
 import static hive.model.insects.InsectType.*;
 import hive.model.players.PlayerCollection;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -25,13 +27,13 @@ public class InterfacePlateauMain extends Parent {
     VBox pions;
     Label nomJoueur;
 
-    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c) {
+    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property) {
         pions = new VBox();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
         this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
+        pions.prefHeightProperty().bind(property);
         
-        col.get(QUEEN_BEE);
         
         
         
@@ -41,7 +43,7 @@ public class InterfacePlateauMain extends Parent {
         
         pions.setOpacity(1);
         pions.setBackground(new Background(bf));
-        pions.setPrefHeight(100);
+        //pions.setPrefHeight(100);
         pions.getChildren().add(new InterfacePions(couleur, col.get(QUEEN_BEE), QUEEN_BEE, c));
         pions.getChildren().add(new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c));
         pions.getChildren().add(new InterfacePions(couleur, col.get(BEETLE), BEETLE, c));

@@ -27,6 +27,12 @@ public class InterfaceCell extends Parent {
         this.getChildren().add(pion);
     }
 
+    public InterfaceCell(CacheImage c, int taille) {
+        this.c = c;
+        this.pion = new InterfacePion(Color.TRANSPARENT, null, c, taille);
+        this.getChildren().add(pion);
+    }
+
     public void setCell(Cell cellule) {
         Color couleur = null;
         this.cellule = cellule;
@@ -42,6 +48,23 @@ public class InterfaceCell extends Parent {
     }
 
     public void removeCell() {
-        this.pion = new InterfacePion(Color.TRANSPARENT, InsectType.SPIDER, c);
+        this.pion = new InterfacePion(Color.TRANSPARENT, null, c);
+    }
+
+    public void modifierTaille(int longueur) {
+        this.getChildren().clear();
+        Color couleur = null;
+        if (this.cellule != null) {
+            if (this.cellule.comb.value().get(0).color == TeamColor.BLACK) {
+                couleur = Color.GRAY;
+            } else {
+                couleur = Color.WHITE;
+            }
+
+            this.pion = new InterfacePion(couleur, this.cellule.comb.value().get(0).type, c, longueur);
+        }else{
+            this.pion = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
+        }
+        this.getChildren().add(pion);
     }
 }
