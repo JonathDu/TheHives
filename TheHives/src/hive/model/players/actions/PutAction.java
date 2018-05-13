@@ -5,9 +5,8 @@
  */
 package hive.model.players.actions;
 
-import hive.model.board.Cell;
 import hive.model.board.Tile;
-import hive.model.board.TilePosition;
+import hive.model.board.Cell;
 
 /**
  *
@@ -15,10 +14,10 @@ import hive.model.board.TilePosition;
  */
 public class PutAction implements Action
 {
-    public TilePosition where;
+    public Cell where;
     public Tile tile;
     
-    public PutAction(TilePosition where, Tile tile)
+    public PutAction(Cell where, Tile tile)
     {
         this.where = where;
         this.tile = tile;
@@ -28,5 +27,11 @@ public class PutAction implements Action
     public void accept(ActionVisitor visitor)
     {
         visitor.visit(this);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "(" + tile + " put at " + where + ")";
     }
 }

@@ -10,26 +10,26 @@ package util.hexagons;
  * @author Thomas
  * @param <E>
  */
-public class HexagonsGraph<E>
+public class HexagonsGraph<H>
 {
-    Hexagon<E> center;
+    H center;
     
     public HexagonsGraph()
     {
         center = null;
     }
     
-    public HexagonsGraph(Hexagon<E> center)
+    public HexagonsGraph(H center)
     {
         this.center = center;
     }
     
-    Hexagon<E> getCenter()
+    public H getCenter()
     {
         return center;
     }
     
-    void setCenter(Hexagon<E> center)
+    void setCenter(H center)
     {
         this.center = center;
     }

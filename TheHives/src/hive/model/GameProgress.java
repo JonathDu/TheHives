@@ -7,8 +7,8 @@ package hive.model;
 
 import hive.model.game.Game;
 import hive.model.game.GameState;
-import hive.model.updates.undoAction.ActionDisapplier;
-import hive.model.updates.doAction.ActionApplier;
+import hive.model.game.undoaction.ActionDisapplier;
+import hive.model.game.doaction.ActionApplier;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 
@@ -22,7 +22,6 @@ public class GameProgress
     
     ActionApplier applier;
     ActionDisapplier disapplier;
-    
     
     public GameProgress(Game game)
     {

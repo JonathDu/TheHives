@@ -5,7 +5,8 @@
  */
 package hive.model.insects;
 
-import util.hexagons.Hexagon;
+import hive.model.board.Cell;
+import hive.model.game.Game;
 import java.util.ArrayList;
 
 /**
@@ -14,5 +15,5 @@ import java.util.ArrayList;
  */
 public interface InsectBehavior
 {
-    public ArrayList<Hexagon> getPossibleDestinations(Hexagon source);
+    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell);
 }

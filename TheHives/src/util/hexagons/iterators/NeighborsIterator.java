@@ -14,22 +14,39 @@ import java.util.Iterator;
  * @author Thomas
  * @param <E>
  */
-public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
+public class NeighborsIterator<E> implements Iterator<Neighbor<E>>
 {
     Hexagon<E> center;
+    boolean clockwise;
     HexagonSide current;
     HexagonSide last;
     
     public NeighborsIterator(Hexagon<E> center)
     {
-        this(center, HexagonSide.A);
+        this(center, true);
     }
     
-    public NeighborsIterator(Hexagon<E> center, HexagonSide side)
+    public NeighborsIterator(Hexagon<E> center, boolean clockwise)
+    {
+        this(center, clockwise, clockwise ? HexagonSide.A : HexagonSide.F);
+    }
+    
+    public NeighborsIterator(Hexagon<E> center, boolean clockwise, HexagonSide side)
+    {
+        this(center, clockwise, side, clockwise ? side.getBefore() : side.getAfter());
+    }
+    
+    public NeighborsIterator(Hexagon<E> center, boolean clockwise, HexagonSide first, HexagonSide last)
     {
         this.center = center;
-        this.current = side;
-        this.last = side.getBefore();
+        this.clockwise = clockwise;
+        this.current = first;
+        this.last = last;
+    }
+    
+    public HexagonSide getVisitedSide()
+    {
+        return clockwise ? current.getBefore() : current.getAfter();
     }
     
     @Override
@@ -39,11 +56,11 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
     }
     
     @Override
-    public Hexagon<E> next()
+    public Neighbor<E> next()
     {
         assert hasNext();
-        Hexagon<E> res = center.getNeighbor(current);
-        current = current != last ? current.getAfter() : null;
+        Neighbor<E> res = new Neighbor<>(center.getNeighbor(current), current);
+        current = current != last ? (clockwise ? current.getAfter() : current.getBefore()) : null;
         return res;
     }
 }

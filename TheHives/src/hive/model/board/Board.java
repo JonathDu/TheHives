@@ -10,49 +10,57 @@ import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
 
 /**
- *
+ *     A
+ *     _
+ * F /   \ B
+ * E \ _ / C
+ *     D
+ * 
+ *   _       _
+ * /   \ _ /   \ _  . . .
+ * \ _ /   \ _ /    . . .
+ * /   \ _ /   \ _  . . .
+ * \ _ /   \ _ /    . . .
+ * /   \ _ /   \    . . .
+ *  . . . . . . . . . . .
+ *  . . . . . . . . . . .
+ *  . . . . . . . . . . .
+ * 
  * @author Thomas
  */
-public class Board extends CircularHexagonsGraph<TilesStack>
+public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
 {   
     public Board(Matrix<TilesStack> matrix)
     {
-        super(matrix, new HiveNeighborsShifter());
+        super(matrix, new HiveNeighborsShifter(), (x, y) -> new Honeycomb(new Vector2i(x, y)));
     }
     
-    public Cell getHexagon(int x, int y)
-    {
-        return getHexagon(new Vector2i(x, y));
-    }
     
-    @Override
-    public Cell getHexagon(Vector2i pos)
-    {
-        return new Cell(super.getHexagon(pos).getValue());
-    }
     
+    
+    // to string
     @Override
     public String toString()
     {
         String res = "";
-        res += toStringLine("  ___  ", "   ");
+        res += toStringLine("  _______  ", "       ");
         res += "\n";
         for (int y = 0; y < getData().getData().length; y++)
         {
-            res += toStringLine(" /   \\ ", "   ");
+            res += toStringLine(" /       \\ ", "       ");
             res += "\n";
             res += toStringThirdLine(y);
             res += "\n";
-            res += toStringLine("\\     /", "   ");
+            res += toStringLine("\\         /", "       ");
             res += "\n";
             res += toStringFifthLine(y);
             res += "\n";
         }
-        res += "     ";
-        res += toStringLine("\\     / ", "  ");
+        res += "         ";
+        res += toStringLine("\\         / ", "      ");
         res += "\n";
-        res += "      ";
-        res += toStringLine("\\___/ ", "    ");
+        res += "          ";
+        res += toStringLine("\\_______/ ", "        ");
 
         return res;
     }
@@ -75,8 +83,8 @@ public class Board extends CircularHexagonsGraph<TilesStack>
         boolean isCase = true;
         for (Object item : getData().getData()[y])
         {
-            String str = item != null ? item.toString() : " ";
-            res += isCase ? "/  " + str + "  \\" : "___";
+            String str = item != null && !item.toString().equals("[]") ? item.toString() : "     ";
+            res += isCase ? "/  " + str + "  \\" : "_______";
             isCase = !isCase;
         }
         return res;
@@ -88,8 +96,8 @@ public class Board extends CircularHexagonsGraph<TilesStack>
         boolean isCase = true;
         for (Object item : getData().getData()[y])
         {
-            String str = item != null ? item.toString() : " ";
-            res += isCase ? " \\___/ " : " " + str + " ";
+            String str = item != null && !item.toString().equals("[]") ? item.toString() : "     ";
+            res += isCase ? " \\_______/ " : " " + str + " ";
             isCase = !isCase;
         }
         return res;

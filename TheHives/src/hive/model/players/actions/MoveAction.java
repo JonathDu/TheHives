@@ -5,7 +5,7 @@
  */
 package hive.model.players.actions;
 
-import hive.model.board.TilePosition;
+import hive.model.board.Cell;
 
 /**
  *
@@ -13,12 +13,24 @@ import hive.model.board.TilePosition;
  */
 public class MoveAction implements Action
 {
-    public TilePosition source;
-    public TilePosition destination;
+    public Cell source;
+    public Cell destination;
+    
+    public MoveAction(Cell source, Cell destination)
+    {
+        this.source = source;
+        this.destination = destination;
+    }
     
     @Override
     public void accept(ActionVisitor visitor)
     {
         visitor.visit(this);
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "(" + source + " move to " + destination + ")";
     }
 }

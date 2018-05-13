@@ -15,9 +15,6 @@ import javafx.scene.Parent;
 public abstract class Activity
 {
     Parent graphics;
-    Observable when_start;
-    Observable when_pause;
-    Observable when_stop;
     
     public Activity(Parent graphics)
     {

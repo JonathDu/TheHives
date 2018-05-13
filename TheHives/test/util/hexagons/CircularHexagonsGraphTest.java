@@ -22,7 +22,7 @@ import util.Vector2i;
 public class CircularHexagonsGraphTest
 {
     private Matrix<Integer> m;  
-    private CircularHexagonsGraph<Integer> c;
+    private CircularHexagonsGraph<Integer, Hexagon<Integer>> c;
     
     public CircularHexagonsGraphTest()
     {
@@ -51,7 +51,7 @@ public class CircularHexagonsGraphTest
         HiveNeighborsShifter getter = new HiveNeighborsShifter();
         
         m = new Matrix<>(tab);
-        c = new CircularHexagonsGraph(m, getter);
+        c = new CircularHexagonsGraph(m, getter, (x, y) -> new Hexagon());
     }
     
     @After
@@ -66,7 +66,7 @@ public class CircularHexagonsGraphTest
         {
             for(int x = 0; x < m.sizeX(); x++)
             {
-                assertEquals(c.getHexagon(new Vector2i(x,y)).getValue() ,m.getAt(x, y));
+                assertEquals(c.getHexagon(new Vector2i(x,y)).value() ,m.getAt(x, y));
             }
         }
     }
