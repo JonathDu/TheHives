@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.doaction;
 
 import hive.model.board.Cell;
 import hive.model.players.actions.MoveAction;
@@ -12,30 +12,26 @@ import hive.model.players.actions.MoveAction;
  *
  * @author Thomas
  */
-public class MoveActionSelection
+public class MoveActionSelection implements ActionSelection
 {
-    enum State
-    {
-        WAITS_SOURCE,
-        SOURCE_SELECTED,
-        DESTINATION_SELECTED;
-    }
-    
-    public State state;
     public Cell source;
     public Cell destination;
     
     public MoveActionSelection()
     {
-        state = State.WAITS_SOURCE;
         source = null;
         destination = null;
     }
     
-    MoveAction produceAction()
+    @Override
+    public MoveAction produceAction()
     {
-        assert source != null;
-        assert destination != null;
         return new MoveAction(source, destination);
+    }
+
+    @Override
+    public void accept(ActionSelectionVisitor visitor)
+    {
+        visitor.visit(this);
     }
 }

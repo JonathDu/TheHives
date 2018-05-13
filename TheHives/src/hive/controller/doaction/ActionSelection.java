@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.doaction;
+
+import hive.model.players.actions.Action;
 
 /**
  *
  * @author Thomas
  */
-class PutActionSelection
+public interface ActionSelection
 {
+    public Action produceAction();
     
+    public void accept(ActionSelectionVisitor visitor);
 }

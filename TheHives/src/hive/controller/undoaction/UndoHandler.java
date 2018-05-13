@@ -3,17 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
-
-import hive.model.players.actions.Action;
+package hive.controller.undoaction;
 
 /**
  *
  * @author Thomas
  */
-public interface ActionSelection
+public class UndoHandler
 {
-    Action produceAction();
     
-    void accept(ActionSelectionVisitor visitor);
 }

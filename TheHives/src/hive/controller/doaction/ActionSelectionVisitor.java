@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.doaction;
 
 /**
  *
@@ -11,5 +11,6 @@ package hive.controller;
  */
 public interface ActionSelectionVisitor
 {
-    
+    public void visit(PutActionSelection selection);
+    public void visit(MoveActionSelection selection);
 }
