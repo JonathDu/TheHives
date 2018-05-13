@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.board;
+package hive.model.game.rules;
 
+import hive.model.board.Cell;
+import hive.model.board.Honeycomb;
+import hive.model.board.Tile;
+import hive.model.board.TilesStack;
+import hive.model.game.GameState;
 import hive.model.players.TeamColor;
 import java.util.function.Predicate;
 import util.Iterators;
@@ -22,12 +27,12 @@ import util.iterators.StoppingIterator;
  *
  * @author Thomas
  */
-public class Cells
+public class HiveFunctions
 {
     // check if the tile is surrounded by 6 cells (at level 0)
     public static boolean isSurrounded(Cell cell)
     {
-        return Iterators.count(new StoppingIterator<Neighbor<TilesStack>>(new NeighborsIterator(cell.comb), n -> !n.hexagon.value().isEmpty())) == 6;
+        return Iterators.count(new StoppingIterator<>(new NeighborsIterator<>(cell.comb), n -> !n.hexagon.value().isEmpty())) == 6;
     }
     
     // check if the tile is below an other one
@@ -155,6 +160,11 @@ public class Cells
     {
         FilteringIterator<Neighbor<TilesStack>> neighbors = new FilteringIterator<>(new NeighborsIterator<TilesStack>(comb), neighbor -> !neighbor.hexagon.value().empty());
         return Iterators.count(neighbors) > 0;
+    }
+    
+    public static int nbTurns(GameState state)
+    {
+        return state.trace.size() / state.players.size() + 1;
     }
 }
 

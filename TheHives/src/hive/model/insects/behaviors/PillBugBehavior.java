@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.Game;
+import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ public class PillBugBehavior implements InsectBehavior
 {
 
     @Override
-    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

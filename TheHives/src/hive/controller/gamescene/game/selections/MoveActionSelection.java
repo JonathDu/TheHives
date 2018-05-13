@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.doaction;
+package hive.controller.gamescene.game.selections;
 
+import hive.controller.gamescene.game.selectors.GameSelector;
 import hive.model.board.Cell;
 import hive.model.players.actions.MoveAction;
 
@@ -14,13 +15,23 @@ import hive.model.players.actions.MoveAction;
  */
 public class MoveActionSelection implements ActionSelection
 {
+    public enum State
+    {
+        BEGIN,
+        SOURCE_SELECTED,
+        DESINATION_SELECTED,
+        END;
+    }
+    
     public Cell source;
     public Cell destination;
     
+    public State state;
+    
+    
     public MoveActionSelection()
     {
-        source = null;
-        destination = null;
+        this.state = State.BEGIN;
     }
     
     @Override
@@ -28,9 +39,9 @@ public class MoveActionSelection implements ActionSelection
     {
         return new MoveAction(source, destination);
     }
-
+    
     @Override
-    public void accept(ActionSelectionVisitor visitor)
+    public void accept(GameSelector visitor)
     {
         visitor.visit(this);
     }

@@ -6,10 +6,10 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.board.Cells;
+import hive.model.game.rules.HiveFunctions;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
-import hive.model.game.Game;
+import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
 import util.hexagons.Hexagon;
@@ -24,13 +24,13 @@ import util.iterators.StoppingIterator;
 public class GrasshopperBehavior implements InsectBehavior
 {
     @Override
-    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
     {
         assert cell.level == 0;
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
             return list;
         
         // for each side

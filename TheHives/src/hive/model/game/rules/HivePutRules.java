@@ -7,9 +7,10 @@ package hive.model.game.rules;
 
 import hive.model.board.Board;
 import hive.model.board.Cell;
-import hive.model.board.Cells;
 import hive.model.board.Honeycomb;
+import hive.model.board.Tile;
 import hive.model.game.Game;
+import hive.model.game.GameState;
 import java.util.ArrayList;
 import util.Vector2i;
 import util.hexagons.iterators.NeighborsIterator;
@@ -22,21 +23,21 @@ public class HivePutRules implements PutRules
 {
 
     @Override
-    public ArrayList<Cell> getPossibleDestinations(Game game)
+    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
     {
         ArrayList<Cell> list = new ArrayList<>();
-        Board board = game.state.board;
+        Board board = state.board;
         
-        if(game.state.data.nb_tiles == 0)
+        if(state.data.nb_tiles == 0)
         {
             // return center
-            list.add(new Cell(game.state.board.getCenter()));
+            list.add(new Cell(state.board.getCenter()));
             return list;
         }
-        else if(game.state.data.nb_tiles == 1)
+        else if(state.data.nb_tiles == 1)
         {
             // return center neighbors
-            NeighborsIterator neighbors = new NeighborsIterator(game.state.board.getCenter());
+            NeighborsIterator neighbors = new NeighborsIterator(state.board.getCenter());
             while(neighbors.hasNext())
                 list.add(new Cell((Honeycomb)neighbors.next().hexagon));
             return list;
@@ -48,17 +49,10 @@ public class HivePutRules implements PutRules
             for(int x = 0; x < board.getData().sizeX(); ++x)
             {
                 Honeycomb comb = board.getHexagon(new Vector2i(x, y));
-                if(comb.value().isEmpty() && Cells.hasNeighbors(comb) && Cells.neighborsHaveSameColor(comb, game.state.turn.getCurrent().color))
+                if(comb.value().isEmpty() && HiveFunctions.hasNeighbors(comb) && HiveFunctions.neighborsHaveSameColor(comb, state.turn.getCurrent().color))
                     list.add(new Cell(comb));
             }
         }
         return list;
     }
-
-    @Override
-    public int getMaxQueenTurn(Game game)
-    {
-        return 4;
-    }
-    
 }

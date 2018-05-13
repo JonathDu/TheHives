@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.insects;
+package hive.model.game.rules;
 
 import hive.model.board.Cell;
 import hive.model.game.GameState;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Thomas
  */
-public interface InsectBehavior
+public interface MoveRules
 {
     public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell);
 }

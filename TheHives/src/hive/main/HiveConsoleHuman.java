@@ -12,6 +12,8 @@ import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveRules;
 import hive.model.insects.InsectBehavior;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -47,12 +49,11 @@ public class HiveConsoleHuman
         {
             Player player = game.state.turn.getCurrent();
             if (player == game.state.players.get(0))
-            {
                 System.out.println("Joueur 1");
-            } else
-            {
+            else
                 System.out.println("Joueur 2");
-            }
+            
+            System.out.println("Tour " + HiveFunctions.nbTurns(game.state));
 
             assert player.decision instanceof HumanDecision;
             HumanDecision decision = (HumanDecision) player.decision;
@@ -99,7 +100,7 @@ public class HiveConsoleHuman
             } while (insectType == null);
         } while (game.state.turn.getCurrent().collection.get(insectType) <= 0);
         
-        ArrayList<Cell> listPossibleDestinations = game.rules.getPutRules().getPossibleDestinations(game);
+        ArrayList<Cell> listPossibleDestinations = ((HiveRules)game.rules).getPossiblePlacements(game.state, insectType);
         System.out.println("Positions d'arrive possibles :");
         System.out.println(listPossibleDestinations);
         
@@ -119,8 +120,7 @@ public class HiveConsoleHuman
         System.out.println("Position depart : ");
         Vector2i startPos = new Vector2i(sc.nextInt(), sc.nextInt());
         Cell start = new Cell(game.state.board.getHexagon(startPos), game.state.board.getHexagon(startPos).value().size()-1);
-        InsectBehavior behavior = game.rules.getInsectsBehaviors().get(game.state.board.getHexagon(startPos).value().peek().type);
-        ArrayList<Cell> listPossibleDestinations = behavior.getPossibleDestinations(game, start);
+        ArrayList<Cell> listPossibleDestinations = game.rules.getPossibleDestinations(game.state, start);
         System.out.println("Positions d'arrive possibles :");
         
         System.out.println(listPossibleDestinations);

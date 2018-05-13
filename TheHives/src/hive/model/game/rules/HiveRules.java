@@ -6,20 +6,12 @@
 package hive.model.game.rules;
 
 import hive.model.board.Cell;
-import hive.model.board.Cells;
-import hive.model.board.Cell;
+import hive.model.board.Tile;
+import hive.model.game.Game;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
-import hive.model.insects.InsectsBehaviors;
-import hive.model.insects.behaviors.BeetleBehavior;
-import hive.model.insects.behaviors.GrasshopperBehavior;
-import hive.model.insects.behaviors.LadybugBehavior;
-import hive.model.insects.behaviors.MosquitoBehavior;
-import hive.model.insects.behaviors.PillBugBehavior;
-import hive.model.insects.behaviors.QueenBeeBehavior;
-import hive.model.insects.behaviors.SoldierAntBehavior;
-import hive.model.insects.behaviors.SpiderBehavior;
 import hive.model.players.Player;
+import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -30,33 +22,47 @@ import java.util.HashSet;
 public class HiveRules implements Rules
 {
     public HivePutRules put_rules;
-    public InsectsBehaviors behaviors;
+    public HiveMoveRules move_rules;
     
     public HiveRules()
     {
         this.put_rules = new HivePutRules();
-        this.behaviors = new InsectsBehaviors();
-        
-        behaviors.put(InsectType.QUEEN_BEE, new QueenBeeBehavior());
-        behaviors.put(InsectType.SPIDER, new SpiderBehavior());
-        behaviors.put(InsectType.BEETLE, new BeetleBehavior());
-        behaviors.put(InsectType.GRASSHOPPER, new GrasshopperBehavior());
-        behaviors.put(InsectType.SOLDIER_ANT, new SoldierAntBehavior());
-        behaviors.put(InsectType.MOSQUITO, new MosquitoBehavior());
-        behaviors.put(InsectType.LADYBUG, new LadybugBehavior());
-        behaviors.put(InsectType.PILL_BUG, new PillBugBehavior());
+        this.move_rules = new HiveMoveRules();
     }
     
-    @Override
-    public HivePutRules getPutRules()
+    public ArrayList<Cell> getPossiblePlacements(GameState state, InsectType type)
     {
-        return put_rules;
+        if(queenMustBePut(state))
+        {
+            if(type == InsectType.QUEEN_BEE)
+                return getPossiblePlacementsConstantTime(state);
+            else
+                return new ArrayList<>();
+        }
+        else
+            return getPossiblePlacementsConstantTime(state);
     }
-    
+
     @Override
-    public InsectsBehaviors getInsectsBehaviors()
+    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
     {
-        return behaviors;
+        return getPossiblePlacements(state, tile.type);
+    }
+
+    @Override
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    {
+        if(!queenIsPut(state))
+            return new ArrayList<>();
+        if(queenMustBePut(state))
+        {
+            if(cell.getTile().type == InsectType.QUEEN_BEE)
+                return move_rules.getPossibleDestinations(state, cell);
+            else
+                return new ArrayList<>();
+        }
+        else
+            return move_rules.getPossibleDestinations(state, cell);
     }
     
     @Override
@@ -75,6 +81,13 @@ public class HiveRules implements Rules
             return GameStatus.CONTINUES;
     }
     
+    private ArrayList<Cell> getPossiblePlacementsConstantTime(GameState state)
+    {
+        if(state.data.placements == null)
+            state.data.placements = put_rules.getPossiblePlacements(state, null);
+        return state.data.placements;
+    }
+    
     private boolean queenIsSurrounded(GameState state, Player player)
     {
         HashSet<Cell> queen_cells = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
@@ -83,9 +96,24 @@ public class HiveRules implements Rules
         if(!queen_cells.isEmpty())
         {
             assert queen_cells.size() == 1;
-            return Cells.isSurrounded(queen_cells.iterator().next());
+            return HiveFunctions.isSurrounded(queen_cells.iterator().next());
         }
         else
             return false;
+    }
+    
+    private int getMaxQueenTurn()
+    {
+        return 4;
+    }
+    
+    private boolean queenMustBePut(GameState state)
+    {
+        return HiveFunctions.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
+    }
+    
+    private boolean queenIsPut(GameState state)
+    {
+        return !state.data.tiles.get(state.turn.getCurrent().color).get(InsectType.QUEEN_BEE).isEmpty();
     }
 }

@@ -29,7 +29,7 @@ public enum InsectType
     LADYBUG,
     // x1 (Red)
     PILL_BUG;
-    // x1 (Cyan)
+    // x1 (Cyan)// x1 (Cyan)// x1 (Cyan)// x1 (Cyan)
     
     public static final ArrayList<InsectType> implemented_insects;
     public static final ArrayList<InsectType> default_insects;

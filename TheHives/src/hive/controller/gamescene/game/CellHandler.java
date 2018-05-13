@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.gamescene.game;
 
-import hive.model.board.Honeycomb;
-import hive.model.game.Game;
+import hive.controller.gamescene.game.selectors.CellClickedSelector;
+import hive.model.board.Cell;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import util.Vector2i;
 
 /**
  *
@@ -17,14 +16,14 @@ import util.Vector2i;
  */
 public class CellHandler implements EventHandler<MouseEvent>
 {
-    Game game;
-    Honeycomb comb;
+    GameController controller;
+    Cell cell;
     
     
-    public CellHandler(Game game, Vector2i pos)
+    public CellHandler(GameController controller, Cell cell)
     {
-        this.game = game;
-        this.comb = game.state.board.getHexagon(pos);
+        this.controller = controller;
+        this.cell = cell;
     }
     
     @Override
@@ -32,8 +31,7 @@ public class CellHandler implements EventHandler<MouseEvent>
     {
         if(event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            
+            controller.selection.accept(new CellClickedSelector(controller, event));
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -3,15 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game.rules;
+package hive.controller.gamescene;
 
-import hive.model.game.GameState;
+import hive.controller.gamescene.game.GameController;
 
 /**
  *
  * @author Thomas
  */
-public interface Rules extends PutRules, MoveRules
+public class GameSceneController
 {
-    public GameStatus getStatus(GameState state);
+    GameController game_controller;
+    
+    GameSceneSelection selection;
 }

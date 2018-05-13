@@ -6,7 +6,8 @@
 package hive.model.game.rules;
 
 import hive.model.board.Cell;
-import hive.model.game.Game;
+import hive.model.board.Tile;
+import hive.model.game.GameState;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,5 @@ import java.util.ArrayList;
  */
 public interface PutRules
 {
-    public ArrayList<Cell> getPossibleDestinations(Game game);
-    public int getMaxQueenTurn(Game game);
+    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile);
 }

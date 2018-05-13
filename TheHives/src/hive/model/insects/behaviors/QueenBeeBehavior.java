@@ -6,10 +6,11 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.board.Cells;
+import hive.model.game.rules.HiveFunctions;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
+import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
 import util.Iterators;
@@ -23,13 +24,13 @@ import util.hexagons.iterators.NeighborsIterator;
 public class QueenBeeBehavior implements InsectBehavior
 {
     @Override
-    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell)
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
     {
         assert cell.level == 0;
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(Cells.isCrushed(cell) || !Cells.isConnexWithout(cell, game.state.data.nb_combs))
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
             return list;
         
         NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);
@@ -44,7 +45,7 @@ public class QueenBeeBehavior implements InsectBehavior
                 continue;
             
             // the queen must be free to slide
-            if(!Cells.isFreeAtSide(cell, neighbor.from))
+            if(!HiveFunctions.isFreeAtSide(cell, neighbor.from))
                 continue;
             
             // the queen can slide but the queen has to stay connected with other tiles

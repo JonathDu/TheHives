@@ -18,7 +18,7 @@ import hive.model.players.decisions.Decision;
  */
 public class GameProgress
 {
-    Game game;
+    public final Game game;
     
     ActionApplier applier;
     ActionDisapplier disapplier;
