@@ -14,7 +14,7 @@ import java.util.Iterator;
  * @author Thomas
  * @param <E>
  */
-public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
+public class NeighborsIterator<E> implements Iterator<Neighbor<E>>
 {
     Hexagon<E> center;
     boolean clockwise;
@@ -56,10 +56,10 @@ public class NeighborsIterator<E> implements Iterator<Hexagon<E>>
     }
     
     @Override
-    public Hexagon<E> next()
+    public Neighbor<E> next()
     {
         assert hasNext();
-        Hexagon<E> res = center.getNeighbor(current);
+        Neighbor<E> res = new Neighbor<>(center.getNeighbor(current), current);
         current = current != last ? (clockwise ? current.getAfter() : current.getBefore()) : null;
         return res;
     }

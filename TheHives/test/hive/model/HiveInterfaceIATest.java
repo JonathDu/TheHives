@@ -194,7 +194,7 @@ public class HiveInterfaceIATest
         
         System.out.println(game.state.board);
         
-        assert game.state.board.getHexagon(new Vector2i(0,0)).getValue().peek().type == InsectType.BEETLE;
+        assert game.state.board.getHexagon(new Vector2i(0,0)).value().peek().type == InsectType.BEETLE;
     }
 
     @Test

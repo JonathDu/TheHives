@@ -5,8 +5,6 @@
  */
 package hive.model.game.utildata;
 
-import hive.model.board.Board;
-
 /**
  *
  * @author Thomas

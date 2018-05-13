@@ -71,7 +71,7 @@ public class HexagonsIteratorsTest
         int i = 0;
         while (lineIterator.hasNext() && i++ < nbElem)
         {
-            chaineObtenue += lineIterator.next().getValue().toString() + " ";
+            chaineObtenue += lineIterator.next().value().toString() + " ";
         }
         assert chaineObtenue.equals(chaineAttendu);
         System.out.println("ok");
@@ -105,7 +105,7 @@ public class HexagonsIteratorsTest
         
         while (neighIterator.hasNext())
         {
-            chaineObtenue += neighIterator.next().getValue().toString() + " ";
+            chaineObtenue += neighIterator.next().hexagon.value().toString() + " ";
         }
         
         Assert.assertEquals(chaineAttendue, chaineObtenue);

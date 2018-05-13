@@ -10,7 +10,6 @@ import hive.model.board.Cell;
 import hive.model.board.Cells;
 import hive.model.board.Honeycomb;
 import hive.model.game.Game;
-import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import util.Vector2i;
 import util.hexagons.iterators.NeighborsIterator;
@@ -39,7 +38,7 @@ public class HivePutRules implements PutRules
             // return center neighbors
             NeighborsIterator neighbors = new NeighborsIterator(game.state.board.getCenter());
             while(neighbors.hasNext())
-                list.add(new Cell((Honeycomb)neighbors.next()));
+                list.add(new Cell((Honeycomb)neighbors.next().hexagon));
             return list;
         }
         
@@ -49,7 +48,7 @@ public class HivePutRules implements PutRules
             for(int x = 0; x < board.getData().sizeX(); ++x)
             {
                 Honeycomb comb = board.getHexagon(new Vector2i(x, y));
-                if(comb.stack().isEmpty() && Cells.hasNeighbors(comb) && Cells.neighborsHaveSameColor(comb, game.state.turn.getCurrent().color))
+                if(comb.value().isEmpty() && Cells.hasNeighbors(comb) && Cells.neighborsHaveSameColor(comb, game.state.turn.getCurrent().color))
                     list.add(new Cell(comb));
             }
         }

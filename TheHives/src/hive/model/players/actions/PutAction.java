@@ -28,4 +28,10 @@ public class PutAction implements Action
     {
         visitor.visit(this);
     }
+    
+    @Override
+    public String toString()
+    {
+        return "(" + tile + " put at " + where + ")";
+    }
 }
