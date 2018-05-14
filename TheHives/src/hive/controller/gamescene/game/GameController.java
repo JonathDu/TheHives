@@ -5,8 +5,6 @@
  */
 package hive.controller.gamescene.game;
 
-import hive.controller.gamescene.game.selections.GameSelection;
-import hive.controller.gamescene.game.selections.NoGameSelection;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 
@@ -16,13 +14,18 @@ import hive.model.game.Game;
  */
 public class GameController
 {
+    // model
     public GameProgress progress;
     
-    public GameSelection selection;
+    // interface
     
-    public GameController(Game game)
+    // controller
+    public ActionBuilder builder;
+    
+    
+    public GameController(Game game) // TODO +interface parameter
     {
         this.progress = new GameProgress(game);
-        this.selection = new NoGameSelection();
+        this.builder = new ActionBuilder();
     }
 }

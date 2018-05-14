@@ -5,7 +5,9 @@
  */
 package hive.controller.gamescene;
 
+import hive.controller.gamescene.game.ActionBuilder;
 import hive.controller.gamescene.game.GameController;
+import hive.model.GameProgress;
 
 /**
  *
@@ -13,7 +15,15 @@ import hive.controller.gamescene.game.GameController;
  */
 public class GameSceneController
 {
-    GameController game_controller;
+    // model
     
-    GameSceneSelection selection;
+    // interface
+    
+    // controller
+    public GameController controller;
+    
+    public GameSceneController()
+    {
+        this.controller = new GameController(null); // TODO
+    }
 }

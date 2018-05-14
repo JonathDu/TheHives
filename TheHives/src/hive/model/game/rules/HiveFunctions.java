@@ -164,7 +164,7 @@ public class HiveFunctions
     
     public static int nbTurns(GameState state)
     {
-        return state.trace.size() / state.players.size() + 1;
+        return state.data.trace.size() / state.players.size() + 1;
     }
 }
 
