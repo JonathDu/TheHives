@@ -43,8 +43,8 @@ public class InterfacePlateau extends Parent {
 
         StackPane centerPane = new StackPane();
 
-        InterfaceRuche ruche = new InterfaceRuche(c);
-
+        InterfaceRuche ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight());
+        
 
 
         AnchorPane.setTopAnchor(centerPane, 13.0);

@@ -27,8 +27,10 @@ import util.Vector2i;
  */
 public class TheHives extends Application {
 
+    /* le minimum est 400 et 600 */
+    
     public int HEIGHT = 600;
-    public int WIDTH = 800;
+    public int WIDTH = 600;
     Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
     //int HEIGHT = (int) dimension.getHeight();
     //int WIDTH  = (int)dimension.getWidth();
@@ -44,18 +46,14 @@ public class TheHives extends Application {
         PlayerCollection player = new PlayerCollection();
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
         root = new Group();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
+        
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
+        primaryStage.setMaxHeight((int) dimension.getHeight());
+        primaryStage.setMaxWidth((int)dimension.getWidth());
         //goToPlateau("Joueur1", "Joueur2");
         goToMenu();
 

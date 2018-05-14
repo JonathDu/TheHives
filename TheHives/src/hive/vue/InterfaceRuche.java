@@ -21,10 +21,18 @@ public class InterfaceRuche extends Parent {
     private final Matrix<InterfaceCell> tab;
     private final int largeur = 24;
     private final int hauteur = 10;
-    private int longueurPion = 40;
-    private int largeurPion = (int) (longueurPion / 1.4);
+    private int longueurPion;// = 40;
+    private int largeurPion;// = (int) (longueurPion / 1.4);
+    int width, height;
 
-    public InterfaceRuche(CacheImage c) {
+    public InterfaceRuche(CacheImage c, int width, int height) {
+        this.width = width;
+        this.height = height;
+        
+        
+        longueurPion = width/60;
+        largeurPion = (int) (longueurPion / 1.4);
+                
         tab = new Matrix<>(hauteur, largeur);
         for (int i = 0; i < largeur; i++) {
             for (int j = 0; j < hauteur; j++) {

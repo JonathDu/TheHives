@@ -58,10 +58,10 @@ public class InterfaceMenu extends Parent{
         Group NG = new Group();
         StackPane NewGame = new StackPane();
         ImageView caseImNG = new ImageView(imageCase);
-        caseImNG.setFitHeight(width/5);
-        caseImNG.setFitWidth(width/5);
+        caseImNG.setFitHeight(width/4);
+        caseImNG.setFitWidth(width/4);
         Label newGame = new Label("Nouvelle partie");
-        newGame.setFont(new Font("Arial", width/45));
+        newGame.setFont(new Font("Copperplate", width/45));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(caseImNG);
         NewGame.getChildren().add(newGame);
@@ -90,15 +90,15 @@ public class InterfaceMenu extends Parent{
         Group CP = new Group();
         StackPane ChargerPartie = new StackPane();
         ImageView caseImCP = new ImageView(imageCase);
-        caseImCP.setFitHeight(tailleDeCase);
-        caseImCP.setFitWidth(tailleDeCase);
+        caseImCP.setFitHeight(tailleDeCase+width/24);
+        caseImCP.setFitWidth(tailleDeCase+width/24);
         Label chargerPartie = new Label("Charger partie");
-        chargerPartie.setFont(new Font("Arial", tailleDeCase/8));
+        chargerPartie.setFont(new Font("Copperplate", tailleDeCase/8));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(caseImCP);
         ChargerPartie.getChildren().add(chargerPartie);
         ChargerPartie.setLayoutX(width/2);
-        ChargerPartie.setLayoutY(height/12);
+        ChargerPartie.setLayoutY(height/14);
         CP.getChildren().add(ChargerPartie);
         ImageView beeImCP = new ImageView(imageBee);
         beeImCP.setFitHeight(tailleDeCase/2);
@@ -125,7 +125,7 @@ public class InterfaceMenu extends Parent{
         caseImS.setFitHeight(tailleDeCase);
         caseImS.setFitWidth(tailleDeCase);
         Label statistiques = new Label("Statistiques");
-        statistiques.setFont(new Font("Arial", tailleDeCase/8));
+        statistiques.setFont(new Font("Copperplate", tailleDeCase/8));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(caseImS);
         Statistiques.getChildren().add(statistiques);
@@ -157,7 +157,7 @@ public class InterfaceMenu extends Parent{
         caseImC.setFitHeight(tailleDeCase);
         caseImC.setFitWidth(tailleDeCase);
         Label credits = new Label("Crédits");
-        credits.setFont(new Font("Arial", tailleDeCase/8));
+        credits.setFont(new Font("Copperplate", tailleDeCase/8));
         credits.setAlignment(CENTER);
         Credits.getChildren().add(caseImC);
         Credits.getChildren().add(credits);
@@ -243,6 +243,7 @@ public class InterfaceMenu extends Parent{
                 Sortie.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                     System.out.println("Sortie ! ");
                     //i.accueil();
+                    Platform.exit();
                 });
                 Cases.getChildren().add(Sortie);
             }
@@ -338,7 +339,7 @@ public class InterfaceMenu extends Parent{
                 caseImR.setFitHeight(tailleDeCase2);
                 caseImR.setFitWidth(tailleDeCase2);
                 Label regles = new Label("Règles");
-                regles.setFont(new Font("Arial", tailleDeCase/8));
+                regles.setFont(new Font("Copperplate", tailleDeCase/8));
                 regles.setAlignment(CENTER);
                 Regles.getChildren().add(caseImR);
                 Regles.getChildren().add(regles);
