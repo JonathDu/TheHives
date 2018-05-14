@@ -44,12 +44,12 @@ public class InterfaceRuche extends Parent {
         this.setOnScroll((event) -> {
 
             if (event.getDeltaY() < 0 && longueurPion > 10) {
-                longueurPion = longueurPion - 10;
+                longueurPion = longueurPion - 3;
                 largeurPion = (int) (longueurPion / 1.4);
                 majTaille();
             }
             else if (event.getDeltaY() > 0 && longueurPion < 80) {
-                longueurPion = longueurPion + 10;
+                longueurPion = longueurPion + 3;
                 largeurPion = (int) (longueurPion / 1.4);
                 majTaille();
             }
