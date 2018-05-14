@@ -27,7 +27,7 @@ public interface InterfaceIA
     public ArrayList<Action> currentPlayerPossibilities(Game game);
     public ArrayList<Tile> freeTiles(Game game, Player p);
     public void doAction(Game game, Action action);
-    public void undoAction(Game game);
+    public Action undoAction(Game game);
     public ArrayList<Decision> startSimulation(Game game);
     public void endSimulation(Game game, ArrayList<Decision> decisions);
 }

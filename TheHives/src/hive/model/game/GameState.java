@@ -20,16 +20,14 @@ public class GameState
     public Players players;
     public PlayerTurn turn;
     
-    public ActionsTrace trace;
     public PrecalculatedData data;
     
-    public GameState(Board board, Players players, PlayerTurn turn, ActionsTrace trace, PrecalculatedData data)
+    public GameState(Board board, Players players, PlayerTurn turn, PrecalculatedData data)
     {
         this.board = board;
         this.players = players;
         this.turn = turn;
         
-        this.trace = trace;
         this.data = data;
     }
 }

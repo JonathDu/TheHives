@@ -40,7 +40,7 @@ public class GameProgress
     
     public void undoAction()
     {
-        Action action = game.state.trace.peek();
+        Action action = game.state.data.trace.peek();
         action.accept(disapplier);
     }
 }
