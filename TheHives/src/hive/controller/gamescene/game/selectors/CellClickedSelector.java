@@ -55,11 +55,13 @@ public class CellClickedSelector implements GameSelector
         {
         case BEGIN:
             // code here
+            selection.source = null;
+            selection.state = MoveActionSelection.State.SOURCE_SELECTED;
             break;
         case SOURCE_SELECTED:
             // code here
             break;
-        case DESINATION_SELECTED:
+        case DESTINATION_SELECTED:
             // impossible
             break;
         case END:
