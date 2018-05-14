@@ -7,6 +7,7 @@ package hive.main;
 
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
+import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
@@ -19,6 +20,10 @@ import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.HumanDecision;
+import hive.model.players.decisions.IADecision;
+import static hive.model.players.decisions.Level.EASY;
+import static hive.model.players.decisions.Level.HARD;
+import static hive.model.players.decisions.Level.MEDIUM;
 import java.util.ArrayList;
 import java.util.Scanner;
 import util.Vector2i;
@@ -38,11 +43,11 @@ public class HiveConsoleIA
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = DefaultGame.get(new HumanDecision(), new HumanDecision());
+        Game game = DefaultGame.get(new IADecision(MEDIUM), new IADecision(HARD));
         
         
         GameProgress progress = new GameProgress(game);
-
+        
         Scanner sc = new Scanner(System.in);
         int i = 0;
         while (game.rules.getStatus(game.state) == GameStatus.CONTINUES)

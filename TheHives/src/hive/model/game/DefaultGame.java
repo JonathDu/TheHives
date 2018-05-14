@@ -53,8 +53,8 @@ public class DefaultGame
         
         collection.put(InsectType.QUEEN_BEE, 1);
         collection.put(InsectType.SPIDER, 2);
-        collection.put(InsectType.BEETLE, 2);
-        collection.put(InsectType.GRASSHOPPER, 3);
+        collection.put(InsectType.BEETLE, 5);
+        collection.put(InsectType.GRASSHOPPER, 8);
         collection.put(InsectType.SOLDIER_ANT, 3);
         collection.put(InsectType.MOSQUITO, 1);
         collection.put(InsectType.LADYBUG, 1);
