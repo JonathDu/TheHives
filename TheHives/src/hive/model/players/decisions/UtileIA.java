@@ -10,7 +10,6 @@ import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
-import hive.model.players.actions.NoAction;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
@@ -36,11 +35,11 @@ public class UtileIA {
             value = insectsValue(currentFreeTile);
             ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
             value -= insectsValue(opponentFreeTile);
-            value +=evalFreeQueen( state);
+            value +=evalQueen( state);
         }
         return value;
     }
-    static int evaluationOpponent(Game state, int currentNeighbours){
+    static int evaluationOpponent(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
         Player opponent = hia.opponentPlayer(state);
@@ -56,7 +55,7 @@ public class UtileIA {
             value = -(insectsValue(currentFreeTile));
             ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
             value += insectsValue(opponentFreeTile);
-            value -=evalQueen( state, currentNeighbours);
+            value -=evalQueen( state);
         }
         return value;
     }
@@ -115,13 +114,17 @@ public class UtileIA {
         }
     }
     
-    static int evalFreeQueen( Game state, int currentNeighbours){
+    static int evalQueen( Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
-        int currentNeighbour = hia.queenFreeNeighbour(current, state);
-        int opponentNeighbour = hia.queenFreeNeighbour(opponent, state);
-        return (opponentNeighbour-currentNeighbour)*10;
+        int afterCurrentNeighbour = hia.queenFreeNeighbour(current, state);
+        int afterOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
+        Action hello = hia.undoAction(state);
+        int beforeCurrentNeighbour = hia.queenFreeNeighbour(current, state);
+        int beforeOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
+        hia.doAction(state, hello);
+        return ((afterOpponentNeighbour-beforeOpponentNeighbour)-(currentNeighbour))*50;
     }
     
     static int insectsValue(ArrayList<Tile> freeTile){
