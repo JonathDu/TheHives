@@ -19,7 +19,7 @@ public class MoveActionSelection implements ActionSelection
     {
         BEGIN,
         SOURCE_SELECTED,
-        DESINATION_SELECTED,
+        DESTINATION_SELECTED,
         END;
     }
     

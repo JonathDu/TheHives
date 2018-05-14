@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -63,8 +64,7 @@ public class HiveInterfaceIA implements InterfaceIA
     public int queenFreeNeighbour(Player p, Game game)
     {
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        if(queen_positions.isEmpty())
-            return 0;
+        assert queen_positions.size() == 1;
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
@@ -121,16 +121,16 @@ public class HiveInterfaceIA implements InterfaceIA
     @Override
     public ArrayList<Tile> freeTiles(Game game, Player p)
     {
-        ArrayList<Tile> tiles = new ArrayList<>();
-        for (InsectType type : InsectType.implemented_insects)
+        ArrayList<Tile> free_tiles = new ArrayList<>();
+        for(InsectType type : InsectType.implemented_insects)
         {
-            for (int i = 0; i < p.collection.get(type); i++)
-            {
-                Tile tile = new Tile(type, p.color);
-                tiles.add(tile);
-            }
+            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
+            Iterator<Cell> it = sources.iterator();
+            while(it.hasNext())  
+                free_tiles.add(it.next().getTile());
+            
         }
-        return tiles;
+        return free_tiles;
     }
 
     @Override

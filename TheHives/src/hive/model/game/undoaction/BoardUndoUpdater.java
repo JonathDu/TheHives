@@ -37,8 +37,6 @@ public class BoardUndoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        System.out.println("    " + action);
-        TilesStack stack = action.destination.comb.value();
         Tile t = action.destination.comb.value().remove(action.destination.level);
         action.source.comb.value().add(action.source.level, t);
     }
