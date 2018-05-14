@@ -26,7 +26,6 @@ public class ActionDisapplier implements ActionVisitor
     {
         this.player_undo = new PlayerUndoUpdater(state.turn);
         this.algo_undo = new PrecalculatedDataUndoUpdater(state.data);
-        this.trace_undo = new TraceUndoUpdater(state.trace);
         this.board_undo = new BoardUndoUpdater(state.board);
     }
 
@@ -35,7 +34,6 @@ public class ActionDisapplier implements ActionVisitor
     {
         action.accept(player_undo);
         action.accept(algo_undo);
-        action.accept(trace_undo);
         action.accept(board_undo);
     }
 
@@ -44,7 +42,6 @@ public class ActionDisapplier implements ActionVisitor
     {
         action.accept(player_undo);
         action.accept(algo_undo);
-        action.accept(trace_undo);
         action.accept(board_undo);
     }
 

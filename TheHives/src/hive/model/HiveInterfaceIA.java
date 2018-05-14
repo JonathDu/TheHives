@@ -141,10 +141,11 @@ public class HiveInterfaceIA implements InterfaceIA
     }
 
     @Override
-    public void undoAction(Game game)
+    public Action undoAction(Game game)
     {
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.undoAction();
+        return game.state.data.last_undo;
     }
     
     @Override

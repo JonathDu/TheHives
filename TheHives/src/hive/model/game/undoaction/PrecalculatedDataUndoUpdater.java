@@ -37,6 +37,12 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // nb_combs (according to hive put rules (tiles put at level 0))
         data.nb_combs -= 1;
         
+        // last
+        data.last_undo = data.trace.peek();
+        
+        // trace
+        data.trace.pop();
+        
         // placements
         data.placements = null;
     }
@@ -58,6 +64,12 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         else if(action.source.comb.value().size() > 1 && action.destination.comb.value().size() == 0)
             data.nb_combs -= 1;
         
+        // last
+        data.last_undo = data.trace.peek();
+        
+        // trace
+        data.trace.pop();
+        
         // placements
         data.placements = null;
     }
@@ -70,6 +82,12 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // nb_tiles
         
         // nb_combs
+        
+        // last
+        data.last_undo = data.trace.peek();
+        
+        // trace
+        data.trace.pop();
         
         // placements
         data.placements = null;
