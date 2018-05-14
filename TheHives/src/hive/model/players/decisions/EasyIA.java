@@ -21,9 +21,6 @@ public class EasyIA implements IA{
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
-        actionList.forEach((a) -> {
-            System.out.println(a);
-        });
         if(actionList.isEmpty()){
             return new NoAction();
         }
@@ -34,14 +31,12 @@ public class EasyIA implements IA{
             hia.doAction(state, currentAction);
             if(hia.winCurrent(state)){
                 hia.undoAction(state);
-                System.out.println(currentAction);
                 return currentAction;
             }
             else if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 actionList.remove(i);
                 if(actionList.isEmpty()){
-                    System.out.println(currentAction);
                     return currentAction;
                 }
             }

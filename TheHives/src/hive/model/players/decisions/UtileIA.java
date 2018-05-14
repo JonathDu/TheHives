@@ -63,7 +63,7 @@ public class UtileIA {
     static int miniMaxCurrentPlayer(Game state, int depth, int min){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
-            return evaluationCurrentPlayer(state);
+            return evaluationOpponent(state);
         }
         else{
             int vMax = -50000;

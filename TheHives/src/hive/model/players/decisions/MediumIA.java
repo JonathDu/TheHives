@@ -31,7 +31,7 @@ public class MediumIA implements IA{
         while(i<actionList.size()){
             currentAction = actionList.get(i);
             hia.doAction(state, currentAction);
-            res = UtileIA.evaluationOpponent(state);
+            res = UtileIA.evaluationCurrentPlayer(state);
             if(hia.winCurrent(state)){
                 hia.undoAction(state);
                 return currentAction;
@@ -52,7 +52,7 @@ public class MediumIA implements IA{
         Random rnd = new Random();
         currentAction = actionList.get(rnd.nextInt(actionList.size()));
         hia.doAction(state, currentAction);
-        while(UtileIA.evaluationOpponent(state)<(value/nbValue)){
+        while(UtileIA.evaluationCurrentPlayer(state)<(value/nbValue)){
             hia.undoAction(state);
             currentAction = actionList.get(rnd.nextInt(actionList.size()));
             hia.doAction(state, currentAction);
