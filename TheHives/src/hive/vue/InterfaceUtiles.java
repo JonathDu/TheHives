@@ -19,9 +19,9 @@ import hive.thehives.TheHives;
  *
  * @author Adeline
  */
-class InterfaceUtiles extends Parent{
+public class InterfaceUtiles extends Parent{
 
-    InterfaceUtiles(int height, int width, Stage primaryStage, TheHives i) {
+    public InterfaceUtiles(int height, int width, Stage primaryStage, TheHives i) {
         Image imageCase = new Image(getClass().getResourceAsStream("rsc/images/case.png"));
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
