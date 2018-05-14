@@ -30,10 +30,10 @@ public class InterfacePlateau extends Parent {
 
         StackPane centerPane = new StackPane();
 
-        InterfaceRuche ruche = new InterfaceRuche(c);
-        ruche.layout();
+        InterfaceRuche ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight());
+
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
-        
+
         ruche.isResizable();
         centerPane.getChildren().add(ruche);
 
@@ -44,5 +44,5 @@ public class InterfacePlateau extends Parent {
         this.getChildren().add(pane);
     }
 
-    
+
 }
