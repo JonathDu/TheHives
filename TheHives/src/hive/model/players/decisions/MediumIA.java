@@ -8,6 +8,7 @@ package hive.model.players.decisions;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import hive.model.players.actions.NoAction;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,6 +22,9 @@ public class MediumIA implements IA{
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+        if(actionList.isEmpty()){
+            return new NoAction();
+        }
         int value=0, nbValue=0, res;
         Action currentAction;
         int i=0;

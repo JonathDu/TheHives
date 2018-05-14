@@ -10,6 +10,7 @@ import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
+import hive.model.players.actions.NoAction;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
@@ -69,14 +70,19 @@ public class UtileIA {
             ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
             int tmp;
             Action currentAction;
-            while(!actionList.isEmpty()){
-                currentAction = actionList.remove(0);
-                hia.doAction(state,currentAction);
-                tmp = miniMaxOpponent(state, depth-1, vMax);
-                hia.undoAction(state);
-                vMax = max(tmp,vMax);
-                if(vMax > min)
-                    return vMax;
+            if(actionList.isEmpty()){
+                vMax=max(miniMaxOpponent(state, depth-1, vMax),vMax);
+            }
+            else{
+                while(!actionList.isEmpty()){
+                    currentAction = actionList.remove(0);
+                    hia.doAction(state,currentAction);
+                    tmp = miniMaxOpponent(state, depth-1, vMax);
+                    hia.undoAction(state);
+                    vMax = max(tmp,vMax);
+                    if(vMax > min)
+                        return vMax;
+                }
             }
             return vMax;
         }
@@ -91,14 +97,19 @@ public class UtileIA {
             ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
             int tmp;
             Action currentAction;
-            while(!actionList.isEmpty()){
-                currentAction = actionList.remove(0);
-                hia.doAction(state,currentAction);
-                tmp = miniMaxOpponent(state, depth-1, vMin);
-                hia.undoAction(state);
-                vMin = min(tmp,vMin);
-                if(vMin < max)
-                    return vMin;
+            if(actionList.isEmpty()){
+                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin),vMin);
+            }
+            else{
+                while(!actionList.isEmpty()){
+                    currentAction = actionList.remove(0);
+                    hia.doAction(state,currentAction);
+                    tmp = miniMaxOpponent(state, depth-1, vMin);
+                    hia.undoAction(state);
+                    vMin = min(tmp,vMin);
+                    if(vMin < max)
+                        return vMin;
+                }
             }
             return vMin;
         }
