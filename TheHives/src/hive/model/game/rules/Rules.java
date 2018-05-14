@@ -6,15 +6,12 @@
 package hive.model.game.rules;
 
 import hive.model.game.GameState;
-import hive.model.insects.InsectsBehaviors;
 
 /**
  *
  * @author Thomas
  */
-public interface Rules
+public interface Rules extends PutRules, MoveRules
 {
-    public PutRules getPutRules();
-    public InsectsBehaviors getInsectsBehaviors();
     public GameStatus getStatus(GameState state);
 }

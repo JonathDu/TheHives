@@ -22,11 +22,12 @@ public interface InterfaceIA
     public Player opponentPlayer(Game game);
     public boolean winCurrent(Game game);
     public boolean winOpponent(Game game);
+    public boolean winBoth(Game game);
     public int queenFreeNeighbour(Player p, Game game);
     public ArrayList<Action> currentPlayerPossibilities(Game game);
     public ArrayList<Tile> freeTiles(Game game, Player p);
     public void doAction(Game game, Action action);
-    public void undoAction(Game game);
+    public Action undoAction(Game game);
     public ArrayList<Decision> startSimulation(Game game);
     public void endSimulation(Game game, ArrayList<Decision> decisions);
 }

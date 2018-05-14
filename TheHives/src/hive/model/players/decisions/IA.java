@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.model.players.decisions;
+
+import hive.model.game.Game;
+import hive.model.players.actions.Action;
 
 /**
  *
- * @author Thomas
+ * @author Coralie
  */
-public enum ActivityEventType
-{
-    START,
-    PAUSE,
-    STOP;
+public interface IA {
+    public Action SearchAction(Game state);
 }
