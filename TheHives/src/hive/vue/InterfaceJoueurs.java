@@ -25,6 +25,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import hive.thehives.TheHives;
+import javafx.event.EventHandler;
 
 /**
  *
@@ -56,14 +57,16 @@ public class InterfaceJoueurs extends Parent{
 
         //Image imageIA = new Image("vue/rsc/images/ai1.png");
         Image imageIA = new Image("hive/vue/rsc/images/ai2.png");
-
+        
+        int maxJoueur = width/2;
+        int minJoueur = maxJoueur/2;
         Group J1 =new Group();
         Label joueur1 = new Label("Joueur 1");
-        joueur1.setFont(new Font("Arial", tailleDeCase/3));
+        joueur1.setFont(new Font("Copperplate", maxJoueur/10));
         joueur1.setAlignment(Pos.CENTER);
-        joueur1.setMinSize(width/10, 30);
-        joueur1.setMaxSize(width/5, 70);
-        joueur1.setPrefSize(tailleDeCase/3*4, 50);
+        joueur1.setMinSize(minJoueur, 30);
+        joueur1.setMaxSize(maxJoueur, 70);
+        //joueur1.setPrefSize(tailleDeCase/3*5, 50);
         joueur1.setLayoutX(width/2-tailleDeCase/3*2);
         joueur1.setLayoutY(height/6);
         this.getChildren().add(joueur1);
@@ -73,9 +76,9 @@ public class InterfaceJoueurs extends Parent{
         humain1.setUserData("Humain");
         ImageView humainIm1 = new ImageView(imageHumain);
         humainIm1.setFitHeight(width/10);
-        humainIm1.setFitWidth(width/12);
+        humainIm1.setFitWidth(width/10);
         humain1.setGraphic(humainIm1);
-        humain1.setFont(new Font("Arial", tailleDeCase/5));
+        humain1.setFont(new Font("Copperplate", tailleDeCase/5));
         humain1.setLayoutX(width/2-width/4);
         humain1.setLayoutY(height/4);
         //humain1.setPrefSize(tailleDeCase/2, tailleDeCase/2);
@@ -87,12 +90,13 @@ public class InterfaceJoueurs extends Parent{
         IAIm1.setFitHeight(width/10);
         IAIm1.setFitWidth(width/10);
         IA1.setGraphic(IAIm1);
-        IA1.setFont(new Font("Arial", tailleDeCase/5));
+        IA1.setFont(new Font("Copperplate", tailleDeCase/5));
         IA1.setLayoutX(width/2+width/4-width/10);
         IA1.setLayoutY(height/4);
         IA1.setToggleGroup(j1);
 
         Name1.setPromptText("Votre prenom");
+        Name1.setText(null);
         final ToggleGroup ia1 = new ToggleGroup();
 
         j1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -122,7 +126,7 @@ public class InterfaceJoueurs extends Parent{
                         est_ai1=1;
                         ToggleButton facile = new RadioButton("Facile");
                         facile.setUserData("facile");
-                        facile.setFont(new Font("Arial", tailleDeCase/9));
+                        facile.setFont(new Font("Copperplate", tailleDeCase/7));
                         facile.setLayoutX(width/2-width/4);
                         facile.setLayoutY(height/4+width/9);
                         facile.setMinSize(width/10, 30);
@@ -130,7 +134,7 @@ public class InterfaceJoueurs extends Parent{
                         facile.setToggleGroup(ia1);
                         ToggleButton moyenne = new RadioButton("Moyenne");
                         moyenne.setUserData("moyenne");
-                        moyenne.setFont(new Font("Arial", tailleDeCase/9));
+                        moyenne.setFont(new Font("Copperplate", tailleDeCase/7));
                         moyenne.setLayoutX(width/2);
                         moyenne.setLayoutY(height/4+width/9);
                         moyenne.setMinSize(width/10, 30);
@@ -138,7 +142,7 @@ public class InterfaceJoueurs extends Parent{
                         moyenne.setToggleGroup(ia1);
                         ToggleButton difficile = new RadioButton("Difficile");
                         difficile.setUserData("difficile");
-                        difficile.setFont(new Font("Arial", tailleDeCase/9));
+                        difficile.setFont(new Font("Copperplate", tailleDeCase/7));
                         difficile.setLayoutX(width/2+width/4);
                         difficile.setLayoutY(height/4+width/9);
                         difficile.setMinSize(width/10, 30);
@@ -165,41 +169,46 @@ public class InterfaceJoueurs extends Parent{
         J1.getChildren().add(IA1);
         this.getChildren().add(J1);
 
+        
+        
         Group J2 =new Group();
         Label joueur2 = new Label("Joueur 2");
-        joueur2.setFont(new Font("Arial", tailleDeCase/3));
-        joueur2.setPrefSize(tailleDeCase/3*8, 50);
+        joueur2.setFont(new Font("Copperplate", maxJoueur/10));
         joueur2.setAlignment(Pos.CENTER);
-        joueur2.setMinSize(width/10, 30);
-        joueur2.setMaxSize(width/5, 70);
+        joueur1.setMinSize(width/10, 30);
+        joueur1.setMaxSize(maxJoueur, 70);
+        //joueur2.setPrefSize(tailleDeCase/3*5, 50);
         joueur2.setLayoutX(width/2-tailleDeCase/3*2);
         joueur2.setLayoutY(height/2);
         this.getChildren().add(joueur2);
         final ToggleGroup j2 = new ToggleGroup();
-        //RadioButton humain2 = new RadioButton("Humain");
-        RadioButton humain2 = new RadioButton("");
-        humain2.setUserData("Humain");
+        //ToggleButton humain1 = new RadioButton("Humain");
+        ToggleButton humain2 = new RadioButton("");
+        humain1.setUserData("Humain");
         ImageView humainIm2 = new ImageView(imageHumain);
         humainIm2.setFitHeight(width/10);
-        humainIm2.setFitWidth(width/12);
+        humainIm2.setFitWidth(width/10);
         humain2.setGraphic(humainIm2);
-        humain2.setFont(new Font("Arial", tailleDeCase/9));
+        humain2.setFont(new Font("Copperplate", tailleDeCase/5));
         humain2.setLayoutX(width/2-width/4);
         humain2.setLayoutY(height/1.8);
+        //humain1.setPrefSize(tailleDeCase/2, tailleDeCase/2);
         humain2.setToggleGroup(j2);
-        //RadioButton IA2 = new RadioButton("IA");
-        RadioButton IA2 = new RadioButton("");
-        humain2.setUserData("IA2");
+        //ToggleButton IA1 = new RadioButton("IA");
+        ToggleButton IA2 = new RadioButton("");
+        IA2.setUserData("IA");
         ImageView IAIm2 = new ImageView(imageIA);
         IAIm2.setFitHeight(width/10);
         IAIm2.setFitWidth(width/10);
         IA2.setGraphic(IAIm2);
-        IA2.setFont(new Font("Arial", tailleDeCase/9));
-        IA2.setLayoutX(width/2+width/4-width/12);
+        IA2.setFont(new Font("Copperplate", tailleDeCase/5));
+        IA2.setLayoutX(width/2+width/4-width/10);
         IA2.setLayoutY(height/1.8);
         IA2.setToggleGroup(j2);
+        
         Name2.setPromptText("Votre prenom");
-
+        Name2.setText(null);
+        
         final ToggleGroup ia2 = new ToggleGroup();
 
 
@@ -235,7 +244,7 @@ public class InterfaceJoueurs extends Parent{
                         est_ai2=1;
                         RadioButton facile = new RadioButton("Facile");
                         facile.setUserData("facile");
-                        facile.setFont(new Font("Arial", tailleDeCase/9));
+                        facile.setFont(new Font("Copperplate", tailleDeCase/7));
                         facile.setLayoutX(width/2-width/4);
                         facile.setLayoutY(height/1.8+width/9);
                         facile.setMinSize(width/10, 30);
@@ -243,7 +252,7 @@ public class InterfaceJoueurs extends Parent{
                         facile.setToggleGroup(ia2);
                         RadioButton moyenne = new RadioButton("Moyenne");
                         moyenne.setUserData("moyenne");
-                        moyenne.setFont(new Font("Arial", tailleDeCase/9));
+                        moyenne.setFont(new Font("Copperplate", tailleDeCase/7));
                         moyenne.setLayoutX(width/2);
                         moyenne.setLayoutY(height/1.8+width/9);
                         moyenne.setMinSize(width/10, 30);
@@ -251,7 +260,7 @@ public class InterfaceJoueurs extends Parent{
                         moyenne.setToggleGroup(ia2);
                         RadioButton difficile = new RadioButton("Difficile");
                         difficile.setUserData("difficile");
-                        difficile.setFont(new Font("Arial", tailleDeCase/9));
+                        difficile.setFont(new Font("Copperplate", tailleDeCase/7));
                         difficile.setLayoutX(width/2+width/4);
                         difficile.setLayoutY(height/1.8+width/9);
                         difficile.setMinSize(width/10, 30);
@@ -286,26 +295,42 @@ public class InterfaceJoueurs extends Parent{
 
         //DropShadow shadow = new DropShadow();
         Button valider = new Button("Valider");
+        
+        valider.setFont(new Font("Copperplate", minJoueur/15));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);
         });
         valider.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event) -> {
             valider.setEffect(null);
         });
-        valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-
-            System.out.println("Enregistrer ! ");
-            System.out.println("Name1 : " + Name1.getCharacters());
-            System.out.println("IA1 : " + versionIA1);
-            System.out.println("Name2 : " + Name2.getCharacters());
-            System.out.println("IA2 : " + versionIA2);
-
-
-            i.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
+        valider.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                System.out.println("Enregistrer ! ");
+                System.out.println("Name1 : " + Name1.getCharacters());
+                System.out.println("IA1 : " + versionIA1);
+                System.out.println("Name2 : " + Name2.getCharacters());
+                System.out.println("IA2 : " + versionIA2);
+                String joueur_1, joueur_2;
+                if(Name1.getText()!=null){
+                    joueur_1 = Name1.getCharacters().toString();
+                }
+                else{
+                    joueur_1 = versionIA1;
+                }   
+                if(Name2.getText()!=null){
+                    joueur_2 = Name2.getCharacters().toString();
+                }
+                else{
+                    joueur_2 = versionIA2;
+                }   //i.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
+                i.goToPlateau(joueur_1, joueur_2);
+            }
         });
-        valider.setLayoutX(width/2-width/20);
-        valider.setLayoutY(height/1.3);
-        valider.setMinSize(width/10, 30);
+        valider.setLayoutX(width/2-maxJoueur/40);
+        valider.setLayoutY(height-minJoueur/2);
+        valider.setMinSize(minJoueur/15*7, minJoueur/15);
+        valider.setMaxSize(minJoueur/15*7*3, minJoueur/15*3);
         this.getChildren().add(valider);
 
     }

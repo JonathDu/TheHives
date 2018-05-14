@@ -14,14 +14,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import hive.thehives.TheHives;
+import javafx.application.Platform;
 
 /**
  *
  * @author Adeline
  */
-class InterfaceUtiles extends Parent{
+public class InterfaceUtiles extends Parent{
 
-    InterfaceUtiles(int height, int width, Stage primaryStage, TheHives i) {
+    public InterfaceUtiles(int height, int width, Stage primaryStage, TheHives i) {
         Image imageCase = new Image(getClass().getResourceAsStream("rsc/images/case.png"));
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
@@ -50,6 +51,7 @@ class InterfaceUtiles extends Parent{
         Sortie.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             System.out.println("Sortie ! ");
             //i.accueil();
+            Platform.exit();
             this.getChildren().add(Sortie);
         });
         Utiles.getChildren().add(Sortie);

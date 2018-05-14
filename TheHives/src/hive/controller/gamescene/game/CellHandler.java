@@ -27,7 +27,7 @@ public class CellHandler implements EventHandler<MouseEvent>
     public CellHandler(GameController controller, Vector2i pos)
     {
         this.controller = controller;
-        this.cell = new Cell(new Honeycomb(pos));
+        this.cell = new Cell(controller.progress.game.state.board.getHexagon(pos));
     }
 
     @Override
@@ -38,6 +38,8 @@ public class CellHandler implements EventHandler<MouseEvent>
             Decision decision = controller.progress.game.state.turn.getCurrent().decision;
             if (decision instanceof HumanDecision)
             {
+                System.out.println(cell);
+                
                 HumanDecision human_decision = (HumanDecision) decision;
 
                 switch (controller.builder.getState())
