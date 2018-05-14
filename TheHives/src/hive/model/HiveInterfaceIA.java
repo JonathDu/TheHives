@@ -64,9 +64,7 @@ public class HiveInterfaceIA implements InterfaceIA
     public int queenFreeNeighbour(Player p, Game game)
     {
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        if(queen_positions.isEmpty()){
-            return 0;
-        }
+        assert queen_positions.size() == 1;
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
@@ -144,10 +142,11 @@ public class HiveInterfaceIA implements InterfaceIA
     }
 
     @Override
-    public void undoAction(Game game)
+    public Action undoAction(Game game)
     {
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.undoAction();
+        return game.state.data.last_undo;
     }
     
     @Override
