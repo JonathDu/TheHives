@@ -43,9 +43,13 @@ public class InterfaceComb extends Parent {
         } else {
             couleur = Color.WHITE;
         }
-
-        this.pion = new InterfacePion(couleur, this.comb.value().get(0).type, c);
-        this.getChildren().add(pion);
+        int i = 0;
+        while (this.comb.value().get(i) != null) {
+            
+            InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
+            this.getChildren().add(pionx);
+            i++;
+        }
     }
 
     public void removeComb() {
@@ -61,11 +65,17 @@ public class InterfaceComb extends Parent {
             } else {
                 couleur = Color.WHITE;
             }
-
-            this.pion = new InterfacePion(couleur, this.comb.value().get(0).type, c, longueur);
-        }else{
+            int i = 0;
+            while (this.comb.value().get(i) != null) {
+                InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
+                this.getChildren().add(pionx);
+                this.pion = pionx;
+                i++;
+            }
+        } else {
             this.pion = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
+            this.getChildren().add(pion);
+
         }
-        this.getChildren().add(pion);
     }
 }
