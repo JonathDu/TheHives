@@ -124,7 +124,7 @@ public class UtileIA {
         int beforeCurrentNeighbour = hia.queenFreeNeighbour(current, state);
         int beforeOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
         hia.doAction(state, hello);
-        return ((afterOpponentNeighbour-beforeOpponentNeighbour)-(currentNeighbour))*50;
+        return ((afterCurrentNeighbour-beforeCurrentNeighbour)-(afterOpponentNeighbour-beforeOpponentNeighbour))*(-10);
     }
     
     static int insectsValue(ArrayList<Tile> freeTile){
