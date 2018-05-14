@@ -14,6 +14,7 @@ import hive.vue.InterfaceMenu;
 import hive.vue.InterfaceJoueurs;
 import java.awt.Dimension;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -30,10 +31,10 @@ public class TheHives extends Application {
     /* le minimum est 400 et 600 */
 
     public int HEIGHT = 600;
-    public int WIDTH = 600;
+    public int WIDTH = 800;
     Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-    //int HEIGHT = (int) dimension.getHeight();
-    //int WIDTH  = (int)dimension.getWidth();
+//    int HEIGHT = (int) dimension.getHeight();
+//    int WIDTH  = (int)dimension.getWidth();
     Group root;
     Scene scene;
     Stage primaryStage;
@@ -47,7 +48,7 @@ public class TheHives extends Application {
 
 
         root = new Group();
-        //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
+        scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
 
         primaryStage.setMinHeight(400);
@@ -58,9 +59,11 @@ public class TheHives extends Application {
         goToMenu();
 
         //PLEIN ECRAN
-        //primaryStage.setFullScreen(true); //passer en affichage plein écran
-        //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
-        //root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
+//        primaryStage.setFullScreen(true); //passer en affichage plein écran
+//        primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
+//        root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
+        
+        
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();
         primaryStage.show();
