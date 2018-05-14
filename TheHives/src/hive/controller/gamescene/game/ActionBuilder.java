@@ -17,6 +17,7 @@ import hive.model.players.actions.PutAction;
  */
 public class ActionBuilder
 {
+
     public enum State
     {
         BEGIN,
@@ -25,62 +26,62 @@ public class ActionBuilder
         SOURCE_SELECTED,
         DESTINATION_SELECTED, // end move
     }
-    
+
     public Tile tile;
     public Cell source;
     public Cell placement_or_destination;
     private State state;
-    
+
     public ActionBuilder()
     {
         state = State.BEGIN;
     }
-    
+
     public State getState()
     {
         return state;
     }
-    
+
     public void setTile(Tile tile)
     {
-        assert state == State.BEGIN || state == State.TILE_SELECTED;
+        assert state == State.BEGIN || state == State.TILE_SELECTED; 
         this.tile = tile;
         state = State.TILE_SELECTED;
     }
-    
+
     public void setPlacement(Cell cell)
     {
-        assert state == State.BEGIN || state == State.DESTINATION_SELECTED;
+        assert state == State.TILE_SELECTED;
         this.placement_or_destination = cell;
         state = State.DESTINATION_SELECTED;
     }
-    
+
     public void setSource(Cell cell)
     {
-        assert state == State.BEGIN || state == State.SOURCE_SELECTED;
+        assert state == State.BEGIN;
         this.source = cell;
         state = State.SOURCE_SELECTED;
     }
-    
+
     public void setDestination(Cell cell)
     {
-        assert state == State.BEGIN || state == State.DESTINATION_SELECTED;
+        assert state == State.SOURCE_SELECTED;
         this.placement_or_destination = cell;
         state = State.DESTINATION_SELECTED;
     }
-    
+
     Action produce()
     {
-        switch(state)
+        switch (state)
         {
-        case PLACEMENT_SELECTED:
-            assert tile != null;
-            assert placement_or_destination != null;
-            return new PutAction(placement_or_destination, tile);
-        case DESTINATION_SELECTED:
-            assert source != null;
-            assert placement_or_destination != null;
-            return new MoveAction(source, placement_or_destination);
+            case PLACEMENT_SELECTED:
+                assert tile != null;
+                assert placement_or_destination != null;
+                return new PutAction(placement_or_destination, tile);
+            case DESTINATION_SELECTED:
+                assert source != null;
+                assert placement_or_destination != null;
+                return new MoveAction(source, placement_or_destination);
         }
         assert false;
         return null;
