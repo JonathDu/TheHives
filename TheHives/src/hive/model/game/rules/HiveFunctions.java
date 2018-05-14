@@ -126,7 +126,7 @@ public class HiveFunctions
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
         Tile tmp = cell.comb.value().pop();
 
-        boolean res = isConnex(to_see, nb_combs);
+        boolean res = isConnex(to_see, nb_combs - 1);
 
         cell.comb.value().push(tmp);
 
@@ -134,10 +134,10 @@ public class HiveFunctions
     }
     
     // check connexity starting at cell by breath first search : connex if we counts all the tiles
-    public static boolean isConnex(Honeycomb comb, int nb_combs)
+    public static boolean isConnex(Honeycomb comb, int expected)
     {
         BreadthIterator<TilesStack> iterator = new BreadthIterator<>(comb, hexagon -> !hexagon.value().isEmpty());
-        return Iterators.count(iterator) == nb_combs - 1;
+        return Iterators.count(iterator) == expected;
     }
     
     // color of a stack is the color of the tile at the top

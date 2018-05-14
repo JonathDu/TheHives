@@ -12,6 +12,7 @@ import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.TeamColor;
+import hive.model.players.actions.NoAction;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -71,7 +72,7 @@ public class HiveRules implements Rules
         boolean current_wins = queenIsSurrounded(state, state.turn.getOpponent());
         boolean opponent_wins = queenIsSurrounded(state, state.turn.getCurrent());
         
-        if(current_wins && opponent_wins)
+        if((current_wins && opponent_wins) || nobodyCanPlay(state))
             return GameStatus.DRAW;
         else if(current_wins)
             return GameStatus.CURRENT_WINS;
@@ -115,5 +116,10 @@ public class HiveRules implements Rules
     private boolean queenIsPut(GameState state)
     {
         return !state.data.tiles.get(state.turn.getCurrent().color).get(InsectType.QUEEN_BEE).isEmpty();
+    }
+
+    private boolean nobodyCanPlay(GameState state)
+    {
+        return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }
 }
