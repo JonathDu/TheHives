@@ -63,7 +63,8 @@ public class HiveInterfaceIA implements InterfaceIA
     public int queenFreeNeighbour(Player p, Game game)
     {
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        assert queen_positions.size() == 1;
+        if(queen_positions.isEmpty())
+            return 0;
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
