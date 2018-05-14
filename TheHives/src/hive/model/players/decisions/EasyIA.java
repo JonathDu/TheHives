@@ -29,11 +29,11 @@ public class EasyIA implements IA{
         while(i<actionList.size()){
             currentAction = actionList.get(i);
             hia.doAction(state, currentAction);
-            if(hia.winCurrent(state)){
+            if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(hia.winOpponent(state)){
+            else if(hia.winCurrent(state)){
                 hia.undoAction(state);
                 actionList.remove(i);
                 if(actionList.isEmpty()){

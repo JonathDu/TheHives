@@ -32,11 +32,11 @@ public class HardIA implements IA{
         while(!actionList.isEmpty()){
             currentAction = actionList.remove(0);
             hia.doAction(state, currentAction);
-            if(hia.winCurrent(state)){
+            if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(!hia.winOpponent(state)){
+            else if(!hia.winCurrent(state)){
                 tmp = UtileIA.miniMaxOpponent(state, depth-1, max);
                 hia.undoAction(state);
                 if(tmp > max){

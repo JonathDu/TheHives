@@ -32,11 +32,11 @@ public class MediumIA implements IA{
             currentAction = actionList.get(i);
             hia.doAction(state, currentAction);
             res = UtileIA.evaluationCurrentPlayer(state);
-            if(hia.winCurrent(state)){
+            if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(hia.winOpponent(state)){
+            else if(hia.winCurrent(state)){
                 hia.undoAction(state);
                 actionList.remove(i);
                 if(actionList.isEmpty())
