@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.gamescene;
+
+import hive.controller.gamescene.GameSceneSelection;
 
 /**
  *
  * @author Thomas
  */
-public enum ActivityEventType
+public interface GameSceneSelector
 {
-    START,
-    PAUSE,
-    STOP;
+    public void visit(GameSceneSelection selection);
 }

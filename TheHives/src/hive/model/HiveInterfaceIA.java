@@ -10,6 +10,7 @@ import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.rules.HiveRules;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
@@ -51,6 +52,12 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         return game.rules.getStatus(game.state) == GameStatus.OPPONENT_WINS;
     }
+    
+    @Override
+    public boolean winBoth(Game game)
+    {
+        return game.rules.getStatus(game.state) == GameStatus.DRAW;
+    }
 
     @Override
     public int queenFreeNeighbour(Player p, Game game)
@@ -73,17 +80,21 @@ public class HiveInterfaceIA implements InterfaceIA
         Player current = game.state.turn.getCurrent();
         
         // PutAction
+        for(InsectType type : InsectType.implemented_insects)
         {
-            ArrayList<Cell> destinations = game.rules.getPutRules().getPossibleDestinations(game);
-            for(InsectType type : InsectType.implemented_insects)
+            Tile tile = new Tile(type, current.color);
+            /*for(int i = 0; i < current.collection.get(type); ++i)
             {
-                Tile tile = new Tile(type, current.color);
-                for(int i = 0; i < current.collection.get(type); ++i)
-                {
-                    Iterator<Cell> dest = destinations.iterator();
-                    while(dest.hasNext())
-                        actions.add(new PutAction(dest.next(), tile));
-                }
+                Iterator<Cell> dest = destinations.iterator();
+                while(dest.hasNext())
+                    actions.add(new PutAction(dest.next(), tile));
+            }*/
+            ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
+            if(current.collection.get(type) > 0)
+            {
+                Iterator<Cell> place = placements.iterator();
+                while(place.hasNext())
+                    actions.add(new PutAction(place.next(), tile));
             }
         }
         
@@ -96,7 +107,7 @@ public class HiveInterfaceIA implements InterfaceIA
             while(source_iterator.hasNext())
             {
                 Cell source = source_iterator.next();
-                ArrayList<Cell> destinations = game.rules.getInsectsBehaviors().get(type).getPossibleDestinations(game, source);
+                ArrayList<Cell> destinations = game.rules.getPossibleDestinations(game.state, source);
                 Iterator<Cell> dest_iterator = destinations.iterator();
                 while(dest_iterator.hasNext())
                     actions.add(new MoveAction(source, dest_iterator.next()));

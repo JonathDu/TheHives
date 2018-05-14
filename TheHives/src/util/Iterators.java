@@ -7,6 +7,7 @@ package util;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  *
@@ -14,13 +15,6 @@ import java.util.Iterator;
  */
 public class Iterators
 {
-    public static <E> Collection<E> fill(Collection<E> collection, Iterator<E> iterator)
-    {
-        while(iterator.hasNext())
-            collection.add(iterator.next());
-        return collection;
-    }
-    
     public static <E> int count(Iterator<E> iterator)
     {
         int i = 0;
@@ -30,5 +24,19 @@ public class Iterators
             iterator.next();
         }
         return i;
+    }
+    
+    public static <E> boolean searchN(Iterator<E> iterator, Predicate<E> predicate, int n)
+    {
+        int i = 0;
+        while(iterator.hasNext())
+        {
+            E e = iterator.next();
+            if(predicate.test(e))
+                ++i;
+            if(i == n)
+                return true;
+        }
+        return false;
     }
 }
