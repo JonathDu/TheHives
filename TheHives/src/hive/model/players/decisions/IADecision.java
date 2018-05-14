@@ -47,7 +47,6 @@ public class IADecision implements Decision
         }
         
         Action a = ia.SearchAction(state);
-        System.out.println(a);
         hia.endSimulation(state, decisions);
         return a;
         

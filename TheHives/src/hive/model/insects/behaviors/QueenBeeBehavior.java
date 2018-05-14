@@ -9,11 +9,9 @@ import hive.model.board.Cell;
 import hive.model.game.rules.HiveFunctions;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
-import hive.model.game.Game;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
-import util.Iterators;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -41,10 +39,6 @@ public class QueenBeeBehavior implements InsectBehavior
             
             // the queen only slides
             if(!neighbor.hexagon.value().isEmpty())
-                continue;
-            
-            // the queen must be free to slide
-            if(!HiveFunctions.isFreeAtSide(cell, neighbor.from))
                 continue;
             
             // the queen can slide but the queen has to stay connected with other tiles
