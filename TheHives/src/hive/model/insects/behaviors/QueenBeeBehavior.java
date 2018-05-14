@@ -29,7 +29,6 @@ public class QueenBeeBehavior implements InsectBehavior
         assert cell.level == 0;
         
         ArrayList<Cell> list = new ArrayList<>();
-        
         if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
             return list;
         
@@ -49,10 +48,7 @@ public class QueenBeeBehavior implements InsectBehavior
                 continue;
             
             // the queen can slide but the queen has to stay connected with other tiles
-            NeighborsIterator<TilesStack> around_neighbor = new NeighborsIterator<>(neighbor.hexagon);
-
-            // if we have found 2 neighbors, it will stay connex anyway (we already count the queen in it)
-            if(Iterators.searchN(around_neighbor, n -> !n.hexagon.value().isEmpty(), 2))
+            if(HiveFunctions.hasWallNextToAtSide(cell, neighbor.from) && HiveFunctions.isFreeAtSide(cell, neighbor.from))
                 list.add(new Cell((Honeycomb)neighbor.hexagon));
         }
         return list;

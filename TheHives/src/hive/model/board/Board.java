@@ -37,7 +37,6 @@ public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
     
     
     
-    
     // to string
     @Override
     public String toString()
@@ -83,7 +82,7 @@ public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
         boolean isCase = true;
         for (Object item : getData().getData()[y])
         {
-            String str = item != null && !item.toString().equals("[]") ? item.toString() : "     ";
+            String str = item != null && !item.toString().equals("[]") ? displayStack((TilesStack)item) : "     ";
             res += isCase ? "/  " + str + "  \\" : "_______";
             isCase = !isCase;
         }
@@ -96,10 +95,21 @@ public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
         boolean isCase = true;
         for (Object item : getData().getData()[y])
         {
-            String str = item != null && !item.toString().equals("[]") ? item.toString() : "     ";
+            String str = item != null && !item.toString().equals("[]") ? displayStack((TilesStack)item) : "     ";
             res += isCase ? " \\_______/ " : " " + str + " ";
             isCase = !isCase;
         }
         return res;
+    }
+    
+    private String displayStack(TilesStack stack)
+    {
+        assert !stack.isEmpty();
+        if(stack.size() == 1)
+            return " " + stack.peek() + " ";
+        else
+        {
+            return stack.peek() + " " + stack.size();
+        }
     }
 }

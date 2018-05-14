@@ -68,12 +68,19 @@ public class HiveFunctions
         return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.level);
     }
     
-    // check if the tile can move at side direction
+    // check if the tile has at least two open spaces
     public static boolean isFreeAtSide(Cell cell, HexagonSide side)
     {
         return cell.comb.getNeighbor(side).value().size() <= cell.level &&
                 (cell.comb.getNeighbor(side.getBefore()).value().size() <= cell.level ||
                 cell.comb.getNeighbor(side.getAfter()).value().size() <= cell.level);
+    }
+    
+    // check if the tile has a wall next to it
+    public static boolean hasWallNextToAtSide(Cell cell, HexagonSide side)
+    {
+        return cell.comb.getNeighbor(side.getBefore()).value().size() > cell.level
+                || cell.comb.getNeighbor(side.getAfter()).value().size() > cell.level;
     }
     
     // check the connexity when the cell is removed
@@ -116,6 +123,8 @@ public class HiveFunctions
         nb_groups /= 2;
         // would mean it has no neighbors which is impossible
         assert nb_groups != 0;
+        // hexagon is at most connected with 3 groups
+        assert nb_groups <= 3;
         // if there is one group connex, it is connex anyway
         if(nb_groups == 1)
             return true;
@@ -126,6 +135,7 @@ public class HiveFunctions
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
         Tile tmp = cell.comb.value().pop();
 
+        System.out.println("g = " + nb_groups + " , c = " + nb_combs);
         boolean res = isConnex(to_see, nb_combs - 1);
 
         cell.comb.value().push(tmp);

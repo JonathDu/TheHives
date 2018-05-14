@@ -63,7 +63,7 @@ public class PrecalculatedDataDoUpdater implements ActionVisitor
         if(action.source.comb.value().size() == 1 && action.destination.comb.value().size() >= 1)
             data.nb_combs -= 1;
         // if the tile shares a comb but will occupy an empty comb
-        else if(action.source.comb.value().size() > 1 && action.destination.comb.value().size() == 0)
+        else if(action.source.comb.value().size() >= 2 && action.destination.comb.value().size() == 0)
             data.nb_combs += 1;
         
         // last
