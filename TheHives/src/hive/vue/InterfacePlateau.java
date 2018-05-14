@@ -5,7 +5,11 @@
  */
 package hive.vue;
 
+import hive.controller.gamescene.game.GameController;
+import hive.model.game.DefaultGame;
+import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
+import hive.model.players.decisions.HumanDecision;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -23,16 +27,18 @@ import javafx.stage.Stage;
 public class InterfacePlateau extends Parent {
 //
     BorderPane pane;
+    GameController controller;
 
     public InterfacePlateau(PlayerCollection col, CacheImage c, Stage stage, String joueur1, String joueur2, DoubleProperty prop) {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
-        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop);
-        InterfacePlateauMain main2 = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty());
+        controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
+        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller);
+        InterfacePlateauMain main2 = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        InterfaceRuche ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight());
+        InterfaceRuche ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
         
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();
