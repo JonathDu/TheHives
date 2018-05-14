@@ -6,7 +6,7 @@
 package hive.model.insects;
 
 import hive.model.board.Cell;
-import hive.model.game.Game;
+import hive.model.game.GameState;
 import java.util.ArrayList;
 
 /**
@@ -15,5 +15,5 @@ import java.util.ArrayList;
  */
 public interface InsectBehavior
 {
-    public ArrayList<Cell> getPossibleDestinations(Game game, Cell cell);
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell);
 }

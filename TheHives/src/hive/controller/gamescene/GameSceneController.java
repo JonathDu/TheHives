@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.gamescene;
+
+import hive.controller.gamescene.game.GameController;
 
 /**
  *
  * @author Thomas
  */
-public interface ActionSelectionVisitor
+public class GameSceneController
 {
+    GameController game_controller;
     
+    GameSceneSelection selection;
 }

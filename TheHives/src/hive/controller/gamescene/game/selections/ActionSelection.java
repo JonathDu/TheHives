@@ -3,22 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.gamescene.game.selections;
 
-import hive.model.game.Game;
+import hive.model.players.actions.Action;
 
 /**
  *
  * @author Thomas
  */
-public class GameController
+public interface ActionSelection extends GameSelection
 {
-    Game game;
-    
-    ActionSelection selection;
-    
-    public GameController(Game game)
-    {
-        this.game = game;
-    }
+    public Action produceAction();
 }

@@ -8,10 +8,9 @@ package util.hexagons.iterators;
 import java.util.ArrayDeque;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Queue;
-import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -21,22 +20,39 @@ import java.util.function.Predicate;
  * @author Thomas
  * @param <E>
  */
-public class BreadthIterator<E> implements Iterator<Hexagon<E>>
+public class BreadthAtLengthIterator<E> implements Iterator<Hexagon<E>>
 {
     Queue<Hexagon<E>> queue;
-    Set<Hexagon<E>> seen;
+    HashMap<Hexagon<E>, Boolean> seen;
     Predicate<Hexagon<E>> predicate;
     
-    public BreadthIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate)
+    public BreadthAtLengthIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate, int n)
     {
         this.queue = new ArrayDeque<>();
-        this.seen = new HashSet<>();
+        queue.add(center);
+        
+        this.seen = new HashMap<>();
         this.predicate = predicate;
         
-        if(predicate.test(center))
+        // n - 1 times, as the queue contains the n-th hexagons
+        for(int i = 0; i < n - 1; ++i)
         {
-            queue.add(center);
-            seen.add(center);
+            Hexagon<E> h = queue.remove();
+            seen.put(h, Boolean.TRUE);
+        
+            for(HexagonSide side : HexagonSide.values())
+            {
+                Hexagon<E> neighbor = h.getNeighbor(side);
+                assert neighbor != null;
+                if(seen.get(neighbor) == null && predicate.test(neighbor))
+                {
+                    queue.add(neighbor);
+                    seen.put(neighbor, Boolean.TRUE);
+                }
+            }
+            
+            if(queue.isEmpty())
+                break;
         }
     }
 
@@ -50,19 +66,7 @@ public class BreadthIterator<E> implements Iterator<Hexagon<E>>
     public Hexagon<E> next()
     {
         assert hasNext();
-        
         Hexagon<E> h = queue.remove();
-        
-        for(HexagonSide side : HexagonSide.values())
-        {
-            Hexagon<E> neighbor = h.getNeighbor(side);
-            assert neighbor != null;
-            if(!seen.contains(neighbor) && predicate.test(neighbor))
-            {
-                queue.add(neighbor);
-                seen.add(neighbor);
-            }
-        }
         return h;
     }
 }

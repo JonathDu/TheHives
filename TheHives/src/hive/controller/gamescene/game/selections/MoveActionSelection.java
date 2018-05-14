@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.controller.gamescene.game.selections;
 
+import hive.controller.gamescene.game.selectors.GameSelector;
 import hive.model.board.Cell;
 import hive.model.players.actions.MoveAction;
 
@@ -12,30 +13,36 @@ import hive.model.players.actions.MoveAction;
  *
  * @author Thomas
  */
-public class MoveActionSelection
+public class MoveActionSelection implements ActionSelection
 {
-    enum State
+    public enum State
     {
-        WAITS_SOURCE,
+        BEGIN,
         SOURCE_SELECTED,
-        DESTINATION_SELECTED;
+        DESINATION_SELECTED,
+        END;
     }
     
-    public State state;
     public Cell source;
     public Cell destination;
     
+    public State state;
+    
+    
     public MoveActionSelection()
     {
-        state = State.WAITS_SOURCE;
-        source = null;
-        destination = null;
+        this.state = State.BEGIN;
     }
     
-    MoveAction produceAction()
+    @Override
+    public MoveAction produceAction()
     {
-        assert source != null;
-        assert destination != null;
         return new MoveAction(source, destination);
+    }
+    
+    @Override
+    public void accept(GameSelector visitor)
+    {
+        visitor.visit(this);
     }
 }

@@ -14,8 +14,8 @@ import util.hexagons.Hexagon;
  */
 public class Cell
 {
-    public Honeycomb comb;
-    public int level;
+    public final Honeycomb comb;
+    public final int level;
     
     public Cell(Honeycomb comb)
     {

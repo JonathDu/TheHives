@@ -59,7 +59,7 @@ public class NeighborsIterator<E> implements Iterator<Neighbor<E>>
     public Neighbor<E> next()
     {
         assert hasNext();
-        Neighbor<E> res = new Neighbor<>(center.getNeighbor(current), current);
+        Neighbor<E> res = new Neighbor<>(center, current, center.getNeighbor(current));
         current = current != last ? (clockwise ? current.getAfter() : current.getBefore()) : null;
         return res;
     }

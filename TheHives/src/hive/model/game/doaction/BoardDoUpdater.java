@@ -37,14 +37,13 @@ public class BoardDoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        TilesStack stack = action.source.comb.value();
-        Tile t = stack.remove(action.source.level);
+        Tile t = action.source.comb.value().remove(action.source.level);
         action.destination.comb.value().add(action.destination.level, t);
     }
 
     @Override
     public void visit(NoAction action)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }

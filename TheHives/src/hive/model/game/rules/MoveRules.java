@@ -5,14 +5,15 @@
  */
 package hive.model.game.rules;
 
+import hive.model.board.Cell;
+import hive.model.game.GameState;
+import java.util.ArrayList;
+
 /**
  *
  * @author Thomas
  */
-public enum GameStatus
+public interface MoveRules
 {
-    CURRENT_WINS,
-    OPPONENT_WINS,
-    CONTINUES,
-    DRAW;
+    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell);
 }
