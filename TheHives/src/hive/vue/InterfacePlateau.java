@@ -33,7 +33,7 @@ public class InterfacePlateau extends Parent {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
-        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller);
+        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, pane.heightProperty(), controller);
         InterfacePlateauMain main2 = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller);
 
         StackPane centerPane = new StackPane();
