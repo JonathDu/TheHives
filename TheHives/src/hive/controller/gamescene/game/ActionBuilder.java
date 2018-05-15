@@ -72,18 +72,20 @@ public class ActionBuilder
 
     Action produce()
     {
+        Action action = null;
         switch (state)
         {
             case PLACEMENT_SELECTED:
                 assert tile != null;
                 assert placement_or_destination != null;
-                return new PutAction(placement_or_destination, tile);
+                action = new PutAction(placement_or_destination, tile);
             case DESTINATION_SELECTED:
                 assert source != null;
                 assert placement_or_destination != null;
-                return new MoveAction(source, placement_or_destination);
+                action = new MoveAction(source, placement_or_destination);
         }
-        assert false;
-        return null;
+        state = State.BEGIN;
+        assert action == null;
+        return action;
     }
 }

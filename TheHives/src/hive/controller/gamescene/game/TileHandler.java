@@ -32,30 +32,33 @@ public class TileHandler implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent event) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            System.out.println(tile);
+            //System.out.println(tile);
             
-//            Decision decision = controller.progress.game.state.turn.getCurrent().decision;
-//            if (decision instanceof HumanDecision) {
-//                
-//                HumanDecision human_decision = (HumanDecision) decision;
-//
-//                switch (controller.builder.getState()) {
-//                    case BEGIN:
-//                        controller.builder.setTile(tile);
-//                        // TODO : mettre a jour graphiquement la cell source selectionnée + les destinations possibles
-//                        break;
-//                    case SOURCE_SELECTED:
-//                        //TODO
-//                        break;
-//                    case TILE_SELECTED:
-//                        controller.builder.setTile(tile);
-//                        // TODO : mettre a jour graphiquement la tile selectionnée + les destinations possibles
-//                        break;
-//                    case PLACEMENT_SELECTED:
-//                        //TODO
-//                        break;
-//                }
-//            }
+            Decision decision = controller.progress.game.state.turn.getCurrent().decision;
+            if (decision instanceof HumanDecision) {
+                
+                HumanDecision human_decision = (HumanDecision) decision;
+
+                switch (controller.builder.getState()) {
+                    case BEGIN:
+                        System.out.println("Tile selectionnée");
+                        controller.builder.setTile(tile);
+                        // TODO : mettre a jour graphiquement la cell source selectionnée + les destinations possibles
+                        break;
+                    case TILE_SELECTED:
+                        if(tile.type != controller.builder.tile.type)
+                        {
+                            System.out.println("Changement de tile");
+                            controller.builder.setTile(tile);
+                        }
+                        else
+                        {
+                            System.out.println("Aucun changement : tile deja selectionnée");
+                        }
+                        // TODO : mettre a jour graphiquement la tile selectionnée + les destinations possibles
+                        break;
+                }
+            }
         } else if (true) // autre evenement ? mouseOver ?
         {
             // information about the tile ? IA or not

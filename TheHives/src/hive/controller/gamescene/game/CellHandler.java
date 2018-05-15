@@ -38,28 +38,37 @@ public class CellHandler implements EventHandler<MouseEvent>
             Decision decision = controller.progress.game.state.turn.getCurrent().decision;
             if (decision instanceof HumanDecision)
             {
-                System.out.println(cell);
+                //System.out.println(cell);
                 
                 HumanDecision human_decision = (HumanDecision) decision;
 
                 switch (controller.builder.getState())
                 {
                     case BEGIN:
+                        System.out.println("Source selectionnée");
                         controller.builder.setSource(cell);
                         // TODO : mettre a jour graphiquement la cell source selectionnée + les destinations possibles
                         break;
                     case SOURCE_SELECTED:
                         if (cell != controller.builder.source) //si on ne clique pas sur la cellule deja selectionnée
                         {
+                            System.out.println("Destination selectionnée");
+
                             controller.builder.setDestination(cell);
                             Action action = controller.builder.produce();
-                            human_decision.setAction(action);
-                            controller.progress.doAction();
+                            /*human_decision.setAction(action);
+                            controller.progress.doAction();*/
                             // TODO : mettre à jour graphiquement source et destination (pas besoin de faire tout le plateau)
+                        }
+                        else
+                        {
+                            System.out.println("Aucun changement : source = destination");
                         }
                         break;
                     case TILE_SELECTED:
+                        System.out.println("Placement selectionné");
                         controller.builder.setPlacement(cell);
+                        Action action = controller.builder.produce();
                         // TODO : mettre a jour graphiquement la tile selectionnée + les destinations possibles
                         break;
                 }
