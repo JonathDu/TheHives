@@ -12,6 +12,7 @@ import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import javafx.scene.Parent;
 import hive.vue.InterfaceComb;
+import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
 import util.Matrix;
 import util.Vector2i;
@@ -44,7 +45,7 @@ public class InterfaceRuche extends Parent {
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x,y);
-                CellHandler handler = new CellHandler(controller, pos);
+                CellHandler handler = new CellHandler(controller, this, pos);
                 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));
@@ -76,31 +77,46 @@ public class InterfaceRuche extends Parent {
 //            }
 //        });
     }
+    
+    public void selectCell(Vector2i pos)
+    {
+        
+    }
+    
+    public void majCells(ArrayList<Cell> cells)
+    {
+        
+    }
+    
+    public void surlignerCells(ArrayList<Cell> cells)
+    {
+        
+    }
 
-    public void placerPremierPion(Honeycomb c) {
+    private void placerPremierPion(Honeycomb c) {
         Vector2i pos = new Vector2i(hauteur / 2, largeur / 2);
         tab.getAt(pos).setComb(c);
     }
 
-    public void placerPion(Honeycomb c, Vector2i pos) {
+    private void placerPion(Honeycomb c, Vector2i pos) {
         if (pos.x < hauteur && pos.y < largeur && pos.x >= 0 && pos.y >= 0) {
             tab.getAt(pos).setComb(c);
         }
     }
 
-    public void placerPion(Honeycomb c, int x, int y) {
+    private void placerPion(Honeycomb c, int x, int y) {
         if (x < hauteur && y < largeur && x >= 0 && y >= 0) {
             tab.getAt(x, y).setComb(c);
         }
     }
 
-    public void enleverPion(int x, int y) {
+    private void enleverPion(int x, int y) {
         if (x < hauteur && y < largeur && x >= 0 && y >= 0) {
             tab.getAt(x, y).removeComb();
         }
     }
 
-    public void enleverPion(Vector2i pos) {
+    private void enleverPion(Vector2i pos) {
         if (pos.x < hauteur && pos.y < largeur && pos.x >= 0 && pos.y >= 0) {
             tab.getAt(pos).removeComb();
         }

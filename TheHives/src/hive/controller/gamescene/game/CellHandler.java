@@ -10,6 +10,7 @@ import hive.model.board.Honeycomb;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
+import hive.vue.InterfaceRuche;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
@@ -23,11 +24,13 @@ public class CellHandler implements EventHandler<MouseEvent>
 
     GameController controller;
     Cell cell;
+    InterfaceRuche uiRuche;
 
-    public CellHandler(GameController controller, Vector2i pos)
+    public CellHandler(GameController controller, InterfaceRuche uiRuche, Vector2i pos)
     {
         this.controller = controller;
         this.cell = new Cell(controller.progress.game.state.board.getHexagon(pos));
+        this.uiRuche = uiRuche;
     }
 
     @Override
@@ -47,6 +50,8 @@ public class CellHandler implements EventHandler<MouseEvent>
                     case BEGIN:
                         System.out.println("Source selectionnée");
                         controller.builder.setSource(cell);
+                        uiRuche.selectCell(cell.comb.pos); //mettre en evidence la source
+                        uiRuche.surlignerCells(controller.progress.game.rules.getPossibleDestinations(controller.progress.game.state, cell)); //surligner les destinations
                         // TODO : mettre a jour graphiquement la cell source selectionnée + les destinations possibles
                         break;
                     case SOURCE_SELECTED:
