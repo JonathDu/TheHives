@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.gamescene.game.GameController;
 import hive.controller.gamescene.game.TileHandler;
+import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import static hive.model.insects.InsectType.*;
 import hive.model.players.PlayerCollection;
@@ -51,9 +52,9 @@ public class InterfacePlateauMain extends Parent {
         InterfacePions pileGrassHopper = new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c);
         InterfacePions pileBeetle = new InterfacePions(couleur, col.get(BEETLE), BEETLE, c);
         
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, BEETLE));
+        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, QUEEN_BEE));
+        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, GRASSHOPPER));
+        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, BEETLE));
         
         
         
@@ -66,5 +67,10 @@ public class InterfacePlateauMain extends Parent {
         
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
+    }
+    
+    public void surlignerTile(Tile tile)
+    {
+        
     }
 }

@@ -83,12 +83,22 @@ public class InterfaceRuche extends Parent {
         
     }
     
+    public void deselectCell(Vector2i pos)
+    {
+        
+    }
+    
     public void majCells(ArrayList<Cell> cells)
     {
         
     }
     
     public void surlignerCells(ArrayList<Cell> cells)
+    {
+        
+    }
+    
+    public void desurlignerCells(ArrayList<Cell> cells)
     {
         
     }

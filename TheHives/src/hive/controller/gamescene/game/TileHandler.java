@@ -11,6 +11,7 @@ import hive.model.insects.InsectType;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
+import hive.vue.InterfacePlateauMain;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
@@ -22,10 +23,12 @@ import util.Vector2i;
 public class TileHandler implements EventHandler<MouseEvent> {
 
     GameController controller;
+    InterfacePlateauMain uiMain;
     Tile tile;
 
-    public TileHandler(GameController controller, InsectType insectType) {
+    public TileHandler(GameController controller, InterfacePlateauMain uiMain, InsectType insectType) {
         this.controller = controller;
+        this.uiMain = uiMain;
         this.tile = new Tile(insectType, controller.progress.game.state.turn.getCurrent().color);
     }
 
@@ -43,7 +46,8 @@ public class TileHandler implements EventHandler<MouseEvent> {
                     case BEGIN:
                         System.out.println("Tile selectionnée");
                         controller.builder.setTile(tile);
-                        // TODO : mettre a jour graphiquement la cell source selectionnée + les destinations possibles
+                        uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
+                        // TODO : MAJ graphique : les destinations possibles
                         break;
                     case TILE_SELECTED:
                         if(tile.type != controller.builder.tile.type)
