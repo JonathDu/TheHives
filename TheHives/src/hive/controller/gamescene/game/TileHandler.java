@@ -46,20 +46,24 @@ public class TileHandler implements EventHandler<MouseEvent> {
                     case BEGIN:
                         System.out.println("Tile selectionnée");
                         controller.builder.setTile(tile);
+                        /*
                         uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
                         // TODO : MAJ graphique : les destinations possibles
+                        */
                         break;
                     case TILE_SELECTED:
                         if(tile.type != controller.builder.tile.type)
                         {
                             System.out.println("Changement de tile");
+                            //uiMain.desurlignerTile(controller.builder.tile);
                             controller.builder.setTile(tile);
+                            //uiMain.surlignerTile(tile);
+                            
                         }
                         else
                         {
                             System.out.println("Aucun changement : tile deja selectionnée");
                         }
-                        // TODO : mettre a jour graphiquement la tile selectionnée + les destinations possibles
                         break;
                 }
             }

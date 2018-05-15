@@ -45,7 +45,7 @@ public class CellHandler implements EventHandler<MouseEvent>
             Decision decision = game.state.turn.getCurrent().decision;
             if (decision instanceof HumanDecision)
             {
-                //System.out.println(cell);
+                System.out.println(cell);
 
                 HumanDecision human_decision = (HumanDecision) decision;
 
@@ -54,8 +54,10 @@ public class CellHandler implements EventHandler<MouseEvent>
                     case BEGIN:
                         System.out.println("Source selectionnée");
                         controller.builder.setSource(cell);
+                        /*
                         uiRuche.selectCell(cell.comb.pos); //MAJ graphique : mettre en evidence la source
                         uiRuche.surlignerCells(game.rules.getPossibleDestinations(game.state, cell)); //MAJ graphique : surligner les destinations
+                         */
                         break;
                     case SOURCE_SELECTED:
                         if (cell != controller.builder.source) //si on ne clique pas sur la cellule deja selectionnée
@@ -63,6 +65,7 @@ public class CellHandler implements EventHandler<MouseEvent>
                             System.out.println("Destination selectionnée");
                             controller.builder.setDestination(cell);
                             Action action = controller.builder.produce();
+                            /*
                             human_decision.setAction(action);
                             controller.progress.doAction();
                             ArrayList<Cell> cells = new ArrayList<>();
@@ -71,6 +74,7 @@ public class CellHandler implements EventHandler<MouseEvent>
                             uiRuche.majCells(cells); // MAJ graphique : mettre a jour le deplacement
                             uiRuche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
                             uiRuche.desurlignerCells(game.rules.getPossibleDestinations(game.state, controller.builder.source)); // MAJ graphique : desurligne les destinations possible de la sources
+                             */
                         } else
                         {
                             System.out.println("Aucun changement : source = destination");
@@ -80,12 +84,14 @@ public class CellHandler implements EventHandler<MouseEvent>
                         System.out.println("Placement selectionné");
                         controller.builder.setPlacement(cell);
                         Action action = controller.builder.produce();
+                        /*
                         human_decision.setAction(action);
                         controller.progress.doAction();
                         //TODO : MAJ graphique : on deselectionne la tile
                         ArrayList<Cell> cells = new ArrayList<>();
                         uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
                         cells.add(controller.builder.placement_or_destination); //destination
+                         */
                         break;
                 }
             }
