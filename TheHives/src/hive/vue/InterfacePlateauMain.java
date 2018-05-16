@@ -33,7 +33,7 @@ public class InterfacePlateauMain extends Parent {
     Label nomJoueur;
     public boolean isCourant;
 
-    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau, TeamColor color) {
+    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
@@ -45,9 +45,9 @@ public class InterfacePlateauMain extends Parent {
         pions.setOpacity(1);
         pions.setBackground(new Background(bf));
         //pions.setPrefHeight(100);
-        InterfacePions pileQueenBee = new InterfacePions(couleur, col.get(QUEEN_BEE), QUEEN_BEE, c);
-        InterfacePions pileGrassHopper = new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c);
-        InterfacePions pileBeetle = new InterfacePions(couleur, col.get(BEETLE), BEETLE, c);
+        InterfacePions pileQueenBee = new InterfacePions(color, col.get(QUEEN_BEE), QUEEN_BEE, c);
+        InterfacePions pileGrassHopper = new InterfacePions(color, col.get(GRASSHOPPER), GRASSHOPPER, c);
+        InterfacePions pileBeetle = new InterfacePions(color, col.get(BEETLE), BEETLE, c);
 
         pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, QUEEN_BEE));
         pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, GRASSHOPPER));

@@ -12,6 +12,7 @@ import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import javafx.scene.Parent;
 import hive.vue.InterfaceComb;
+import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -28,7 +29,6 @@ public class InterfaceRuche extends Parent {
     private final int largeur;
     private final int hauteur;
     private final int longueurPion = 40;
-    private final int largeurPion = (int) (longueurPion / 1.4);
     int width, height;
     private GameController controller;
     private final Board board;
@@ -41,6 +41,10 @@ public class InterfaceRuche extends Parent {
 //
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
+
+        double center = ((sqrt(3) / 2) * longueurPion);
+        double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
+
         this.board = controller.progress.game.state.board;
         this.controller = controller;
         hauteur = controller.progress.game.state.board.getData().sizeY();
@@ -51,12 +55,12 @@ public class InterfaceRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
-                cell.setLayoutX(x * (longueurPion + largeurPion));
+                cell.setLayoutY(y * (longueurPion + h));
 
-                if (x % 2 == 0) {
-                    cell.setLayoutY(y * 2 * largeurPion);
+                if (y % 2 == 0) {
+                    cell.setLayoutX((x * 2 * center) + center);
                 } else {
-                    cell.setLayoutY((y * 2 * largeurPion) + largeurPion);
+                    cell.setLayoutX(x * 2 * center);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));

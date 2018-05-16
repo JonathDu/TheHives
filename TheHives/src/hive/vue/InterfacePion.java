@@ -7,10 +7,14 @@ package hive.vue;
 
 import com.sun.javafx.sg.prism.NGNode;
 import hive.model.insects.InsectType;
+import hive.model.players.TeamColor;
+import static java.lang.Math.sqrt;
 import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
 
 /**
@@ -23,71 +27,88 @@ public class InterfacePion extends Parent {
     public static int LARGEUR = (int) (LONGUEUR / 1.4);
     public Polygon hexagon;
 
-    public InterfacePion(Color couleur, InsectType typePions, CacheImage c) {
+    public InterfacePion(TeamColor couleur, InsectType typePions, CacheImage c) {
 
         Group g = new Group();
-        hexagon = createHexagon(LONGUEUR, couleur);
-        g.getChildren().add(hexagon);
-        ImageView img = createImage(typePions, LONGUEUR, c);
+        hexagon = createHexagon(LONGUEUR);
+        ImagePattern img = createImage(typePions, LONGUEUR, c, couleur);
         if (img != null) {
-            g.getChildren().add(img);
+            hexagon.setFill(img);
+
+        } else {
+            hexagon.setFill(Color.TRANSPARENT);
         }
+        g.getChildren().add(hexagon);
 
         this.getChildren().add(g);
     }
 
-    public InterfacePion(Color couleur, InsectType typePions, CacheImage c, int longueur) {
+    public InterfacePion(TeamColor couleur, InsectType typePions, CacheImage c, int longueur) {
         Group g = new Group();
-        hexagon = createHexagon(longueur, couleur);
+        hexagon = createHexagon(longueur);
+
+        ImagePattern img = createImage(typePions, longueur, c, couleur);
+        if (img != null) {
+            hexagon.setFill(img);
+        } else {
+            hexagon.setFill(Color.TRANSPARENT);
+        }
         g.getChildren().add(hexagon);
 
-        ImageView img = createImage(typePions, longueur, c);
-        if (img != null) {
-            g.getChildren().add(img);
-        }
         this.getChildren().add(g);
     }
 
-    private Polygon createHexagon(int longueur, Color couleur) {
-        int largeur = (int) (longueur / 1.4);
-
+    private Polygon createHexagon(double side) {
+        double center = ((sqrt(3) / 2) * side);
+        double hauteur = sqrt(-Math.pow(center, 2) + Math.pow(side, 2));
         Polygon hexagon = new Polygon();
 
         //Adding coordinates to the polygon 
         hexagon.getPoints().addAll(new Double[]{
-            10.0, 60.0,
-            largeur + 10.0, largeur + 60.0,
-            largeur + longueur + 10.0, largeur + 60.0,
-            2 * largeur + longueur + 10.0, 60.0,
-            largeur + longueur + 10.0, 60.0 - largeur,
-            largeur + 10.0, 60.0 - largeur});
-        hexagon.setFill(couleur);
-        hexagon.setStroke(Color.BLACK);
+            center, 0.0,
+            2 * center, hauteur,
+            2 * center, hauteur + side,
+            center, side * 2,
+            0.0, side + hauteur,
+            0.0, hauteur
+
+        });
         return hexagon;
     }
 
-    private ImageView createImage(InsectType type, int longueur, CacheImage c) {
-        ImageView v = null;
+    private ImagePattern createImage(InsectType type, int longueur, CacheImage c, TeamColor couleur) {
+        ImagePattern v = null;
+        Image i = null;
         if (type != null) {
             switch (type) {
                 case QUEEN_BEE:
-                    v = c.getImage("hive/vue/rsc/images/bee.png");
+                    if (couleur == TeamColor.BLACK) {
+                        i = c.getImage("pionQueenB.png");
+                    } else {
+                        i = c.getImage("pionQueenW.png");
+                    }
+                    v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case GRASSHOPPER:
-                    v = c.getImage("hive/vue/rsc/images/grasshopper.png");
+                    if (couleur == TeamColor.BLACK) {
+                        i = c.getImage("pionSauterelleB.png");
+                    } else {
+                        i = c.getImage("pionSauterelleW.png");
+                    }
+                    v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case BEETLE:
-                    v = c.getImage("hive/vue/rsc/images/beetle.png");
+                    if (couleur == TeamColor.BLACK) {
+                        i = c.getImage("pionScarabeB.png");
+                    } else {
+                        i = c.getImage("pionScarabeW.png");
+                    }
+                    v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 default:
                     break;
 
             }
-            v.setFitHeight(longueur / 2);
-            v.setLayoutX(longueur);
-            v.setLayoutY(longueur);
-
-            v.setPreserveRatio(true);
 
         }
         return v;

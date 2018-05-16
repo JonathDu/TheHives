@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.model.insects.InsectType;
+import hive.model.players.TeamColor;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -21,7 +22,7 @@ public class InterfacePions extends Parent {
 
     private int type;
 
-    public InterfacePions(Color couleur, int nbPions, InsectType typePions, CacheImage c) {
+    public InterfacePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {
         Group g = new Group();
         for(int i=0; i<nbPions; i++){
             InterfacePion pion = new InterfacePion(couleur, typePions, c);

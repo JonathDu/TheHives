@@ -29,30 +29,24 @@ public class InterfaceComb extends Parent {
 
     public InterfaceComb(CacheImage c) {
         this.c = c;
-        this.socle = new InterfacePion(Color.TRANSPARENT, null, c);
-        this.socle.hexagon.setStroke(Color.TRANSPARENT);
+        this.socle = new InterfacePion(null, null, c);
+        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
 
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
-        this.socle = new InterfacePion(Color.TRANSPARENT, null, c, taille);
-        this.socle.hexagon.setStroke(Color.TRANSPARENT);
+        this.socle = new InterfacePion(null, null, c, taille);
+        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
 
     public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
-        Color couleur = null;
 
-        if (tile.getTile().color == TeamColor.BLACK) {
-            couleur = Color.GRAY;
-        } else {
-            couleur = Color.WHITE;
-        }
         int i = 0;
-        InterfacePion pion = new InterfacePion(couleur, tile.getTile().type, c);
+        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
         pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
         this.pions.add(tile.level, pion);
         this.getChildren().add(this.pions.get(this.pions.size() - 1));
@@ -64,15 +58,9 @@ public class InterfaceComb extends Parent {
         this.getChildren().add(socle);
         for (int i = comb.value().size() - 1; i >= 0; i--) {
             int index = comb.value().size()-1 - i;
-            Color couleur = null;
 
-            if (comb.value().get(i).color == TeamColor.BLACK) {
-                couleur = Color.GRAY;
-            } else {
-                couleur = Color.WHITE;
-            }
 
-            pions.add(index, new InterfacePion(couleur, comb.value().get(i).type, c));
+            pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
             pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
 
             this.getChildren().add(pions.get(index));
