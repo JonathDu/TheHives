@@ -28,7 +28,7 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
+        Game game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
 
         GameProgress progress = new GameProgress(game);
 
@@ -38,15 +38,14 @@ public class HiveConsoleIA {
 
             progress.doAction();
 
-            // mettre un sleep ici ?
+            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+            if (player == game.state.players.get(0)) {
+                System.out.println("Joueur 1");
+            } else {
+                System.out.println("Joueur 2");
+            }
+            System.out.println(game.state.board);
         }
-        System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-        if (player == game.state.players.get(0)) {
-            System.out.println("Joueur 1");
-        } else {
-            System.out.println("Joueur 2");
-        }
-        System.out.println(game.state.board);
 
     }
 }

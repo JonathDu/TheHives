@@ -70,8 +70,12 @@ public class MiniMax{
                     tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList);
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
-                    if(vMin < max)
+                    if(vMin < max){
+                        while(!actionList[depth].isEmpty()){
+                            actionList[depth].remove(0);
+                        }
                         return vMin;
+                    }
                 }
             }
             return vMin;
