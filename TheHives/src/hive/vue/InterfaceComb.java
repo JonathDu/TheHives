@@ -23,7 +23,7 @@ import javax.sound.midi.ControllerEventListener;
 public class InterfaceComb extends Parent {
 
     private ArrayList<InterfacePion> pions;
-    private InterfacePion socle;
+    public InterfacePion socle;
     private CacheImage c;
 
     public InterfaceComb(CacheImage c) {

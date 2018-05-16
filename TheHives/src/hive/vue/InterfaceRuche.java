@@ -88,7 +88,7 @@ public class InterfaceRuche extends Parent {
                 Vector2i pos = new Vector2i(x,y);
 
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
-                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).socle.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
             }
         }
     }
