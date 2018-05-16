@@ -67,7 +67,7 @@ public class ActionBuilder
     
     public void setPossibleDestinations(ArrayList<Cell> destinations)
     {
-        
+        possibleDestinations = destinations;
     }
 
     public void setDestination(Cell cell)

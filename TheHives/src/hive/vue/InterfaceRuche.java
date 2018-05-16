@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import hive.vue.InterfaceComb;
 import java.util.ArrayList;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import util.Matrix;
 import util.Vector2i;
 
@@ -88,26 +89,32 @@ public class InterfaceRuche extends Parent {
         }
     }
 
-    public void selectCell(Vector2i pos) {
-
+    public void selectCell(Vector2i pos) { // pour la source
+        tab.getAt(pos).setSelected(Color.BLUE);
     }
 
     public void deselectCell(Vector2i pos) {
-
+        tab.getAt(pos).setNotSelected();
     }
 
     public void majCells(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos),plateau, controller);
+            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos), plateau, controller);
         }
     }
 
-    public void surlignerCells(ArrayList<Cell> cells) {
-
+    public void surlignerCells(ArrayList<Cell> cells) { //pour les destinations possible
+        for (int i = 0; i < cells.size(); i++) {
+            tab.getAt(cells.get(i).comb.pos).setSelected(Color.GREENYELLOW);
+        }
     }
 
     public void desurlignerCells(ArrayList<Cell> cells) {
+        for (int i = 0; i < cells.size(); i++) {
 
+            tab.getAt(cells.get(i).comb.pos).setNotSelected();
+
+        }
     }
 
 //    public void majTaille() {

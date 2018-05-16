@@ -21,13 +21,14 @@ public class InterfacePion extends Parent {
 
     public static int LONGUEUR = 40;
     public static int LARGEUR = (int) (LONGUEUR / 1.4);
+    public Polygon hexagon;
 
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c) {
 
         Group g = new Group();
         ImageView img = null;
 
-        Polygon hexagon = new Polygon();
+        hexagon = new Polygon();
 
         //Adding coordinates to the polygon 
         hexagon.getPoints().addAll(new Double[]{
@@ -69,11 +70,11 @@ public class InterfacePion extends Parent {
     }
 
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c, int longueur) {
-        int largeur = (int) (longueur/1.4);
+        int largeur = (int) (longueur / 1.4);
         Group g = new Group();
         ImageView img = null;
 
-        Polygon hexagon = new Polygon();
+        hexagon = new Polygon();
 
         //Adding coordinates to the polygon 
         hexagon.getPoints().addAll(new Double[]{
