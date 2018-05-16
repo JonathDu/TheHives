@@ -43,13 +43,15 @@ public class InterfacePlateau extends Parent {
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        this.ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller, this);
+        ruche  = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
+        ruche.setHandler(this);
+
 
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();
 //            System.out.println(x);
 //            p.setHvalue(x/20);
-// 
+//
 //        });
 
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
