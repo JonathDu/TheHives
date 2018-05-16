@@ -9,6 +9,7 @@ import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.rules.HiveFunctions;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
@@ -18,37 +19,34 @@ import java.util.Scanner;
  *
  * @author Thomas
  */
-public class HiveConsoleIA
-{
+public class HiveConsoleIA {
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = DefaultGame.get(new IADecision(Level.EASY), new IADecision(Level.EASY));
-        
-        
+        Game game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
+
         GameProgress progress = new GameProgress(game);
-        
-        Scanner sc = new Scanner(System.in);
-        int i = 0;
-        while (game.rules.getStatus(game.state) == GameStatus.CONTINUES)
-        {
-            Player player = game.state.turn.getCurrent();
-            if (player == game.state.players.get(0))
-                System.out.println("Joueur 1");
-            else
-                System.out.println("Joueur 2");
-            
+
+        Player player = null;
+        while (game.rules.getStatus(game.state) == GameStatus.CONTINUES) {
+            player = game.state.turn.getCurrent();
+
             progress.doAction();
-            
-            System.out.println(game.state.board);
-            
+
             // mettre un sleep ici ?
         }
+        System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+        if (player == game.state.players.get(0)) {
+            System.out.println("Joueur 1");
+        } else {
+            System.out.println("Joueur 2");
+        }
+        System.out.println(game.state.board);
+
     }
 }

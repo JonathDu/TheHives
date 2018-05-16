@@ -51,13 +51,13 @@ public class DefaultGame
         PlayerCollection collection = new PlayerCollection();
         
         collection.put(InsectType.QUEEN_BEE, 1);
-        collection.put(InsectType.SPIDER, 0);
-        collection.put(InsectType.BEETLE, 0);
-        collection.put(InsectType.GRASSHOPPER, 0);
-        collection.put(InsectType.SOLDIER_ANT, 30);
-        collection.put(InsectType.MOSQUITO, 1);
-        collection.put(InsectType.LADYBUG, 1);
-        collection.put(InsectType.PILL_BUG, 1);
+        collection.put(InsectType.SPIDER, 2);
+        collection.put(InsectType.BEETLE, 2);
+        collection.put(InsectType.GRASSHOPPER, 3);
+        collection.put(InsectType.SOLDIER_ANT, 3);
+        collection.put(InsectType.MOSQUITO, 0);
+        collection.put(InsectType.LADYBUG, 0);
+        collection.put(InsectType.PILL_BUG, 0);
         
         return collection;
     }

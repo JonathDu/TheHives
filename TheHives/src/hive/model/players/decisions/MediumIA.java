@@ -9,6 +9,7 @@ import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
+import static hive.model.players.decisions.Evaluation.evaluationCurrentPlayer;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,7 +22,7 @@ public class MediumIA implements IA{
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
         if(actionList.isEmpty()){
             return new NoAction();
         }
@@ -31,7 +32,7 @@ public class MediumIA implements IA{
         while(i<actionList.size()){
             currentAction = actionList.get(i);
             hia.doAction(state, currentAction);
-            res = UtileIA.evaluationCurrentPlayer(state);
+            res = evaluationCurrentPlayer(state);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 return currentAction;
@@ -52,7 +53,7 @@ public class MediumIA implements IA{
         Random rnd = new Random();
         currentAction = actionList.get(rnd.nextInt(actionList.size()));
         hia.doAction(state, currentAction);
-        while(UtileIA.evaluationCurrentPlayer(state)<(value/nbValue)){
+        while(evaluationCurrentPlayer(state)<(value/nbValue)){
             hia.undoAction(state);
             currentAction = actionList.get(rnd.nextInt(actionList.size()));
             hia.doAction(state, currentAction);

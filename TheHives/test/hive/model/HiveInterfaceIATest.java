@@ -173,7 +173,7 @@ public class HiveInterfaceIATest
     @Test
     public void testCurrentPlayerPossibilities()
     {
-        ArrayList<Action> possibilities = inter.currentPlayerPossibilities(game);
+        ArrayList<Action> possibilities = inter.currentPlayerPossibilities2(game);
 
         assert possibilities.size() == 11;
 

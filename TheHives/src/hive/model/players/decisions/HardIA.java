@@ -21,7 +21,7 @@ public class HardIA implements IA{
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
         if(actionList.isEmpty()){
             return new NoAction();
         }
@@ -37,7 +37,7 @@ public class HardIA implements IA{
                 return currentAction;
             }
             else if(!hia.winCurrent(state)){
-                tmp = UtileIA.miniMaxOpponent(state, depth-1, max);
+                tmp = MiniMax.miniMaxOpponent(state, depth-1, max);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;

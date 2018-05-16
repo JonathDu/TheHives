@@ -24,7 +24,9 @@ public interface InterfaceIA
     public boolean winOpponent(Game game);
     public boolean winBoth(Game game);
     public int queenFreeNeighbour(Player p, Game game);
-    public ArrayList<Action> currentPlayerPossibilities(Game game);
+    public ArrayList<Tile> queenNeighbours(Player p, Game game);
+    public void currentPlayerPossibilities(Game game,ArrayList<Action> actions);
+    public ArrayList<Action> currentPlayerPossibilities2(Game game);
     public ArrayList<Tile> freeTiles(Game game, Player p);
     public void doAction(Game game, Action action);
     public Action undoAction(Game game);
