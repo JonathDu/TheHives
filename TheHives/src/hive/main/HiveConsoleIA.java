@@ -28,7 +28,7 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
+        Game game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
 
         GameProgress progress = new GameProgress(game);
 
