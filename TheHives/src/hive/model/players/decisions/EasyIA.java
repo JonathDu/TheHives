@@ -17,6 +17,8 @@ import java.util.Random;
  * @author Coralie
  */
 public class EasyIA implements IA{
+    
+    
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
