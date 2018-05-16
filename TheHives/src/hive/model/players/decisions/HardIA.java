@@ -28,7 +28,7 @@ public class HardIA implements IA{
         ArrayList<Action> maxActionList = new ArrayList<>();
         int max=-50000, tmp;
         Action currentAction;
-        int depth =3;
+        int depth =4;
         while(!actionList.isEmpty()){
             currentAction = actionList.remove(0);
             hia.doAction(state, currentAction);

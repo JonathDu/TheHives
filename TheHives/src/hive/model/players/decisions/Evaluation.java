@@ -34,7 +34,7 @@ public class Evaluation {
                 ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
                 value -= insectsValue(opponentFreeTile);
                 value +=evalQueen( state);
-                value +=valuNeighboursQueen(state);
+                value +=valueNeighboursQueen(state);
         }
         return value;
     }
@@ -55,7 +55,7 @@ public class Evaluation {
                 ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
                 value += insectsValue(opponentFreeTile);
                 value -=evalQueen( state);
-                value -=valuNeighboursQueen(state);
+                value -=valueNeighboursQueen(state);
         }
         return value;
     }
@@ -72,10 +72,10 @@ public class Evaluation {
         int beforeCurrentNeighbour = hia.queenFreeNeighbour(current, state);
         int beforeOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
         hia.doAction(state, hello);
-        return ((afterCurrentNeighbour-beforeCurrentNeighbour)-(afterOpponentNeighbour-beforeOpponentNeighbour))*(-20);
+        return ((afterCurrentNeighbour-beforeCurrentNeighbour)-(afterOpponentNeighbour-beforeOpponentNeighbour))*(-30);
     }
     
-    static int valuNeighboursQueen( Game state){
+    static int valueNeighboursQueen( Game state){
         int value=0;
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
@@ -98,19 +98,19 @@ public class Evaluation {
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
-                        value += 40;
+                        value += 100;
                         break;
                     case  GRASSHOPPER:
-                        value += 10;
-                        break;
-                    case  SOLDIER_ANT:
                         value += 20;
                         break;
+                    case  SOLDIER_ANT:
+                        value += 50;
+                        break;
                     case  SPIDER:
-                        value += 3;
+                        value += 5;
                         break;
                     case  BEETLE:
-                        value += 5;
+                        value += 10;
                         break;
                 }
                 
@@ -124,9 +124,9 @@ public class Evaluation {
                     case  QUEEN_BEE:
                         return 0;
                     case  GRASSHOPPER:
-                        return 35;
+                        return 100;
                     case  SOLDIER_ANT:
-                        return 10;
+                        return 30;
                     case  SPIDER:
                         return 40;
                     case  BEETLE:
