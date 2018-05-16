@@ -43,7 +43,9 @@ public class InterfacePlateau extends Parent {
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller, this);
+        ruche  = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
+        ruche.setHandler(this);
+        
 
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();

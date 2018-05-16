@@ -31,7 +31,7 @@ public class InterfaceRuche extends Parent {
     int width, height;
     private GameController controller;
 
-    public InterfaceRuche(CacheImage c, int width, int height, GameController controller, InterfacePlateau plateau) {
+    public InterfaceRuche(CacheImage c, int width, int height, GameController controller) {
 //        this.width = width;
 //        this.height = height;
 //        
@@ -45,13 +45,12 @@ public class InterfaceRuche extends Parent {
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x,y);
-                SocleHandler handler = new SocleHandler(controller, plateau, pos);
                 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));
                 
                 
-                cell.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+         
                 
                 
                 if (x % 2 == 0) {
@@ -76,6 +75,17 @@ public class InterfaceRuche extends Parent {
 //                majTaille();
 //            }
 //        });
+    }
+    
+    public void setHandler(InterfacePlateau plateau){
+        for (int y = 0; y < hauteur; y++) {
+            for (int x = 0; x < largeur; x++) {
+                Vector2i pos = new Vector2i(x,y);
+            
+                SocleHandler handler = new SocleHandler(controller, plateau, pos);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+            }
+        }
     }
     
     public void selectCell(Vector2i pos)

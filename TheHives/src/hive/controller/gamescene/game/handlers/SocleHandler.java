@@ -20,6 +20,7 @@ import util.Vector2i;
 
 /**
  * Appelé lorsque l'on clique sur une cellule du plateau vide
+ *
  * @author Thomas
  */
 public class SocleHandler implements EventHandler<MouseEvent>
@@ -84,8 +85,8 @@ public class SocleHandler implements EventHandler<MouseEvent>
                         controller.progress.doAction();
                         //TODO : MAJ graphique : on deselectionne la tile
                         ArrayList<Cell> cells = new ArrayList<>();
-                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
                         cells.add(controller.builder.placement_or_destination); //destination
+                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
                         break;
                 }
             }
