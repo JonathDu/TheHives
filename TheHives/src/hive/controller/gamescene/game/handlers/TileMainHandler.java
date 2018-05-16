@@ -44,6 +44,8 @@ public class TileMainHandler implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event)
     {
+        System.out.println("--- TILE MAIN ---");
+
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             Decision decision = controller.progress.game.state.turn.getCurrent().decision;

@@ -36,7 +36,7 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
     {
         this.controller = controller;
         this.game = controller.progress.game;
-        this.cell = new Cell(game.state.board.getHexagon(pos));
+        this.cell = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size()-1);
         this.uiPlateau = uiPlateau;
         this.uiRuche = uiPlateau.ruche;
     }
@@ -44,6 +44,7 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
     @Override
     public void handle(MouseEvent event)
     {
+        System.out.println("--- TILE PLATEAU ---");
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             Decision decision = game.state.turn.getCurrent().decision;
