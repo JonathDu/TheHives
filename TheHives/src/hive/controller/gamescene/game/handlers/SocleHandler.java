@@ -20,18 +20,17 @@ import util.Vector2i;
 
 /**
  * Appelé lorsque l'on clique sur une cellule du plateau vide
+ *
  * @author Thomas
  */
-public class SocleHandler implements EventHandler<MouseEvent>
-{
+public class SocleHandler implements EventHandler<MouseEvent> {
 
     GameController controller;
     Game game;
     Cell cell;
     InterfaceRuche uiRuche;
 
-    public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
-    {
+    public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos) {
         this.controller = controller;
         this.game = controller.progress.game;
         this.cell = new Cell(game.state.board.getHexagon(pos));
@@ -39,19 +38,15 @@ public class SocleHandler implements EventHandler<MouseEvent>
     }
 
     @Override
-    public void handle(MouseEvent event)
-    {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
-        {
+    public void handle(MouseEvent event) {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
             Decision decision = game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision)
-            {
+            if (decision instanceof HumanDecision) {
                 System.out.println(cell);
 
                 HumanDecision human_decision = (HumanDecision) decision;
 
-                switch (controller.builder.getState())
-                {
+                switch (controller.builder.getState()) {
                     case BEGIN:
                         System.out.println("Impossible : vous devez selectionner une case contenant au moins une tile");
                         break;
@@ -70,8 +65,7 @@ public class SocleHandler implements EventHandler<MouseEvent>
                             uiRuche.majCells(cells); // MAJ graphique : mettre a jour le deplacement
                             uiRuche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
                             uiRuche.desurlignerCells(game.rules.getPossibleDestinations(game.state, controller.builder.source)); // MAJ graphique : desurligne les destinations possible de la sources
-                        } else
-                        {
+                        } else {
                             System.out.println("Aucun changement : source = destination");
                         }
                         break;
@@ -84,8 +78,8 @@ public class SocleHandler implements EventHandler<MouseEvent>
                         controller.progress.doAction();
                         //TODO : MAJ graphique : on deselectionne la tile
                         ArrayList<Cell> cells = new ArrayList<>();
-                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
                         cells.add(controller.builder.placement_or_destination); //destination
+                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
                         break;
                 }
             }

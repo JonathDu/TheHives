@@ -44,10 +44,11 @@ public class InterfaceComb extends Parent {
         }
         int i = 0;
         this.pions.add(tile.level, new InterfacePion(couleur, tile.getTile().type, c));
+        this.getChildren().add(this.pions.get(this.pions.size()-1));
     }
 
     public void removeTile() {
-        this.pions.remove(this.pions.size());
+        this.pions.remove(this.pions.size()-1);
     }
 
     /*public void modifierTaille(int longueur) {

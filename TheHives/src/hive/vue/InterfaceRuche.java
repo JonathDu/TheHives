@@ -30,6 +30,7 @@ public class InterfaceRuche extends Parent {
     private final int largeurPion = (int) (longueurPion / 1.4);
     int width, height;
     private GameController controller;
+    private final Board board;
 
     public InterfaceRuche(CacheImage c, int width, int height, GameController controller, InterfacePlateau plateau) {
 //        this.width = width;
@@ -38,22 +39,21 @@ public class InterfaceRuche extends Parent {
 //        
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
+        this.board = controller.progress.game.state.board;
         this.controller = controller;
         hauteur = controller.progress.game.state.board.getData().sizeY();
         largeur = controller.progress.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
-                Vector2i pos = new Vector2i(x,y);
+                Vector2i pos = new Vector2i(x, y);
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
-                
+
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));
-                
-                
+
                 cell.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
-                
-                
+
                 if (x % 2 == 0) {
                     cell.setLayoutY(y * 2 * largeurPion);
                 } else {
@@ -77,33 +77,28 @@ public class InterfaceRuche extends Parent {
 //            }
 //        });
     }
-    
-    public void selectCell(Vector2i pos)
-    {
-        
-    }
-    
-    public void deselectCell(Vector2i pos)
-    {
-        
-    }
-    
-    public void majCells(ArrayList<Cell> cells)
-    {
-        
-    }
-    
-    public void surlignerCells(ArrayList<Cell> cells)
-    {
-        
-    }
-    
-    public void desurlignerCells(ArrayList<Cell> cells)
-    {
+
+    public void selectCell(Vector2i pos) {
         
     }
 
+    public void deselectCell(Vector2i pos) {
 
+    }
+
+    public void majCells(ArrayList<Cell> cells) {
+        for(int i=0; i< cells.size(); i++){
+            tab.getAt(cells.get(i).comb.pos).addTile(cells.get(i));
+        }
+    }
+
+    public void surlignerCells(ArrayList<Cell> cells) {
+
+    }
+
+    public void desurlignerCells(ArrayList<Cell> cells) {
+
+    }
 
 //    public void majTaille() {
 //

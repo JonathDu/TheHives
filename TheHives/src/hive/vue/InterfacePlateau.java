@@ -43,7 +43,7 @@ public class InterfacePlateau extends Parent {
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller, this);
+        this.ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller, this);
 
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();
@@ -51,6 +51,7 @@ public class InterfacePlateau extends Parent {
 //            p.setHvalue(x/20);
 // 
 //        });
+
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
 
         ruche.isResizable();
