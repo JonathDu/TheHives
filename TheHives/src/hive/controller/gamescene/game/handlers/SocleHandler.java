@@ -11,6 +11,7 @@ import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
+import hive.vue.InterfacePlateau;
 import hive.vue.InterfaceRuche;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -29,12 +30,12 @@ public class SocleHandler implements EventHandler<MouseEvent>
     Cell cell;
     InterfaceRuche uiRuche;
 
-    public SocleHandler(GameController controller, InterfaceRuche uiRuche, Vector2i pos)
+    public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
         this.controller = controller;
         this.game = controller.progress.game;
         this.cell = new Cell(game.state.board.getHexagon(pos));
-        this.uiRuche = uiRuche;
+        this.uiRuche = uiPlateau.ruche;
     }
 
     @Override

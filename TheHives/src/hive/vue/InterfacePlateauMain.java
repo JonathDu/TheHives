@@ -30,52 +30,43 @@ public class InterfacePlateauMain extends Parent {
 
     VBox pions;
     Label nomJoueur;
+    public boolean isCourant;
 
-    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property, GameController controller) {
+    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau) {
         pions = new VBox();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
         this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
         pions.prefHeightProperty().bind(property);
-        
-        
-        
-        
-        
+
         BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
 
-        
         pions.setOpacity(1);
         pions.setBackground(new Background(bf));
         //pions.setPrefHeight(100);
         InterfacePions pileQueenBee = new InterfacePions(couleur, col.get(QUEEN_BEE), QUEEN_BEE, c);
         InterfacePions pileGrassHopper = new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c);
         InterfacePions pileBeetle = new InterfacePions(couleur, col.get(BEETLE), BEETLE, c);
-        
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, BEETLE));
-        
-        
-        
+
+        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, QUEEN_BEE));
+        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, GRASSHOPPER));
+        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, BEETLE));
+
         pions.getChildren().add(pileQueenBee);
         pions.getChildren().add(pileGrassHopper);
         pions.getChildren().add(pileBeetle);
 
-        
         pions.getChildren().add(this.nomJoueur);
-        
+
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
     }
-    
-    public void surlignerTile(Tile tile)
-    {
-        
+
+    public void surlignerTile(Tile tile) {
+
     }
-    
-    public void desurlignerTile(Tile tile)
-    {
-        
+
+    public void desurlignerTile(Tile tile) {
+
     }
 }

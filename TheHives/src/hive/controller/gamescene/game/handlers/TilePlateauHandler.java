@@ -11,6 +11,7 @@ import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
+import hive.vue.InterfacePlateau;
 import hive.vue.InterfaceRuche;
 import java.util.ArrayList;
 import javafx.event.EventHandler;
@@ -28,14 +29,16 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
     GameController controller;
     Game game;
     Cell cell;
+    InterfacePlateau uiPlateau;
     InterfaceRuche uiRuche;
 
-    public TilePlateauHandler(GameController controller, InterfaceRuche uiRuche, Vector2i pos)
+    public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
         this.controller = controller;
         this.game = controller.progress.game;
         this.cell = new Cell(game.state.board.getHexagon(pos));
-        this.uiRuche = uiRuche;
+        this.uiPlateau = uiPlateau;
+        this.uiRuche = uiPlateau.ruche;
     }
 
     @Override

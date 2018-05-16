@@ -26,38 +26,41 @@ import javafx.stage.Stage;
  */
 public class InterfacePlateau extends Parent {
 //
+
     BorderPane pane;
     GameController controller;
+    public InterfacePlateauMain mainGauche;
+    public InterfacePlateauMain mainDroite;
+    public InterfaceRuche ruche;
 
     public InterfacePlateau(PlayerCollection col, CacheImage c, Stage stage, String joueur1, String joueur2, DoubleProperty prop) {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
-        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller);
-        InterfacePlateauMain main2 = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller);
+
+        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller, this);
+        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller, this);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        InterfaceRuche ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
-        
+        ruche = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller, this);
+
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();
 //            System.out.println(x);
 //            p.setHvalue(x/20);
 // 
 //        });
-        
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
 
         ruche.isResizable();
         centerPane.getChildren().add(ruche);
         p.setContent(centerPane);
-        
+
         pane.setCenter(p);
-        pane.setLeft(main1);
-        pane.setRight(main2);
+        pane.setLeft(mainGauche);
+        pane.setRight(mainDroite);
         this.getChildren().add(pane);
     }
-
 
 }

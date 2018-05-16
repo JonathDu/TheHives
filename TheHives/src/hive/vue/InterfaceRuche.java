@@ -31,7 +31,7 @@ public class InterfaceRuche extends Parent {
     int width, height;
     private GameController controller;
 
-    public InterfaceRuche(CacheImage c, int width, int height, GameController controller) {
+    public InterfaceRuche(CacheImage c, int width, int height, GameController controller, InterfacePlateau plateau) {
 //        this.width = width;
 //        this.height = height;
 //        
@@ -45,7 +45,7 @@ public class InterfaceRuche extends Parent {
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x,y);
-                SocleHandler handler = new SocleHandler(controller, this, pos);
+                SocleHandler handler = new SocleHandler(controller, plateau, pos);
                 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));

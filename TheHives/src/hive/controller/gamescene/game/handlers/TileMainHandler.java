@@ -7,9 +7,11 @@ package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
+import hive.model.game.Game;
 import hive.model.insects.InsectType;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
+import hive.vue.InterfacePlateau;
 import hive.vue.InterfacePlateauMain;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -24,14 +26,18 @@ public class TileMainHandler implements EventHandler<MouseEvent>
 
     //TODO : différencier quel joueur click ???
     GameController controller;
+    InterfacePlateau uiPlateau;
     InterfacePlateauMain uiMain;
     Tile tile;
+    Game game;
 
-    public TileMainHandler(GameController controller, InterfacePlateauMain uiMain, InsectType insectType)
+    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, InterfacePlateauMain uiMain,  InsectType insectType)
     {
         this.controller = controller;
+        this.uiPlateau = uiPlateau;
         this.uiMain = uiMain;
         this.tile = new Tile(insectType, controller.progress.game.state.turn.getCurrent().color);
+        this.game = controller.progress.game;
     }
 
     @Override
@@ -48,7 +54,7 @@ public class TileMainHandler implements EventHandler<MouseEvent>
                         System.out.println("Tile selectionnée");
                         controller.builder.setTile(tile);
                         uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
-                        // TODO : MAJ graphique : les destinations possibles
+                        uiPlateau.ruche.surlignerCells(game.rules.getPossiblePlacements(game.state, tile));// MAJ graphique : les destinations possibles
                         break;
                     case TILE_SELECTED:
                         if (tile.type != controller.builder.tile.type)
