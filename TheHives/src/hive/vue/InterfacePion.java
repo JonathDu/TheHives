@@ -26,43 +26,10 @@ public class InterfacePion extends Parent {
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c) {
 
         Group g = new Group();
-        ImageView img = null;
-
-        hexagon = new Polygon();
-
-        //Adding coordinates to the polygon 
-        hexagon.getPoints().addAll(new Double[]{
-            10.0, 60.0,
-            LARGEUR + 10.0, LARGEUR + 60.0,
-            LARGEUR + LONGUEUR + 10.0, LARGEUR + 60.0,
-            2 * LARGEUR + LONGUEUR + 10.0, 60.0,
-            LARGEUR + LONGUEUR + 10.0, 60.0 - LARGEUR,
-            LARGEUR + 10.0, 60.0 - LARGEUR});
-        hexagon.setFill(couleur);
-        hexagon.setStroke(Color.BLACK);
+        hexagon = createHexagon(LONGUEUR, couleur);
         g.getChildren().add(hexagon);
-
-        if (typePions != null) {
-            switch (typePions) {
-                case QUEEN_BEE:
-                    img = c.getImage("hive/vue/rsc/images/bee.png");
-                    break;
-                case GRASSHOPPER:
-                    img = c.getImage("hive/vue/rsc/images/grasshopper.png");
-                    break;
-                case BEETLE:
-                    img = c.getImage("hive/vue/rsc/images/beetle.png");
-                    break;
-                default:
-                    break;
-
-            }
-            img.setFitHeight(LONGUEUR / 2);
-            img.setLayoutX(LONGUEUR);
-            img.setLayoutY(LONGUEUR);
-
-            img.setPreserveRatio(true);
-
+        ImageView img = createImage(typePions, LONGUEUR, c);
+        if (img != null) {
             g.getChildren().add(img);
         }
 
@@ -70,11 +37,21 @@ public class InterfacePion extends Parent {
     }
 
     public InterfacePion(Color couleur, InsectType typePions, CacheImage c, int longueur) {
-        int largeur = (int) (longueur / 1.4);
         Group g = new Group();
-        ImageView img = null;
+        hexagon = createHexagon(longueur, couleur);
+        g.getChildren().add(hexagon);
 
-        hexagon = new Polygon();
+        ImageView img = createImage(typePions, longueur, c);
+        if (img != null) {
+            g.getChildren().add(img);
+        }
+        this.getChildren().add(g);
+    }
+
+    private Polygon createHexagon(int longueur, Color couleur) {
+        int largeur = (int) (longueur / 1.4);
+
+        Polygon hexagon = new Polygon();
 
         //Adding coordinates to the polygon 
         hexagon.getPoints().addAll(new Double[]{
@@ -86,32 +63,33 @@ public class InterfacePion extends Parent {
             largeur + 10.0, 60.0 - largeur});
         hexagon.setFill(couleur);
         hexagon.setStroke(Color.BLACK);
-        g.getChildren().add(hexagon);
+        return hexagon;
+    }
 
-        if (typePions != null) {
-            switch (typePions) {
+    private ImageView createImage(InsectType type, int longueur, CacheImage c) {
+        ImageView v = null;
+        if (type != null) {
+            switch (type) {
                 case QUEEN_BEE:
-                    img = c.getImage("hive/vue/rsc/images/bee.png");
+                    v = c.getImage("hive/vue/rsc/images/bee.png");
                     break;
                 case GRASSHOPPER:
-                    img = c.getImage("hive/vue/rsc/images/grasshopper.png");
+                    v = c.getImage("hive/vue/rsc/images/grasshopper.png");
                     break;
                 case BEETLE:
-                    img = c.getImage("hive/vue/rsc/images/beetle.png");
+                    v = c.getImage("hive/vue/rsc/images/beetle.png");
                     break;
                 default:
                     break;
 
             }
-            img.setFitHeight(longueur / 2);
-            img.setLayoutX(longueur);
-            img.setLayoutY(longueur);
+            v.setFitHeight(longueur / 2);
+            v.setLayoutX(longueur);
+            v.setLayoutY(longueur);
 
-            img.setPreserveRatio(true);
+            v.setPreserveRatio(true);
 
-            g.getChildren().add(img);
         }
-
-        this.getChildren().add(g);
+        return v;
     }
 }
