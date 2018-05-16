@@ -93,52 +93,25 @@ public class InterfaceRuche extends Parent {
         
     }
 
-    private void placerPremierPion(Honeycomb c) {
-        Vector2i pos = new Vector2i(hauteur / 2, largeur / 2);
-        tab.getAt(pos).setComb(c);
-    }
 
-    private void placerPion(Honeycomb c, Vector2i pos) {
-        if (pos.x < hauteur && pos.y < largeur && pos.x >= 0 && pos.y >= 0) {
-            tab.getAt(pos).setComb(c);
-        }
-    }
 
-    private void placerPion(Honeycomb c, int x, int y) {
-        if (x < hauteur && y < largeur && x >= 0 && y >= 0) {
-            tab.getAt(x, y).setComb(c);
-        }
-    }
-
-    private void enleverPion(int x, int y) {
-        if (x < hauteur && y < largeur && x >= 0 && y >= 0) {
-            tab.getAt(x, y).removeComb();
-        }
-    }
-
-    private void enleverPion(Vector2i pos) {
-        if (pos.x < hauteur && pos.y < largeur && pos.x >= 0 && pos.y >= 0) {
-            tab.getAt(pos).removeComb();
-        }
-    }
-
-    public void majTaille() {
-
-        this.getChildren().clear();
-        for (int i = 0; i < largeur; i++) {
-            for (int j = 0; j < hauteur; j++) {
-
-                tab.getAt(new Vector2i(j, i)).setLayoutX(i * (longueurPion + largeurPion));
-
-                if (i % 2 == 0) {
-                    tab.getAt(new Vector2i(j, i)).setLayoutY(j * 2 * largeurPion);
-                } else {
-                    tab.getAt(new Vector2i(j, i)).setLayoutY((j * 2 * largeurPion) + largeurPion);
-                }
-
-                tab.getAt(new Vector2i(j, i)).modifierTaille(longueurPion);
-                this.getChildren().add(tab.getAt(new Vector2i(j, i)));
-            }
-        }
-    }
+//    public void majTaille() {
+//
+//        this.getChildren().clear();
+//        for (int i = 0; i < largeur; i++) {
+//            for (int j = 0; j < hauteur; j++) {
+//
+//                tab.getAt(new Vector2i(j, i)).setLayoutX(i * (longueurPion + largeurPion));
+//
+//                if (i % 2 == 0) {
+//                    tab.getAt(new Vector2i(j, i)).setLayoutY(j * 2 * largeurPion);
+//                } else {
+//                    tab.getAt(new Vector2i(j, i)).setLayoutY((j * 2 * largeurPion) + largeurPion);
+//                }
+//
+//                tab.getAt(new Vector2i(j, i)).modifierTaille(longueurPion);
+//                this.getChildren().add(tab.getAt(new Vector2i(j, i)));
+//            }
+//        }
+//    }
 }

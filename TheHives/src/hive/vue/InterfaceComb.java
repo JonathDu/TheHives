@@ -7,8 +7,8 @@ package hive.vue;
 
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
-import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
+import java.util.ArrayList;
 import javafx.scene.Parent;
 import javafx.scene.paint.Color;
 
@@ -18,45 +18,39 @@ import javafx.scene.paint.Color;
  */
 public class InterfaceComb extends Parent {
 
-    private InterfacePion pion;
-    private Honeycomb comb;
+    private ArrayList<InterfacePion> pions;
+    private InterfacePion socle;
     private CacheImage c;
 
     public InterfaceComb(CacheImage c) {
         this.c = c;
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c);
-        this.getChildren().add(pion);
+        this.socle = new InterfacePion(Color.TRANSPARENT, null, c);
+        this.getChildren().add(pions.get(0));
     }
 
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c, taille);
-        this.getChildren().add(pion);
+        socle = new InterfacePion(Color.TRANSPARENT, null, c, taille);
+        this.getChildren().add(socle);
     }
 
-    public void setComb(Honeycomb comb) {
+    public void addTile(Cell tile) {
         Color couleur = null;
-        this.comb = comb;
 
-        if (this.comb.value().get(0).color == TeamColor.BLACK) {
+        if (tile.getTile().color == TeamColor.BLACK) {
             couleur = Color.GRAY;
         } else {
             couleur = Color.WHITE;
         }
         int i = 0;
-        while (this.comb.value().get(i) != null) {
-            
-            InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
-            this.getChildren().add(pionx);
-            i++;
-        }
+        this.pions.add(tile.level, new InterfacePion(couleur, tile.getTile().type, c));
     }
 
-    public void removeComb() {
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c);
+    public void removeTile() {
+        this.pions.remove(this.pions.size());
     }
 
-    public void modifierTaille(int longueur) {
+    /*public void modifierTaille(int longueur) {
         this.getChildren().clear();
         Color couleur = null;
         if (this.comb != null) {
@@ -69,13 +63,14 @@ public class InterfaceComb extends Parent {
             while (this.comb.value().get(i) != null) {
                 InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
                 this.getChildren().add(pionx);
-                this.pion = pionx;
+                this.pions = pionx;
                 i++;
             }
         } else {
-            this.pion = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
-            this.getChildren().add(pion);
+            this.pions = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
+            this.getChildren().add(pions);
 
         }
     }
+*/
 }
