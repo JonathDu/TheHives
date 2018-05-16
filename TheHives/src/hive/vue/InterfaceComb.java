@@ -58,7 +58,8 @@ public class InterfaceComb extends Parent {
 
     public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
         pions.clear();
-
+        this.getChildren().clear();
+        this.getChildren().add(socle);
         for (int i = 0; i < comb.value().size(); i++) {
             Color couleur = null;
 
