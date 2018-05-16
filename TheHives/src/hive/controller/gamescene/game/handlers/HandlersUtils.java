@@ -21,6 +21,11 @@ public class HandlersUtils
 
     public static void moveOnBoard(GameController controller, HumanDecision human_decision, Cell cell, InterfaceRuche uiRuche)
     {
+        if (!controller.builder.possibleDestinations.contains(cell))
+        {
+            System.err.println("Destination impossible");
+            return;
+        }
         //TODO : tester si le move est possible ??? connexité etc ...
 
         /* ACTION BUILDER */
@@ -53,5 +58,6 @@ public class HandlersUtils
         ArrayList<Cell> cells = new ArrayList<>();
         cells.add(controller.builder.placement_or_destination); //destination
         uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
+        uiRuche.desurlignerCells(controller.builder.possibleDestinations);
     }
 }
