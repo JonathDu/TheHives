@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.gamescene.game.GameController;
-import hive.controller.gamescene.game.TileHandler;
+import hive.controller.gamescene.game.handlers.TileMainHandler;
 import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import static hive.model.insects.InsectType.*;
@@ -52,9 +52,9 @@ public class InterfacePlateauMain extends Parent {
         InterfacePions pileGrassHopper = new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c);
         InterfacePions pileBeetle = new InterfacePions(couleur, col.get(BEETLE), BEETLE, c);
         
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileHandler(controller, this, BEETLE));
+        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, QUEEN_BEE));
+        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, GRASSHOPPER));
+        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, this, BEETLE));
         
         
         

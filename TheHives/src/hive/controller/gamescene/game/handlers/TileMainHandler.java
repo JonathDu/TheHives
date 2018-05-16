@@ -3,64 +3,61 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.gamescene.game;
+package hive.controller.gamescene.game.handlers;
 
-import hive.model.board.Cell;
+import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
-import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateauMain;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import util.Vector2i;
 
 /**
+ * Appelé lorque que l'on clique sur une tile d'une des pioches du joueur
  *
  * @author jonathan
  */
-public class TileHandler implements EventHandler<MouseEvent> {
+public class TileMainHandler implements EventHandler<MouseEvent>
+{
 
+    //TODO : différencier quel joueur click ???
     GameController controller;
     InterfacePlateauMain uiMain;
     Tile tile;
 
-    public TileHandler(GameController controller, InterfacePlateauMain uiMain, InsectType insectType) {
+    public TileMainHandler(GameController controller, InterfacePlateauMain uiMain, InsectType insectType)
+    {
         this.controller = controller;
         this.uiMain = uiMain;
         this.tile = new Tile(insectType, controller.progress.game.state.turn.getCurrent().color);
     }
 
     @Override
-    public void handle(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            //System.out.println(tile);
-            
+    public void handle(MouseEvent event)
+    {
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
+        {
             Decision decision = controller.progress.game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision) {
-                
-                HumanDecision human_decision = (HumanDecision) decision;
-
-                switch (controller.builder.getState()) {
+            if (decision instanceof HumanDecision)
+            {
+                switch (controller.builder.getState())
+                {
                     case BEGIN:
                         System.out.println("Tile selectionnée");
                         controller.builder.setTile(tile);
-                        /*
                         uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
                         // TODO : MAJ graphique : les destinations possibles
-                        */
                         break;
                     case TILE_SELECTED:
-                        if(tile.type != controller.builder.tile.type)
+                        if (tile.type != controller.builder.tile.type)
                         {
                             System.out.println("Changement de tile");
-                            //uiMain.desurlignerTile(controller.builder.tile);
+                            uiMain.desurlignerTile(controller.builder.tile);
                             controller.builder.setTile(tile);
-                            //uiMain.surlignerTile(tile);
-                            
-                        }
-                        else
+                            uiMain.surlignerTile(tile);
+                        } else
                         {
                             System.out.println("Aucun changement : tile deja selectionnée");
                         }

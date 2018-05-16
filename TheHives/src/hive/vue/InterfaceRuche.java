@@ -5,7 +5,7 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.CellHandler;
+import hive.controller.gamescene.game.handlers.SocleHandler;
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
@@ -45,7 +45,7 @@ public class InterfaceRuche extends Parent {
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x,y);
-                CellHandler handler = new CellHandler(controller, this, pos);
+                SocleHandler handler = new SocleHandler(controller, this, pos);
                 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));

@@ -53,7 +53,7 @@ public class ActionBuilder
     {
         assert state == State.TILE_SELECTED;
         this.placement_or_destination = cell;
-        state = State.DESTINATION_SELECTED;
+        state = State.PLACEMENT_SELECTED;
     }
 
     public void setSource(Cell cell)
@@ -70,7 +70,7 @@ public class ActionBuilder
         state = State.DESTINATION_SELECTED;
     }
 
-    Action produce()
+    public Action produce()
     {
         Action action = null;
         switch (state)
@@ -79,10 +79,12 @@ public class ActionBuilder
                 assert tile != null;
                 assert placement_or_destination != null;
                 action = new PutAction(placement_or_destination, tile);
+                break;
             case DESTINATION_SELECTED:
                 assert source != null;
                 assert placement_or_destination != null;
                 action = new MoveAction(source, placement_or_destination);
+                break;
         }
         state = State.BEGIN;
         assert action == null;
