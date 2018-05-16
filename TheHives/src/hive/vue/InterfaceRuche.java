@@ -32,8 +32,7 @@ public class InterfaceRuche extends Parent {
     private GameController controller;
     private final Board board;
     private InterfacePlateau plateau;
-    
-    
+
     public InterfaceRuche(CacheImage c, int width, int height, GameController controller) {
 //        this.width = width;
 //        this.height = height;
@@ -48,14 +47,10 @@ public class InterfaceRuche extends Parent {
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
-                Vector2i pos = new Vector2i(x,y);
+                Vector2i pos = new Vector2i(x, y);
 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + largeurPion));
-
-
-
-
 
                 if (x % 2 == 0) {
                     cell.setLayoutY(y * 2 * largeurPion);
@@ -81,11 +76,11 @@ public class InterfaceRuche extends Parent {
 //        });
     }
 
-    public void setHandler(InterfacePlateau plateau){
+    public void setHandler(InterfacePlateau plateau) {
         this.plateau = plateau;
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
-                Vector2i pos = new Vector2i(x,y);
+                Vector2i pos = new Vector2i(x, y);
 
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
                 tab.getAt(pos).socle.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
@@ -93,21 +88,17 @@ public class InterfaceRuche extends Parent {
         }
     }
 
-    public void selectCell(Vector2i pos)
-    {
+    public void selectCell(Vector2i pos) {
 
     }
 
-    public void deselectCell(Vector2i pos)
-    {
+    public void deselectCell(Vector2i pos) {
 
     }
-
-
 
     public void majCells(ArrayList<Cell> cells) {
-        for(int i=0; i< cells.size(); i++){
-            tab.getAt(cells.get(i).comb.pos).addTile(cells.get(i), plateau, controller);
+        for (int i = 0; i < cells.size(); i++) {
+            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos),plateau, controller);
         }
     }
 

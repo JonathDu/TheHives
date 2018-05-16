@@ -11,6 +11,7 @@ import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
+import javafx.event.EventType;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -53,6 +54,24 @@ public class InterfaceComb extends Parent {
         pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
         this.pions.add(tile.level, pion);
         this.getChildren().add(this.pions.get(this.pions.size() - 1));
+    }
+
+    public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
+        pions.clear();
+
+        for (int i = 0; i < comb.value().size(); i++) {
+            Color couleur = null;
+
+            if (comb.value().get(i).color == TeamColor.BLACK) {
+                couleur = Color.GRAY;
+            } else {
+                couleur = Color.WHITE;
+            }
+            
+            pions.add(i, new InterfacePion(couleur, comb.value().get(i).type, c));
+            this.pions.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
+            this.getChildren().add(pions.get(i));
+        }
     }
 
     public void removeTile() {
