@@ -18,11 +18,10 @@ import java.util.Random;
  */
 public class EasyIA implements IA{
     
-    
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+         ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
         if(actionList.isEmpty()){
             return new NoAction();
         }

@@ -18,26 +18,17 @@ import java.util.Random;
  */
 public class HardIA implements IA{   
     
-    ArrayList<Action> actionList = new ArrayList<>();
-    
-    /*private void initializedActionlist(){
-        int i;
-        for (i=0;i<10;i++){
-            this.actionList[i]=new ArrayList<>();
-        }
-    }*/
     @Override
     public Action SearchAction(Game state){
-        int depth =4;
-        //initializedActionlist();
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        actionList = hia.currentPlayerPossibilities(state);
+        ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
         if(actionList.isEmpty()){
             return new NoAction();
         }
         ArrayList<Action> maxActionList = new ArrayList<>();
         int max=-50000, tmp;
         Action currentAction;
+        int depth =3;
         while(!actionList.isEmpty()){
             currentAction = actionList.remove(0);
             hia.doAction(state, currentAction);
@@ -46,7 +37,7 @@ public class HardIA implements IA{
                 return currentAction;
             }
             else if(!hia.winCurrent(state)){
-                tmp = MiniMax.miniMaxOpponent(state, depth-1, max, actionList, actionList.size());
+                tmp = MiniMax.miniMaxOpponent(state, depth-1, max);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;

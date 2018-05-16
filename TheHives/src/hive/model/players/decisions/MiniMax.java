@@ -6,7 +6,9 @@
 package hive.model.players.decisions;
 
 import hive.model.HiveInterfaceIA;
+import hive.model.board.Tile;
 import hive.model.game.Game;
+import hive.model.players.Player;
 import hive.model.players.actions.Action;
 import static hive.model.players.decisions.Evaluation.evaluationCurrentPlayer;
 import static hive.model.players.decisions.Evaluation.evaluationOpponent;
@@ -19,26 +21,24 @@ import java.util.ArrayList;
  * @author Coralie
  */
 public class MiniMax{
-    static int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action> actionList, int tailleActuelle ){
+    static int miniMaxCurrentPlayer(Game state, int depth, int min){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
             return evaluationCurrentPlayer(state);
         }
         else{
             int vMax = -50000;
-            actionList = hia.currentPlayerPossibilities(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
             int tmp;
-            int taille = actionList.size();
             Action currentAction;
-            if(taille==tailleActuelle){
-                vMax=max(miniMaxOpponent(state, depth-1, vMax, actionList, taille),vMax);
+            if(actionList.isEmpty()){
+                vMax=max(miniMaxOpponent(state, depth-1, vMax),vMax);
             }
             else{
-                while(taille>tailleActuelle){
-                    currentAction = actionList.remove(tailleActuelle);
-                    taille--;
+                while(!actionList.isEmpty()){
+                    currentAction = actionList.remove(0);
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxOpponent(state, depth-1, vMax, actionList, actionList.size());
+                    tmp = miniMaxOpponent(state, depth-1, vMax);
                     hia.undoAction(state);
                     vMax = max(tmp,vMax);
                     if(vMax > min)
@@ -48,26 +48,24 @@ public class MiniMax{
             return vMax;
         }
     }
-    static int miniMaxOpponent(Game state, int depth, int max, ArrayList<Action> actionList, int tailleActuelle){
+    static int miniMaxOpponent(Game state, int depth, int max){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state)|| hia.winOpponent(state)){
             return evaluationOpponent(state);
         }
         else{
             int vMin = 50000;
-            actionList = hia.currentPlayerPossibilities(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
             int tmp;
-            int taille = actionList.size();
             Action currentAction;
-            if(taille==tailleActuelle){
-                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList, taille),vMin);
+            if(actionList.isEmpty()){
+                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin),vMin);
             }
             else{
-                while(taille>tailleActuelle){
-                    currentAction = actionList.remove(tailleActuelle);
-                    taille--;
+                while(!actionList.isEmpty()){
+                    currentAction = actionList.remove(0);
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin, actionList, actionList.size());
+                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin);
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
                     if(vMin < max)

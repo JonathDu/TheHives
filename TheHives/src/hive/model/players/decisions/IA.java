@@ -13,5 +13,6 @@ import hive.model.players.actions.Action;
  * @author Coralie
  */
 public interface IA {
+    
     public Action SearchAction(Game state);
 }
