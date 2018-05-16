@@ -58,7 +58,7 @@ public class HiveConsoleHuman
             assert player.decision instanceof HumanDecision;
             HumanDecision decision = (HumanDecision) player.decision;
             
-            for(Action a : hi.currentPlayerPossibilities(game))
+            for(Action a : hi.currentPlayerPossibilities2(game))
                 System.out.println(a);
 
             String actionChoose;
