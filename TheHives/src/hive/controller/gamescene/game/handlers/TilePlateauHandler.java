@@ -68,14 +68,8 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
                         uiRuche.surlignerCells(controller.builder.possibleDestinations); //MAJ graphique : surligner les destinations
                         break;
                     case SOURCE_SELECTED:
-                        if (cell != controller.builder.source) //si on ne clique pas sur la cellule deja selectionnée
-                        {
-                            System.out.println("Destination selectionnée");
-                            HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
-                        } else
-                        {
-                            System.err.println("Aucun changement : source = destination");
-                        }
+                        System.out.println("Destination selectionnée");
+                        HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
                         break;
                     case TILE_SELECTED:
                         System.out.println("Placement selectionné");
@@ -83,10 +77,6 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
                         break;
                 }
             }
-        } else if (true) // autre evenement ? mouseOver ?
-        {
-            // information about the tile ? IA or not
-            // etc
         }
     }
 }
