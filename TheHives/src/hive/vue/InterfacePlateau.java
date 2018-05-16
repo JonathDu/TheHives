@@ -9,6 +9,7 @@ import hive.controller.gamescene.game.GameController;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
+import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
@@ -38,8 +39,8 @@ public class InterfacePlateau extends Parent {
         pane.prefWidthProperty().bind(stage.widthProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller, this);
-        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller, this);
+        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, Color.AZURE, c, prop, controller,this, TeamColor.WHITE);
+        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, Color.BURLYWOOD, c, pane.heightProperty(), controller, this,TeamColor.BLACK);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();

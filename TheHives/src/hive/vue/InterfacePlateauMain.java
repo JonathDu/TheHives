@@ -11,6 +11,7 @@ import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import static hive.model.insects.InsectType.*;
 import hive.model.players.PlayerCollection;
+import hive.model.players.TeamColor;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.geometry.Pos;
@@ -32,7 +33,7 @@ public class InterfacePlateauMain extends Parent {
     Label nomJoueur;
     public boolean isCourant;
 
-    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau) {
+    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, Color couleur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
@@ -48,9 +49,9 @@ public class InterfacePlateauMain extends Parent {
         InterfacePions pileGrassHopper = new InterfacePions(couleur, col.get(GRASSHOPPER), GRASSHOPPER, c);
         InterfacePions pileBeetle = new InterfacePions(couleur, col.get(BEETLE), BEETLE, c);
 
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, BEETLE));
+        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, QUEEN_BEE));
+        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, GRASSHOPPER));
+        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, BEETLE));
 
         pions.getChildren().add(pileQueenBee);
         pions.getChildren().add(pileGrassHopper);

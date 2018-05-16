@@ -9,6 +9,7 @@ import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.insects.InsectType;
+import hive.model.players.TeamColor;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
@@ -31,12 +32,12 @@ public class TileMainHandler implements EventHandler<MouseEvent>
     Tile tile;
     Game game;
 
-    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, InterfacePlateauMain uiMain,  InsectType insectType)
+    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, InterfacePlateauMain uiMain, TeamColor color, InsectType insectType)
     {
         this.controller = controller;
         this.uiPlateau = uiPlateau;
         this.uiMain = uiMain;
-        this.tile = new Tile(insectType, controller.progress.game.state.turn.getCurrent().color);
+        this.tile = new Tile(insectType, color);
         this.game = controller.progress.game;
     }
 

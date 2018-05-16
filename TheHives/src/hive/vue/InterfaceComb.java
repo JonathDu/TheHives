@@ -5,12 +5,16 @@
  */
 package hive.vue;
 
+import hive.controller.gamescene.game.GameController;
+import hive.controller.gamescene.game.handlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javax.sound.midi.ControllerEventListener;
 
 /**
  *
@@ -25,16 +29,18 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c) {
         this.c = c;
         this.socle = new InterfacePion(Color.TRANSPARENT, null, c);
+        this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
 
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
         socle = new InterfacePion(Color.TRANSPARENT, null, c, taille);
+        this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
 
-    public void addTile(Cell tile) {
+    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
         Color couleur = null;
 
         if (tile.getTile().color == TeamColor.BLACK) {
@@ -43,12 +49,14 @@ public class InterfaceComb extends Parent {
             couleur = Color.WHITE;
         }
         int i = 0;
-        this.pions.add(tile.level, new InterfacePion(couleur, tile.getTile().type, c));
-        this.getChildren().add(this.pions.get(this.pions.size()-1));
+        InterfacePion pion = new InterfacePion(couleur, tile.getTile().type, c);
+        pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
+        this.pions.add(tile.level, pion);
+        this.getChildren().add(this.pions.get(this.pions.size() - 1));
     }
 
     public void removeTile() {
-        this.pions.remove(this.pions.size()-1);
+        this.pions.remove(this.pions.size() - 1);
     }
 
     /*public void modifierTaille(int longueur) {
@@ -73,5 +81,5 @@ public class InterfaceComb extends Parent {
 
         }
     }
-*/
+     */
 }
