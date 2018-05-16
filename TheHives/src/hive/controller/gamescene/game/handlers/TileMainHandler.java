@@ -53,13 +53,27 @@ public class TileMainHandler implements EventHandler<MouseEvent>
             {
                 switch (controller.builder.getState())
                 {
-                    case BEGIN:
+                    case SOURCE_SELECTED:
+                        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
+                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations); // MAJ graphique : desurligne les destinations possible de la sources   
+
                         System.out.println("Tile selectionnée");
-                        
-                         /* ACTION BUILDER */
+
+                        /* ACTION BUILDER */
                         controller.builder.setTile(tile);
                         controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tile));
-                        
+
+                        /* MAJ GRPAHIQUE */
+                        uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
+                        uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);// MAJ graphique : les destinations possibles
+                        break;
+                    case BEGIN:
+                        System.out.println("Tile selectionnée");
+
+                        /* ACTION BUILDER */
+                        controller.builder.setTile(tile);
+                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tile));
+
                         /* MAJ GRPAHIQUE */
                         uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
                         uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);// MAJ graphique : les destinations possibles
@@ -78,10 +92,6 @@ public class TileMainHandler implements EventHandler<MouseEvent>
                         break;
                 }
             }
-        } else if (true) // autre evenement ? mouseOver ?
-        {
-            // information about the tile ? IA or not
-            // etc
         }
     }
 }
