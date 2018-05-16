@@ -68,7 +68,7 @@ public class HiveFunctions
         return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.level);
     }
     
-    // check if the tile has at least two open spaces
+    // check if the cell has at least two open spaces
     public static boolean isFreeAtSide(Cell cell, HexagonSide side)
     {
         return cell.comb.getNeighbor(side).value().size() <= cell.level &&
@@ -76,7 +76,7 @@ public class HiveFunctions
                 cell.comb.getNeighbor(side.getAfter()).value().size() <= cell.level);
     }
     
-    // check if the tile has a wall next to it
+    // check if the cell has a wall next to it
     public static boolean hasWallNextToAtSide(Cell cell, HexagonSide side)
     {
         return cell.comb.getNeighbor(side.getBefore()).value().size() > cell.level
@@ -134,8 +134,7 @@ public class HiveFunctions
 
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
         Tile tmp = cell.comb.value().pop();
-
-        System.out.println("g = " + nb_groups + " , c = " + nb_combs);
+        
         boolean res = isConnex(to_see, nb_combs - 1);
 
         cell.comb.value().push(tmp);

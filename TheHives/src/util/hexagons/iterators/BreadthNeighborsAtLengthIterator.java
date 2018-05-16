@@ -9,8 +9,10 @@ import java.util.ArrayDeque;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Queue;
+import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -20,41 +22,53 @@ import java.util.function.Predicate;
  * @author Thomas
  * @param <E>
  */
-public class BreadthAtLengthIterator<E> implements Iterator<Hexagon<E>>
+public class BreadthNeighborsAtLengthIterator<E> implements Iterator<Hexagon<E>>
 {
     Queue<Hexagon<E>> queue;
-    HashMap<Hexagon<E>, Boolean> seen;
-    Predicate<Hexagon<E>> predicate;
+    Set<Hexagon<E>> seen;
+    Predicate<Neighbor<E>> predicate;
+    int m;
+    int n;
     
-    public BreadthAtLengthIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate, int n)
+    public BreadthNeighborsAtLengthIterator(Hexagon<E> center, Predicate<Neighbor<E>> predicate, int n)
     {
         this.queue = new ArrayDeque<>();
-        queue.add(center);
         
-        this.seen = new HashMap<>();
+        this.seen = new HashSet<>();
         this.predicate = predicate;
+        this.m = 0;
+        this.n = n;
         
-        // n - 1 times, as the queue contains the n-th hexagons
-        for(int i = 0; i < n - 1; ++i)
+        queue.add(center);
+        seen.add(center);
+        
+        // remove once
+        remove(1);
+    }
+    
+    void remove(int k)
+    {
+        ++m;
+        int count = 0;
+        for(int i = 0; i < k; ++i)
         {
             Hexagon<E> h = queue.remove();
-            seen.put(h, Boolean.TRUE);
-        
             for(HexagonSide side : HexagonSide.values())
             {
-                Hexagon<E> neighbor = h.getNeighbor(side);
-                assert neighbor != null;
-                if(seen.get(neighbor) == null && predicate.test(neighbor))
+                Neighbor<E> neighbor = new Neighbor(h, side, h.getNeighbor(side));
+                assert neighbor.hexagon != null;
+                if(!seen.contains(neighbor.hexagon) && predicate.test(neighbor))
                 {
-                    queue.add(neighbor);
-                    seen.put(neighbor, Boolean.TRUE);
+                    ++count;
+                    queue.add(neighbor.hexagon);
+                    seen.add(neighbor.hexagon);
                 }
             }
-            
-            if(queue.isEmpty())
-                break;
         }
+        if(m < n)
+            remove(count);
     }
+    
 
     @Override
     public boolean hasNext()
