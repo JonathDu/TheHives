@@ -62,7 +62,8 @@ public class InterfaceComb extends Parent {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
-        for (int i = 0; i < comb.value().size(); i++) {
+        for (int i = comb.value().size() - 1; i >= 0; i--) {
+            int index = comb.value().size()-1 - i;
             Color couleur = null;
 
             if (comb.value().get(i).color == TeamColor.BLACK) {
@@ -71,10 +72,12 @@ public class InterfaceComb extends Parent {
                 couleur = Color.WHITE;
             }
 
-            pions.add(i, new InterfacePion(couleur, comb.value().get(i).type, c));
-            this.pions.get(i).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
-            this.getChildren().add(pions.get(i));
+            pions.add(index, new InterfacePion(couleur, comb.value().get(i).type, c));
+            pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
+
+            this.getChildren().add(pions.get(index));
         }
+
     }
 
     public void removeTile() {
@@ -91,7 +94,7 @@ public class InterfaceComb extends Parent {
     public void setNotSelected() {
         socle.hexagon.setStroke(Color.TRANSPARENT);
         for (int i = 0; i < pions.size(); i++) {
-            pions.get(i).hexagon.setStroke(Color.BLUE);
+            pions.get(i).hexagon.setStroke(Color.BLACK);
         }
     }
     /*public void modifierTaille(int longueur) {
