@@ -28,7 +28,7 @@ public class MiniMax{
         }
         else{
             int vMax = -50000;
-            ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
             int tmp;
             Action currentAction;
             if(actionList.isEmpty()){
@@ -55,7 +55,7 @@ public class MiniMax{
         }
         else{
             int vMin = 50000;
-            ArrayList<Action> actionList = hia.currentPlayerPossibilities(state);
+            ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
             int tmp;
             Action currentAction;
             if(actionList.isEmpty()){

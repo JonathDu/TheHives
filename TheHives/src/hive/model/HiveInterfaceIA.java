@@ -93,14 +93,10 @@ public class HiveInterfaceIA implements InterfaceIA
         }
         return neighbours;
     }
-    
-    // it does NOT copy equals tiles and equals cells
     @Override
-    public ArrayList<Action> currentPlayerPossibilities(Game game)
-    {
-        ArrayList<Action> actions = new ArrayList<>();
+    public ArrayList<Action> currentPlayerPossibilities2(Game game){
         Player current = game.state.turn.getCurrent();
-        
+        ArrayList<Action> actions = new ArrayList<>();
         // PutAction
         for(InsectType type : InsectType.implemented_insects)
         {
@@ -136,6 +132,47 @@ public class HiveInterfaceIA implements InterfaceIA
             }
         }
         return actions;
+    
+    }
+    // it does NOT copy equals tiles and equals cells
+    @Override
+    public void currentPlayerPossibilities(Game game,ArrayList<Action> actions)
+    {
+        Player current = game.state.turn.getCurrent();
+        // PutAction
+        for(InsectType type : InsectType.implemented_insects)
+        {
+            Tile tile = new Tile(type, current.color);
+            /*for(int i = 0; i < current.collection.get(type); ++i)
+            {
+                Iterator<Cell> dest = destinations.iterator();
+                while(dest.hasNext())
+                    actions.add(new PutAction(dest.next(), tile));
+            }*/
+            ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
+            if(current.collection.get(type) > 0)
+            {
+                Iterator<Cell> place = placements.iterator();
+                while(place.hasNext())
+                    actions.add(new PutAction(place.next(), tile));
+            }
+        }
+        
+        
+        // MoveAction
+        for(InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
+            Iterator<Cell> source_iterator = sources.iterator();
+            while(source_iterator.hasNext())
+            {
+                Cell source = source_iterator.next();
+                ArrayList<Cell> destinations = game.rules.getPossibleDestinations(game.state, source);
+                Iterator<Cell> dest_iterator = destinations.iterator();
+                while(dest_iterator.hasNext())
+                    actions.add(new MoveAction(source, dest_iterator.next()));
+            }
+        }
     }
 
     @Override
