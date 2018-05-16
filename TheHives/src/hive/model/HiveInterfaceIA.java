@@ -21,6 +21,7 @@ import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
@@ -72,6 +73,25 @@ public class HiveInterfaceIA implements InterfaceIA
             if (neighIter.next().hexagon.value().isEmpty())
                 nbNeighbor++;
         return nbNeighbor;
+    }
+    @Override
+    public ArrayList<Tile> queenNeighbours(Player p, Game game)
+    {
+        HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        ArrayList<Tile> neighbours = new ArrayList<>();
+        Neighbor<TilesStack> hex;
+        if(queen_positions.isEmpty()){
+            return neighbours;
+        }
+        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
+        while (neighIter.hasNext()){
+            hex = neighIter.next();
+            if (!hex.hexagon.value().isEmpty()){
+                neighbours.add(hex.hexagon.value().peek());
+                
+            }
+        }
+        return neighbours;
     }
     
     // it does NOT copy equals tiles and equals cells

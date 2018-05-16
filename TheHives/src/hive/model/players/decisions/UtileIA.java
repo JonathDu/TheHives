@@ -31,11 +31,12 @@ public class UtileIA {
             return 10000;
         }
         else{
-            ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
-            value = insectsValue(currentFreeTile);
-            ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
-            value -= insectsValue(opponentFreeTile);
-            value +=evalQueen( state);
+                ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
+                value = insectsValue(currentFreeTile);
+                ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
+                value -= insectsValue(opponentFreeTile);
+                value +=evalQueen( state);
+                value +=valuNeighboursQueen(state);
         }
         return value;
     }
@@ -51,11 +52,12 @@ public class UtileIA {
             return -10000;
         }
         else{
-            ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
-            value = -(insectsValue(currentFreeTile));
-            ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
-            value += insectsValue(opponentFreeTile);
-            value -=evalQueen( state);
+                ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
+                value = -(insectsValue(currentFreeTile));
+                ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
+                value += insectsValue(opponentFreeTile);
+                value -=evalQueen( state);
+                value -=valuNeighboursQueen(state);
         }
         return value;
     }
@@ -103,7 +105,7 @@ public class UtileIA {
                 while(!actionList.isEmpty()){
                     currentAction = actionList.remove(0);
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxOpponent(state, depth-1, vMin);
+                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin);
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
                     if(vMin < max)
@@ -121,10 +123,27 @@ public class UtileIA {
         int afterCurrentNeighbour = hia.queenFreeNeighbour(current, state);
         int afterOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
         Action hello = hia.undoAction(state);
+        opponent = hia.currentPlayer(state);
+        current = hia.opponentPlayer(state);
         int beforeCurrentNeighbour = hia.queenFreeNeighbour(current, state);
         int beforeOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
         hia.doAction(state, hello);
-        return ((afterCurrentNeighbour-beforeCurrentNeighbour)-(afterOpponentNeighbour-beforeOpponentNeighbour))*(-10);
+        return ((afterCurrentNeighbour-beforeCurrentNeighbour)-(afterOpponentNeighbour-beforeOpponentNeighbour))*(-20);
+    }
+    
+    static int valuNeighboursQueen( Game state){
+        int value=0;
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        Player opponent = hia.opponentPlayer(state);
+        ArrayList<Tile> neighbours = hia.queenNeighbours(opponent,state);
+        Tile tuile;
+        while(!neighbours.isEmpty()){
+            tuile=neighbours.remove(0);
+            if(tuile.color!=opponent.color){
+                value+=insectsValueNeighboursQueen(tuile);
+            }
+        }
+        return value;
     }
     
     static int insectsValue(ArrayList<Tile> freeTile){
@@ -154,6 +173,28 @@ public class UtileIA {
             }
             return value;
     }
+    
+    static int insectsValueNeighboursQueen(Tile freeTile){
+                switch (freeTile.type) 
+                {
+                    case  QUEEN_BEE:
+                        return 0;
+                    case  GRASSHOPPER:
+                        return 35;
+                    case  SOLDIER_ANT:
+                        return 10;
+                    case  SPIDER:
+                        return 40;
+                    case  BEETLE:
+                        return 30;
+                    default :
+                        return 0;
+                   
+                }
+        
+    }
+    
+    
        
     
 }
