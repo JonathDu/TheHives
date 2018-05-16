@@ -10,6 +10,7 @@ import hive.model.board.Tile;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,7 @@ public class ActionBuilder
 
     public Tile tile;
     public Cell source;
+    public ArrayList<Cell> possibleDestinations;
     public Cell placement_or_destination;
     private State state;
 
@@ -61,6 +63,11 @@ public class ActionBuilder
         assert state == State.BEGIN;
         this.source = cell;
         state = State.SOURCE_SELECTED;
+    }
+    
+    public void setPossibleDestinations(ArrayList<Cell> destinations)
+    {
+        
     }
 
     public void setDestination(Cell cell)

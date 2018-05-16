@@ -36,7 +36,7 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
     {
         this.controller = controller;
         this.game = controller.progress.game;
-        this.cell = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size()-1);
+        this.cell = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size() - 1);
         this.uiPlateau = uiPlateau;
         this.uiRuche = uiPlateau.ruche;
     }
@@ -58,41 +58,28 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
                 {
                     case BEGIN:
                         System.out.println("Source selectionnée");
+
+                        /* ACTION BUILDER */
                         controller.builder.setSource(cell);
+                        controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cell));
+
+                        /* MAJ GRPAHIQUE */
                         uiRuche.selectCell(cell.comb.pos); //MAJ graphique : mettre en evidence la source
-                        uiRuche.surlignerCells(game.rules.getPossibleDestinations(game.state, cell)); //MAJ graphique : surligner les destinations
+                        uiRuche.surlignerCells(controller.builder.possibleDestinations); //MAJ graphique : surligner les destinations
                         break;
                     case SOURCE_SELECTED:
                         if (cell != controller.builder.source) //si on ne clique pas sur la cellule deja selectionnée
                         {
-                            //TODO : tester si le move est possible ??? c'est un beetle ???
                             System.out.println("Destination selectionnée");
-                            controller.builder.setDestination(cell);
-                            Action action = controller.builder.produce();
-                            human_decision.setAction(action);
-                            controller.progress.doAction();
-                            ArrayList<Cell> cells = new ArrayList<>();
-                            cells.add(controller.builder.source); //source
-                            cells.add(cell); //destination
-                            uiRuche.majCells(cells); // MAJ graphique : mettre a jour le deplacement
-                            uiRuche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
-                            uiRuche.desurlignerCells(game.rules.getPossibleDestinations(game.state, controller.builder.source)); // MAJ graphique : desurligne les destinations possible de la sources
+                            HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
                         } else
                         {
-                            System.out.println("Aucun changement : source = destination");
+                            System.err.println("Aucun changement : source = destination");
                         }
                         break;
                     case TILE_SELECTED:
-                        //TODO : tester si le put est possible ??? connexité etc ...
                         System.out.println("Placement selectionné");
-                        controller.builder.setPlacement(cell);
-                        Action action = controller.builder.produce();
-                        human_decision.setAction(action);
-                        controller.progress.doAction();
-                        //TODO : MAJ graphique : on deselectionne la tile
-                        ArrayList<Cell> cells = new ArrayList<>();
-                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
-                        cells.add(controller.builder.placement_or_destination); //destination
+                        HandlersUtils.putOnBoard(controller, human_decision, cell, uiRuche);
                         break;
                 }
             }

@@ -55,9 +55,14 @@ public class TileMainHandler implements EventHandler<MouseEvent>
                 {
                     case BEGIN:
                         System.out.println("Tile selectionnée");
+                        
+                         /* ACTION BUILDER */
                         controller.builder.setTile(tile);
+                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tile));
+                        
+                        /* MAJ GRPAHIQUE */
                         uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
-                        uiPlateau.ruche.surlignerCells(game.rules.getPossiblePlacements(game.state, tile));// MAJ graphique : les destinations possibles
+                        uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);// MAJ graphique : les destinations possibles
                         break;
                     case TILE_SELECTED:
                         if (tile.type != controller.builder.tile.type)
@@ -68,7 +73,7 @@ public class TileMainHandler implements EventHandler<MouseEvent>
                             uiMain.surlignerTile(tile);
                         } else
                         {
-                            System.out.println("Aucun changement : tile deja selectionnée");
+                            System.err.println("Aucun changement : tile deja selectionnée");
                         }
                         break;
                 }

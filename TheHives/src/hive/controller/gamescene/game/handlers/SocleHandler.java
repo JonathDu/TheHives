@@ -49,46 +49,26 @@ public class SocleHandler implements EventHandler<MouseEvent>
             Decision decision = game.state.turn.getCurrent().decision;
             if (decision instanceof HumanDecision)
             {
-                System.out.println(cell);
-
                 HumanDecision human_decision = (HumanDecision) decision;
 
                 switch (controller.builder.getState())
                 {
                     case BEGIN:
-                        System.out.println("Impossible : vous devez selectionner une case contenant au moins une tile");
+                        System.err.println("Impossible : vous devez selectionner une case contenant au moins une tile");
                         break;
                     case SOURCE_SELECTED:
                         if (cell != controller.builder.source) //si on ne clique pas sur la cellule deja selectionnée
                         {
-                            //TODO : tester si le move est possible ??? connexité etc ...
                             System.out.println("Destination selectionnée");
-                            controller.builder.setDestination(cell);
-                            Action action = controller.builder.produce();
-                            human_decision.setAction(action);
-                            controller.progress.doAction();
-                            ArrayList<Cell> cells = new ArrayList<>();
-                            cells.add(controller.builder.source); //source
-                            cells.add(cell); //destination
-                            uiRuche.majCells(cells); // MAJ graphique : mettre a jour le deplacement
-                            uiRuche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
-                            uiRuche.desurlignerCells(game.rules.getPossibleDestinations(game.state, controller.builder.source)); // MAJ graphique : desurligne les destinations possible de la sources
+                            HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
                         } else
                         {
-                            System.out.println("Aucun changement : source = destination");
+                            System.err.println("Aucun changement : source = destination");
                         }
                         break;
                     case TILE_SELECTED:
-                        //TODO : tester si le put est possible ??? connexité etc ...
                         System.out.println("Placement selectionné");
-                        controller.builder.setPlacement(cell);
-                        Action action = controller.builder.produce();
-                        human_decision.setAction(action);
-                        controller.progress.doAction();
-                        //TODO : MAJ graphique : on deselectionne la tile
-                        ArrayList<Cell> cells = new ArrayList<>();
-                        cells.add(controller.builder.placement_or_destination); //destination
-                        uiRuche.majCells(cells); // MAJ graphique : met a jour la case ajoutée
+                        HandlersUtils.putOnBoard(controller, human_decision, cell, uiRuche);
                         break;
                 }
             }
