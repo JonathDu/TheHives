@@ -56,4 +56,36 @@ public class GrasshopperBehavior implements InsectBehavior
         }
         return list;
     }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+        
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+            return false;
+        
+        // for each side
+        for(HexagonSide side : HexagonSide.values())
+        {
+            // start in line
+            StoppingIterator<Hexagon<TilesStack>> line = new StoppingIterator<>(
+                    new LineAtSideIterator<>(cell.comb, side),
+                    hexagon -> !hexagon.value().isEmpty());
+            
+            // the first neighbor must exist to jump over it
+            if(!line.hasNext())
+                continue;
+            line.next();
+            
+            // looks for the end of the line
+            while(line.hasNext())
+            {
+                line.next();
+            }
+            
+            return true;
+        }
+        return false;
+    }
 }

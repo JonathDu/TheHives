@@ -68,4 +68,30 @@ public class SpiderBehavior implements InsectBehavior
         
         return list;*/
     }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+                
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+            return false;
+        
+        Tile tmp = cell.comb.value().pop();
+        
+        PathAtLengthIterator<TilesStack> iterator = new PathAtLengthIterator<>(
+                cell.comb,
+                neighbor -> HiveFunctions.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveFunctions.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from),
+                3);
+        
+        while(iterator.hasNext())
+        {
+            cell.comb.value().push(tmp);
+            return true;
+        }
+        
+        cell.comb.value().push(tmp);
+        
+        return false;
+    }
 }
