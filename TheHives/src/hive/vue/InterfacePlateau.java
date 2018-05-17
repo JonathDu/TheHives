@@ -39,8 +39,8 @@ public class InterfacePlateau extends Parent {
         pane.prefWidthProperty().bind(stage.widthProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, c, prop, controller,this, TeamColor.WHITE);
-        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, c, prop, controller, this,TeamColor.BLACK);
+        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, c, pane.heightProperty(), controller,this, TeamColor.WHITE);
+        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, c, pane.heightProperty(), controller, this,TeamColor.BLACK);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();

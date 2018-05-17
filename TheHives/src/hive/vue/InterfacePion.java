@@ -65,14 +65,12 @@ public class InterfacePion extends Parent {
 
         //Adding coordinates to the polygon 
         hexagon.getPoints().addAll(new Double[]{
-            center, 0.0,
-            2 * center, hauteur,
-            2 * center, hauteur + side,
-            center, side * 2,
-            0.0, side + hauteur,
-            0.0, hauteur
-
-        });
+            0.0, center,
+            hauteur, 2 * center,
+            hauteur + side, 2 * center,
+            side * 2, center,
+            side + hauteur, 0.0,
+            hauteur, 0.0,});
         return hexagon;
     }
 

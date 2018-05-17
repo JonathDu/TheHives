@@ -55,12 +55,12 @@ public class InterfaceRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
-                cell.setLayoutY(y * (longueurPion + h));
+                cell.setLayoutX(x * (longueurPion + h));
 
-                if (y % 2 == 0) {
-                    cell.setLayoutX((x * 2 * center) + center);
+                if (x % 2 == 0) {
+                    cell.setLayoutY((y * 2 * center) + center);
                 } else {
-                    cell.setLayoutX(x * 2 * center);
+                    cell.setLayoutY(y * 2 * center);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
