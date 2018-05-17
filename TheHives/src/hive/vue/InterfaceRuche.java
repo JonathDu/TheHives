@@ -49,8 +49,8 @@ public class InterfaceRuche extends Parent {
 
         this.board = controller.progress.game.state.board;
         this.controller = controller;
-        hauteur = controller.progress.game.state.board.getData().sizeY();
-        largeur = controller.progress.game.state.board.getData().sizeX();
+        hauteur = controller.progress.game.state.board.getData().sizeX();
+        largeur = controller.progress.game.state.board.getData().sizeY();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
