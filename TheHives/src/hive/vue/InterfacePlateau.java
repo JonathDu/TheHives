@@ -65,5 +65,10 @@ public class InterfacePlateau extends Parent {
         pane.setRight(mainDroite);
         this.getChildren().add(pane);
     }
+    
+    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color)
+    {
+        return null;
+    }
 
 }

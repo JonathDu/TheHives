@@ -8,13 +8,9 @@ package hive.vue;
 import hive.controller.gamescene.game.GameController;
 import hive.controller.gamescene.game.handlers.TileMainHandler;
 import hive.model.board.Tile;
-import hive.model.game.DefaultGame;
 import static hive.model.insects.InsectType.*;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -48,9 +44,9 @@ public class InterfacePlateauMain extends Parent {
         InterfacePions pileGrassHopper = new InterfacePions(color, col.get(GRASSHOPPER), GRASSHOPPER, c);
         InterfacePions pileBeetle = new InterfacePions(color, col.get(BEETLE), BEETLE, c);
 
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, BEETLE));
+        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, QUEEN_BEE));
+        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, GRASSHOPPER));
+        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, BEETLE));
 
         pions.getChildren().add(pileQueenBee);
         pions.getChildren().add(pileGrassHopper);

@@ -7,14 +7,9 @@ package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
-import hive.model.game.Game;
-import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import hive.vue.InterfaceRuche;
-import java.util.ArrayList;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -23,20 +18,15 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class SocleHandler implements EventHandler<MouseEvent>
+public class SocleHandler extends HandlerPlateau
 {
 
-    GameController controller;
-    Game game;
-    Cell cell;
-    InterfaceRuche uiRuche;
+    Cell cellClicked;
 
     public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
-        this.controller = controller;
-        this.game = controller.progress.game;
-        this.cell = new Cell(game.state.board.getHexagon(pos), 0);
-        this.uiRuche = uiPlateau.ruche;
+        super(controller, uiPlateau);
+        cellClicked = new Cell(game.state.board.getHexagon(pos), 0);
     }
 
     @Override
@@ -47,21 +37,24 @@ public class SocleHandler implements EventHandler<MouseEvent>
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             Decision decision = game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision)
-            {
-                HumanDecision human_decision = (HumanDecision) decision;
 
-                switch (controller.builder.getState())
-                {
-                    case SOURCE_SELECTED:
-                        System.out.println("Destination selectionnée");
-                        HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                    case TILE_SELECTED:
-                        System.out.println("Placement selectionné");
-                        HandlersUtils.putOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                }
+            if (!(decision instanceof HumanDecision))
+            {
+                return;
+            }
+
+            HumanDecision human_decision = (HumanDecision) decision;
+
+            switch (controller.builder.getState())
+            {
+                case SOURCE_SELECTED:
+                    System.out.println("Destination selectionnée");
+                    moveOnBoard(human_decision, cellClicked);
+                    break;
+                case TILE_SELECTED:
+                    System.out.println("Placement selectionné");
+                    putOnBoard(human_decision, cellClicked);
+                    break;
             }
         }
     }
