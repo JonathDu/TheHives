@@ -70,13 +70,13 @@ public class InterfaceCharger extends Parent {
         AnchorPane.setTopAnchor(choix, (double) height/10);
         AnchorPane.setLeftAnchor(choix, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(choix, (double) tailleDeCase*2);
-        AnchorPane.setBottomAnchor(choix, (double) height/1.1);
+        //AnchorPane.setBottomAnchor(choix, (double) height/1.1);
         pane.getChildren().add(choix);
         
         AnchorPane.setTopAnchor(parties, (double) height/4);
         AnchorPane.setLeftAnchor(parties, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(parties, (double) tailleDeCase*2);
-        AnchorPane.setBottomAnchor(parties, (double) height/1.3);
+        //AnchorPane.setBottomAnchor(parties, (double) height/1.3);
         pane.getChildren().add(parties);
         
         
@@ -95,9 +95,10 @@ public class InterfaceCharger extends Parent {
                 System.out.println("Enregistrer ! ");
             }
         });
-        
+        valider.setMinHeight(20);
+        //valider.setMaxHeight(11);
         AnchorPane.setBottomAnchor(valider, (double) 90);
-        AnchorPane.setTopAnchor(valider, (double) height - 100);
+        //AnchorPane.setTopAnchor(valider, (double) height - 100);
         AnchorPane.setLeftAnchor(valider, (double) tailleDeCase*3);
         AnchorPane.setRightAnchor(valider, (double) tailleDeCase*3);
         
