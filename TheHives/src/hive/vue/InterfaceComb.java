@@ -30,7 +30,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c);
-        this.socle.hexagon.setStroke(Color.BLACK);
+        //this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
@@ -38,7 +38,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c, taille);
-        this.socle.hexagon.setStroke(Color.BLACK);
+        //this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
