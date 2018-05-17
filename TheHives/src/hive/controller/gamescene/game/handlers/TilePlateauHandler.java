@@ -55,7 +55,7 @@ public class TilePlateauHandler extends HandlerPlateau
                     controller.builder.setSource(cellClicked);
                     controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
 
-                    uiRuche.selectCell(action_source.comb.pos);
+                    uiRuche.selectCell(controller.builder.source.comb.pos);
                     uiRuche.surlignerCells(controller.builder.possibleDestinations);
                     break;
                 case SOURCE_SELECTED:

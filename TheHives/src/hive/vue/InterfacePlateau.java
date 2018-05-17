@@ -40,8 +40,8 @@ public class InterfacePlateau extends Parent {
         pane.prefHeightProperty().bind(stage.heightProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        InterfacePlateauMain mainGauche = new InterfacePlateauMain(colJ1,stage, joueur1, c, controller, this, TeamColor.WHITE);
-        InterfacePlateauMain mainDroite = new InterfacePlateauMain(colJ2,stage, joueur2, c, controller, this, TeamColor.BLACK);
+        this.mainGauche = new InterfacePlateauMain(colJ1, stage, joueur1, c, controller, this, TeamColor.WHITE);
+        this.mainDroite = new InterfacePlateauMain(colJ2, stage, joueur2, c, controller, this, TeamColor.BLACK);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
@@ -57,7 +57,7 @@ public class InterfacePlateau extends Parent {
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
         centerPane.getChildren().add(ruche);
         p.setContent(centerPane);
-        
+
         p.setHvalue(0.5);
         p.setVvalue(0.5);
         pane.setCenter(p);
@@ -65,10 +65,9 @@ public class InterfacePlateau extends Parent {
         pane.setRight(mainDroite);
         this.getChildren().add(pane);
     }
-    
-    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color)
-    {
-        return null;
+
+    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
+        return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
 }

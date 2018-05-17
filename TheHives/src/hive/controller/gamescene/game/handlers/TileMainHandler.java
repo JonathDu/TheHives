@@ -57,30 +57,30 @@ public class TileMainHandler extends HandlerPlateau
                     controller.builder.setTile(tileClicked);
                     controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
 
-                    uiMain.surlignerTile(action_tile);
+                    uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
                     break;
                 case SOURCE_SELECTED:
                     System.out.println("Tile selectionnée");
 
-                    uiPlateau.ruche.deselectCell(action_source.comb.pos);
+                    uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
 
                     controller.builder.setTile(tileClicked);
                     controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
 
-                    uiMain.surlignerTile(action_tile);
+                    uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
                     break;
                 case TILE_SELECTED:
-                    if (tileClicked.type != action_tile.type)
+                    if (tileClicked.type != controller.builder.tile.type)
                     {
                         System.out.println("Changement de tile");
 
-                        uiMain.desurlignerTile(action_tile);
+                        uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
-                        uiMain.surlignerTile(action_tile);
+                        uiMain.surlignerTile(controller.builder.tile);
                     } else
                     {
                         System.err.println("Aucun changement : tile deja selectionnée");

@@ -27,18 +27,18 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
     GameController controller;
     Game game;
     InterfacePlateau uiPlateau;
-    Cell action_source;
-    Cell action_placement_or_destination;
-    Tile action_tile;
+    //Cell action_source;
+    //Cell action_placement_or_destination;
+    //Tile action_tile;
 
     public HandlerPlateau(GameController controller, InterfacePlateau uiPlateau)
     {
         this.controller = controller;
         this.game = controller.progress.game;
         this.uiPlateau = uiPlateau;
-        action_source = controller.builder.source;
-        action_placement_or_destination = controller.builder.placement_or_destination;
-        action_tile = controller.builder.tile;
+        //action_source = controller.builder.source;
+        //action_placement_or_destination = controller.builder.placement_or_destination;
+        //action_tile = controller.builder.tile;
     }
 
     @Override
@@ -55,8 +55,8 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
         doAction(human_decision, cellClicked);
 
         /* MAJ GRPAHIQUE */
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(action_source, action_placement_or_destination)));
-        uiPlateau.ruche.deselectCell(action_source.comb.pos);
+        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
+        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
         uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations); 
     }
 
@@ -72,7 +72,7 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
 
         /* MAJ GRPAHIQUE */
         //TODO : MAJ graphique : on deselectionne la tile
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(action_placement_or_destination))); // MAJ graphique : met a jour la case ajoutée
+        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.placement_or_destination))); // MAJ graphique : met a jour la case ajoutée
         uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
     }
     
