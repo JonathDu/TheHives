@@ -55,7 +55,7 @@ public class InterfacePlateauMain extends Parent {
         pions.getChildren().add(pileQueenBee);
         pions.getChildren().add(pileGrassHopper);
         pions.getChildren().add(pileBeetle);
-
+        
         pions.getChildren().add(this.nomJoueur);
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);

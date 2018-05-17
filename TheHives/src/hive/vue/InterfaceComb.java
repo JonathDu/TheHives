@@ -75,6 +75,7 @@ public class InterfaceComb extends Parent {
     public void setSelected(Color col) {
         socle.hexagon.setStroke(col);
         for (int i = 0; i < pions.size(); i++) {
+            pions.get(i).hexagon.setStrokeWidth(3);
             pions.get(i).hexagon.setStroke(col);
         }
     }
@@ -82,7 +83,7 @@ public class InterfaceComb extends Parent {
     public void setNotSelected() {
         socle.hexagon.setStroke(Color.TRANSPARENT);
         for (int i = 0; i < pions.size(); i++) {
-            pions.get(i).hexagon.setStroke(Color.BLACK);
+            pions.get(i).hexagon.setStroke(Color.TRANSPARENT);
         }
     }
     /*public void modifierTaille(int longueur) {
