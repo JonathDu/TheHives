@@ -47,5 +47,32 @@ public class SoldierAntBehavior implements InsectBehavior
         
         return list;
     } 
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+                
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+            return false;
+        
+        Tile tmp = cell.comb.value().pop();
+        
+        // breadth first search on neighbors of the cell,
+        // that have a wall next to it and free to access, from one to an other
+        BreadthNeighborsIterator<TilesStack> iterator = new BreadthNeighborsIterator<>(
+                cell.comb,
+                neighbor -> HiveFunctions.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveFunctions.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
+        
+        while(iterator.hasNext())
+        {
+            cell.comb.value().push(tmp);
+            return true;
+        }
+        
+        cell.comb.value().push(tmp);
+        
+        return false;
+    }
     
 }

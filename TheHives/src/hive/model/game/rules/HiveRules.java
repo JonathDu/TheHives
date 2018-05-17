@@ -65,6 +65,12 @@ public class HiveRules implements Rules
     }
     
     @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        return move_rules.isFree(state, cell);
+    }
+    
+    @Override
     public GameStatus getStatus(GameState state)
     {
         boolean current_wins = queenIsSurrounded(state, state.turn.getOpponent());
@@ -122,4 +128,6 @@ public class HiveRules implements Rules
             return false;
         return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }
+
+
 }

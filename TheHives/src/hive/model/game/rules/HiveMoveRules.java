@@ -34,4 +34,10 @@ public class HiveMoveRules implements MoveRules
     {
         return behaviors.get(cell.getTile().type).getPossibleDestinations(state, cell);
     }
+    
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        return behaviors.get(cell.getTile().type).isFree(state, cell);
+    }
 }
