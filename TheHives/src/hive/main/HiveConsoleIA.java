@@ -38,7 +38,7 @@ public class HiveConsoleIA {
 
             progress.doAction();
 
-            // mettre un sleep ici ?
+            
         }
         System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
         if (player == game.state.players.get(0)) {

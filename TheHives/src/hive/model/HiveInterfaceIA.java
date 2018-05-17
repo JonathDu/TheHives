@@ -10,7 +10,6 @@ import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveRules;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;

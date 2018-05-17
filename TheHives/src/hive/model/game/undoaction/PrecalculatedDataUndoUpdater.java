@@ -5,12 +5,16 @@
  */
 package hive.model.game.undoaction;
 
+import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
+import hive.model.board.TilesStack;
+import hive.model.game.utildata.OccurencesPerHoneycomb;
 import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
+import util.hexagons.iterators.NeighborsIterator;
 
 /**
  *
@@ -43,6 +47,9 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // trace
         data.trace.pop();
         
+        // occurences
+        data.occurences.get(action.tile.color).removeInfluence(action.where.comb);
+        
         // placements
         data.placements = null;
     }
@@ -71,6 +78,11 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // trace
         data.trace.pop();
         
+        // occurences
+        OccurencesPerHoneycomb current_occurences = data.occurences.get(tile.color);
+        current_occurences.removeInfluence(action.destination.comb);
+        current_occurences.addInfluence(action.source.comb);
+        
         // placements
         data.placements = null;
     }
@@ -89,6 +101,8 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         
         // trace
         data.trace.pop();
+        
+        // occurences
         
         // placements
         data.placements = null;
