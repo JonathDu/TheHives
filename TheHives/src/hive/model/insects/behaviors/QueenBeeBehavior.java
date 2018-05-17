@@ -47,4 +47,30 @@ public class QueenBeeBehavior implements InsectBehavior
         }
         return list;
     }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+        
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+            return false;
+        
+        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);
+        
+        // for each neighbor
+        while (neighbors.hasNext())
+        {
+            Neighbor<TilesStack> neighbor = neighbors.next();
+            
+            // the queen only slides
+            if(!neighbor.hexagon.value().isEmpty())
+                continue;
+            
+            // the queen can slide but the queen has to stay connected with other tiles
+            if(HiveFunctions.hasWallNextToAtSide(cell, neighbor.from) && HiveFunctions.isFreeAtSide(cell, neighbor.from))
+                return true;
+        }
+        return false;
+    }
 }
