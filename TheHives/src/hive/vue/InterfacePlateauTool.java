@@ -38,8 +38,8 @@ public class InterfacePlateauTool extends Parent {
         grille = new GridPane();
         grille.prefWidthProperty().bind(stage.widthProperty());
         
-        Button bouton = creerBouton("hive/vue/rsc/images/home.png");
-        Button bouton1 = creerBouton("hive/vue/rsc/images/home.png");
+        Button bouton = creerBouton("home.png");
+        Button bouton1 = creerBouton("home.png");
 
         for (int i = 0; i < 10; i++) {
             ColumnConstraints r = new ColumnConstraints();
@@ -56,7 +56,8 @@ public class InterfacePlateauTool extends Parent {
 
     private Button creerBouton(String path) {
         Button bouton = new Button();
-        ImageView image = c.getImage(path);
+        ImageView image;
+        image = new ImageView(c.getImage(path));
         image.setFitWidth(40);
         image.setPreserveRatio(true);
         image.setSmooth(true);

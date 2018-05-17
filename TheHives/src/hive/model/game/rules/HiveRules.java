@@ -7,11 +7,9 @@ package hive.model.game.rules;
 
 import hive.model.board.Cell;
 import hive.model.board.Tile;
-import hive.model.game.Game;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
-import hive.model.players.TeamColor;
 import hive.model.players.actions.NoAction;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -120,6 +118,8 @@ public class HiveRules implements Rules
 
     private boolean nobodyCanPlay(GameState state)
     {
+        if(HiveFunctions.nbTurns(state) == 1)
+            return false;
         return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }
 }

@@ -5,14 +5,16 @@
  */
 package hive.model.game.rules;
 
-import hive.model.board.Board;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
-import hive.model.game.Game;
 import hive.model.game.GameState;
+import hive.model.game.utildata.OccurencesPerHoneycomb;
 import java.util.ArrayList;
-import util.Vector2i;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
@@ -26,7 +28,48 @@ public class HivePutRules implements PutRules
     public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
     {
         ArrayList<Cell> list = new ArrayList<>();
-        Board board = state.board;
+        
+        if(state.data.nb_tiles == 0)
+        {
+            // return center
+            list.add(new Cell(state.board.getCenter()));
+            return list;
+        }
+        else if(state.data.nb_tiles == 1)
+        {
+            // return center neighbors
+            NeighborsIterator neighbors = new NeighborsIterator(state.board.getCenter());
+            while(neighbors.hasNext())
+                list.add(new Cell((Honeycomb)neighbors.next().hexagon));
+            return list;
+        }
+        
+        OccurencesPerHoneycomb current_occurences = state.data.occurences.get(state.turn.getCurrent().color);
+        OccurencesPerHoneycomb opponent_occurences = state.data.occurences.get(state.turn.getOpponent().color);
+        
+        Set<Map.Entry<Honeycomb, AtomicInteger>> mapping = current_occurences.entrySet();
+        
+        // iterates on current influenced combs
+        Iterator<Map.Entry<Honeycomb, AtomicInteger>> iterator = mapping.iterator();
+        while(iterator.hasNext())
+        {
+            Map.Entry<Honeycomb, AtomicInteger> pair = iterator.next();
+            // the comb must be empty to put a tile (influenced combs may be occupied by current or opponent tiles)
+            if(!pair.getKey().value().isEmpty())
+                continue;
+            
+            // if it's not influenced, the pair <comb, 0> should not be contained in the map, otherwise we find a positive value
+            assert pair.getValue().get() > 0;
+            
+            // the comb must not be in conflict with opponents tiles
+            if(opponent_occurences.containsKey(pair.getKey()))
+                continue;
+            
+            // we can add the cell at level 0
+            list.add(new Cell(pair.getKey()));
+        }
+        
+        /*Board board = state.board;
         
         if(state.data.nb_tiles == 0)
         {
@@ -52,7 +95,8 @@ public class HivePutRules implements PutRules
                 if(comb.value().isEmpty() && HiveFunctions.hasNeighbors(comb) && HiveFunctions.neighborsHaveSameColor(comb, state.turn.getCurrent().color))
                     list.add(new Cell(comb));
             }
-        }
+        }*/
+        
         return list;
     }
 }

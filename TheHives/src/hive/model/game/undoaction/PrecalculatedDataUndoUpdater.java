@@ -5,12 +5,16 @@
  */
 package hive.model.game.undoaction;
 
+import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
+import hive.model.board.TilesStack;
+import hive.model.game.utildata.OccurencesPerHoneycomb;
 import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
+import util.hexagons.iterators.NeighborsIterator;
 
 /**
  *
@@ -43,6 +47,9 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // trace
         data.trace.pop();
         
+        // occurences
+        data.occurences.get(action.tile.color).removeInfluence(action.where.comb);
+        
         // placements
         data.placements = null;
     }
@@ -58,17 +65,23 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         // nb_tiles
         
         // nb_combs
-        if(action.source.comb.value().size() == 1 && action.destination.comb.value().size() >= 1)
-            data.nb_combs += 1;
-        // if the tile shares a comb but will occupy an empty comb
-        else if(action.source.comb.value().size() > 1 && action.destination.comb.value().size() == 0)
+        // if the tile leaves a comb for an other one already occupied
+        if(action.destination.comb.value().size() == 1 && action.source.comb.value().size() >= 1)
             data.nb_combs -= 1;
+        // if the tile shares a comb but will occupy an empty comb
+        else if(action.destination.comb.value().size() >= 2 && action.source.comb.value().size() == 0)
+            data.nb_combs += 1;
         
         // last
         data.last_undo = data.trace.peek();
         
         // trace
         data.trace.pop();
+        
+        // occurences
+        OccurencesPerHoneycomb current_occurences = data.occurences.get(tile.color);
+        current_occurences.removeInfluence(action.destination.comb);
+        current_occurences.addInfluence(action.source.comb);
         
         // placements
         data.placements = null;
@@ -88,6 +101,8 @@ public class PrecalculatedDataUndoUpdater implements ActionVisitor
         
         // trace
         data.trace.pop();
+        
+        // occurences
         
         // placements
         data.placements = null;

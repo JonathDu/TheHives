@@ -30,7 +30,6 @@ import util.Vector2i;
 public class TheHives extends Application {
 
     /* le minimum est 400 et 600 */
-
     public int HEIGHT = 600;
     public int WIDTH = 800;
     Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,7 +47,6 @@ public class TheHives extends Application {
         PlayerCollection player = new PlayerCollection();
 
 
-
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
@@ -61,13 +59,13 @@ public class TheHives extends Application {
         //goToPlateau("Joueur1", "Joueur2");
         goToMenu();
 
+
         //PLEIN ECRAN
 
 //        primaryStage.setFullScreen(true); //passer en affichage plein écran
 //        primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
 //        root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
 
-        
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();
         primaryStage.show();

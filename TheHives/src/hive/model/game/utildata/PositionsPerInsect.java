@@ -24,5 +24,4 @@ public class PositionsPerInsect extends EnumMap<InsectType, HashSet<Cell>>
             put(type, new HashSet<>());
         }
     }
-    
 }

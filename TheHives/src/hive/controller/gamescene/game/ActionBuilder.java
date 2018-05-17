@@ -10,6 +10,7 @@ import hive.model.board.Tile;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,7 @@ public class ActionBuilder
 
     public Tile tile;
     public Cell source;
+    public ArrayList<Cell> possibleDestinations;
     public Cell placement_or_destination;
     private State state;
 
@@ -53,7 +55,7 @@ public class ActionBuilder
     {
         assert state == State.TILE_SELECTED;
         this.placement_or_destination = cell;
-        state = State.DESTINATION_SELECTED;
+        state = State.PLACEMENT_SELECTED;
     }
 
     public void setSource(Cell cell)
@@ -61,6 +63,11 @@ public class ActionBuilder
         assert state == State.BEGIN;
         this.source = cell;
         state = State.SOURCE_SELECTED;
+    }
+    
+    public void setPossibleDestinations(ArrayList<Cell> destinations)
+    {
+        possibleDestinations = destinations;
     }
 
     public void setDestination(Cell cell)
@@ -70,20 +77,24 @@ public class ActionBuilder
         state = State.DESTINATION_SELECTED;
     }
 
-    Action produce()
+    public Action produce()
     {
+        Action action = null;
         switch (state)
         {
             case PLACEMENT_SELECTED:
                 assert tile != null;
                 assert placement_or_destination != null;
-                return new PutAction(placement_or_destination, tile);
+                action = new PutAction(placement_or_destination, tile);
+                break;
             case DESTINATION_SELECTED:
                 assert source != null;
                 assert placement_or_destination != null;
-                return new MoveAction(source, placement_or_destination);
+                action = new MoveAction(source, placement_or_destination);
+                break;
         }
-        assert false;
-        return null;
+        state = State.BEGIN;
+        assert action == null;
+        return action;
     }
 }

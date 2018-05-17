@@ -5,6 +5,7 @@
  */
 package util.hexagons.iterators;
 
+import hive.model.board.Honeycomb;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,19 +19,21 @@ import util.hexagons.HexagonSide;
  *
  * @author Thomas
  */
-public class BorderIterator<E> implements Iterator<Hexagon<E>>
+public class BreadthNeighborsIterator<E> implements Iterator<Hexagon<E>>
 {
     Queue<Hexagon<E>> queue;
     Set<Hexagon<E>> seen;
-    Predicate<Hexagon<E>> predicate;
+    Predicate<Neighbor<E>> predicate;
     
-    public BorderIterator(Hexagon<E> center, Predicate<Hexagon<E>> predicate)
+    public BreadthNeighborsIterator(Hexagon<E> center, Predicate<Neighbor<E>> predicate)
     {
         this.queue = new ArrayDeque<>();
-        queue.add(center);
-        
         this.seen = new HashSet<>();
         this.predicate = predicate;
+        
+        queue.add(center);
+        seen.add(center);
+        this.next();
     }
 
     @Override
@@ -45,16 +48,15 @@ public class BorderIterator<E> implements Iterator<Hexagon<E>>
         assert hasNext();
         
         Hexagon<E> h = queue.remove();
-        seen.add(h);
         
         for(HexagonSide side : HexagonSide.values())
         {
-            Hexagon<E> neighbor = h.getNeighbor(side);
-            assert neighbor != null;
-            if(!seen.contains(neighbor) && predicate.test(neighbor))
+            Neighbor<E> neighbor = new Neighbor(h, side, h.getNeighbor(side));
+            assert neighbor.hexagon != null;
+            if(!seen.contains(neighbor.hexagon) && predicate.test(neighbor))
             {
-                queue.add(neighbor);
-                seen.add(neighbor);
+                queue.add(neighbor.hexagon);
+                seen.add(neighbor.hexagon);
             }
         }
         return h;

@@ -5,12 +5,17 @@
  */
 package hive.vue;
 
+import hive.controller.gamescene.game.GameController;
+import hive.controller.gamescene.game.handlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
-import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
+import java.util.ArrayList;
+import javafx.event.EventType;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javax.sound.midi.ControllerEventListener;
 
 /**
  *
@@ -18,45 +23,69 @@ import javafx.scene.paint.Color;
  */
 public class InterfaceComb extends Parent {
 
-    private InterfacePion pion;
-    private Honeycomb comb;
+    private ArrayList<InterfacePion> pions;
+    public InterfacePion socle;
     private CacheImage c;
 
     public InterfaceComb(CacheImage c) {
         this.c = c;
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c);
-        this.getChildren().add(pion);
+        this.socle = new InterfacePion(null, null, c);
+        this.socle.hexagon.setStroke(Color.BLACK);
+        this.pions = new ArrayList<>();
+        this.getChildren().add(pions.get(0));
     }
 
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c, taille);
-        this.getChildren().add(pion);
+        this.socle = new InterfacePion(null, null, c, taille);
+        this.socle.hexagon.setStroke(Color.BLACK);
+        this.pions = new ArrayList<>();
+        this.getChildren().add(socle);
     }
 
-    public void setComb(Honeycomb comb) {
-        Color couleur = null;
-        this.comb = comb;
+    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
 
-        if (this.comb.value().get(0).color == TeamColor.BLACK) {
-            couleur = Color.GRAY;
-        } else {
-            couleur = Color.WHITE;
-        }
         int i = 0;
-        while (this.comb.value().get(i) != null) {
-            
-            InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
-            this.getChildren().add(pionx);
-            i++;
+        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
+        pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
+        this.pions.add(tile.level, pion);
+        this.getChildren().add(this.pions.get(this.pions.size() - 1));
+    }
+
+    public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
+        pions.clear();
+        this.getChildren().clear();
+        this.getChildren().add(socle);
+        for (int i = comb.value().size() - 1; i >= 0; i--) {
+            int index = comb.value().size()-1 - i;
+
+
+            pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
+            pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
+
+            this.getChildren().add(pions.get(index));
+        }
+
+    }
+
+    public void removeTile() {
+        this.pions.remove(this.pions.size() - 1);
+    }
+
+    public void setSelected(Color col) {
+        socle.hexagon.setStroke(col);
+        for (int i = 0; i < pions.size(); i++) {
+            pions.get(i).hexagon.setStroke(col);
         }
     }
 
-    public void removeComb() {
-        this.pion = new InterfacePion(Color.TRANSPARENT, null, c);
+    public void setNotSelected() {
+        socle.hexagon.setStroke(Color.TRANSPARENT);
+        for (int i = 0; i < pions.size(); i++) {
+            pions.get(i).hexagon.setStroke(Color.BLACK);
+        }
     }
-
-    public void modifierTaille(int longueur) {
+    /*public void modifierTaille(int longueur) {
         this.getChildren().clear();
         Color couleur = null;
         if (this.comb != null) {
@@ -69,13 +98,23 @@ public class InterfaceComb extends Parent {
             while (this.comb.value().get(i) != null) {
                 InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
                 this.getChildren().add(pionx);
+<<<<<<< HEAD
                 this.pion = pionx;
                 i++;
             }
         } else {
             this.pion = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
             this.getChildren().add(pion);
+=======
+                this.pions = pionx;
+                i++;
+            }
+        } else {
+            this.pions = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
+            this.getChildren().add(pions);
+>>>>>>> Controlleur
 
         }
     }
+     */
 }

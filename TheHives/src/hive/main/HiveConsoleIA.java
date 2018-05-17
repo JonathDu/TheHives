@@ -7,26 +7,12 @@ package hive.main;
 
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
-import hive.model.HiveInterfaceIA;
-import hive.model.board.Tile;
-import hive.model.board.Cell;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.insects.InsectBehavior;
-import hive.model.insects.InsectType;
 import hive.model.players.Player;
-import hive.model.players.TeamColor;
-import hive.model.players.actions.Action;
-import hive.model.players.actions.MoveAction;
-import hive.model.players.actions.PutAction;
-import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
-import static hive.model.players.decisions.Level.EASY;
-import static hive.model.players.decisions.Level.HARD;
-import static hive.model.players.decisions.Level.MEDIUM;
-import java.util.ArrayList;
+import hive.model.players.decisions.Level;
 import java.util.Scanner;
-import util.Vector2i;
 
 /**
  *
@@ -43,7 +29,7 @@ public class HiveConsoleIA
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = DefaultGame.get(new IADecision(MEDIUM), new IADecision(HARD));
+        Game game = DefaultGame.get(new IADecision(Level.EASY), new IADecision(Level.EASY));
         
         
         GameProgress progress = new GameProgress(game);
