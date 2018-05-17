@@ -14,6 +14,7 @@ import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
 import util.hexagons.iterators.BreadthNeighborsAtLengthIterator;
+import util.hexagons.iterators.PathAtLengthIterator;
 
 /**
  *
@@ -21,11 +22,30 @@ import util.hexagons.iterators.BreadthNeighborsAtLengthIterator;
  */
 public class SpiderBehavior implements InsectBehavior
 {
-
     @Override
     public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
     {
         assert cell.level == 0;
+        
+        ArrayList<Cell> list = new ArrayList<>();
+        
+        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+            return list;
+        
+        Tile tmp = cell.comb.value().pop();
+        
+        PathAtLengthIterator<TilesStack> iterator = new PathAtLengthIterator<>(
+                cell.comb,
+                neighbor -> HiveFunctions.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveFunctions.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from),
+                3);
+        
+        while(iterator.hasNext())
+            list.add(new Cell((Honeycomb)iterator.next()));
+        
+        cell.comb.value().push(tmp);
+        
+        return list;
+        /*assert cell.level == 0;
         
         ArrayList<Cell> list = new ArrayList<>();
         
@@ -46,7 +66,6 @@ public class SpiderBehavior implements InsectBehavior
         
         cell.comb.value().push(tmp);
         
-        return list;
+        return list;*/
     }
-    
 }
