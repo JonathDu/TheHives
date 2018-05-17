@@ -58,8 +58,8 @@ public class TheHives extends Application {
         primaryStage.setMinWidth(600);
         primaryStage.setMaxHeight((int) dimension.getHeight());
         primaryStage.setMaxWidth((int)dimension.getWidth());
-        goToPlateau("Joueur1", "Joueur2");
-        //goToMenu();
+        //goToPlateau("Joueur1", "Joueur2");
+        goToMenu();
 
         //PLEIN ECRAN
 
