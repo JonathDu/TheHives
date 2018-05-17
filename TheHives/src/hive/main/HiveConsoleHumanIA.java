@@ -45,7 +45,8 @@ public class HiveConsoleHumanIA
         
         HiveInterfaceIA hi = new HiveInterfaceIA();
         
-        while (game.rules.getStatus(game.state) == GameStatus.CONTINUES)
+        GameStatus status;
+        while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES)
         {
             Player player = game.state.turn.getCurrent();
             if (player == game.state.players.get(0))
@@ -85,6 +86,19 @@ public class HiveConsoleHumanIA
                 progress.doAction();
             }
             System.out.println(game.state.board);
+        }
+        
+        switch(status)
+        {
+        case DRAW:
+            System.out.println("Match nul");
+            break;
+        case CURRENT_WINS:
+            System.out.println(game.state.turn.getCurrent().color + " gagne !");
+            break;
+        case OPPONENT_WINS:
+            System.out.println(game.state.turn.getOpponent().color + " gagne !");
+            break;
         }
     }
 
