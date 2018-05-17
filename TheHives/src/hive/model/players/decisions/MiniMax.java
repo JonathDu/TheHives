@@ -40,9 +40,7 @@ public class MiniMax{
                     hia.undoAction(state);
                     vMax = max(tmp,vMax);
                     if(vMax > min){
-                        while(!actionList[depth].isEmpty()){
-                            actionList[depth].remove(0);
-                        }
+                            actionList[depth].clear();
                         return vMax;
                     }
                 }
@@ -71,9 +69,7 @@ public class MiniMax{
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
                     if(vMin < max){
-                        while(!actionList[depth].isEmpty()){
-                            actionList[depth].remove(0);
-                        }
+                            actionList[depth].clear();
                         return vMin;
                     }
                 }
