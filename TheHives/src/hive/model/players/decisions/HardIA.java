@@ -22,14 +22,14 @@ public class HardIA implements IA{
     private void init(int taille){
         actionList = new ArrayList[taille];
         for(int i=0;i<taille;i++){
-            actionList[i]=new ArrayList<>();
+            actionList[i]=new ArrayList<>(300);
         }
         
     }
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        int depth =4;
+        int depth =3;
         init(depth+1);
         hia.currentPlayerPossibilities(state,actionList[depth]);
         if(actionList[depth].isEmpty()){
