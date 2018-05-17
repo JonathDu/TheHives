@@ -20,6 +20,8 @@ import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.HumanDecision;
+import hive.model.players.decisions.IADecision;
+import hive.model.players.decisions.Level;
 import java.util.ArrayList;
 import java.util.Scanner;
 import util.Vector2i;
@@ -28,7 +30,7 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class HiveConsoleHuman
+public class HiveConsoleHumanIA
 {
 
     /**
@@ -36,7 +38,7 @@ public class HiveConsoleHuman
      */
     public static void main(String[] args)
     {
-        Game game = DefaultGame.get(new HumanDecision(), new HumanDecision());
+        Game game = DefaultGame.get(new HumanDecision(), new IADecision(Level.EASY));
         GameProgress progress = new GameProgress(game);
 
         Scanner sc = new Scanner(System.in);
@@ -54,27 +56,33 @@ public class HiveConsoleHuman
             
             System.out.println("Tour " + HiveFunctions.nbTurns(game.state));
 
-            assert player.decision instanceof HumanDecision;
-            HumanDecision decision = (HumanDecision) player.decision;
-            
-            for(Action a : hi.currentPlayerPossibilities2(game))
-                System.out.println(a);
+            if(player.decision instanceof HumanDecision)
+            {
+                HumanDecision decision = (HumanDecision) player.decision;
 
-            String actionChoose;
-            do
-            {
-                System.out.println("Choix de l'action (PUT ou MOVE) (ou UNDO) :");
-                actionChoose = sc.next();
-            } while (!actionChoose.equals("PUT") && !actionChoose.equals("MOVE") && !actionChoose.equals("UNDO"));
-            
-            if(actionChoose.equals("UNDO"))
-            {
-                progress.undoAction();
+                for(Action a : hi.currentPlayerPossibilities2(game))
+                    System.out.println(a);
+
+                String actionChoose;
+                do
+                {
+                    System.out.println("Choix de l'action (PUT ou MOVE) (ou UNDO) :");
+                    actionChoose = sc.next();
+                } while (!actionChoose.equals("PUT") && !actionChoose.equals("MOVE") && !actionChoose.equals("UNDO"));
+
+                if(actionChoose.equals("UNDO"))
+                {
+                    progress.undoAction();
+                }
+                else
+                {
+                    Action a = (actionChoose.equals("PUT") ? put(game) : move(game));
+                    decision.setAction(a);
+                    progress.doAction();
+                }
             }
             else
             {
-                Action a = (actionChoose.equals("PUT") ? put(game) : move(game));
-                decision.setAction(a);
                 progress.doAction();
             }
             System.out.println(game.state.board);

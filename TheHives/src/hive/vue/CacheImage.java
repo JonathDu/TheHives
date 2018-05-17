@@ -20,15 +20,15 @@ public class CacheImage {
         this.table = new Hashtable();
     }
     
-    public ImageView getImage(String path){
+    public Image getImage(String path){
         Image image;
         
-        image = table.get(path);
+        image = table.get("hive/vue/rsc/images/"+path);
         if(image == null){
-            image = new Image(path);
-            
-            table.put(path, image);
+            image = new Image("hive/vue/rsc/images/"+path);
+            image.isSmooth();
+            table.put("hive/vue/rsc/images/"+path, image);
         }
-        return new ImageView(image);
+        return  image;
     }
 }

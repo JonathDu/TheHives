@@ -5,22 +5,12 @@
  */
 package hive.vue;
 
-import hive.vue.CacheImage;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 /**
@@ -48,8 +38,8 @@ public class InterfacePlateauTool extends Parent {
         grille = new GridPane();
         grille.prefWidthProperty().bind(stage.widthProperty());
         
-        Button bouton = creerBouton("hive/vue/rsc/images/home.png");
-        Button bouton1 = creerBouton("hive/vue/rsc/images/home.png");
+        Button bouton = creerBouton("home.png");
+        Button bouton1 = creerBouton("home.png");
 
         for (int i = 0; i < 10; i++) {
             ColumnConstraints r = new ColumnConstraints();
@@ -66,7 +56,8 @@ public class InterfacePlateauTool extends Parent {
 
     private Button creerBouton(String path) {
         Button bouton = new Button();
-        ImageView image = c.getImage(path);
+        ImageView image;
+        image = new ImageView(c.getImage(path));
         image.setFitWidth(40);
         image.setPreserveRatio(true);
         image.setSmooth(true);

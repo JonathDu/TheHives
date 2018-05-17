@@ -10,51 +10,53 @@ import hive.model.GameProgress;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
 import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
+import java.util.Scanner;
 
 /**
  *
  * @author Thomas
  */
-public class HiveConsoleIA {
+public class HiveConsoleTestIA
+{
 
     /**
      * @param args the command line arguments
      */
-
     public static void main(String[] args) throws InterruptedException
     {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.GAME_A, new IADecision(Level.EASY), new IADecision(Level.EASY));
-
+        
+        int n = 3;
+        
         GameProgress progress = new GameProgress(game);
-
+        
         System.out.println(game.state.board);
-
-        //Thread.sleep(10000); // 10s
-
+        
+        Thread.sleep(10000); // 10s
+        
+        int k = 0;
         GameStatus status;
-        while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES)
+        while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && k < n)
         {
+            ++k;
             Player player = game.state.turn.getCurrent();
             if (player == game.state.players.get(0))
                 System.out.println("Joueur 1");
             else
                 System.out.println("Joueur 2");
-
+            
             progress.doAction();
-
-
-
+            
             System.out.println(game.state.board);
         }
-
+        
         switch(status)
         {
         case DRAW:
@@ -66,8 +68,9 @@ public class HiveConsoleIA {
         case OPPONENT_WINS:
             System.out.println(game.state.turn.getOpponent().color + " gagne !");
             break;
+        case CONTINUES:
+            System.out.println("La partie continue");
+            break;
         }
-
-
     }
 }

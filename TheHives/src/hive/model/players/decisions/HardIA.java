@@ -38,8 +38,10 @@ public class HardIA implements IA{
         ArrayList<Action> maxActionList = new ArrayList<>();
         int max=-50000, tmp;
         Action currentAction;
+
         while(!actionList[depth].isEmpty()){
             currentAction = actionList[depth].remove(0);
+
             hia.doAction(state, currentAction);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);

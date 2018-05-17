@@ -27,18 +27,23 @@ public class DefaultGame
 {
     public static int nbTiles = 11;
     public static int nbPlayers = 2;
-    
+
     public static Game get(Decision d1, Decision d2)
+    {
+        return new Game(getState(d1, d2), new HiveRules());
+    }
+
+    public static GameState getState(Decision d1, Decision d2)
     {
         Board board = getBoard();
         Players players = getPlayers(d1, d2);
         PlayerTurn turn = new PlayerTurn(players);
-    
+
         PrecalculatedData data = new PrecalculatedData(new PositionsPerTeamInsect(), 0, 0, new ActionsTrace(), new OccurencesPerTeamHoneycomb());
-        
-        return new Game(new GameState(board, players, turn, data), new HiveRules());
+
+        return new GameState(board, players, turn, data);
     }
-    
+
     public static Board getBoard()
     {
         int size = nbTiles * nbPlayers + 2;
@@ -46,28 +51,28 @@ public class DefaultGame
         m.setAll(() -> new TilesStack());
         return new Board(m);
     }
-    
+
     public static PlayerCollection getCollection()
     {
         PlayerCollection collection = new PlayerCollection();
-        
+
         collection.put(InsectType.QUEEN_BEE, 1);
         collection.put(InsectType.SPIDER, 2);
         collection.put(InsectType.BEETLE, 2);
         collection.put(InsectType.GRASSHOPPER, 3);
         collection.put(InsectType.SOLDIER_ANT, 3);
-        collection.put(InsectType.MOSQUITO, 0);
-        collection.put(InsectType.LADYBUG, 0);
-        collection.put(InsectType.PILL_BUG, 0);
-        
+        collection.put(InsectType.MOSQUITO, 1);
+        collection.put(InsectType.LADYBUG, 1);
+        collection.put(InsectType.PILL_BUG, 1);
+
         return collection;
     }
-    
+
     public static Player getPlayer(TeamColor color, Decision decision)
     {
         return new Player(color, decision, getCollection());
     }
-    
+
     public static Players getPlayers(Decision d1, Decision d2)
     {
         return new Players(getPlayer(TeamColor.WHITE, d1), getPlayer(TeamColor.BLACK, d2));
