@@ -29,18 +29,19 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class HiveInterfaceIA implements InterfaceIA
 {
+
     @Override
     public Player currentPlayer(Game game)
     {
         return game.state.turn.getCurrent();
     }
-    
+
     @Override
     public Player opponentPlayer(Game game)
     {
         return game.state.turn.getOpponent();
     }
-    
+
     @Override
     public boolean winCurrent(Game game)
     {
@@ -52,7 +53,7 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         return game.rules.getStatus(game.state) == GameStatus.OPPONENT_WINS;
     }
-    
+
     @Override
     public boolean winBoth(Game game)
     {
@@ -63,26 +64,31 @@ public class HiveInterfaceIA implements InterfaceIA
     public int queenFreeNeighbour(Player p, Game game)
     {
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        if(queen_positions.isEmpty()){
+        if (queen_positions.isEmpty())
+        {
             return 0;
         }
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
+        {
             if (neighIter.next().hexagon.value().isEmpty())
+            {
                 nbNeighbor++;
+            }
+        }
         return nbNeighbor;
     }
-    
+
     // it does NOT copy equals tiles and equals cells
     @Override
     public ArrayList<Action> currentPlayerPossibilities(Game game)
     {
         ArrayList<Action> actions = new ArrayList<>();
         Player current = game.state.turn.getCurrent();
-        
+
         // PutAction
-        for(InsectType type : InsectType.implemented_insects)
+        for (InsectType type : InsectType.implemented_insects)
         {
             Tile tile = new Tile(type, current.color);
             /*for(int i = 0; i < current.collection.get(type); ++i)
@@ -92,27 +98,30 @@ public class HiveInterfaceIA implements InterfaceIA
                     actions.add(new PutAction(dest.next(), tile));
             }*/
             ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
-            if(current.collection.get(type) > 0)
+            if (current.collection.get(type) > 0)
             {
                 Iterator<Cell> place = placements.iterator();
-                while(place.hasNext())
+                while (place.hasNext())
+                {
                     actions.add(new PutAction(place.next(), tile));
+                }
             }
         }
-        
-        
+
         // MoveAction
-        for(InsectType type : InsectType.implemented_insects)
+        for (InsectType type : InsectType.implemented_insects)
         {
             HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
             Iterator<Cell> source_iterator = sources.iterator();
-            while(source_iterator.hasNext())
+            while (source_iterator.hasNext())
             {
                 Cell source = source_iterator.next();
                 ArrayList<Cell> destinations = game.rules.getPossibleDestinations(game.state, source);
                 Iterator<Cell> dest_iterator = destinations.iterator();
-                while(dest_iterator.hasNext())
+                while (dest_iterator.hasNext())
+                {
                     actions.add(new MoveAction(source, dest_iterator.next()));
+                }
             }
         }
         return actions;
@@ -122,21 +131,45 @@ public class HiveInterfaceIA implements InterfaceIA
     public ArrayList<Tile> freeTiles(Game game, Player p)
     {
         ArrayList<Tile> free_tiles = new ArrayList<>();
-        for(InsectType type : InsectType.implemented_insects)
+        for (InsectType type : InsectType.implemented_insects)
         {
             HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
             Iterator<Cell> it = sources.iterator();
-            while(it.hasNext())  
-                free_tiles.add(it.next().getTile());
-            
+            while (it.hasNext())
+            {
+                Cell cell = it.next();
+                if (!game.rules.getPossibleDestinations(game.state, cell).isEmpty())
+                {
+                    free_tiles.add(cell.getTile());
+                }
+            }
         }
         return free_tiles;
+    }
+
+    public ArrayList<Tile> blockedTiles(Player p, Game game)
+    {
+        ArrayList<Tile> blocked_tiles = new ArrayList<>();
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
+            Iterator<Cell> it = sources.iterator();
+            while (it.hasNext())
+            {
+                Cell cell = it.next();
+                if (game.rules.getPossibleDestinations(game.state, cell).isEmpty())
+                {
+                    blocked_tiles.add(cell.getTile());
+                }
+            }
+        }
+        return blocked_tiles;
     }
 
     @Override
     public void doAction(Game game, Action action)
     {
-        ((SimulatedDecision)game.state.turn.getCurrent().decision).setAction(action);
+        ((SimulatedDecision) game.state.turn.getCurrent().decision).setAction(action);
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.doAction();
     }
@@ -148,13 +181,13 @@ public class HiveInterfaceIA implements InterfaceIA
         gameprogress.undoAction();
         return game.state.data.last_undo;
     }
-    
+
     @Override
     public ArrayList<Decision> startSimulation(Game game)
     {
         ArrayList<Decision> decisions = new ArrayList<>();
         Iterator<Player> player_iterator = game.state.players.iterator();
-        while(player_iterator.hasNext())
+        while (player_iterator.hasNext())
         {
             Player player = player_iterator.next();
             decisions.add(player.decision);
@@ -162,16 +195,17 @@ public class HiveInterfaceIA implements InterfaceIA
         }
         return decisions;
     }
-    
+
     @Override
     public void endSimulation(Game game, ArrayList<Decision> decisions)
     {
         Iterator<Player> player_iterator = game.state.players.iterator();
         Iterator<Decision> decision_iterator = decisions.iterator();
-        while(player_iterator.hasNext())
+        while (player_iterator.hasNext())
         {
             Player player = player_iterator.next();
             player.decision = decision_iterator.next();
         }
     }
+
 }
