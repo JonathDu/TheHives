@@ -41,6 +41,11 @@ public class InterfaceMenu extends Parent{
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
        
+        if(i.pleinEcran==1){
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
+        }
+        
         Canvas n = new Canvas();
         Group circles = new Group();
         for (int j = 0; j < 30; j++) {
@@ -64,8 +69,48 @@ public class InterfaceMenu extends Parent{
         ImageView caseImNG = new ImageView(imageCase);
         caseImNG.setFitHeight(width/4);
         caseImNG.setFitWidth(width/4);
-        Label newGame = new Label("Nouvelle partie");
-        newGame.setFont(new Font("Copperplate", width/45));
+        Label newGame=new Label();
+        Label chargerPartie = new Label();
+        Label statistiques = new Label();
+        Label credits = new Label();
+        Label regles = new Label();
+
+        if(i.langue=="Français"){
+            newGame.setText("Nouvelle partie");
+            chargerPartie.setText("Charger Partie");
+            statistiques.setText("Statistiques");
+            credits.setText("Crèdits");
+            regles.setText("Règles");
+        }
+        else if(i.langue=="English"){
+            newGame.setText("New Game");
+            chargerPartie.setText("Load Game");
+            statistiques.setText("Scores");
+            credits.setText("Credits");
+            regles.setText("Rules");
+        }
+        else if(i.langue=="Italiano"){
+            newGame.setText("Nuova Partita");
+            chargerPartie.setText("Carica Partita");
+            statistiques.setText("Statistica");
+            credits.setText("Crediti");
+            regles.setText("Regoli");
+        }
+        else if(i.langue=="Русский"){
+            newGame.setText("Новая Игра");
+            chargerPartie.setText("Загрузить Игру");
+            statistiques.setText("Статистика");
+            credits.setText("Разработчики");
+            regles.setText("Правила");
+        }
+        else if(i.langue=="Deutsch"){
+            newGame.setText("Neues Spiel");
+            chargerPartie.setText("Spiel Laden");
+            statistiques.setText("Statistik");
+            credits.setText("Credits");
+            regles.setText("Regeln");
+        }
+        newGame.setFont(new Font("Papyrus", width/45));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(caseImNG);
         NewGame.getChildren().add(newGame);
@@ -86,7 +131,7 @@ public class InterfaceMenu extends Parent{
         });
         NG.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             System.out.println("New Game ! ");
-            i.goToChoixJoueur(pleinEcran);
+            i.goToChoixJoueur();
         });
         
         this.getChildren().add(NG);
@@ -96,7 +141,6 @@ public class InterfaceMenu extends Parent{
         ImageView caseImCP = new ImageView(imageCase);
         caseImCP.setFitHeight(tailleDeCase+width/24);
         caseImCP.setFitWidth(tailleDeCase+width/24);
-        Label chargerPartie = new Label("Charger partie");
         chargerPartie.setFont(new Font("Copperplate", tailleDeCase/8));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(caseImCP);
@@ -132,7 +176,6 @@ public class InterfaceMenu extends Parent{
         ImageView caseImS = new ImageView(imageCase);
         caseImS.setFitHeight(tailleDeCase);
         caseImS.setFitWidth(tailleDeCase);
-        Label statistiques = new Label("Statistiques");
         statistiques.setFont(new Font("Copperplate", tailleDeCase/8));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(caseImS);
@@ -164,7 +207,6 @@ public class InterfaceMenu extends Parent{
         ImageView caseImC = new ImageView(imageCase);
         caseImC.setFitHeight(tailleDeCase);
         caseImC.setFitWidth(tailleDeCase);
-        Label credits = new Label("Crédits");
         credits.setFont(new Font("Copperplate", tailleDeCase/8));
         credits.setAlignment(CENTER);
         Credits.getChildren().add(caseImC);
@@ -305,6 +347,22 @@ public class InterfaceMenu extends Parent{
                 Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                     System.out.println("Préférences ! ");
                     //i.accueil();
+                    Preferences p = new Preferences(primaryStage, i);
+                    this.getChildren().add(p);
+                    StackPane pref = new StackPane();
+                    Image imageQ = new Image(InterfaceMenu.this.getClass().getResourceAsStream("rsc/images/exit3.png"));
+                    ImageView ImQ = new ImageView(imageQ);
+                    ImQ.setFitHeight(tailleDeCase/2.5);
+                    ImQ.setFitWidth(tailleDeCase/2.5);
+                    pref.getChildren().add(ImQ);
+                    pref.setLayoutX(width-tailleDeCase);
+                    pref.setLayoutY(0);
+                    pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
+                        this.getChildren().remove(this.getChildren().size()-2, this.getChildren().size());
+                        i.goToMenu();
+                    });
+                    
+                    this.getChildren().add(pref);
                 });
                 Cases.getChildren().add(Preferences);
             }
@@ -324,7 +382,6 @@ public class InterfaceMenu extends Parent{
                 ImageView caseImR = new ImageView(imageCase);
                 caseImR.setFitHeight(tailleDeCase2);
                 caseImR.setFitWidth(tailleDeCase2);
-                Label regles = new Label("Règles");
                 regles.setFont(new Font("Copperplate", tailleDeCase/8));
                 regles.setAlignment(CENTER);
                 Regles.getChildren().add(caseImR);

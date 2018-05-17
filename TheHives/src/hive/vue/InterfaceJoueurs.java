@@ -12,14 +12,11 @@ import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -27,7 +24,6 @@ import javafx.stage.Stage;
 import hive.thehives.TheHives;
 import javafx.event.EventHandler;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -41,9 +37,9 @@ public class InterfaceJoueurs extends Parent{
     int est_h1=0, est_h2=0, est_ai1=0, est_ai2=0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
-    public InterfaceJoueurs(Stage primaryStage, TheHives i, int pleinEcran) {
+    public InterfaceJoueurs(Stage primaryStage, TheHives i) {
         
-        if(pleinEcran==1){
+        if(i.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
@@ -58,9 +54,9 @@ public class InterfaceJoueurs extends Parent{
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
         
         Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran");
+        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "joueurs");
+        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "joueurs");
+        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "joueurs");
         utiles3.getChildren().addAll(preferences, sortie, ecran);
         AnchorPane.setRightAnchor(utiles3, (double) 0);
         AnchorPane.setTopAnchor(utiles3, (double) 0);
@@ -68,7 +64,7 @@ public class InterfaceJoueurs extends Parent{
         AnchorPane.setBottomAnchor(utiles3, (double) height-tailleDeCase*2);
         pane.getChildren().add(utiles3);
         Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu");
+        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "joueurs");
         utiles1.getChildren().addAll(menu);
         AnchorPane.setLeftAnchor(utiles1, (double) 0);
         AnchorPane.setRightAnchor(utiles1, (double) width-tailleDeCase);
@@ -95,7 +91,47 @@ public class InterfaceJoueurs extends Parent{
         
         System.out.println(grille.getHeight());
         
-        Label joueur1 = new Label("Joueur 1");
+        
+        Label joueur1 = new Label(); // jocatori, Spiler
+        Label joueur2 = new Label();
+        
+        Button valider = new Button(); // Invio, Enter Bestätigen
+        if(i.langue=="Français"){
+            joueur1.setText("Joueur 1");
+            joueur2.setText("Joueur 2");
+            Name1.setPromptText("Votre prenom"); // nome , Name
+            Name2.setPromptText("Votre prenom");
+            valider.setText("Valider");
+        }
+        else if(i.langue=="English"){
+            joueur1.setText("Player 1");
+            joueur2.setText("Player 2");
+            Name1.setPromptText("Name");
+            Name2.setPromptText("Name");
+            valider.setText("Commit");
+        }
+        else if(i.langue=="Italiano"){
+            joueur1.setText("Jocatore 1");
+            joueur2.setText("Jocatore 2");
+            Name1.setPromptText("Nome");
+            Name2.setPromptText("Nome");
+            valider.setText("Invio");
+        }
+        else if(i.langue=="Русский"){
+            joueur1.setText("Игрок 1");
+            joueur2.setText("Игрок 2");
+            Name1.setPromptText("Имя");
+            Name2.setPromptText("Имя");
+            valider.setText("Подтвердить");
+        }
+        else if(i.langue=="Deutsch"){
+            joueur1.setText("Spiler 1");
+            joueur2.setText("Spiler 2");
+            Name1.setPromptText("Name");
+            Name2.setPromptText("Name");
+            valider.setText("Bestätigen");
+        }
+        
         joueur1.setFont(new Font("Copperplate", maxJoueur/10));
         joueur1.setAlignment(Pos.CENTER);
         joueur1.setMinSize(minJoueur, 30);
@@ -119,7 +155,6 @@ public class InterfaceJoueurs extends Parent{
         i1.getChildren().add(IA1);
         grille.add(i1, 2, 1);
         
-        Name1.setPromptText("Votre prenom");
         Name1.setText(null);
         final ToggleGroup ia1 = new ToggleGroup();
         j1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -149,19 +184,19 @@ public class InterfaceJoueurs extends Parent{
                         }
                         est_ai1=1;
                         ToggleButton facile;
-                        facile = bouton.creer("facile1");
+                        facile = bouton.creer("facile1"); //Facile, Einfach
                         facile.setToggleGroup(ia1);
                         StackPane f1 = new StackPane();
                         f1.getChildren().add(facile);
                         grille.add(f1, 0, 2);
                         ToggleButton moyenne;
-                        moyenne = bouton.creer("moyenne1");
+                        moyenne = bouton.creer("moyenne1"); //Media, Mittel/Normal
                         moyenne.setToggleGroup(ia1);
                         StackPane m1 = new StackPane();
                         m1.getChildren().add(moyenne);
                         grille.add(m1, 1, 2);
                         ToggleButton difficile;
-                        difficile = bouton.creer("difficile1");
+                        difficile = bouton.creer("difficile1"); //Difficile, Schwer
                         difficile.setToggleGroup(ia1);
                         StackPane d1 = new StackPane();
                         d1.getChildren().add(difficile);
@@ -181,7 +216,6 @@ public class InterfaceJoueurs extends Parent{
         });
         
         
-        Label joueur2 = new Label("Joueur 2");
         joueur2.setFont(new Font("Copperplate", maxJoueur/10));
         joueur2.setAlignment(Pos.CENTER);
         joueur2.setMinSize(width/10, 30);
@@ -204,7 +238,6 @@ public class InterfaceJoueurs extends Parent{
         i2.getChildren().add(IA2);
         grille.add(i2, 2, 4);
         
-        Name2.setPromptText("Votre prenom");
         Name2.setText(null);
         
         final ToggleGroup ia2 = new ToggleGroup();
@@ -273,7 +306,6 @@ public class InterfaceJoueurs extends Parent{
         AnchorPane.setBottomAnchor(grille, (double) 200);
         pane.getChildren().add(grille);
         
-        Button valider = new Button("Valider");
         valider.setFont(new Font("Copperplate", width/35));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);

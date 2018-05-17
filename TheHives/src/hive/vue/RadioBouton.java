@@ -70,7 +70,21 @@ class RadioBouton extends ToggleButton{
             }*/
         }else if(type=="facile1" || type=="facile2"){
             bouton.setUserData("facile");
-            bouton.setText("Facile");
+            if(i.langue=="Français"){
+                bouton.setText("Facile");
+            }
+            else if(i.langue=="English"){
+                bouton.setText("Easy");
+            }
+            else if(i.langue=="Italiano"){
+                bouton.setText("Facile");
+            }
+            else if(i.langue=="Русский"){
+                bouton.setText("Легкий");
+            }
+            else if(i.langue=="Deutsch"){
+                bouton.setText("Einfach");
+            }
             bouton.setFont(new Font("Copperplate", tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
@@ -84,7 +98,21 @@ class RadioBouton extends ToggleButton{
             }*/
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
-            bouton.setText("Moyenne");
+            if(i.langue=="Français"){
+                bouton.setText("Moyenne");
+            }
+            else if(i.langue=="English"){
+                bouton.setText("Medium");
+            }
+            else if(i.langue=="Italiano"){
+                bouton.setText("Media");
+            }
+            else if(i.langue=="Русский"){
+                bouton.setText("Средний");
+            }
+            else if(i.langue=="Deutsch"){
+                bouton.setText("Normal");
+            }
             bouton.setFont(new Font("Copperplate", tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
@@ -98,7 +126,21 @@ class RadioBouton extends ToggleButton{
             }*/
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
+            if(i.langue=="Français"){
             bouton.setText("Difficile");
+            }
+            else if(i.langue=="English"){
+                bouton.setText("Hard");
+            }
+            else if(i.langue=="Italiano"){
+                bouton.setText("Difficile");
+            }
+            else if(i.langue=="Русский"){
+                bouton.setText("Сложный");
+            }
+            else if(i.langue=="Deutsch"){
+                bouton.setText("Schwer");
+            }
             bouton.setFont(new Font("Copperplate", tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);

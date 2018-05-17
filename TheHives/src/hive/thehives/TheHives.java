@@ -39,6 +39,8 @@ public class TheHives extends Application {
     Scene scene;
     Stage primaryStage;
     Stage stage;
+    public String langue = "Français";
+    public int pleinEcran = 0;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -82,8 +84,8 @@ public class TheHives extends Application {
 
     }
 
-    public void goToChoixJoueur(int pleinEcran) {
-        this.scene = new Scene(new InterfaceJoueurs(primaryStage, this, pleinEcran), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+    public void goToChoixJoueur() {
+        this.scene = new Scene(new InterfaceJoueurs(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 
