@@ -38,14 +38,15 @@ public class HiveConsoleIA {
 
             progress.doAction();
 
-            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-            if (player == game.state.players.get(0)) {
-                System.out.println("Joueur 1");
-            } else {
-                System.out.println("Joueur 2");
-            }
-            System.out.println(game.state.board);
+            
         }
+        System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+        if (player == game.state.players.get(0)) {
+            System.out.println("Joueur 1");
+        } else {
+            System.out.println("Joueur 2");
+        }
+        System.out.println(game.state.board);
 
     }
 }
