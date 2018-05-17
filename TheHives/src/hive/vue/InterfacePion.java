@@ -101,7 +101,7 @@ public class InterfacePion extends Parent {
                     } else {
                         i = c.getImage("pionScarabeW.png");
                     }
-                    v = new ImagePattern(i, 1, 1, 1, 1, true);
+                    v = new ImagePattern(i, 1, 1, 1, 1, false);
                     v.isProportional();
                     break;
                 default:

@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import hive.vue.InterfaceComb;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import util.Matrix;
@@ -31,26 +33,24 @@ public class InterfaceRuche extends Parent {
     private final int longueurPion = 40;
     int width, height;
 
-          
     private GameController controller;
     private final Board board;
     private InterfacePlateau plateau;
 
-    public InterfaceRuche(CacheImage c, int width, int height, GameController controller) {
+    public InterfaceRuche(CacheImage c, GameController controller) {
 //        this.width = width;
 //        this.height = height;
 //
 //
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
-
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
         this.board = controller.progress.game.state.board;
         this.controller = controller;
-        hauteur = controller.progress.game.state.board.getData().sizeX();
-        largeur = controller.progress.game.state.board.getData().sizeY();
+        hauteur = controller.progress.game.state.board.getData().sizeY();
+        largeur = controller.progress.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
@@ -59,7 +59,7 @@ public class InterfaceRuche extends Parent {
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + h));
 
-                if (x % 2 == 0) {
+                if (x % 2 != 0) {
                     cell.setLayoutY((y * 2 * center) + center);
                 } else {
                     cell.setLayoutY(y * 2 * center);
