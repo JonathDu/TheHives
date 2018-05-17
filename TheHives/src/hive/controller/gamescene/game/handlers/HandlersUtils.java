@@ -21,11 +21,11 @@ public class HandlersUtils
 
     public static void moveOnBoard(GameController controller, HumanDecision human_decision, Cell cell, InterfaceRuche uiRuche)
     {
-        if (!controller.builder.possibleDestinations.contains(new Cell(cell.comb)))
-        {
-            System.err.println("Destination impossible");
-            return;
-        }
+//        if (!controller.builder.possibleDestinations.contains(new Cell(cell.comb)))
+//        {
+//            System.err.println("Destination impossible");
+//            return;
+//        }
         //TODO : tester si le move est possible ??? connexité etc ...
 
         /* ACTION BUILDER */
@@ -45,11 +45,11 @@ public class HandlersUtils
 
     public static void putOnBoard(GameController controller, HumanDecision human_decision, Cell cell, InterfaceRuche uiRuche)
     {
-        if (!controller.builder.possibleDestinations.contains(new Cell(cell.comb)))
-        {
-            System.err.println("Placement impossible");
-            return;
-        }
+//        if (!controller.builder.possibleDestinations.contains(new Cell(cell.comb)))
+//        {
+//            System.err.println("Placement impossible");
+//            return;
+//        }
         
         /* ACTION BUILDER */
         controller.builder.setPlacement(cell);
