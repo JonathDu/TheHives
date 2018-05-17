@@ -5,17 +5,18 @@
  */
 package hive.vue;
 
-import com.sun.deploy.cache.InMemoryLocalApplicationProperties;
-import hive.model.board.Cell;
-import hive.model.board.Tile;
-import hive.model.board.TilesStack;
-import hive.model.insects.InsectType;
+import hive.controller.gamescene.game.GameController;
+import hive.model.game.DefaultGame;
+import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
+import hive.model.players.decisions.HumanDecision;
+import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -25,38 +26,48 @@ import javafx.stage.Stage;
  * @author jonathan
  */
 public class InterfacePlateau extends Parent {
+//
 
-    AnchorPane pane;
+    BorderPane pane;
+    GameController controller;
+    public InterfacePlateauMain mainGauche;
+    public InterfacePlateauMain mainDroite;
+    public InterfaceRuche ruche;
 
-    public InterfacePlateau(PlayerCollection col, CacheImage c, Stage stage, String joueur1, String joueur2) {
-        pane = new AnchorPane();
+    public InterfacePlateau(PlayerCollection col, CacheImage c, Stage stage, String joueur1, String joueur2, DoubleProperty prop) {
+        pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
-        InterfacePlateauMain main1 = new InterfacePlateauMain(col, joueur1, Color.AZURE, c);
-        InterfacePlateauMain main2 = new InterfacePlateauMain(col, joueur2, Color.AZURE, c);
+        controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        AnchorPane.setTopAnchor(main1, 0.0);
-        AnchorPane.setLeftAnchor(main1, 0.0);
-        AnchorPane.setTopAnchor(main2, 0.0);
-        AnchorPane.setRightAnchor(main2, 0.0);
+
+        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, c, pane.heightProperty(), controller,this, TeamColor.WHITE);
+        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, c, pane.heightProperty(), controller, this,TeamColor.BLACK);
+
 
         StackPane centerPane = new StackPane();
+        ScrollPane p = new ScrollPane();
+        p.setHvalue(0.5);
+        //p.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        ruche  = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
+        ruche.setHandler(this);
 
-        InterfaceRuche ruche = new InterfaceRuche(c);
-//        ruche.placerPion(new Cell(new TilesStack(new Tile(InsectType.BEETLE, TeamColor.BLACK))), 1, 5);
-//        ruche.placerPion(new Cell(new TilesStack(new Tile(InsectType.BEETLE, TeamColor.WHITE))), 2, 5);
+
+//        p.setOnDragDetected((event) -> {
+//            double x= -event.getX();
+//            System.out.println(x);
+//            p.setHvalue(x/20);
 //
-//        ruche.placerPion(new Cell(new TilesStack(new Tile(InsectType.BEETLE, TeamColor.WHITE))), 9, 20);
+//        });
 
-        AnchorPane.setTopAnchor(centerPane, 0.0);
-        AnchorPane.setLeftAnchor(centerPane, 0.0);
-        AnchorPane.setBottomAnchor(centerPane, 0.0);
-        AnchorPane.setRightAnchor(centerPane, 0.0);
+        StackPane.setAlignment(ruche, Pos.TOP_CENTER);
+
+        ruche.isResizable();
         centerPane.getChildren().add(ruche);
-        StackPane.setAlignment(ruche, Pos.CENTER);
-        pane.getChildren().add(centerPane);
-        pane.getChildren().add(main1);
-        pane.getChildren().add(main2);
+        p.setContent(centerPane);
 
+        pane.setCenter(p);
+        pane.setLeft(mainGauche);
+        pane.setRight(mainDroite);
         this.getChildren().add(pane);
     }
 
