@@ -7,14 +7,12 @@ package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
-import hive.model.game.Game;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import hive.vue.InterfacePlateauMain;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -22,75 +20,72 @@ import javafx.scene.input.MouseEvent;
  *
  * @author jonathan
  */
-public class TileMainHandler implements EventHandler<MouseEvent>
+public class TileMainHandler extends HandlerPlateau
 {
-
-    //TODO : différencier quel joueur click ???
-    GameController controller;
-    InterfacePlateau uiPlateau;
+    TeamColor color;
     InterfacePlateauMain uiMain;
-    Tile tile;
-    Game game;
+    Tile tileClicked;
 
-    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, InterfacePlateauMain uiMain, TeamColor color, InsectType insectType)
+    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, TeamColor color, InsectType insectType)
     {
-        this.controller = controller;
-        this.uiPlateau = uiPlateau;
-        this.uiMain = uiMain;
-        this.tile = new Tile(insectType, color);
-        this.game = controller.progress.game;
+        super(controller, uiPlateau);
+        tileClicked = new Tile(insectType, color);
+        this.color = color;
     }
 
     @Override
     public void handle(MouseEvent event)
     {
+        uiMain = uiPlateau.getInterfacePlateauMain(color);
+
         System.out.println("--- TILE MAIN ---");
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             Decision decision = controller.progress.game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision)
+
+            if (!(decision instanceof HumanDecision))
             {
-                switch (controller.builder.getState())
-                {
-                    case SOURCE_SELECTED:
-                        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos); // MAJ graphique : on deselectionne la source
-                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations); // MAJ graphique : desurligne les destinations possible de la sources   
+                return;
+            }
 
-                        System.out.println("Tile selectionnée");
+            switch (controller.builder.getState())
+            {
+                case BEGIN:
+                    System.out.println("Tile selectionnée");
 
-                        /* ACTION BUILDER */
-                        controller.builder.setTile(tile);
-                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tile));
+                    controller.builder.setTile(tileClicked);
+                    controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
 
-                        /* MAJ GRPAHIQUE */
-                        uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
-                        uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);// MAJ graphique : les destinations possibles
-                        break;
-                    case BEGIN:
-                        System.out.println("Tile selectionnée");
+                    uiMain.surlignerTile(action_tile);
+                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    break;
+                case SOURCE_SELECTED:
+                    System.out.println("Tile selectionnée");
 
-                        /* ACTION BUILDER */
-                        controller.builder.setTile(tile);
-                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tile));
+                    uiPlateau.ruche.deselectCell(action_source.comb.pos);
+                    uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
 
-                        /* MAJ GRPAHIQUE */
-                        uiMain.surlignerTile(tile); // MAJ graphique : surligne la tile selectionnée
-                        uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);// MAJ graphique : les destinations possibles
-                        break;
-                    case TILE_SELECTED:
-                        if (tile.type != controller.builder.tile.type)
-                        {
-                            System.out.println("Changement de tile");
-                            uiMain.desurlignerTile(controller.builder.tile);
-                            controller.builder.setTile(tile);
-                            uiMain.surlignerTile(tile);
-                        } else
-                        {
-                            System.err.println("Aucun changement : tile deja selectionnée");
-                        }
-                        break;
-                }
+                    controller.builder.setTile(tileClicked);
+                    controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
+
+                    uiMain.surlignerTile(action_tile);
+                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    break;
+                case TILE_SELECTED:
+                    if (tileClicked.type != action_tile.type)
+                    {
+                        System.out.println("Changement de tile");
+
+                        uiMain.desurlignerTile(action_tile);
+                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+                        controller.builder.setTile(tileClicked);
+                        uiMain.surlignerTile(action_tile);
+                    } else
+                    {
+                        System.err.println("Aucun changement : tile deja selectionnée");
+                    }
+                    break;
             }
         }
     }
