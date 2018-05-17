@@ -3,13 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller;
+package hive.model.players.decisions;
 
 /**
  *
- * @author Thomas
+ * @author Coralie
  */
-class PutActionSelection
-{
-    
+public enum Level {
+    EASY(0), MEDIUM(1), HARD(2);
+    int level;
+
+    private Level(int level) {
+        this.level = level;
+    }
 }

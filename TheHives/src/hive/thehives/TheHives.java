@@ -10,22 +10,16 @@ import hive.model.board.Board;
 import hive.model.board.TilesStack;
 import hive.model.game.DefaultGame;
 import hive.model.players.PlayerCollection;
-import hive.vue.Executer;
 import hive.vue.InterfaceJeu;
 import hive.vue.InterfaceMenu;
 import hive.vue.InterfaceJoueurs;
 import java.awt.Dimension;
 import java.io.IOException;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import util.Matrix;
 import util.Vector2i;
 
@@ -37,12 +31,12 @@ public class TheHives extends Application {
 
     /* le minimum est 400 et 600 */
 
-    public int HEIGHT = 400;
-    public int WIDTH = 600;
+    public int HEIGHT = 600;
+    public int WIDTH = 800;
     Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-    //int HEIGHT = (int) dimension.getHeight();
-    //int WIDTH  = (int)dimension.getWidth();
-    BorderPane root;
+//    int HEIGHT = (int) dimension.getHeight();
+//    int WIDTH  = (int)dimension.getWidth();
+    Group root;
     Scene scene;
     Stage primaryStage;
     Stage stage;
@@ -54,8 +48,9 @@ public class TheHives extends Application {
         PlayerCollection player = new PlayerCollection();
 
 
-        root = new BorderPane();
-        //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
+
+        root = new Group();
+        scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
         primaryStage.setHeight(HEIGHT);
         primaryStage.setWidth(WIDTH);
@@ -63,19 +58,15 @@ public class TheHives extends Application {
         primaryStage.setMinWidth(600);
         primaryStage.setMaxHeight((int) dimension.getHeight());
         primaryStage.setMaxWidth((int)dimension.getWidth());
-        //goToPlateau("Joueur1", "Joueur2");
-        goToMenu();
+        goToPlateau("Joueur1", "Joueur2");
+        //goToMenu();
 
         //PLEIN ECRAN
-        //primaryStage.setFullScreen(true); //passer en affichage plein écran
-        //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
-        //root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
-        
-        StackPane stack = new StackPane();
-        stack.setStyle("-fx-background-color: red;");
-        stage = primaryStage;
-        //stage.initStyle(StageStyle.UNDECORATED);
-        
+
+//        primaryStage.setFullScreen(true); //passer en affichage plein écran
+//        primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
+//        root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
+
         
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();

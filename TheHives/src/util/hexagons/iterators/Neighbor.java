@@ -15,12 +15,14 @@ import util.hexagons.HexagonSide;
  */
 public class Neighbor<E>
 {
-    public Hexagon<E> hexagon;
+    public Hexagon<E> origin;
     public HexagonSide from;
+    public Hexagon<E> hexagon;
     
-    public Neighbor(Hexagon<E> hexagon, HexagonSide from)
+    public Neighbor(Hexagon<E> origin, HexagonSide from, Hexagon<E> hexagon)
     {
-        this.hexagon = hexagon;
+        this.origin = origin;
         this.from = from;
+        this.hexagon = hexagon;
     }
 }

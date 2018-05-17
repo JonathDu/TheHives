@@ -19,14 +19,12 @@ public class ActionApplier implements ActionVisitor
 {
     PlayerDoUpdater player_do;
     PrecalculatedDataDoUpdater algo_do;
-    TraceDoUpdater trace_do;
     BoardDoUpdater board_do;
 
     public ActionApplier(GameState state)
     {
         this.player_do = new PlayerDoUpdater(state.turn);
         this.algo_do = new PrecalculatedDataDoUpdater(state.data);
-        this.trace_do = new TraceDoUpdater(state.trace);
         this.board_do = new BoardDoUpdater(state.board);
     }
     
@@ -35,7 +33,6 @@ public class ActionApplier implements ActionVisitor
     {
         action.accept(player_do);
         action.accept(algo_do);
-        action.accept(trace_do);
         action.accept(board_do);
     }
 
@@ -44,7 +41,6 @@ public class ActionApplier implements ActionVisitor
     {
         action.accept(player_do);
         action.accept(algo_do);
-        action.accept(trace_do);
         action.accept(board_do);
     }
 
@@ -53,7 +49,6 @@ public class ActionApplier implements ActionVisitor
     {
         action.accept(player_do);
         action.accept(algo_do);
-        action.accept(trace_do);
         action.accept(board_do);
     }
 }
