@@ -6,15 +6,11 @@
 package hive.vue;
 
 import javafx.application.Platform;
-import javafx.geometry.Pos;
 import static javafx.geometry.Pos.CENTER;
-import static javafx.geometry.Pos.TOP_CENTER;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -27,6 +23,10 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import hive.thehives.TheHives;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -34,9 +34,13 @@ import hive.thehives.TheHives;
  */
 public class InterfaceMenu extends Parent{
     
-    public InterfaceMenu(int height, int width, Stage primaryStage, TheHives i){
+    Stage stage;
+    int pleinEcran = 0;
+    public InterfaceMenu(Stage primaryStage, TheHives i){
         
-        
+        int height = (int) primaryStage.getHeight();
+        int width = (int) primaryStage.getWidth();
+       
         Canvas n = new Canvas();
         Group circles = new Group();
         for (int j = 0; j < 30; j++) {
@@ -82,7 +86,7 @@ public class InterfaceMenu extends Parent{
         });
         NG.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             System.out.println("New Game ! ");
-            i.goToChoixJoueur();
+            i.goToChoixJoueur(pleinEcran);
         });
         
         this.getChildren().add(NG);
@@ -113,8 +117,12 @@ public class InterfaceMenu extends Parent{
             CP.setEffect(null);
         });
         CP.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            System.out.println("Charger partie ! ");
-            //i.accueil();
+            try {
+                System.out.println("Charger partie ! ");
+                i.goToChargerPartie();
+            } catch (IOException ex) {
+                Logger.getLogger(InterfaceMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
         
         this.getChildren().add(CP);
@@ -182,29 +190,6 @@ public class InterfaceMenu extends Parent{
         });
         
         this.getChildren().add(C);
-        
-        /*StackPane Regles = new StackPane();
-        ImageView caseImR = new ImageView(imageCase);
-        caseImR.setFitHeight(tailleDeCase);
-        caseImR.setFitWidth(tailleDeCase);
-        Label regles = new Label("Règles");
-        regles.setAlignment(CENTER);
-        Regles.getChildren().add(caseImR);
-        Regles.getChildren().add(regles);
-        Regles.setLayoutX(width/1.4);
-        Regles.setLayoutY(height/2.5);
-        Regles.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
-            Regles.setEffect(shadow);
-        });
-        Regles.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event) -> {
-            Regles.setEffect(null);
-        });
-        Regles.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            System.out.println("Regles ! ");
-            //i.accueil();
-        });
-        this.getChildren().add(Regles);*/
-        
     
         
         int tailleDeCase2 = tailleDeCase;
@@ -225,8 +210,8 @@ public class InterfaceMenu extends Parent{
                 caseImR.setFitHeight(tailleDeCase);
                 caseImR.setFitWidth(tailleDeCase);
                 Sortie.getChildren().add(caseImR);
-                //Image imageSortie = new Image(getClass().getResourceAsStream("Images/exit1.png"));
-                //Image imageSortie = new Image(getClass().getResourceAsStream("Images/exit2.png"));
+                //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit1.png"));
+                //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit2.png"));
                 Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit3.png"));
                 ImageView sortieIm = new ImageView(imageSortie);
                 sortieIm.setFitHeight(tailleDeCase2/2.5);
@@ -278,6 +263,7 @@ public class InterfaceMenu extends Parent{
                 });
                 PleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                     System.out.println("Plein Écran ! ");
+                    pleinEcran=1;
                     primaryStage.setFullScreen(true);
                     primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
                     //i.goToMenu();
@@ -302,8 +288,8 @@ public class InterfaceMenu extends Parent{
                 caseImR.setFitWidth(tailleDeCase);
                 Preferences.getChildren().add(caseImR);
                 Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/settings1.png"));
-                //Image imageSortie = new Image(getClass().getResourceAsStream("Images/settings2.png"));
-                //Image imageSortie = new Image(getClass().getResourceAsStream("Images/settings3.png"));
+                //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/settings2.png"));
+                //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/settings3.png"));
                 ImageView sortieIm = new ImageView(imageSortie);
                 sortieIm.setFitHeight(tailleDeCase2/2.5);
                 sortieIm.setFitWidth(tailleDeCase2/2.5);

@@ -5,19 +5,27 @@
  */
 package hive.thehives;
 
+import hive.vue.InterfaceCharger;
 import hive.model.board.Board;
 import hive.model.board.TilesStack;
 import hive.model.game.DefaultGame;
 import hive.model.players.PlayerCollection;
+import hive.vue.Executer;
 import hive.vue.InterfaceJeu;
 import hive.vue.InterfaceMenu;
 import hive.vue.InterfaceJoueurs;
 import java.awt.Dimension;
+import java.io.IOException;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import util.Matrix;
 import util.Vector2i;
 
@@ -29,15 +37,15 @@ public class TheHives extends Application {
 
     /* le minimum est 400 et 600 */
 
-    public int HEIGHT = 600;
+    public int HEIGHT = 400;
     public int WIDTH = 600;
     Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
     //int HEIGHT = (int) dimension.getHeight();
     //int WIDTH  = (int)dimension.getWidth();
-    Group root;
+    BorderPane root;
     Scene scene;
     Stage primaryStage;
-
+    Stage stage;
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -46,10 +54,11 @@ public class TheHives extends Application {
         PlayerCollection player = new PlayerCollection();
 
 
-        root = new Group();
+        root = new BorderPane();
         //scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
         this.primaryStage = primaryStage;
-
+        primaryStage.setHeight(HEIGHT);
+        primaryStage.setWidth(WIDTH);
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
         primaryStage.setMaxHeight((int) dimension.getHeight());
@@ -61,6 +70,13 @@ public class TheHives extends Application {
         //primaryStage.setFullScreen(true); //passer en affichage plein écran
         //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
         //root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
+        
+        StackPane stack = new StackPane();
+        stack.setStyle("-fx-background-color: red;");
+        stage = primaryStage;
+        //stage.initStyle(StageStyle.UNDECORATED);
+        
+        
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();
         primaryStage.show();
@@ -72,18 +88,18 @@ public class TheHives extends Application {
     }
 
     public void goToMenu() {
-        this.scene = new Scene(new InterfaceMenu(HEIGHT, WIDTH, primaryStage, this), WIDTH, HEIGHT, Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfaceMenu(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
 
     }
 
-    public void goToChoixJoueur() {
-        this.scene = new Scene(new InterfaceJoueurs(HEIGHT, WIDTH, primaryStage, this), WIDTH, HEIGHT, Color.LIGHTBLUE);
+    public void goToChoixJoueur(int pleinEcran) {
+        this.scene = new Scene(new InterfaceJoueurs(primaryStage, this, pleinEcran), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
-        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), WIDTH, HEIGHT, Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 
@@ -91,6 +107,19 @@ public class TheHives extends Application {
 //        Image souris = new Image(getClass().getResourceAsStream("vue/images/souris.png"));
 //        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
 //        this.scene.setCursor(sourisIm);
+        scene.getStylesheets().add("/style.css");
         primaryStage.setScene(scene);
+    }
+
+    public void goToChargerPartie() throws IOException {
+        
+       // Executer executer = new Executer();
+        /*
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(TheHives.class.getResource("/src/hive/thehives/choix.fxml"));
+        AnchorPane choisir = (AnchorPane) loader.load();
+        this.scene = new Scene(choisir);*/
+        this.scene = new Scene(new InterfaceCharger(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        changeScene();
     }
 }

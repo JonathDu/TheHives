@@ -30,7 +30,7 @@ public class InterfaceRuche extends Parent {
         this.height = height;
         
         
-        longueurPion = width/60;
+        longueurPion = width/70;
         largeurPion = (int) (longueurPion / 1.4);
                 
         tab = new Matrix<>(hauteur, largeur);

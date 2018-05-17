@@ -22,19 +22,24 @@ import javafx.application.Platform;
  */
 public class InterfaceUtiles extends Parent{
 
-    public InterfaceUtiles(int height, int width, Stage primaryStage, TheHives i) {
+    public InterfaceUtiles(Stage primaryStage, TheHives i) {
+        
+        int height = (int) primaryStage.getHeight();
+        int width = (int) primaryStage.getWidth();
+        
         Image imageCase = new Image(getClass().getResourceAsStream("rsc/images/case.png"));
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
         int tailleDeCase2 = tailleDeCase/2;
+        
         Group Utiles = new Group();
         StackPane Sortie = new StackPane();
         ImageView caseImR = new ImageView(imageCase);
         caseImR.setFitHeight(tailleDeCase);
         caseImR.setFitWidth(tailleDeCase);
         Sortie.getChildren().add(caseImR);
-        //Image imageSortie = new Image(getClass().getResourceAsStream("Images/exit1.png"));
-        //Image imageSortie = new Image(getClass().getResourceAsStream("Images/exit2.png"));
+        //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit1.png"));
+        //Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit2.png"));
         Image imageSortie = new Image(getClass().getResourceAsStream("rsc/images/exit3.png"));
         ImageView sortieIm = new ImageView(imageSortie);
         sortieIm.setFitHeight(tailleDeCase/2.5);
@@ -52,8 +57,9 @@ public class InterfaceUtiles extends Parent{
             System.out.println("Sortie ! ");
             //i.accueil();
             Platform.exit();
-            this.getChildren().add(Sortie);
         });
+        
+            
         Utiles.getChildren().add(Sortie);
         StackPane PleinEcran = new StackPane();
         ImageView caseImPE = new ImageView(imageCase);
