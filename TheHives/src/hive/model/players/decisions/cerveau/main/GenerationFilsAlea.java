@@ -5,7 +5,7 @@
  */
 package hive.model.players.decisions.cerveau.main;
 
-import hive.model.players.decisions.cerveau.generationAlpha.AdamEtEve;
+import hive.model.players.decisions.cerveau.AdamEtEve;
 
 /**
  *
@@ -18,7 +18,7 @@ public class GenerationFilsAlea {
      */
     public static void main(String[] args) {
         AdamEtEve AE= new AdamEtEve();
-        AE.generate();
+        AE.generate("generationBeta");
     }
     
 }
