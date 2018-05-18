@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.gamescene.game.GameController;
+import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
@@ -68,6 +69,11 @@ public class InterfacePlateau extends Parent {
 
     public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
+    }
+    
+    public void majTileMain(Tile tile)
+    {
+        
     }
 
 }

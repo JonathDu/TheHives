@@ -79,7 +79,7 @@ public class SocleHandler extends HandlerPlateau
 
     public void putOnBoard(HumanDecision human_decision, Cell cellClicked)
     {
-        //TODO : MAJ graphique : on deselectionne la tile
+        uiPlateau.majTileMain(controller.builder.tile);
         uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
 
         controller.builder.setPlacement(cellClicked);
