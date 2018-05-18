@@ -56,6 +56,7 @@ public class TilePlateauHandler extends HandlerPlateau
 
                     uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    event.consume();
                     break;
             }
         }

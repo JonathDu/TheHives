@@ -59,6 +59,7 @@ public class TileMainHandler extends HandlerPlateau
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    event.consume();
                     break;
                 case SOURCE_SELECTED:
                     System.out.println("Tile selectionnée");
@@ -71,6 +72,7 @@ public class TileMainHandler extends HandlerPlateau
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    event.consume();
                     break;
                 case TILE_SELECTED:
                     if (tileClicked.type != controller.builder.tile.type)
@@ -85,6 +87,7 @@ public class TileMainHandler extends HandlerPlateau
                     {
                         System.err.println("Aucun changement : tile deja selectionnée");
                     }
+                    event.consume();
                     break;
             }
         }

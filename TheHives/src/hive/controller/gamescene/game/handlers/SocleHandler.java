@@ -55,10 +55,12 @@ public class SocleHandler extends HandlerPlateau
                     }
                     System.out.println("Destination selectionnée");
                     moveOnBoard(human_decision, new Cell(combClicked));
+                    event.consume();
                     break;
                 case TILE_SELECTED:
                     System.out.println("Placement selectionné");
                     putOnBoard(human_decision, new Cell(combClicked));
+                    event.consume();
                     break;
             }
         }
