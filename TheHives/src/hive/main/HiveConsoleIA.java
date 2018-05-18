@@ -32,7 +32,7 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.GAME_A, new IADecision(Level.EASY), new IADecision(Level.EASY));
+        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.HARD), new IADecision(Level.EASY));
 
         GameProgress progress = new GameProgress(game);
 
@@ -44,6 +44,7 @@ public class HiveConsoleIA {
         while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES)
         {
             Player player = game.state.turn.getCurrent();
+            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
             if (player == game.state.players.get(0))
                 System.out.println("Joueur 1");
             else
@@ -55,7 +56,7 @@ public class HiveConsoleIA {
 
             System.out.println(game.state.board);
         }
-
+        
         switch(status)
         {
         case DRAW:
