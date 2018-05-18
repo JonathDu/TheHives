@@ -40,7 +40,16 @@ public class EvaluationLearning {
         }
 
     }
+    
+    public EvaluationLearning(ArrayList<Integer> evalValues){
+        this.evalValues = evalValues;
+    }
 
+    public ArrayList<Integer> getEvalValues() {
+        return evalValues;
+    }
+    
+    
     int evaluation(Game state) {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);

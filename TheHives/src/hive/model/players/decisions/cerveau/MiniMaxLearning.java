@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.cerveau;
 
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import static hive.model.players.decisions.Evaluation.evaluation;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
@@ -17,11 +16,19 @@ import java.util.ArrayList;
  *
  * @author Coralie
  */
-public class MiniMax{
-    static public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
+public class MiniMaxLearning{
+    EvaluationLearning eval;
+
+    public MiniMaxLearning(EvaluationLearning eval) {
+        this.eval = eval;
+    }
+    
+    
+    
+    public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
-            return evaluation(state);
+            return eval.evaluation(state);
         }
         else{
             int vMax = -50000;
@@ -47,10 +54,10 @@ public class MiniMax{
             return vMax;
         }
     }
-    static public int miniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList){
+    public int miniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state)|| hia.winOpponent(state)){
-            return -(evaluation(state));
+            return -(eval.evaluation(state));
         }
         else{
             int vMin = 50000;
