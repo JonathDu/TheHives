@@ -105,23 +105,34 @@ public class InterfaceRuche extends Parent {
         tab.getAt(pos).setNotSelected();
     }
 
-    public void majCells(ArrayList<Cell> cells) {
-        for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos),cells.get(i).level, plateau, controller);
-        }
+    public void majSource(Cell source) {
+        tab.getAt(source.comb.pos).majComb(source.comb, plateau, controller);
+    }
+    
+    public void majDestination(Cell destination) {
+        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, controller);
+    }
+    
+    public void majDestinations(ArrayList<Cell> destinations) {
+        destinations.forEach((destination) ->
+        {
+            majDestination(destination);
+        });
+    }
+    
+    public void majPlacement(Cell placement) {
+        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, controller);
     }
 
-    public void surlignerCells(ArrayList<Cell> cells) { //pour les destinations possible
+    public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb( 4,246,118));
         }
     }
 
-    public void desurlignerCells(ArrayList<Cell> cells) {
+    public void desurlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
-
             tab.getAt(cells.get(i).comb.pos).setNotSelected();
-
         }
     }
 

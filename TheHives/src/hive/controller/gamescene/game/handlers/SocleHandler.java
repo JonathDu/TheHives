@@ -36,67 +36,70 @@ public class SocleHandler extends HandlerPlateau
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            Decision decision = game.state.turn.getCurrent().decision;
-
-            if (!(decision instanceof HumanDecision))
+            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
             {
                 return;
             }
-
-            HumanDecision human_decision = (HumanDecision) decision;
 
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
                     if (new Cell(combClicked, controller.builder.source.level).equals(controller.builder.source))
                     {
-                        System.out.println("Même source : aucune action");
-                        return;
+                        System.err.println("Même source : aucune action");
+                    } else if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
+                    {
+                        System.err.println("Destination impossible");
+                    } else
+                    {
+                        System.out.println("Destination selectionnée");
+                        moveOnBoard(new Cell(combClicked));
                     }
-                    System.out.println("Destination selectionnée");
-                    moveOnBoard(human_decision, new Cell(combClicked));
                     event.consume();
                     break;
                 case TILE_SELECTED:
-                    System.out.println("Placement selectionné");
-                    putOnBoard(human_decision, new Cell(combClicked));
+                    if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
+                    {
+                        System.err.println("Placement impossible");
+                    } else
+                    {
+                        System.out.println("Placement selectionné");
+                        putOnBoard(new Cell(combClicked));
+                    }
                     event.consume();
                     break;
             }
         }
     }
 
-    public void moveOnBoard(HumanDecision human_decision, Cell cellClicked)
+    public void moveOnBoard(Cell destination)
     {
         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
-        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
-        controller.builder.setDestination(cellClicked);
-        doAction(human_decision, cellClicked);
+        controller.builder.setDestination(destination);
+        playProducedAction();
 
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
+        uiPlateau.ruche.majSource(controller.builder.source);
+        uiPlateau.ruche.majDestination(controller.builder.placement_or_destination);
     }
 
-    public void putOnBoard(HumanDecision human_decision, Cell cellClicked)
+    public void putOnBoard(Cell placement)
     {
-        uiPlateau.majTileMain(controller.builder.tile);
-        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
-        controller.builder.setPlacement(cellClicked);
-        doAction(human_decision, cellClicked);
+        controller.builder.setPlacement(placement);
+        playProducedAction();
 
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.placement_or_destination)));
+        uiPlateau.majTileMain(controller.builder.tile, controller.progress.game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
+        uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
     }
 
-    private void doAction(HumanDecision human_decision, Cell cellClicked)
+    private void playProducedAction()
     {
-        if (!controller.builder.possibleDestinations.contains(new Cell(cellClicked.comb)))
-        {
-            System.err.println("Placement/Destination impossible");
-            return;
-        }
+        assert game.state.turn.getCurrent().decision instanceof HumanDecision;
         Action action = controller.builder.produce();
-        human_decision.setAction(action);
+        ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
         controller.progress.doAction();
     }
 }

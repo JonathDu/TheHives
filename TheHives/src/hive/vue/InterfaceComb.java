@@ -49,15 +49,13 @@ public class InterfaceComb extends Parent {
 //        this.getChildren().add(this.pions.get(this.pions.size() - 1));
 //    }
 
-    public void majTile(Honeycomb comb, int level, InterfacePlateau plateau, GameController controller) {
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
         for (int i = 0; i < comb.value().size(); i++) {
-            Cell cell = new Cell(comb, level);
-
             pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, cell));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
 
             this.getChildren().add(pions.get(i));
         }

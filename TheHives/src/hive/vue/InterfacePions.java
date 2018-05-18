@@ -48,6 +48,7 @@ public class InterfacePions extends Parent {
 
     public void maj(TeamColor couleur, int nbPions, InsectType typePions) {
         this.getChildren().clear();
+        pions.clear();
         Group g = new Group();
         for (int i = 0; i < nbPions; i++) {
             InterfacePion pion = new InterfacePion(couleur, typePions, c);

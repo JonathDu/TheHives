@@ -47,9 +47,7 @@ public class TileMainHandler extends HandlerPlateau
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            Decision decision = controller.progress.game.state.turn.getCurrent().decision;
-
-            if (!(decision instanceof HumanDecision))
+            if (!(controller.progress.game.state.turn.getCurrent().decision instanceof HumanDecision))
             {
                 return;
             }
@@ -63,20 +61,20 @@ public class TileMainHandler extends HandlerPlateau
                     controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
 
                     uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
                     System.out.println("Tile selectionnée");
 
                     uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
-                    uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+                    uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
                     controller.builder.setTile(tileClicked);
                     controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
 
                     uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
                 case TILE_SELECTED:

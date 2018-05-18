@@ -34,9 +34,7 @@ public class TilePlateauHandler extends HandlerPlateau
         System.out.println("--- TILE PLATEAU ---");
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            Decision decision = game.state.turn.getCurrent().decision;
-
-            if (!(decision instanceof HumanDecision))
+            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
             {
                 return;
             }
@@ -54,7 +52,7 @@ public class TilePlateauHandler extends HandlerPlateau
                     controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
 
                     uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
-                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
+                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
@@ -62,7 +60,7 @@ public class TilePlateauHandler extends HandlerPlateau
                     {
                         System.err.println("Même source : annulation de la selection");
                         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
-                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setBegin();
                         event.consume();
                     }

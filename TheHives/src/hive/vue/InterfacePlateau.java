@@ -71,14 +71,13 @@ public class InterfacePlateau extends Parent {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
     
-    public void majTileMain(Tile tile)
-    {
-        
+    public void majTileMain(Tile tile, int nbTiles)
+    {   
         if(tile.color == TeamColor.BLACK){
-            mainDroite.maj(tile, controller);
+            mainDroite.maj(tile, nbTiles);
         }
         else{
-            mainGauche.maj(tile, controller);
+            mainGauche.maj(tile, nbTiles);
         }
     }
 

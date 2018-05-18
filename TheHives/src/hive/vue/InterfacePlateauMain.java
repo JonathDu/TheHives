@@ -71,15 +71,7 @@ public class InterfacePlateauMain extends Parent {
 
     }
 
-    public void maj(Tile tile, GameController controller) {
-        PlayerCollection col;
-        if (controller.progress.game.state.players.get(0).color == TeamColor.BLACK) {
-            col = controller.progress.game.state.players.get(0).collection;
-        } else {
-            col = controller.progress.game.state.players.get(1).collection;
-        }
-
-        pilesPions.get(tile.type).maj(this.couleur, col.get(QUEEN_BEE), tile.type);
-
+    public void maj(Tile tile, int nbTiles) {
+        pilesPions.get(tile.type).maj(this.couleur, nbTiles, tile.type);
     }
 }
