@@ -18,6 +18,7 @@ import java.util.Random;
  */
 public class HardIA implements IA{   
     ArrayList<Action> [] actionList;
+    //mettre évaluation + construteur
     
     private void init(int taille){
         actionList = new ArrayList[taille];

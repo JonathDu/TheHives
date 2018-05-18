@@ -17,7 +17,8 @@ import java.util.ArrayList;
  * @author Coralie
  */
 public class Evaluation {
-    static int evaluationCurrentPlayer(Game state){
+    //ajout atribut
+    static int evaluation(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
         Player opponent = hia.opponentPlayer(state);
@@ -33,32 +34,16 @@ public class Evaluation {
                 value = insectsValue(currentFreeTile);
                 ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
                 value -= insectsValue(opponentFreeTile);
+                ArrayList<Tile> currentBlocTile = hia.blockedTiles(current, state);
+                value -= insectsValueBloc(currentBlocTile);
+                ArrayList<Tile> opponentBlocTile = hia.blockedTiles(opponent, state);
+                value += insectsValueBloc(opponentBlocTile);
                 value +=evalQueen( state);
                 value +=valueNeighboursQueen(state);
         }
         return value;
     }
-    static int evaluationOpponent(Game state){
-        HiveInterfaceIA hia = new HiveInterfaceIA();
-        Player current = hia.currentPlayer(state);
-        Player opponent = hia.opponentPlayer(state);
-        int value;
-        if(hia.winOpponent(state)){
-            return 10000;
-        }
-        else if(hia.winCurrent(state)){
-            return -10000;
-        }
-        else{
-                ArrayList<Tile> currentFreeTile = hia.freeTiles(state,current);
-                value = -(insectsValue(currentFreeTile));
-                ArrayList<Tile> opponentFreeTile = hia.freeTiles(state,opponent);
-                value += insectsValue(opponentFreeTile);
-                value -=evalQueen( state);
-                value -=valueNeighboursQueen(state);
-        }
-        return value;
-    }
+   
     
     static int evalQueen( Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
@@ -95,6 +80,34 @@ public class Evaluation {
         int value = 0;
             while(!freeTile.isEmpty()){
                 currentTile = freeTile.remove(0);
+                switch (currentTile.type) 
+                {
+                    case  QUEEN_BEE:
+                        value += 100;
+                        break;
+                    case  GRASSHOPPER:
+                        value += 20;
+                        break;
+                    case  SOLDIER_ANT:
+                        value += 50;
+                        break;
+                    case  SPIDER:
+                        value += 5;
+                        break;
+                    case  BEETLE:
+                        value += 10;
+                        break;
+                }
+                
+            }
+            return value;
+    }
+    
+    static int insectsValueBloc(ArrayList<Tile> blocTile){
+        Tile currentTile;
+        int value = 0;
+            while(!blocTile.isEmpty()){
+                currentTile = blocTile.remove(0);
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
