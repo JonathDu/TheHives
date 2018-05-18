@@ -27,7 +27,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c);
-        this.socle.hexagon.setStroke(Color.BLACK);
+//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
@@ -35,7 +35,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c, taille);
-        this.socle.hexagon.setStroke(Color.BLACK);
+//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
@@ -53,14 +53,13 @@ public class InterfaceComb extends Parent {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
-        for (int i = comb.value().size() - 1; i >= 0; i--) {
-            int index = comb.value().size() - 1 - i;
+        for (int i = 0; i < comb.value().size(); i++) {
             Cell cell = new Cell(comb, level);
 
-            pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(index).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, cell));
+            pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, cell));
 
-            this.getChildren().add(pions.get(index));
+            this.getChildren().add(pions.get(i));
         }
 
     }
