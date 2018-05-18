@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.cerveau;
+package hive.model.players.decisions.cerveau.main;
+
+import hive.model.players.decisions.cerveau.Selection;
 
 /**
  *
