@@ -37,45 +37,4 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
 
     @Override
     abstract public void handle(MouseEvent event);
-
-    public void moveOnBoard(HumanDecision human_decision, Cell cellClicked)
-    {
-        if (!controller.builder.possibleDestinations.contains(new Cell(cellClicked.comb)))
-        {
-            System.err.println("Destination impossible");
-            return;
-        }
-
-        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
-        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
-
-        controller.builder.setDestination(cellClicked);
-        doAction(human_decision);
-
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
-    }
-
-    public void putOnBoard(HumanDecision human_decision, Cell cellClicked)
-    {
-        if (!controller.builder.possibleDestinations.contains(new Cell(cellClicked.comb)))
-        {
-            System.err.println("Placement impossible");
-            return;
-        }
-
-        controller.builder.setPlacement(cellClicked);
-        doAction(human_decision);
-
-        //TODO : MAJ graphique : on deselectionne la tile
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.placement_or_destination))); // MAJ graphique : met a jour la case ajoutée
-        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
-    }
-
-    private void doAction(HumanDecision human_decision)
-    {
-        Action action = controller.builder.produce();
-        human_decision.setAction(action);
-        controller.progress.doAction();
-    }
-
 }
