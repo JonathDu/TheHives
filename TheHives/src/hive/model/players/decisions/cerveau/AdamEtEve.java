@@ -5,10 +5,42 @@
  */
 package hive.model.players.decisions.cerveau;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Coralie
  */
 public class AdamEtEve {
-    
+
+    public static void generate(String dossier ) {
+        FileOutputStream fos;
+        Random rnd= new Random();
+        ObjectOutputStream oos;
+        ArrayList<Integer> l =new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            try {
+                fos = new FileOutputStream(new File(dossier+"/fils"+i+".txt"));
+                 l.clear();
+                for(int j =0;i<15;i++){
+                    l.add(rnd.nextInt(101));
+                }
+                oos= new ObjectOutputStream(fos);
+                oos.writeObject(l);
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
