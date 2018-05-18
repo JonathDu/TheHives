@@ -10,11 +10,9 @@ import hive.model.GameProgress;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
-import java.util.Scanner;
 
 /**
  *
@@ -31,7 +29,7 @@ public class HiveConsoleTestIA
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.GAME_A, new IADecision(Level.EASY), new IADecision(Level.EASY));
+        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.GAME_C, new IADecision(Level.EASY), new IADecision(Level.EASY));
         
         int n = 3;
         

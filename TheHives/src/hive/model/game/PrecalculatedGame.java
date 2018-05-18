@@ -113,8 +113,23 @@ public class PrecalculatedGame
             actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(12, 12))), new Tile(InsectType.QUEEN_BEE, TeamColor.BLACK)));
             break;
         case GAME_B:
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(11, 9))), new Tile(InsectType.SOLDIER_ANT, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(11, 10))), new Tile(InsectType.GRASSHOPPER, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(11, 11))), new Tile(InsectType.BEETLE, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(12, 11))), new Tile(InsectType.QUEEN_BEE, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(12, 10))), new Tile(InsectType.QUEEN_BEE, TeamColor.WHITE)));
             break;
         case GAME_C:
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(11, 9))), new Tile(InsectType.QUEEN_BEE, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(11, 10))), new Tile(InsectType.SOLDIER_ANT, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(12, 10))), new Tile(InsectType.GRASSHOPPER, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(13, 9))), new Tile(InsectType.BEETLE, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(13, 10))), new Tile(InsectType.SOLDIER_ANT, TeamColor.BLACK)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(14, 9))), new Tile(InsectType.GRASSHOPPER, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(14, 11))), new Tile(InsectType.SOLDIER_ANT, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(15, 9))), new Tile(InsectType.QUEEN_BEE, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(16, 9))), new Tile(InsectType.SOLDIER_ANT, TeamColor.WHITE)));
+            actions.add(new PutAction(new Cell((Honeycomb)board.getHexagon(new Vector2i(16, 10))), new Tile(InsectType.SPIDER, TeamColor.BLACK)));
             break;
         }
         

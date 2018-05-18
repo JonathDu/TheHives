@@ -5,17 +5,14 @@
  */
 package hive.main;
 
-import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveFunctions;
-import hive.model.game.utildata.PrecalculatedData;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
-import java.util.Scanner;
 
 /**
  *
@@ -36,7 +33,7 @@ public class HiveConsoleIA {
 
         GameProgress progress = new GameProgress(game);
 
-        System.out.println(game.state.board);
+        //System.out.println(game.state.board);
 
         //Thread.sleep(10000); // 10s
 
@@ -51,12 +48,13 @@ public class HiveConsoleIA {
                 System.out.println("Joueur 2");
 
             progress.doAction();
-
-
-
             System.out.println(game.state.board);
+            
         }
-        
+
+        System.out.println(game.state.board);
+        System.out.println("Tour " + HiveFunctions.nbTurns(game.state));
+
         switch(status)
         {
         case DRAW:
