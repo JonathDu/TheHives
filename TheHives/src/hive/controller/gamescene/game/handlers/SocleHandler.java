@@ -3,14 +3,18 @@ package hive.controller.gamescene.game.handlers;
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
+import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
 /**
- * Appelé lorsque que l'on veut put ou move sur une case (rpz le haut de la pile)
+ * Fait une action lorsque que l'on put ou move sur une case (rpz le haut de la
+ * pile)
  *
  * @author Thomas
  */
@@ -58,5 +62,39 @@ public class SocleHandler extends HandlerPlateau
                     break;
             }
         }
+    }
+
+    public void moveOnBoard(HumanDecision human_decision, Cell cellClicked)
+    {
+        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
+        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+
+        controller.builder.setDestination(cellClicked);
+        doAction(human_decision, cellClicked);
+
+        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
+    }
+
+    public void putOnBoard(HumanDecision human_decision, Cell cellClicked)
+    {
+        //TODO : MAJ graphique : on deselectionne la tile
+        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+
+        controller.builder.setPlacement(cellClicked);
+        doAction(human_decision, cellClicked);
+
+        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.placement_or_destination)));
+    }
+
+    private void doAction(HumanDecision human_decision, Cell cellClicked)
+    {
+        if (!controller.builder.possibleDestinations.contains(new Cell(cellClicked.comb)))
+        {
+            System.err.println("Placement/Destination impossible");
+            return;
+        }
+        Action action = controller.builder.produce();
+        human_decision.setAction(action);
+        controller.progress.doAction();
     }
 }

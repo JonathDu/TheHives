@@ -10,12 +10,11 @@ import hive.model.board.Cell;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import hive.vue.InterfaceRuche;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
 /**
- * Appelé lorsque l'on selectionne la source
+ * Fait une action lorsque l'on selectionne la source
  *
  * @author Thomas
  */
@@ -24,10 +23,10 @@ public class TilePlateauHandler extends HandlerPlateau
 
     Cell cellClicked;
 
-    public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
+    public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Cell cellClicked)
     {
         super(controller, uiPlateau);
-        cellClicked = new Cell(game.state.board.getHexagon(pos));
+        this.cellClicked = cellClicked;
     }
 
     @Override
