@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
 /**
- * Appelé lorsque l'on clique sur une cellule du plateau contenant quelque chose
+ * Appelé lorsque l'on selectionne la source
  *
  * @author Thomas
  */
@@ -23,13 +23,11 @@ public class TilePlateauHandler extends HandlerPlateau
 {
 
     Cell cellClicked;
-    InterfaceRuche uiRuche;
 
     public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
         super(controller, uiPlateau);
-        cellClicked = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size() - 1);
-        uiRuche = uiPlateau.ruche;
+        cellClicked = new Cell(game.state.board.getHexagon(pos));
     }
 
     @Override
@@ -45,26 +43,20 @@ public class TilePlateauHandler extends HandlerPlateau
                 return;
             }
 
-            HumanDecision human_decision = (HumanDecision) decision;
-
             switch (controller.builder.getState())
             {
                 case BEGIN:
+                    if (cellClicked.getTile().color != controller.progress.game.state.turn.getCurrent().color)
+                    {
+                        return;
+                    }
                     System.out.println("Source selectionnée");
 
                     controller.builder.setSource(cellClicked);
                     controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
 
-                    uiRuche.selectCell(controller.builder.source.comb.pos);
-                    uiRuche.surlignerCells(controller.builder.possibleDestinations);
-                    break;
-                case SOURCE_SELECTED:
-                    System.out.println("Destination selectionnée");
-                    moveOnBoard(human_decision, cellClicked);
-                    break;
-                case TILE_SELECTED:
-                    System.out.println("Placement selectionné");
-                    putOnBoard(human_decision, cellClicked);
+                    uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
+                    uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
                     break;
             }
         }

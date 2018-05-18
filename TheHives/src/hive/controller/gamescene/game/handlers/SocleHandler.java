@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
+import hive.model.board.Honeycomb;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
@@ -14,19 +10,19 @@ import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
 /**
- * Appelé lorsque l'on clique sur une cellule du plateau vide
+ * Appelé lorsque que l'on veut put ou move sur une case (rpz le haut de la pile)
  *
  * @author Thomas
  */
 public class SocleHandler extends HandlerPlateau
 {
 
-    Cell cellClicked;
+    Honeycomb combClicked;
 
     public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
         super(controller, uiPlateau);
-        cellClicked = new Cell(game.state.board.getHexagon(pos), 0);
+        combClicked = game.state.board.getHexagon(pos);
     }
 
     @Override
@@ -48,12 +44,17 @@ public class SocleHandler extends HandlerPlateau
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
+                    if (new Cell(combClicked) == controller.builder.source)
+                    {
+                        System.out.println("Même source : aucune action");
+                        return;
+                    }
                     System.out.println("Destination selectionnée");
-                    moveOnBoard(human_decision, cellClicked);
+                    moveOnBoard(human_decision, new Cell(combClicked));
                     break;
                 case TILE_SELECTED:
                     System.out.println("Placement selectionné");
-                    putOnBoard(human_decision, cellClicked);
+                    putOnBoard(human_decision, new Cell(combClicked));
                     break;
             }
         }
