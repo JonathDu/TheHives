@@ -55,17 +55,16 @@ public class InterfaceComb extends Parent {
     public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
         pions.clear();
         this.getChildren().clear();
-        this.getChildren().add(socle);
-        for (int i = comb.value().size() - 1; i >= 0; i--) {
-            int index = comb.value().size()-1 - i;
 
+        for (int i = comb.value().size() - 1; i >= 0; i--) {
+            int index = comb.value().size() - 1 - i;
 
             pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
             pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
 
             this.getChildren().add(pions.get(index));
         }
-
+        this.getChildren().add(socle);
     }
 
     public void removeTile() {
