@@ -27,18 +27,12 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
     GameController controller;
     Game game;
     InterfacePlateau uiPlateau;
-    //Cell action_source;
-    //Cell action_placement_or_destination;
-    //Tile action_tile;
 
     public HandlerPlateau(GameController controller, InterfacePlateau uiPlateau)
     {
         this.controller = controller;
         this.game = controller.progress.game;
         this.uiPlateau = uiPlateau;
-        //action_source = controller.builder.source;
-        //action_placement_or_destination = controller.builder.placement_or_destination;
-        //action_tile = controller.builder.tile;
     }
 
     @Override
@@ -52,12 +46,13 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
             return;
         }
 
-        doAction(human_decision, cellClicked);
-
-        /* MAJ GRPAHIQUE */
-        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
-        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations); 
+        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+
+        controller.builder.setDestination(cellClicked);
+        doAction(human_decision);
+
+        uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.source, controller.builder.placement_or_destination)));
     }
 
     public void putOnBoard(HumanDecision human_decision, Cell cellClicked)
@@ -68,20 +63,19 @@ public abstract class HandlerPlateau implements EventHandler<MouseEvent>
             return;
         }
 
-        doAction(human_decision, cellClicked);
+        controller.builder.setPlacement(cellClicked);
+        doAction(human_decision);
 
-        /* MAJ GRPAHIQUE */
         //TODO : MAJ graphique : on deselectionne la tile
         uiPlateau.ruche.majCells(new ArrayList<>(Arrays.asList(controller.builder.placement_or_destination))); // MAJ graphique : met a jour la case ajoutée
         uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
     }
-    
-    private void doAction(HumanDecision human_decision, Cell cellClicked)
+
+    private void doAction(HumanDecision human_decision)
     {
-        controller.builder.setPlacement(cellClicked);
         Action action = controller.builder.produce();
         human_decision.setAction(action);
-        controller.progress.doAction();     
+        controller.progress.doAction();
     }
 
 }
