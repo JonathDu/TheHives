@@ -14,8 +14,6 @@ import hive.model.game.rules.HiveFunctions;
 import hive.model.players.Player;
 import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
-import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
 import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.Mate;
@@ -33,19 +31,18 @@ public class MainLearning {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        Selection select = new Selection(10);
+        Selection select = new Selection(3);
         AdamEtEve AE = new AdamEtEve();
         EvaluationLearning[] evaluations = AE.generate("generationBeta");
         
         
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 if (i != j) {
                     Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(evaluations[j]));
                     GameProgress progress = new GameProgress(game);
                     GameStatus status;
                     while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 400)) {
-                        Player player = game.state.turn.getCurrent();
                         
                         progress.doAction();
 
@@ -76,7 +73,8 @@ public class MainLearning {
         int[] winner =  select.lesGagnants();
         Mate newGeneration;
         newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),10);
-
+        System.out.println("Les fils de la génération suivante : \n" + newGeneration);
+        
     }
 
 }

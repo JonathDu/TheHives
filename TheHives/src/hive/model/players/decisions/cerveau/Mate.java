@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  * @author Coralie
  */
 public class Mate {
+
     ArrayList<Integer>[] son;
     int nbSon;
 
@@ -27,28 +28,28 @@ public class Mate {
     public int getNbSon() {
         return nbSon;
     }
-    
-    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father, int numberSon){
+
+    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father, int numberSon) {
         nbSon = numberSon;
         try {
             init(numberSon);
-            son[0]= mother;
-            son[1]= father;
+            son[0] = mother;
+            son[1] = father;
             Random rnd = new Random();
             int alea;
             int aleaStat;
-            for(int i = 2; i<numberSon ; i++){ // pour chaque enfant
-                for(int j= 0 ; j<15 ; j++){ //pour chaque gène
+            for (int i = 2; i < numberSon; i++) { // pour chaque enfant
+                for (int j = 0; j < 15; j++) { //pour chaque gène
                     alea = rnd.nextInt(100);
-                    if(alea <= 1){ // mutation
+                    if (alea <= 1) { // mutation
                         aleaStat = rnd.nextInt(101);
                         son[i].add(aleaStat);
-                    }else if(alea <= 50){
+                    } else if (alea <= 50) {
                         son[i].add(mother.get(j));
-                        
-                    }else{
+
+                    } else {
                         son[i].add(father.get(j));
-                    }       
+                    }
                 }
             }
             repertory(son);
@@ -56,35 +57,48 @@ public class Mate {
             Logger.getLogger(Mate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father){
+
+    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father) {
         init(15);
         nbSon = 15;
-        son[0]= mother;
-        son[1]= father;
+        son[0] = mother;
+        son[1] = father;
         Random rnd = new Random();
         int alea;
         int aleaStat;
-        for(int i = 2; i<15 ; i++){ // pour chaque enfant
-            for(int j= 0 ; j<15 ; j++){ //pour chaque gène
+        for (int i = 2; i < 15; i++) { // pour chaque enfant
+            for (int j = 0; j < 15; j++) { //pour chaque gène
                 alea = rnd.nextInt(100);
-                if(alea <= 1){ // mutation
+                if (alea <= 1) { // mutation
                     aleaStat = rnd.nextInt(101);
                     son[i].add(aleaStat);
-                }else if(alea <= 50){
+                } else if (alea <= 50) {
                     son[i].add(mother.get(j));
-                        
-                }else{
+
+                } else {
                     son[i].add(father.get(j));
-                }       
+                }
             }
-        } 
-    }
-    private void init(int taille){
-        son = new ArrayList[taille];
-        for(int i=0;i<taille;i++){
-            son[i]=new ArrayList<>(300);
         }
-        
     }
+
+    private void init(int taille) {
+        son = new ArrayList[taille];
+        for (int i = 0; i < taille; i++) {
+            son[i] = new ArrayList<>(300);
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < nbSon; i++) {
+            res += "fils" + i + " : ";
+            res += son[i].toString();
+            res += "\n";
+        }
+        return res;
+    }
+
 }

@@ -40,8 +40,8 @@ public class AdamEtEve {
                 oos= new ObjectOutputStream(fos);
                 oos.writeObject(l);
                 fos.close();
-                salut[i]=null;
-                //salut[i]=new EvaluationLearning("fils"+i+".txt");
+                salut[i]=new EvaluationLearning("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
+                System.out.println("C'est initialisé");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

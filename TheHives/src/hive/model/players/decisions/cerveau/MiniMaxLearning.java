@@ -22,7 +22,7 @@ public class MiniMaxLearning{
     public MiniMaxLearning(EvaluationLearning eval) {
         this.eval = eval;
     }
-    
+     
     
     
     public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
