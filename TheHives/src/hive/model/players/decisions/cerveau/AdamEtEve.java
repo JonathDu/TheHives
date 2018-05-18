@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.cerveau.generationAlpha;
+package hive.model.players.decisions.cerveau;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -23,28 +21,35 @@ import java.util.logging.Logger;
  */
 public class AdamEtEve {
 
-    public void generate() {
+    public EvaluationLearning[] generate(String Dossier) {
+        EvaluationLearning[] salut = new EvaluationLearning[15];
+
         FileOutputStream fos;
         Random rnd= new Random();
         ObjectOutputStream oos;
         ArrayList<Integer> l = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 10; i++) {
             try {
-                File file = new File("fils"+i+".txt");
+                File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
+                System.out.println(file.getAbsolutePath());
                 fos = new FileOutputStream(file);
                  l.clear();
-                for(int j =0;i<15;i++){
+                for(int j =0;j<15;j++){
                     l.add(rnd.nextInt(101));
                 }
                 oos= new ObjectOutputStream(fos);
                 oos.writeObject(l);
                 fos.close();
+                salut[i]=null;
+                //salut[i]=new EvaluationLearning("fils"+i+".txt");
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
+        return salut;
     }
     
 }
