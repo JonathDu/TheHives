@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class AdamEtEve {
 
-    public void generate(String dossier ) {
+    public void generate() {
         FileOutputStream fos;
         Random rnd= new Random();
         ObjectOutputStream oos;

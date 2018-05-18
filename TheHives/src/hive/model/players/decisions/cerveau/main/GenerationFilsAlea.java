@@ -18,7 +18,7 @@ public class GenerationFilsAlea {
      */
     public static void main(String[] args) {
         AdamEtEve AE= new AdamEtEve();
-        AE.generate("generationAlpha");
+        AE.generate();
     }
     
 }
