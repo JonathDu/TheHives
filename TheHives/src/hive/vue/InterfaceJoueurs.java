@@ -89,7 +89,6 @@ public class InterfaceJoueurs extends Parent{
         double hauteurDeGrille = height*0.7;
         double hauteurDeLigne = hauteurDeGrille/6;
         
-        System.out.println(grille.getHeight());
         
         
         Label joueur1 = new Label(); // jocatori, Spiler

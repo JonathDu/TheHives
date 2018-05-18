@@ -5,6 +5,7 @@
  */
 package hive.thehives;
 
+import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceCharger;
 import hive.model.board.Board;
 import hive.model.board.TilesStack;
@@ -98,8 +99,15 @@ public class TheHives extends Application {
 //        Image souris = new Image(getClass().getResourceAsStream("vue/images/souris.png"));
 //        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
 //        this.scene.setCursor(sourisIm);
-        scene.getStylesheets().add("/style.css");
+        //scene.getStylesheets().add("/style.css");
+        Double w = primaryStage.getWidth();
+        Double h = primaryStage.getHeight();
         primaryStage.setScene(scene);
+        
+
+        primaryStage.setWidth(w);
+        primaryStage.setHeight(h);
+        
     }
 
     public void goToChargerPartie() throws IOException {
@@ -111,6 +119,11 @@ public class TheHives extends Application {
         AnchorPane choisir = (AnchorPane) loader.load();
         this.scene = new Scene(choisir);*/
         this.scene = new Scene(new InterfaceCharger(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        changeScene();
+    }
+
+    public void goToRegles() {
+        this.scene = new Scene(new InterfaceRegles(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 }

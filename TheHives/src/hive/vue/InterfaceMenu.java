@@ -38,6 +38,10 @@ public class InterfaceMenu extends Parent{
     int pleinEcran = 0;
     public InterfaceMenu(Stage primaryStage, TheHives i){
         
+        
+        System.out.println("debut menu " +primaryStage.getHeight());
+        
+        
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
        
@@ -403,6 +407,7 @@ public class InterfaceMenu extends Parent{
                 });
                 R.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                     System.out.println("Règles ! ");
+                    i.goToRegles();
                     //i.accueil();
                 });
 
@@ -418,6 +423,9 @@ public class InterfaceMenu extends Parent{
             }
         }
         this.getChildren().add(Cases);
+        
+        
+        System.out.println("fin menu " +primaryStage.getHeight());
         
         
     }

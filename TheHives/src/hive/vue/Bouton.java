@@ -112,6 +112,9 @@ class Bouton  extends Parent {
                                 Logger.getLogger(Bouton.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
+                        else if(origin=="regles"){
+                            i.goToRegles();
+                        }
                     });
                     
                     pane.getChildren().add(pref);
