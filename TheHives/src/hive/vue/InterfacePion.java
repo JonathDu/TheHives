@@ -85,7 +85,7 @@ public class InterfacePion extends Parent {
                     } else {
                         i = c.getImage("pionQueenW.png");
                     }
-                    
+
                     v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case GRASSHOPPER:
@@ -103,8 +103,27 @@ public class InterfacePion extends Parent {
                         i = c.getImage("pionScarabeW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
-                    
+
                     break;
+                case SPIDER:
+                    if (couleur == TeamColor.BLACK) {
+                        i = c.getImage("pionAraigneeB.png");
+                    } else {
+                        i = c.getImage("pionAraigneeW.png");
+                    }
+                    v = new ImagePattern(i, 1, 1, 1, 1, true);
+
+                    break;
+                case SOLDIER_ANT:
+                    if (couleur == TeamColor.BLACK) {
+                        i = c.getImage("pionFourmiB.png");
+                    } else {
+                        i = c.getImage("pionFourmiW.png");
+                    }
+                    v = new ImagePattern(i, 1, 1, 1, 1, true);
+
+                    break;
+
                 default:
                     break;
 
