@@ -9,13 +9,9 @@ import hive.controller.gamescene.game.handlers.SocleHandler;
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
-import hive.model.board.Honeycomb;
 import javafx.scene.Parent;
-import hive.vue.InterfaceComb;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import util.Matrix;
@@ -44,6 +40,9 @@ public class InterfaceRuche extends Parent {
 //
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
+
+
+
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
@@ -68,6 +67,9 @@ public class InterfaceRuche extends Parent {
                 this.getChildren().add(tab.getAt(pos));
             }
         }
+        
+        
+        
 //        this.setOnScroll((event) -> {
 //
 //            if (event.getDeltaY() < 0 && longueurPion > 10) {
@@ -90,7 +92,7 @@ public class InterfaceRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
-                tab.getAt(pos).socle.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
             }
         }
     }
