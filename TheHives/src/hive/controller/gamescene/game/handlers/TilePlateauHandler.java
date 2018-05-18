@@ -11,7 +11,6 @@ import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import javafx.scene.input.MouseEvent;
-import util.Vector2i;
 
 /**
  * Fait une action lorsque l'on selectionne la source
@@ -57,6 +56,16 @@ public class TilePlateauHandler extends HandlerPlateau
                     uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.surlignerCells(controller.builder.possibleDestinations);
                     event.consume();
+                    break;
+                case SOURCE_SELECTED:
+                    if (cellClicked == controller.builder.source)
+                    {
+                        System.err.println("Même source : annulation de la selection");
+                        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
+                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
+                        controller.builder.setBegin();
+                        event.consume();
+                    }
                     break;
             }
         }

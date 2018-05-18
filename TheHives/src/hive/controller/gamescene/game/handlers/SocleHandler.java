@@ -48,7 +48,7 @@ public class SocleHandler extends HandlerPlateau
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
-                    if (new Cell(combClicked) == controller.builder.source)
+                    if (new Cell(combClicked, controller.builder.source.level).equals(controller.builder.source))
                     {
                         System.out.println("Même source : aucune action");
                         return;

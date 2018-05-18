@@ -36,6 +36,11 @@ public class TileMainHandler extends HandlerPlateau
     @Override
     public void handle(MouseEvent event)
     {
+        if(tileClicked.color != game.state.turn.getCurrent().color)
+        {
+            System.err.println("Vous n'avez pas selectionné un pion de votre couleur");
+            return;
+        }
         uiMain = uiPlateau.getInterfacePlateauMain(color);
 
         System.out.println("--- TILE MAIN ---");
@@ -80,7 +85,6 @@ public class TileMainHandler extends HandlerPlateau
                         System.out.println("Changement de tile");
 
                         uiMain.desurlignerTile(controller.builder.tile);
-                        uiPlateau.ruche.desurlignerCells(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
                         uiMain.surlignerTile(controller.builder.tile);
                     } else
