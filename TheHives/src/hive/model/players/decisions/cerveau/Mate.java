@@ -5,7 +5,7 @@
  */
 package hive.model.players.decisions.cerveau;
 
-import static hive.model.players.decisions.cerveau.geniteurs.RepertoryFamily.repertory;
+import static hive.model.players.decisions.cerveau.RepertoryFamily.repertory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;

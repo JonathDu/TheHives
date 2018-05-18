@@ -16,10 +16,10 @@ import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
+import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.Mate;
 import hive.model.players.decisions.cerveau.Selection;
-import hive.model.players.decisions.cerveau.generationAlpha.AdamEtEve;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MainLearning {
 
         Selection select = new Selection(10);
         AdamEtEve AE = new AdamEtEve();
-        EvaluationLearning[] evaluations = AE.generate();
+        EvaluationLearning[] evaluations = AE.generate("generationBeta");
         
         
         for (int i = 0; i < 10; i++) {
