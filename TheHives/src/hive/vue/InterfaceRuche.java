@@ -107,7 +107,7 @@ public class InterfaceRuche extends Parent {
 
     public void majCells(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos), plateau, controller);
+            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos),cells.get(i).level, plateau, controller);
         }
     }
 
