@@ -30,8 +30,11 @@ public class InterfacePlateauMain extends Parent {
     VBox pions;
     Label nomJoueur;
     public boolean isCourant;
+    InterfacePions pileQueenBee;
+    InterfacePions pileGrassHopper;
+    InterfacePions pileBeetle;
 
-    public InterfacePlateauMain(PlayerCollection col,Stage stage, String nomJoueur, CacheImage c,  GameController controller, InterfacePlateau plateau, TeamColor color) {
+    public InterfacePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController controller, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
@@ -40,9 +43,9 @@ public class InterfacePlateauMain extends Parent {
         BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
 
         pions.setBackground(new Background(bf));
-        InterfacePions pileQueenBee = new InterfacePions(color, col.get(QUEEN_BEE), QUEEN_BEE, c);
-        InterfacePions pileGrassHopper = new InterfacePions(color, col.get(GRASSHOPPER), GRASSHOPPER, c);
-        InterfacePions pileBeetle = new InterfacePions(color, col.get(BEETLE), BEETLE, c);
+        pileQueenBee = new InterfacePions(color, col.get(QUEEN_BEE), QUEEN_BEE, c);
+        pileGrassHopper = new InterfacePions(color, col.get(GRASSHOPPER), GRASSHOPPER, c);
+        pileBeetle = new InterfacePions(color, col.get(BEETLE), BEETLE, c);
 
         pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, QUEEN_BEE));
         pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, GRASSHOPPER));
@@ -51,17 +54,39 @@ public class InterfacePlateauMain extends Parent {
         pions.getChildren().add(pileQueenBee);
         pions.getChildren().add(pileGrassHopper);
         pions.getChildren().add(pileBeetle);
-        
+
         pions.getChildren().add(this.nomJoueur);
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
     }
 
     public void surlignerTile(Tile tile) {
+        switch (tile.type) {
+            case QUEEN_BEE:
+                pileQueenBee.setSelected(Color.rgb(246, 6, 189));
+                break;
+            case GRASSHOPPER:
+                pileGrassHopper.setSelected(Color.rgb(246, 6, 189));
+                break;
+            case BEETLE:
+                pileBeetle.setSelected(Color.rgb(246, 6, 189));
+                break;
 
+        }
     }
 
     public void desurlignerTile(Tile tile) {
+        switch (tile.type) {
+            case QUEEN_BEE:
+                pileQueenBee.unsetSelected();
+                break;
+            case GRASSHOPPER:
+                pileGrassHopper.unsetSelected();
+                break;
+            case BEETLE:
+                pileBeetle.unsetSelected();
+                break;
+        }
 
     }
 }

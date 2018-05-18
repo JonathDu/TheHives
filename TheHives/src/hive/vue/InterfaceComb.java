@@ -9,13 +9,10 @@ import hive.controller.gamescene.game.GameController;
 import hive.controller.gamescene.game.handlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
-import hive.model.players.TeamColor;
 import java.util.ArrayList;
-import javafx.event.EventType;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javax.sound.midi.ControllerEventListener;
 
 /**
  *
@@ -30,7 +27,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c);
-//        this.socle.hexagon.setStroke(Color.BLACK);
+        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
@@ -38,30 +35,30 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c, taille);
-//        this.socle.hexagon.setStroke(Color.BLACK);
+        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
 
-    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
+//    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
+//        Cell cell = new Cell(comb, level);
+//        int i = 0;
+//        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
+//        pion.addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
+//        this.pions.add(tile.level, pion);
+//        this.getChildren().add(this.pions.get(this.pions.size() - 1));
+//    }
 
-        int i = 0;
-        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
-        pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
-        this.pions.add(tile.level, pion);
-        this.getChildren().add(this.pions.get(this.pions.size() - 1));
-    }
-
-    public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
+    public void majTile(Honeycomb comb, int level, InterfacePlateau plateau, GameController controller) {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
         for (int i = comb.value().size() - 1; i >= 0; i--) {
-            int index = comb.value().size()-1 - i;
-
+            int index = comb.value().size() - 1 - i;
+            Cell cell = new Cell(comb, level);
 
             pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
+            pions.get(index).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, cell));
 
             this.getChildren().add(pions.get(index));
         }

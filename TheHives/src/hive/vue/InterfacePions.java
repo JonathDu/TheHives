@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.image.ImageView;    
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
@@ -38,6 +38,10 @@ public class InterfacePions extends Parent {
     
     public void setSelected(Color couleur){
         this.pions.get(pions.size()-1).hexagon.setStroke(couleur);
+    }
+    
+    public void unsetSelected(){
+        this.pions.get(pions.size()-1).hexagon.setStroke(Color.TRANSPARENT);
     }
     
     public void maj(){
