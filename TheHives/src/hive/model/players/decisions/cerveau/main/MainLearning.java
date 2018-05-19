@@ -39,16 +39,22 @@ public class MainLearning {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (i != j) {
+                    System.out.println("Nous sommes à la partie de fils"+i+" contre fils"+j);
                     Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(evaluations[j]));
                     GameProgress progress = new GameProgress(game);
                     GameStatus status;
-                    while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 400)) {
+                    while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 300)) {
                         
+                        if(HiveFunctions.nbTurns(game.state)%20 == 0)
+                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
                         progress.doAction();
+                        
 
                     }
                     switch (status) {
                         case CURRENT_WINS:
+                            System.out.println(game.state.turn.getCurrent().color + " gagne !");
+                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
                             if(game.state.turn.getCurrent().color == WHITE){
                                 select.addVictory(i);
                             }
@@ -56,6 +62,8 @@ public class MainLearning {
                                 select.addVictory(j);
                             break;
                         case OPPONENT_WINS:
+                            System.out.println(game.state.turn.getOpponent().color + " gagne !");
+                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
                             if(game.state.turn.getOpponent().color == BLACK){
                                 select.addVictory(j);
                             }
@@ -63,6 +71,7 @@ public class MainLearning {
                                 select.addVictory(i);
                             break;
                         default:
+                            System.out.println("Personne n'a gagné");
                             break;
                     }
                     

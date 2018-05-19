@@ -34,7 +34,7 @@ public class EvaluationLearning {
             try (FileInputStream fis = new FileInputStream(new File(fichier)); 
                 ObjectInputStream ois = new ObjectInputStream(fis)) {
                 evalValues = (ArrayList<Integer>) ois.readObject();
-                System.out.println("evalValues initialisée");
+                System.out.println("Evaluatio fils : "+evalValues.toString());
             }
         } catch (IOException | ClassNotFoundException ioe) {
             System.out.println("Erreur à l'initialisation de evalValue");

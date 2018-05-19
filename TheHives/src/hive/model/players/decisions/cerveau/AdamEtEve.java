@@ -28,7 +28,7 @@ public class AdamEtEve {
         Random rnd= new Random();
         ObjectOutputStream oos;
         ArrayList<Integer> l = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             try {
                 File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
                 System.out.println(file.getAbsolutePath());

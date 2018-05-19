@@ -63,6 +63,7 @@ public class Selection {
                 maxValue2 = nbOfVictory[i];
             }
         }
+        System.out.println("gagnant 1 : "+max[0]+ "le 2eme : "+max[1]);
         return max;
     }
     

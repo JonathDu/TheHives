@@ -62,6 +62,7 @@ public class Mate {
         init(15);
         nbSon = 15;
         son[0] = mother;
+        System.out.println("mere : "+mother.toString()+" pere : "+father.toString());
         son[1] = father;
         Random rnd = new Random();
         int alea;
