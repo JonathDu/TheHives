@@ -19,7 +19,9 @@ import java.awt.Dimension;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.Matrix;
@@ -41,15 +43,16 @@ public class TheHives extends Application {
     Scene scene;
     Stage primaryStage;
     Stage stage;
+    CacheImage cache;
     public String langue = "Français";
     public int pleinEcran = 0;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         Board board = new Board(new Matrix<TilesStack>(14, 14));
         board.getHexagon(new Vector2i(2, 2));
         PlayerCollection player = new PlayerCollection();
-
 
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
@@ -58,18 +61,18 @@ public class TheHives extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
-        primaryStage.setMaxHeight((int) dimension.getHeight()+10);
-        primaryStage.setMaxWidth((int)dimension.getWidth()+10);
+        primaryStage.setMaxHeight((int) dimension.getHeight() + 20);
+        primaryStage.setMaxWidth((int) dimension.getWidth() + 20);
+
+        this.cache = new CacheImage();
+
         //goToPlateau("Joueur1", "Joueur2");
         goToMenu();
 
-
         //PLEIN ECRAN
-
 //        primaryStage.setFullScreen(true); //passer en affichage plein écran
 //        primaryStage.setFullScreenExitHint("Sortie de plein écran - esc"); //changer le message qui s'affiche après le passage en mode plein écran
 //        root.setCursor(Cursor.CROSSHAIR); //changer l'apparence du curseur de souris
-
         primaryStage.setTitle("The Hive");
         primaryStage.sizeToScene();
         primaryStage.show();
@@ -92,28 +95,13 @@ public class TheHives extends Application {
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
-        this.scene = new Scene(new InterfacePlateau(DefaultGame.getCollection(),DefaultGame.getCollection(), new CacheImage(),this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfacePlateau(DefaultGame.getCollection(), DefaultGame.getCollection(), this.cache, this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 
-    public void changeScene() {
-//        Image souris = new Image(getClass().getResourceAsStream("vue/images/souris.png"));
-//        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
-//        this.scene.setCursor(sourisIm);
-        //scene.getStylesheets().add("/style.css");
-        Double w = primaryStage.getWidth();
-        Double h = primaryStage.getHeight();
-        primaryStage.setScene(scene);
-        
-
-        primaryStage.setWidth(w);
-        primaryStage.setHeight(h);
-        
-    }
-
     public void goToChargerPartie() throws IOException {
-        
-       // Executer executer = new Executer();
+
+        // Executer executer = new Executer();
         /*
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(TheHives.class.getResource("/src/hive/thehives/choix.fxml"));
@@ -126,5 +114,19 @@ public class TheHives extends Application {
     public void goToRegles() {
         this.scene = new Scene(new InterfaceRegles(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
+    }
+
+    public void changeScene() {
+        Image souris = cache.getImage("souris.png");
+        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
+        this.scene.setCursor(sourisIm);
+        //scene.getStylesheets().add("/style.css");
+        Double w = primaryStage.getWidth();
+        Double h = primaryStage.getHeight();
+        primaryStage.setScene(scene);
+
+        primaryStage.setWidth(w);
+        primaryStage.setHeight(h);
+
     }
 }
