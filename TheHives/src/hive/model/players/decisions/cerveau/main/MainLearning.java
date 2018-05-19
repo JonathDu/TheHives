@@ -14,6 +14,7 @@ import hive.model.game.rules.HiveFunctions;
 import hive.model.players.Player;
 import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
+import static hive.model.players.decisions.Level.EHARD;
 import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.Mate;
@@ -30,60 +31,56 @@ public class MainLearning {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-
-        Selection select = new Selection(3);
-        AdamEtEve AE = new AdamEtEve();
+        int nbFirstChildren = 5;
+        int[] looseTurn = new int[nbFirstChildren];
+        Selection select = new Selection(nbFirstChildren);
+        AdamEtEve AE = new AdamEtEve(5);
         EvaluationLearning[] evaluations = AE.generate("generationBeta");
-        
-        
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (i != j) {
-                    System.out.println("Nous sommes à la partie de fils"+i+" contre fils"+j);
-                    Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(evaluations[j]));
-                    GameProgress progress = new GameProgress(game);
-                    GameStatus status;
-                    while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 300)) {
-                        
-                        if(HiveFunctions.nbTurns(game.state)%20 == 0)
-                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-                        progress.doAction();
-                        
 
-                    }
-                    switch (status) {
-                        case CURRENT_WINS:
-                            System.out.println(game.state.turn.getCurrent().color + " gagne !");
-                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-                            if(game.state.turn.getCurrent().color == WHITE){
-                                select.addVictory(i);
-                            }
-                            else
-                                select.addVictory(j);
-                            break;
-                        case OPPONENT_WINS:
-                            System.out.println(game.state.turn.getOpponent().color + " gagne !");
-                            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-                            if(game.state.turn.getOpponent().color == BLACK){
-                                select.addVictory(j);
-                            }
-                            else
-                                select.addVictory(i);
-                            break;
-                        default:
-                            System.out.println("Personne n'a gagné");
-                            break;
-                    }
-                    
+        for (int i = 0; i < nbFirstChildren; i++) {
+            System.out.println("Nous sommes à la partie de fils" + i);
+            Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(EHARD));
+            GameProgress progress = new GameProgress(game);
+            GameStatus status;
+            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 100)) {
 
+                if (HiveFunctions.nbTurns(game.state) % 20 == 0) {
+                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
                 }
+                progress.doAction();
+
             }
+            switch (status) {
+                case CURRENT_WINS:
+                    System.out.println(game.state.turn.getCurrent().color + " gagne !");
+                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                    if (game.state.turn.getCurrent().color == WHITE) {
+                        select.addVictory(i);
+                    } else {
+                        looseTurn[i]=HiveFunctions.nbTurns(game.state);
+                    }
+                    break;
+                case OPPONENT_WINS:
+                    System.out.println(game.state.turn.getOpponent().color + " gagne !");
+                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                    if (game.state.turn.getOpponent().color == BLACK) {
+                        looseTurn[i]=HiveFunctions.nbTurns(game.state);
+                    } else {
+                        select.addVictory(i);
+                    }
+                    break;
+                default:
+                    select.addVictory(i);
+                    break;
+            }
+
         }
-        int[] winner =  select.lesGagnants();
+        select.theBestLoosers(looseTurn);
+        int[] winner = select.lesGagnants();
         Mate newGeneration;
-        newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),10);
+        newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(), 10);
         System.out.println("Les fils de la génération suivante : \n" + newGeneration);
-        
+
     }
 
 }

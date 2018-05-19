@@ -18,10 +18,17 @@ import java.util.ArrayList;
 public class IADecisionLearning implements Decision
 {
     EvaluationLearning eval;
-
+    boolean hardIA;
+    
     public IADecisionLearning(EvaluationLearning eva) {
         this.eval = eva;
+        hardIA = false;
     }
+    public IADecisionLearning(Level EHARD){
+        eval = null;
+        hardIA = true;
+    }
+    
     
     
     
@@ -32,7 +39,10 @@ public class IADecisionLearning implements Decision
         IA ia;
         ArrayList<Decision> decisions;
         decisions = hia.startSimulation(state);
-        ia = new HardIALearning(eval);
+        if(hardIA == true)
+            ia=new EvolvedHardIA();
+        else
+            ia = new HardIALearning(eval);
         Action a = ia.SearchAction(state);
         hia.endSimulation(state, decisions);
         return a;

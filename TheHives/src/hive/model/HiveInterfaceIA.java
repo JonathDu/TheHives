@@ -191,6 +191,7 @@ public class HiveInterfaceIA implements InterfaceIA
         {
             HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
             Iterator<Cell> it = sources.iterator();
+            
             while (it.hasNext())
             {
                 Cell cell = it.next();
@@ -201,6 +202,16 @@ public class HiveInterfaceIA implements InterfaceIA
             }
         }
         return free_tiles;
+    }
+    
+    @Override
+    public int nbPossibilitiesQueen(Game game, Player p){
+        Tile tile = new Tile(InsectType.QUEEN_BEE, p.color);
+        
+        ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
+        int nbPossibilities = placements.size();
+        
+        return nbPossibilities;
     }
 
     public ArrayList<Tile> blockedTiles(Player p, Game game)

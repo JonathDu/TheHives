@@ -35,6 +35,9 @@ public class IADecision implements Decision
         decisions = hia.startSimulation(state);
         switch (qI) 
         {
+            case EHARD :
+                ia = new EvolvedHardIA();
+                break;
             case HARD :
                 ia = new HardIA();
                 break;

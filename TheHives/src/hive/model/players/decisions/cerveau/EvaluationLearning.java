@@ -9,15 +9,11 @@ import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.Player;
-import hive.model.players.actions.Action;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -31,26 +27,25 @@ public class EvaluationLearning {
     public EvaluationLearning(String fichier) {
         evalValues = new ArrayList<>();
         try {
-            try (FileInputStream fis = new FileInputStream(new File(fichier)); 
-                ObjectInputStream ois = new ObjectInputStream(fis)) {
+            try (FileInputStream fis = new FileInputStream(new File(fichier));
+                    ObjectInputStream ois = new ObjectInputStream(fis)) {
                 evalValues = (ArrayList<Integer>) ois.readObject();
-                System.out.println("Evaluatio fils : "+evalValues.toString());
+                System.out.println("Evaluatio fils : " + evalValues.toString());
             }
         } catch (IOException | ClassNotFoundException ioe) {
             System.out.println("Erreur à l'initialisation de evalValue");
         }
 
     }
-    
-    public EvaluationLearning(ArrayList<Integer> evalValues){
+
+    public EvaluationLearning(ArrayList<Integer> evalValues) {
         this.evalValues = evalValues;
     }
 
     public ArrayList<Integer> getEvalValues() {
         return evalValues;
     }
-    
-    
+
     int evaluation(Game state) {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
@@ -77,30 +72,55 @@ public class EvaluationLearning {
 
     int evalQueen(Game state) {
         HiveInterfaceIA hia = new HiveInterfaceIA();
+        int values=0;
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
-        int afterCurrentNeighbour = hia.queenFreeNeighbour(current, state);
-        int afterOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
-        Action hello = hia.undoAction(state);
-        opponent = hia.currentPlayer(state);
-        current = hia.opponentPlayer(state);
-        int beforeCurrentNeighbour = hia.queenFreeNeighbour(current, state);
-        int beforeOpponentNeighbour = hia.queenFreeNeighbour(opponent, state);
-        hia.doAction(state, hello);
-        return ((afterCurrentNeighbour - beforeCurrentNeighbour) - (afterOpponentNeighbour - beforeOpponentNeighbour)) * (-30);
+        int queenOpponentPossibilities = hia.nbPossibilitiesQueen(state, opponent);
+        int queenCurrentPossibilities = hia.nbPossibilitiesQueen(state, current);
+        switch (queenOpponentPossibilities) {
+            case 0:
+                values+= evalValues.get(0);
+                break;
+            case 1:
+                values+= evalValues.get(1);
+                break;
+            default:
+                values-= evalValues.get(2);
+                break;
+        }
+        switch (queenCurrentPossibilities) {
+            case 0:
+                values-= evalValues.get(3);
+                break;
+            case 1:
+                values-= evalValues.get(4);
+                break;
+            default:
+                values+= evalValues.get(5);
+                break;
+        }
+        
+        
+        return values;
     }
 
     int valueNeighboursQueen(Game state) {
         int value = 0;
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
-        ArrayList<Tile> neighbours = hia.queenNeighbours(opponent, state);
+        Player current = hia.currentPlayer(state);
+        ArrayList<Tile> neighboursOpponent = hia.queenNeighbours(opponent, state);
+        ArrayList<Tile> neighboursCurrent = hia.queenNeighbours(current, state);
         Tile tuile;
-        while (!neighbours.isEmpty()) {
-            tuile = neighbours.remove(0);
-            if (tuile.color != opponent.color) {
-                value += insectsValueNeighboursQueen(tuile);
-            }
+        while (!neighboursOpponent.isEmpty()) {
+            tuile = neighboursOpponent.remove(0);
+            value += insectsValueNeighboursQueenOpponent(tuile, state);
+
+        }
+        while (!neighboursCurrent.isEmpty()) {
+            tuile = neighboursCurrent.remove(0);
+            value -= insectsValueNeighboursQueenCurrent(tuile, state);
+
         }
         return value;
     }
@@ -112,19 +132,19 @@ public class EvaluationLearning {
             currentTile = freeTile.remove(0);
             switch (currentTile.type) {
                 case QUEEN_BEE:
-                    value += evalValues.get(0);
+                    value += evalValues.get(6);
                     break;
                 case GRASSHOPPER:
-                    value += evalValues.get(1);
+                    value += evalValues.get(7);
                     break;
                 case SOLDIER_ANT:
-                    value += evalValues.get(2);
+                    value += evalValues.get(8);
                     break;
                 case SPIDER:
-                    value += evalValues.get(3);
+                    value += evalValues.get(9);
                     break;
                 case BEETLE:
-                    value += evalValues.get(4);
+                    value += evalValues.get(10);
                     break;
             }
 
@@ -139,19 +159,19 @@ public class EvaluationLearning {
             currentTile = blocTile.remove(0);
             switch (currentTile.type) {
                 case QUEEN_BEE:
-                    value += evalValues.get(5);
+                    value += evalValues.get(11);
                     break;
                 case GRASSHOPPER:
-                    value += evalValues.get(6);
+                    value += evalValues.get(12);
                     break;
                 case SOLDIER_ANT:
-                    value += evalValues.get(7);
+                    value += evalValues.get(13);
                     break;
                 case SPIDER:
-                    value += evalValues.get(8);
+                    value += evalValues.get(14);
                     break;
                 case BEETLE:
-                    value += evalValues.get(9);
+                    value += evalValues.get(15);
                     break;
             }
 
@@ -159,22 +179,51 @@ public class EvaluationLearning {
         return value;
     }
 
-    int insectsValueNeighboursQueen(Tile freeTile) {
-        switch (freeTile.type) {
-            case QUEEN_BEE:
-                return evalValues.get(10);
-            case GRASSHOPPER:
-                return evalValues.get(11);
-            case SOLDIER_ANT:
-                return evalValues.get(12);
-            case SPIDER:
-                return evalValues.get(13);
-            case BEETLE:
-                return evalValues.get(14);
-            default:
-                return evalValues.get(0);
+    int insectsValueNeighboursQueenCurrent(Tile tile, Game state) {
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        if (tile.color == hia.currentPlayer(state).color) {
+            switch (tile.type) {
+                case QUEEN_BEE:
+                    return evalValues.get(16);
+                default:
+                    return evalValues.get(17);
 
+            }
+        }else{
+            switch (tile.type) {
+                case QUEEN_BEE:
+                    return evalValues.get(18);
+                case BEETLE:
+                    return evalValues.get(19);
+                default:
+                    return evalValues.get(20);
+
+            }
         }
 
     }
-}
+    int insectsValueNeighboursQueenOpponent(Tile tile, Game state){
+            HiveInterfaceIA hia = new HiveInterfaceIA();
+            if (tile.color == hia.currentPlayer(state).color) {
+                switch (tile.type) {
+                    case QUEEN_BEE:
+                        return evalValues.get(21);
+                    case GRASSHOPPER:
+                        return evalValues.get(22);
+                    case SOLDIER_ANT:
+                        return evalValues.get(23);
+                    case SPIDER:
+                        return evalValues.get(24);
+                    case BEETLE:
+                        return evalValues.get(25);
+                    default:
+                        return evalValues.get(0);
+
+                }
+            }else{
+                return evalValues.get(26);
+                    
+            }
+
+        }
+    }

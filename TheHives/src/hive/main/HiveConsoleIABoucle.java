@@ -46,6 +46,9 @@ public class HiveConsoleIABoucle {
             case 50:
                 System.out.println("Easy vs Medium");
                 break;
+            case 60:
+                System.out.println("Hard vs EHARD");
+                break;
             default:
                 break;
         }
@@ -55,9 +58,9 @@ public class HiveConsoleIABoucle {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        int i = 20;
+        int i = 60;
         Game game;
-        while (i < 60) {
+        while (i < 70) {
             if (i < 10) {
                 game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
             } else if (i < 20) {
@@ -68,33 +71,40 @@ public class HiveConsoleIABoucle {
                 game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.EASY)/*black*/);
             } else if (i < 50) {
                 game = DefaultGame.get(new IADecision(Level.MEDIUM)/*white*/, new IADecision(Level.EASY)/*black*/);
-            } else {
+            } else if (i < 60){
                 game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
+            }else {
+                game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.EHARD)/*black*/);
             }
+            
             printWhich(i);
             GameProgress progress = new GameProgress(game);
             Player player = null;
-            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES) {
+            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveFunctions.nbTurns(game.state)<150) {
                 player = game.state.turn.getCurrent();
 
                 progress.doAction();
+                if(HiveFunctions.nbTurns(game.state) % 20 == 0)
+                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
 
                 // mettre un sleep ici ?
             }
             System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
-            if (game.rules.getStatus(game.state) != GameStatus.CURRENT_WINS) {
-                if (player == game.state.players.get(0)) {
-                    System.out.println("Joueur 1 a gagné");
-                } else {
-                    System.out.println("Joueur 2 a gagné");
-                }
-            } else {
-                if (player == game.state.players.get(0)) {
-                    System.out.println("Joueur 1 s'est fait perdre");
-                } else {
-                    System.out.println("Joueur 2 s'est fait perdre");
-                }
+            switch(game.rules.getStatus(game.state))
+            {
+            case DRAW:
+                System.out.println("Match nul");
+                break;
+            case CURRENT_WINS:
+                System.out.println(game.state.turn.getCurrent().color + " gagne !");
+                break;
+            case OPPONENT_WINS:
+                System.out.println(game.state.turn.getOpponent().color + " gagne !");
+                break;
+            default:
+                System.out.println("Personne n'a gagné");
             }
+            
 
             //System.out.println(game.state.board);
             i++;

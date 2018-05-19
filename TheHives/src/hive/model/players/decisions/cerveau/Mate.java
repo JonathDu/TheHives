@@ -39,7 +39,7 @@ public class Mate {
             int alea;
             int aleaStat;
             for (int i = 2; i < numberSon; i++) { // pour chaque enfant
-                for (int j = 0; j < 15; j++) { //pour chaque gène
+                for (int j = 0; j < 36; j++) { //pour chaque allèles
                     alea = rnd.nextInt(100);
                     if (alea <= 1) { // mutation
                         aleaStat = rnd.nextInt(101);
@@ -68,7 +68,7 @@ public class Mate {
         int alea;
         int aleaStat;
         for (int i = 2; i < 15; i++) { // pour chaque enfant
-            for (int j = 0; j < 15; j++) { //pour chaque gène
+            for (int j = 0; j < 36; j++) { //pour chaque ellèles
                 alea = rnd.nextInt(100);
                 if (alea <= 1) { // mutation
                     aleaStat = rnd.nextInt(101);

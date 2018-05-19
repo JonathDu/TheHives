@@ -22,6 +22,7 @@ public class HiveConsoleIA {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.InterruptedException
      */
 
     public static void main(String[] args) throws InterruptedException
@@ -29,7 +30,7 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.HARD), new IADecision(Level.HARD));
+        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.EHARD), new IADecision(Level.HARD));
 
         GameProgress progress = new GameProgress(game);
 

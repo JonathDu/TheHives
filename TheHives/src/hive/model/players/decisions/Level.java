@@ -10,7 +10,7 @@ package hive.model.players.decisions;
  * @author Coralie
  */
 public enum Level {
-    EASY(0), MEDIUM(1), HARD(2);
+    EASY(0), MEDIUM(1), HARD(2), EHARD(3);
     int level;
 
     private Level(int level) {

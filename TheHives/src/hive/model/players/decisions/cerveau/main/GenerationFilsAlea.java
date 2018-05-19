@@ -17,7 +17,7 @@ public class GenerationFilsAlea {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AdamEtEve AE= new AdamEtEve();
+        AdamEtEve AE= new AdamEtEve(5);
         AE.generate("generationBeta");
     }
     

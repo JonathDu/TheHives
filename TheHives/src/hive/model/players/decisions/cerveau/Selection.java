@@ -5,9 +5,6 @@
  */
 package hive.model.players.decisions.cerveau;
 
-import static java.lang.Integer.max;
-import static java.lang.Integer.min;
-
 /**
  *
  * @author Coralie
@@ -32,6 +29,39 @@ public class Selection {
     
     public void addVictory(int son){
         nbOfVictory[son]++;
+    }
+    
+    public void theBestLoosers(int[] turnLoose){
+        int max[] = new int[2];
+        int maxValue, maxValue2;
+        
+        if(turnLoose[0]>turnLoose[1]){
+            max[0]= 0;
+            maxValue = turnLoose[0];
+            max[1]= 1;
+            maxValue2 = turnLoose[1];
+        }
+        else{
+            max[0]= 1;
+            maxValue = turnLoose[1];
+            max[1]= 0;
+            maxValue2 = turnLoose[0];
+        }
+        for(int i = 2 ; i < turnLoose.length ; i++){
+            if(turnLoose[i]>maxValue){
+                if(turnLoose[i]>maxValue2){
+                    max[1]= max[0];
+                    maxValue2 = maxValue;
+                    max[0]= i;
+                    maxValue = turnLoose[i];
+                    
+                }
+                max[1]= i;
+                maxValue2 = turnLoose[i];
+            }
+        }
+        addVictory(max[0]);
+        addVictory(max[1]);
     }
     
     public int[] lesGagnants(){

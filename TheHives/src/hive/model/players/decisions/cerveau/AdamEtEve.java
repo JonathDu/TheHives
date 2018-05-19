@@ -20,22 +20,27 @@ import java.util.logging.Logger;
  * @author Coralie
  */
 public class AdamEtEve {
+    int nbSon;
 
+    public AdamEtEve(int nbSon) {
+        this.nbSon = nbSon;
+    }
+    
     public EvaluationLearning[] generate(String Dossier) {
         EvaluationLearning[] salut = new EvaluationLearning[15];
-
+        
         FileOutputStream fos;
         Random rnd= new Random();
         ObjectOutputStream oos;
         ArrayList<Integer> l = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < nbSon; i++) {
             try {
                 File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
                 System.out.println(file.getAbsolutePath());
                 fos = new FileOutputStream(file);
                  l.clear();
-                for(int j =0;j<15;j++){
-                    l.add(rnd.nextInt(101));
+                for(int j =0;j<27;j++){
+                    l.add(rnd.nextInt(201));
                 }
                 oos= new ObjectOutputStream(fos);
                 oos.writeObject(l);
