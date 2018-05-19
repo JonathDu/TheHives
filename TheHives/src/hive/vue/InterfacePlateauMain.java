@@ -8,12 +8,11 @@ package hive.vue;
 import hive.controller.gamescene.game.GameController;
 import hive.controller.gamescene.game.handlers.TileMainHandler;
 import hive.model.board.Tile;
-import hive.model.game.DefaultGame;
+import hive.model.insects.InsectType;
 import static hive.model.insects.InsectType.*;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ReadOnlyProperty;
+import java.util.EnumMap;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -22,6 +21,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 /**
  *
@@ -32,42 +32,46 @@ public class InterfacePlateauMain extends Parent {
     VBox pions;
     Label nomJoueur;
     public boolean isCourant;
+    private TeamColor couleur;
+    EnumMap<InsectType, InterfacePions> pilesPions;
 
-    public InterfacePlateauMain(PlayerCollection col, String nomJoueur, CacheImage c, ReadOnlyProperty property, GameController controller, InterfacePlateau plateau, TeamColor color) {
+    CacheImage c;
+
+    public InterfacePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController controller, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
+        this.c = c;
+        this.couleur = color;
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
         this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
-        pions.prefHeightProperty().bind(property);
-
+        pions.prefHeightProperty().bind(stage.heightProperty());
         BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
 
-        pions.setOpacity(1);
+        pilesPions = new EnumMap<InsectType, InterfacePions>(InsectType.class);
+
+        for (InsectType type : InsectType.implemented_insects) {
+            pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, type));
+            pions.getChildren().add(pilesPions.get(type));
+        }
+
         pions.setBackground(new Background(bf));
-        //pions.setPrefHeight(100);
-        InterfacePions pileQueenBee = new InterfacePions(color, col.get(QUEEN_BEE), QUEEN_BEE, c);
-        InterfacePions pileGrassHopper = new InterfacePions(color, col.get(GRASSHOPPER), GRASSHOPPER, c);
-        InterfacePions pileBeetle = new InterfacePions(color, col.get(BEETLE), BEETLE, c);
-
-        pileQueenBee.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, QUEEN_BEE));
-        pileGrassHopper.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, GRASSHOPPER));
-        pileBeetle.addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, this, color, BEETLE));
-
-        pions.getChildren().add(pileQueenBee);
-        pions.getChildren().add(pileGrassHopper);
-        pions.getChildren().add(pileBeetle);
 
         pions.getChildren().add(this.nomJoueur);
-
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
     }
 
     public void surlignerTile(Tile tile) {
-
+        pilesPions.get(tile.type).setSelected(Color.rgb(246, 6, 189));
     }
 
     public void desurlignerTile(Tile tile) {
+        pilesPions.get(tile.type).unsetSelected();
 
+    }
+
+    public void maj(Tile tile, int nbTiles) {
+        pilesPions.get(tile.type).maj(this.couleur, nbTiles, tile.type);
     }
 }

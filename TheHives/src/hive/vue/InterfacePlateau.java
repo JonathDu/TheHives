@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.gamescene.game.GameController;
+import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
@@ -34,41 +35,50 @@ public class InterfacePlateau extends Parent {
     public InterfacePlateauMain mainDroite;
     public InterfaceRuche ruche;
 
-    public InterfacePlateau(PlayerCollection col, CacheImage c, Stage stage, String joueur1, String joueur2, DoubleProperty prop) {
+    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, Stage stage, String joueur1, String joueur2) {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
+        pane.prefHeightProperty().bind(stage.heightProperty());
         controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-
-        InterfacePlateauMain mainGauche = new InterfacePlateauMain(col, joueur1, c, pane.heightProperty(), controller,this, TeamColor.WHITE);
-        InterfacePlateauMain mainDroite = new InterfacePlateauMain(col, joueur2, c, pane.heightProperty(), controller, this,TeamColor.BLACK);
-
+        this.mainGauche = new InterfacePlateauMain(colJ1, stage, joueur1, c, controller, this, TeamColor.WHITE);
+        this.mainDroite = new InterfacePlateauMain(colJ2, stage, joueur2, c, controller, this, TeamColor.BLACK);
 
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
-        p.setHvalue(0.5);
-        //p.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        ruche  = new InterfaceRuche(c, (int) stage.getWidth(), (int) stage.getHeight(), controller);
+
+        ruche = new InterfaceRuche(c, controller);
         ruche.setHandler(this);
-
-
 //        p.setOnDragDetected((event) -> {
 //            double x= -event.getX();
 //            System.out.println(x);
 //            p.setHvalue(x/20);
 //
 //        });
-
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
-
-        ruche.isResizable();
         centerPane.getChildren().add(ruche);
         p.setContent(centerPane);
 
+        p.setHvalue(0.5);
+        p.setVvalue(0.5);
         pane.setCenter(p);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
         this.getChildren().add(pane);
+    }
+
+    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
+        return color == TeamColor.BLACK ? mainDroite : mainGauche;
+    }
+    
+    public void majTileMain(Tile tile, int nbTiles)
+    {   
+        if(tile.color == TeamColor.BLACK){
+            mainDroite.maj(tile, nbTiles);
+        }
+        else{
+            mainGauche.maj(tile, nbTiles);
+        }
     }
 
 }

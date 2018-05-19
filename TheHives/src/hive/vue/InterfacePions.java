@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
+import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
@@ -21,18 +22,44 @@ import javafx.scene.shape.Polygon;
 public class InterfacePions extends Parent {
 
     private int type;
+    private ArrayList<InterfacePion> pions;
+    private InterfacePion socle;
+    CacheImage c;
 
     public InterfacePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {
+        socle = new InterfacePion(null, null, c);
+        pions = new ArrayList<>();
+        this.c = c;
         Group g = new Group();
-        for(int i=0; i<nbPions; i++){
+        g.getChildren().add(socle);
+        for (int i = 0; i < nbPions; i++) {
             InterfacePion pion = new InterfacePion(couleur, typePions, c);
-            pion.setLayoutX(i*10);
+            pion.setLayoutX(i * 10);
             g.getChildren().add(pion);
+            pions.add(pion);
         }
+        this.getChildren().add(g);
+    }
 
+    public void setSelected(Color couleur) {
+        this.pions.get(pions.size() - 1).hexagon.setStroke(couleur);
+    }
 
-        
+    public void unsetSelected() {
+        this.pions.get(pions.size() - 1).hexagon.setStroke(Color.TRANSPARENT);
+    }
 
+    public void maj(TeamColor couleur, int nbPions, InsectType typePions) {
+        this.getChildren().clear();
+        pions.clear();
+        Group g = new Group();
+        g.getChildren().add(socle);
+        for (int i = 0; i < nbPions; i++) {
+            InterfacePion pion = new InterfacePion(couleur, typePions, c);
+            pion.setLayoutX(i * 10);
+            g.getChildren().add(pion);
+            pions.add(pion);
+        }
         this.getChildren().add(g);
     }
 

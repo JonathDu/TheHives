@@ -57,10 +57,10 @@ public class TheHives extends Application {
         primaryStage.setWidth(WIDTH);
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
-        primaryStage.setMaxHeight((int) dimension.getHeight());
-        primaryStage.setMaxWidth((int)dimension.getWidth());
-        //goToPlateau("Joueur1", "Joueur2");
-        goToMenu();
+        primaryStage.setMaxHeight((int) dimension.getHeight()+10);
+        primaryStage.setMaxWidth((int)dimension.getWidth()+10);
+        goToPlateau("Joueur1", "Joueur2");
+        //goToMenu();
 
 
         //PLEIN ECRAN
@@ -91,7 +91,7 @@ public class TheHives extends Application {
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
-        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(),DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 

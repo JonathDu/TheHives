@@ -1,42 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
-import hive.model.game.Game;
+import hive.model.board.Honeycomb;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import hive.vue.InterfaceRuche;
 import java.util.ArrayList;
-import javafx.event.EventHandler;
+import java.util.Arrays;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
 /**
- * Appelé lorsque l'on clique sur une cellule du plateau vide
+ * Fait une action lorsque que l'on put ou move sur une case (rpz le haut de la
+ * pile)
  *
  * @author Thomas
  */
-public class SocleHandler implements EventHandler<MouseEvent>
+public class SocleHandler extends HandlerPlateau
 {
 
-    GameController controller;
-    Game game;
-    Cell cell;
-    InterfaceRuche uiRuche;
+    Honeycomb combClicked;
 
     public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
-        this.controller = controller;
-        this.game = controller.progress.game;
-        this.cell = new Cell(game.state.board.getHexagon(pos), 0);
-        this.uiRuche = uiPlateau.ruche;
+        super(controller, uiPlateau);
+        combClicked = game.state.board.getHexagon(pos);
     }
 
     @Override
@@ -46,23 +36,70 @@ public class SocleHandler implements EventHandler<MouseEvent>
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            Decision decision = game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision)
+            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
             {
-                HumanDecision human_decision = (HumanDecision) decision;
+                return;
+            }
 
-                switch (controller.builder.getState())
-                {
-                    case SOURCE_SELECTED:
+            switch (controller.builder.getState())
+            {
+                case SOURCE_SELECTED:
+                    if (new Cell(combClicked, controller.builder.source.level).equals(controller.builder.source))
+                    {
+                        System.err.println("Même source : aucune action");
+                    } else if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
+                    {
+                        System.err.println("Destination impossible");
+                    } else
+                    {
                         System.out.println("Destination selectionnée");
-                        HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                    case TILE_SELECTED:
+                        moveOnBoard(new Cell(combClicked));
+                    }
+                    event.consume();
+                    break;
+                case TILE_SELECTED:
+                    if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
+                    {
+                        System.err.println("Placement impossible");
+                    } else
+                    {
                         System.out.println("Placement selectionné");
-                        HandlersUtils.putOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                }
+                        putOnBoard(new Cell(combClicked));
+                    }
+                    event.consume();
+                    break;
             }
         }
+    }
+
+    public void moveOnBoard(Cell destination)
+    {
+        uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
+        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+
+        controller.builder.setDestination(destination);
+        playProducedAction();
+
+        uiPlateau.ruche.majSource(controller.builder.source);
+        uiPlateau.ruche.majDestination(controller.builder.placement_or_destination);
+    }
+
+    public void putOnBoard(Cell placement)
+    {
+        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+
+        controller.builder.setPlacement(placement);
+        playProducedAction();
+
+        uiPlateau.majTileMain(controller.builder.tile, controller.progress.game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
+        uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
+    }
+
+    private void playProducedAction()
+    {
+        assert game.state.turn.getCurrent().decision instanceof HumanDecision;
+        Action action = controller.builder.produce();
+        ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
+        controller.progress.doAction();
     }
 }

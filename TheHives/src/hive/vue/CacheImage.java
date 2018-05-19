@@ -26,7 +26,7 @@ public class CacheImage {
         image = table.get("hive/vue/rsc/images/"+path);
         if(image == null){
             image = new Image("hive/vue/rsc/images/"+path);
-            image.isSmooth();
+            
             table.put("hive/vue/rsc/images/"+path, image);
         }
         return  image;

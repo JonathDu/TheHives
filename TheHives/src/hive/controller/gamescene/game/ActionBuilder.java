@@ -97,4 +97,9 @@ public class ActionBuilder
         assert action == null;
         return action;
     }
+    
+    public void setBegin()
+    {
+        state = State.BEGIN;
+    }
 }
