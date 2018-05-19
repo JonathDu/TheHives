@@ -11,9 +11,10 @@ import hive.model.board.Board;
 import hive.model.board.TilesStack;
 import hive.model.game.DefaultGame;
 import hive.model.players.PlayerCollection;
-import hive.vue.InterfaceJeu;
+import hive.vue.CacheImage;
 import hive.vue.InterfaceMenu;
 import hive.vue.InterfaceJoueurs;
+import hive.vue.InterfacePlateau;
 import java.awt.Dimension;
 import java.io.IOException;
 import javafx.application.Application;
@@ -91,7 +92,7 @@ public class TheHives extends Application {
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
-        this.scene = new Scene(new InterfaceJeu(DefaultGame.getCollection(),DefaultGame.getCollection(), this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        this.scene = new Scene(new InterfacePlateau(DefaultGame.getCollection(),DefaultGame.getCollection(), new CacheImage(),this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
 

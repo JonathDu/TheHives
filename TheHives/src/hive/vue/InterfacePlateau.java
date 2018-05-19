@@ -12,6 +12,7 @@ import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
+import hive.thehives.TheHives;
 import javafx.beans.property.DoubleProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -35,7 +36,7 @@ public class InterfacePlateau extends Parent {
     public InterfacePlateauMain mainDroite;
     public InterfaceRuche ruche;
 
-    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, Stage stage, String joueur1, String joueur2) {
+    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c,TheHives i, Stage stage, String joueur1, String joueur2) {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         pane.prefHeightProperty().bind(stage.heightProperty());
@@ -49,16 +50,12 @@ public class InterfacePlateau extends Parent {
 
         ruche = new InterfaceRuche(c, controller);
         ruche.setHandler(this);
-//        p.setOnDragDetected((event) -> {
-//            double x= -event.getX();
-//            System.out.println(x);
-//            p.setHvalue(x/20);
-//
-//        });
+
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
         centerPane.getChildren().add(ruche);
         p.setContent(centerPane);
-
+        pane.setTop(new InterfacePlateauTool(c, stage));
+        
         p.setHvalue(0.5);
         p.setVvalue(0.5);
         pane.setCenter(p);
