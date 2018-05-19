@@ -23,12 +23,15 @@ public class InterfacePions extends Parent {
 
     private int type;
     private ArrayList<InterfacePion> pions;
+    private InterfacePion socle;
     CacheImage c;
 
     public InterfacePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {
+        socle = new InterfacePion(null, null, c);
         pions = new ArrayList<>();
         this.c = c;
         Group g = new Group();
+        g.getChildren().add(socle);
         for (int i = 0; i < nbPions; i++) {
             InterfacePion pion = new InterfacePion(couleur, typePions, c);
             pion.setLayoutX(i * 10);
@@ -50,6 +53,7 @@ public class InterfacePions extends Parent {
         this.getChildren().clear();
         pions.clear();
         Group g = new Group();
+        g.getChildren().add(socle);
         for (int i = 0; i < nbPions; i++) {
             InterfacePion pion = new InterfacePion(couleur, typePions, c);
             pion.setLayoutX(i * 10);
