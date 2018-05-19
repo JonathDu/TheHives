@@ -9,7 +9,7 @@ import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.game.GameState;
-import hive.model.game.utildata.OccurencesPerHoneycomb;
+import hive.model.game.utildata.TilesInfluence;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -44,8 +44,8 @@ public class HivePutRules implements PutRules
             return list;
         }
         
-        OccurencesPerHoneycomb current_occurences = state.data.occurences.get(state.turn.getCurrent().color);
-        OccurencesPerHoneycomb opponent_occurences = state.data.occurences.get(state.turn.getOpponent().color);
+        TilesInfluence current_occurences = state.data.influences.get(state.turn.getCurrent().color);
+        TilesInfluence opponent_occurences = state.data.influences.get(state.turn.getOpponent().color);
         
         Set<Map.Entry<Honeycomb, AtomicInteger>> mapping = current_occurences.entrySet();
         

@@ -5,23 +5,22 @@
  */
 package hive.model.game.utildata;
 
+import hive.model.board.Honeycomb;
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
 
 /**
- *
+ * To know for each team what are tiles influence
  * @author Thomas
  */
-public class PositionsPerTeamInsect extends EnumMap<TeamColor, PositionsPerInsect>
+public class TilesInfluencePerTeam extends EnumMap<TeamColor, TilesInfluence>
 {
-
-    public PositionsPerTeamInsect()
+    public TilesInfluencePerTeam()
     {
         super(TeamColor.class);
-        for(TeamColor color : TeamColor.values())
+        for(TeamColor tc : TeamColor.values())
         {
-            put(color, new PositionsPerInsect());
+            put(tc, new TilesInfluence());
         }
     }
-    
 }

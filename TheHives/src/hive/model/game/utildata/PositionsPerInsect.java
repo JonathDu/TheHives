@@ -11,7 +11,7 @@ import java.util.EnumMap;
 import java.util.HashSet;
 
 /**
- *
+ * To know for each insect where are the corresponding tiles
  * @author Thomas
  */
 public class PositionsPerInsect extends EnumMap<InsectType, HashSet<Cell>>

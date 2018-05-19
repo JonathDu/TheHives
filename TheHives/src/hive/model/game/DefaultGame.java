@@ -6,11 +6,12 @@
 package hive.model.game;
 
 import hive.model.game.rules.HiveRules;
-import hive.model.game.utildata.PrecalculatedData;
+import hive.model.game.utildata.UtilData;
 import hive.model.board.Board;
-import hive.model.game.utildata.PositionsPerTeamInsect;
+import hive.model.game.utildata.PositionsPerInsectPerTeam;
 import hive.model.board.TilesStack;
-import hive.model.game.utildata.OccurencesPerTeamHoneycomb;
+import hive.model.game.utildata.NbGroupsPerComb;
+import hive.model.game.utildata.TilesInfluencePerTeam;
 import hive.model.insects.InsectType;
 import hive.model.players.decisions.Decision;
 import hive.model.players.Player;
@@ -39,7 +40,7 @@ public class DefaultGame
         Players players = getPlayers(d1, d2);
         PlayerTurn turn = new PlayerTurn(players);
 
-        PrecalculatedData data = new PrecalculatedData(new PositionsPerTeamInsect(), 0, 0, new ActionsTrace(), new OccurencesPerTeamHoneycomb());
+        UtilData data = new UtilData(new PositionsPerInsectPerTeam(), 0, 0, new ActionsTrace(), new TilesInfluencePerTeam(), new NbGroupsPerComb());
 
         return new GameState(board, players, turn, data);
     }

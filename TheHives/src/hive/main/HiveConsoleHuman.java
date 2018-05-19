@@ -12,7 +12,7 @@ import hive.model.board.Tile;
 import hive.model.board.Cell;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.game.rules.HiveRules;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -52,7 +52,7 @@ public class HiveConsoleHuman
             else
                 System.out.println("Joueur 2");
             
-            System.out.println("Tour " + HiveFunctions.nbTurns(game.state));
+            System.out.println("Tour " + HiveUtil.nbTurns(game.state));
 
             assert player.decision instanceof HumanDecision;
             HumanDecision decision = (HumanDecision) player.decision;
