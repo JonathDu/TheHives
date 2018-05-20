@@ -63,7 +63,7 @@ public class HardIALearning implements IA{
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
-                    maxActionList = new ArrayList<>();
+                    maxActionList.clear();
                     maxActionList.add(currentAction);
                 }
                 else if(tmp == max){
