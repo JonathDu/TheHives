@@ -11,6 +11,7 @@ import hive.model.game.undoaction.ActionDisapplier;
 import hive.model.game.doaction.ActionApplier;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
+import java.util.ArrayList;
 
 /**
  *
@@ -35,6 +36,7 @@ public class GameProgress
     {
         Decision decision = game.state.turn.getCurrent().decision;
         Action action = decision.getAction(game);
+        assert (new HiveInterfaceIA()).currentPlayerPossibilities2(game).contains(action);
         action.accept(applier);
     }
     

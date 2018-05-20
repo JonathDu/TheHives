@@ -143,6 +143,7 @@ public class HiveInterfaceIA implements InterfaceIA
     @Override
     public void currentPlayerPossibilities(Game game,ArrayList<Action> actions)
     {
+        actions.clear();
         Player current = game.state.turn.getCurrent();
         // PutAction
         for (InsectType type : InsectType.implemented_insects)
