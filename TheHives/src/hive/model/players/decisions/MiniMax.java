@@ -8,6 +8,7 @@ package hive.model.players.decisions;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import hive.model.players.actions.NoAction;
 import static hive.model.players.decisions.Evaluation.evaluation;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
@@ -29,7 +30,9 @@ public class MiniMax{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
+                hia.doAction(state, new NoAction());
                 vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList),vMax);
+                hia.undoAction(state);
             }
             else{
                 while(!actionList[depth].isEmpty()){
@@ -58,7 +61,9 @@ public class MiniMax{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
+                hia.doAction(state, new NoAction());
                 vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
+                hia.undoAction(state);
             }
             else{
                 while(!actionList[depth].isEmpty()){

@@ -78,7 +78,7 @@ public class HardIALearning implements IA{
             
         }
         else
-            currentAction = null ; //action null
+            currentAction = new NoAction() ; //action null
         return currentAction;
     }
 }

@@ -8,6 +8,7 @@ package hive.model.players.decisions.cerveau;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import hive.model.players.actions.NoAction;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
@@ -36,7 +37,9 @@ public class MiniMaxLearning{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
+                hia.doAction(state, new NoAction());
                 vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList),vMax);
+                hia.undoAction(state);
             }
             else{
                 while(!actionList[depth].isEmpty()){
@@ -65,7 +68,9 @@ public class MiniMaxLearning{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
+                hia.doAction(state, new NoAction());
                 vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
+                hia.undoAction(state);
             }
             else{
                 while(!actionList[depth].isEmpty()){
