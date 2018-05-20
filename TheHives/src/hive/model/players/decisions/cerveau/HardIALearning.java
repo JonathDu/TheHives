@@ -73,12 +73,8 @@ public class HardIALearning implements IA{
             }
         }
         Random rnd = new Random();
-        if(!maxActionList.isEmpty()){
-            currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
-            
-        }
-        else
-            currentAction = new NoAction() ; //action null
+        assert !maxActionList.isEmpty();
+        currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
         return currentAction;
     }
 }
