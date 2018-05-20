@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
@@ -27,7 +27,7 @@ public class QueenBeeBehavior implements InsectBehavior
         assert cell.level == 0;
         
         ArrayList<Cell> list = new ArrayList<>();
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return list;
         
         NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);
@@ -42,9 +42,35 @@ public class QueenBeeBehavior implements InsectBehavior
                 continue;
             
             // the queen can slide but the queen has to stay connected with other tiles
-            if(HiveFunctions.hasWallNextToAtSide(cell, neighbor.from) && HiveFunctions.isFreeAtSide(cell, neighbor.from))
+            if(HiveUtil.hasWallNextToAtSide(cell, neighbor.from) && HiveUtil.isFreeAtSide(cell, neighbor.from))
                 list.add(new Cell((Honeycomb)neighbor.hexagon));
         }
         return list;
+    }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+        
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
+            return false;
+        
+        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);
+        
+        // for each neighbor
+        while (neighbors.hasNext())
+        {
+            Neighbor<TilesStack> neighbor = neighbors.next();
+            
+            // the queen only slides
+            if(!neighbor.hexagon.value().isEmpty())
+                continue;
+            
+            // the queen can slide but the queen has to stay connected with other tiles
+            if(HiveUtil.hasWallNextToAtSide(cell, neighbor.from) && HiveUtil.isFreeAtSide(cell, neighbor.from))
+                return true;
+        }
+        return false;
     }
 }

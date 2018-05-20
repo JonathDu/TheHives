@@ -48,7 +48,7 @@ public class HardIA implements IA{
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(!hia.winCurrent(state)){
+            else {
                 tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){

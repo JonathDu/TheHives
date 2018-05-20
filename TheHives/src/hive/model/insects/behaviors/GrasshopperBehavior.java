@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
@@ -30,7 +30,7 @@ public class GrasshopperBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return list;
         
         // for each side
@@ -55,5 +55,37 @@ public class GrasshopperBehavior implements InsectBehavior
             list.add(new Cell((Honeycomb)line.getStoppingValue()));
         }
         return list;
+    }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        assert cell.level == 0;
+        
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
+            return false;
+        
+        // for each side
+        for(HexagonSide side : HexagonSide.values())
+        {
+            // start in line
+            StoppingIterator<Hexagon<TilesStack>> line = new StoppingIterator<>(
+                    new LineAtSideIterator<>(cell.comb, side),
+                    hexagon -> !hexagon.value().isEmpty());
+            
+            // the first neighbor must exist to jump over it
+            if(!line.hasNext())
+                continue;
+            line.next();
+            
+            // looks for the end of the line
+            while(line.hasNext())
+            {
+                line.next();
+            }
+            
+            return true;
+        }
+        return false;
     }
 }

@@ -5,22 +5,23 @@
  */
 package hive.model.game.utildata;
 
-import hive.model.board.Honeycomb;
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
 
 /**
- *
+ * To know for each team where are their tiles
  * @author Thomas
  */
-public class OccurencesPerTeamHoneycomb extends EnumMap<TeamColor, OccurencesPerHoneycomb>
+public class PositionsPerInsectPerTeam extends EnumMap<TeamColor, PositionsPerInsect>
 {
-    public OccurencesPerTeamHoneycomb()
+
+    public PositionsPerInsectPerTeam()
     {
         super(TeamColor.class);
-        for(TeamColor tc : TeamColor.values())
+        for(TeamColor color : TeamColor.values())
         {
-            put(tc, new OccurencesPerHoneycomb());
+            put(color, new PositionsPerInsect());
         }
     }
+    
 }

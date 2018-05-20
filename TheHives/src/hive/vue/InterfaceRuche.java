@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import hive.vue.InterfaceComb;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import util.Matrix;
@@ -31,38 +33,36 @@ public class InterfaceRuche extends Parent {
     private final int longueurPion = 40;
     int width, height;
 
-          
     private GameController controller;
     private final Board board;
     private InterfacePlateau plateau;
 
-    public InterfaceRuche(CacheImage c, int width, int height, GameController controller) {
+    public InterfaceRuche(CacheImage c, GameController controller) {
 //        this.width = width;
 //        this.height = height;
 //
 //
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
-
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
         this.board = controller.progress.game.state.board;
         this.controller = controller;
-        hauteur = controller.progress.game.state.board.getData().sizeX();
-        largeur = controller.progress.game.state.board.getData().sizeY();
+        hauteur = controller.progress.game.state.board.getData().sizeY();
+        largeur = controller.progress.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
                 InterfaceComb cell = new InterfaceComb(c, longueurPion);
-                cell.setLayoutX(x * (longueurPion + h));
+                cell.setLayoutX(x * (longueurPion + h) + 100);
 
-                if (x % 2 == 0) {
-                    cell.setLayoutY((y * 2 * center) + center);
+                if (x % 2 != 0) {
+                    cell.setLayoutY((y * 2 * center) + center  + 100);
                 } else {
-                    cell.setLayoutY(y * 2 * center);
+                    cell.setLayoutY(y * 2 * center  + 100);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
@@ -96,7 +96,7 @@ public class InterfaceRuche extends Parent {
     }
 
     public void selectCell(Vector2i pos) { // pour la source
-        tab.getAt(pos).setSelected(Color.BLUE);
+        tab.getAt(pos).setSelected(Color.rgb(246, 6, 189));
     }
 
     public void deselectCell(Vector2i pos) {
@@ -111,7 +111,7 @@ public class InterfaceRuche extends Parent {
 
     public void surlignerCells(ArrayList<Cell> cells) { //pour les destinations possible
         for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).setSelected(Color.GREENYELLOW);
+            tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb( 4,246,118));
         }
     }
 

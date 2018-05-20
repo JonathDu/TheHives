@@ -195,7 +195,7 @@ public class HiveInterfaceIA implements InterfaceIA
             while (it.hasNext())
             {
                 Cell cell = it.next();
-                if (!game.rules.getPossibleDestinations(game.state, cell).isEmpty())
+                if (game.rules.isFree(game.state, cell))
                 {
                     free_tiles.add(cell.getTile());
                 }
@@ -224,7 +224,7 @@ public class HiveInterfaceIA implements InterfaceIA
             while (it.hasNext())
             {
                 Cell cell = it.next();
-                if (game.rules.getPossibleDestinations(game.state, cell).isEmpty())
+                if (!game.rules.isFree(game.state, cell))
                 {
                     blocked_tiles.add(cell.getTile());
                 }

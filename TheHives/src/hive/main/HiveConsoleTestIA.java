@@ -10,6 +10,7 @@ import hive.model.GameProgress;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.utildata.UtilData;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;

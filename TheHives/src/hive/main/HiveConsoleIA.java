@@ -9,7 +9,9 @@ import hive.model.GameProgress;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
+
+import hive.model.game.rules.HiveUtil;
+
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
@@ -30,7 +32,9 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
+
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.EHARD), new IADecision(Level.HARD));
+
 
         GameProgress progress = new GameProgress(game);
 
@@ -42,7 +46,7 @@ public class HiveConsoleIA {
         while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES)
         {
             Player player = game.state.turn.getCurrent();
-            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+            System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
             if (player == game.state.players.get(0))
                 System.out.println("Joueur 1");
             else
@@ -54,7 +58,7 @@ public class HiveConsoleIA {
         }
 
         System.out.println(game.state.board);
-        System.out.println("Tour " + HiveFunctions.nbTurns(game.state));
+        System.out.println("Tour " + HiveUtil.nbTurns(game.state));
 
         switch(status)
         {

@@ -85,6 +85,7 @@ public class InterfacePion extends Parent {
                     } else {
                         i = c.getImage("pionQueenW.png");
                     }
+                    
                     v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case GRASSHOPPER:
@@ -102,7 +103,7 @@ public class InterfacePion extends Parent {
                         i = c.getImage("pionScarabeW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
-                    v.isProportional();
+                    
                     break;
                 default:
                     break;

@@ -16,4 +16,5 @@ import java.util.ArrayList;
 public interface InsectBehavior
 {
     public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell);
+    public boolean isFree(GameState state, Cell cell);
 }

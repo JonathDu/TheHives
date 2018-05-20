@@ -5,7 +5,7 @@
  */
 package hive.model.game;
 
-import hive.model.game.utildata.PrecalculatedData;
+import hive.model.game.utildata.UtilData;
 import hive.model.board.Board;
 import hive.model.players.Player;
 import hive.model.players.Players;
@@ -20,9 +20,9 @@ public class GameState
     public Players players;
     public PlayerTurn turn;
     
-    public PrecalculatedData data;
+    public UtilData data;
     
-    public GameState(Board board, Players players, PlayerTurn turn, PrecalculatedData data)
+    public GameState(Board board, Players players, PlayerTurn turn, UtilData data)
     {
         this.board = board;
         this.players = players;

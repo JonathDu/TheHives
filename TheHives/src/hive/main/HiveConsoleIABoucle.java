@@ -9,7 +9,7 @@ import hive.model.GameProgress;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
@@ -80,16 +80,17 @@ public class HiveConsoleIABoucle {
             printWhich(i);
             GameProgress progress = new GameProgress(game);
             Player player = null;
-            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveFunctions.nbTurns(game.state)<150) {
+            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveUtil.nbTurns(game.state)<150) {
                 player = game.state.turn.getCurrent();
 
                 progress.doAction();
-                if(HiveFunctions.nbTurns(game.state) % 20 == 0)
-                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                if(HiveUtil.nbTurns(game.state) % 20 == 0)
+                    System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
 
                 // mettre un sleep ici ?
             }
-            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+
+            System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
             switch(game.rules.getStatus(game.state))
             {
             case DRAW:
@@ -103,6 +104,7 @@ public class HiveConsoleIABoucle {
                 break;
             default:
                 System.out.println("Personne n'a gagné");
+
             }
             
 

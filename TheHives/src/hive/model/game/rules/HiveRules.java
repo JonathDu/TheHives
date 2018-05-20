@@ -65,6 +65,12 @@ public class HiveRules implements Rules
     }
     
     @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        return move_rules.isFree(state, cell);
+    }
+    
+    @Override
     public GameStatus getStatus(GameState state)
     {
         boolean current_wins = queenIsSurrounded(state, state.turn.getOpponent());
@@ -95,7 +101,7 @@ public class HiveRules implements Rules
         if(!queen_cells.isEmpty())
         {
             assert queen_cells.size() == 1;
-            return HiveFunctions.isSurrounded(queen_cells.iterator().next());
+            return HiveUtil.isSurrounded(queen_cells.iterator().next());
         }
         else
             return false;
@@ -108,7 +114,7 @@ public class HiveRules implements Rules
     
     private boolean queenMustBePut(GameState state)
     {
-        return HiveFunctions.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
+        return HiveUtil.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
     }
     
     private boolean queenIsPut(GameState state)
@@ -118,8 +124,10 @@ public class HiveRules implements Rules
 
     private boolean nobodyCanPlay(GameState state)
     {
-        if(HiveFunctions.nbTurns(state) == 1)
+        if(HiveUtil.nbTurns(state) == 1)
             return false;
         return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }
+
+
 }

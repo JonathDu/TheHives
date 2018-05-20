@@ -10,8 +10,7 @@ import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
-import hive.model.players.Player;
+import hive.model.game.rules.HiveUtil;
 import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
 import static hive.model.players.decisions.Level.EHARD;
@@ -42,10 +41,10 @@ public class MainLearning {
             Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(EHARD));
             GameProgress progress = new GameProgress(game);
             GameStatus status;
-            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveFunctions.nbTurns(game.state) < 100)) {
+            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveUtil.nbTurns(game.state) < 100)) {
 
-                if (HiveFunctions.nbTurns(game.state) % 20 == 0) {
-                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                if (HiveUtil.nbTurns(game.state) % 20 == 0) {
+                    System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
                 }
                 progress.doAction();
 
@@ -53,18 +52,18 @@ public class MainLearning {
             switch (status) {
                 case CURRENT_WINS:
                     System.out.println(game.state.turn.getCurrent().color + " gagne !");
-                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                    System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
                     if (game.state.turn.getCurrent().color == WHITE) {
                         select.addVictory(i);
                     } else {
-                        looseTurn[i]=HiveFunctions.nbTurns(game.state);
+                        looseTurn[i]=HiveUtil.nbTurns(game.state);
                     }
                     break;
                 case OPPONENT_WINS:
                     System.out.println(game.state.turn.getOpponent().color + " gagne !");
-                    System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+                    System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
                     if (game.state.turn.getOpponent().color == BLACK) {
-                        looseTurn[i]=HiveFunctions.nbTurns(game.state);
+                        looseTurn[i]=HiveUtil.nbTurns(game.state);
                     } else {
                         select.addVictory(i);
                     }

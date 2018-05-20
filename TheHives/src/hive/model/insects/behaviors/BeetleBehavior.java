@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
@@ -27,7 +27,7 @@ public class BeetleBehavior implements InsectBehavior
     {
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return list;
         
         NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
@@ -46,13 +46,13 @@ public class BeetleBehavior implements InsectBehavior
             else
             {
                 // if the beetle is free to slide or go down
-                if (HiveFunctions.isFreeAtSide(cell, neighbor.from))
+                if (HiveUtil.isFreeAtSide(cell, neighbor.from))
                 {
                     // if the beetle is on the floor
                     if(cell.level == 0)
                     {
                         // if the beetle can slides next to a wall
-                        if(HiveFunctions.hasWallNextToAtSide(cell, neighbor.from) && HiveFunctions.isFreeAtSide(cell, neighbor.from))
+                        if(HiveUtil.hasWallNextToAtSide(cell, neighbor.from) && HiveUtil.isFreeAtSide(cell, neighbor.from))
                             list.add(new Cell((Honeycomb)neighbor.hexagon));
                     }
                     // otherwise it will stay connex anyway
@@ -63,5 +63,46 @@ public class BeetleBehavior implements InsectBehavior
             }
         }
         return list;
+    }
+
+    @Override
+    public boolean isFree(GameState state, Cell cell)
+    {
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
+            return false;
+        
+        NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
+        
+        // for each neighbor
+        while (neighbors.hasNext())
+        {
+            Neighbor<TilesStack> neighbor = neighbors.next();
+            // if the beetle is below (or same level)
+            if (cell.comb.value().size() <= neighbor.hexagon.value().size()) 
+            {
+                // the beetle can climb over it
+                return true;
+            }
+           // otherwise the beetle is above
+            else
+            {
+                // if the beetle is free to slide or go down
+                if (HiveUtil.isFreeAtSide(cell, neighbor.from))
+                {
+                    // if the beetle is on the floor
+                    if(cell.level == 0)
+                    {
+                        // if the beetle can slides next to a wall
+                        if(HiveUtil.hasWallNextToAtSide(cell, neighbor.from) && HiveUtil.isFreeAtSide(cell, neighbor.from))
+                            return true;
+                    }
+                    // otherwise it will stay connex anyway
+                    else
+                        return true;
+                }
+                // otherwise the beetle can't move
+            }
+        }
+        return false;
     }
 }

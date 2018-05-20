@@ -30,7 +30,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c);
-        //this.socle.hexagon.setStroke(Color.BLACK);
+//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
@@ -38,7 +38,7 @@ public class InterfaceComb extends Parent {
     public InterfaceComb(CacheImage c, int taille) {
         this.c = c;
         this.socle = new InterfacePion(null, null, c, taille);
-        //this.socle.hexagon.setStroke(Color.BLACK);
+//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
@@ -75,6 +75,7 @@ public class InterfaceComb extends Parent {
     public void setSelected(Color col) {
         socle.hexagon.setStroke(col);
         for (int i = 0; i < pions.size(); i++) {
+            pions.get(i).hexagon.setStrokeWidth(3);
             pions.get(i).hexagon.setStroke(col);
         }
     }
@@ -82,7 +83,7 @@ public class InterfaceComb extends Parent {
     public void setNotSelected() {
         socle.hexagon.setStroke(Color.TRANSPARENT);
         for (int i = 0; i < pions.size(); i++) {
-            pions.get(i).hexagon.setStroke(Color.BLACK);
+            pions.get(i).hexagon.setStroke(Color.TRANSPARENT);
         }
     }
     /*public void modifierTaille(int longueur) {

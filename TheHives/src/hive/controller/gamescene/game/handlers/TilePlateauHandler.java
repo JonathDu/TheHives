@@ -7,14 +7,10 @@ package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
-import hive.model.game.Game;
-import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import hive.vue.InterfaceRuche;
-import java.util.ArrayList;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -23,22 +19,17 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class TilePlateauHandler implements EventHandler<MouseEvent>
+public class TilePlateauHandler extends HandlerPlateau
 {
 
-    GameController controller;
-    Game game;
-    Cell cell;
-    InterfacePlateau uiPlateau;
+    Cell cellClicked;
     InterfaceRuche uiRuche;
 
     public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
     {
-        this.controller = controller;
-        this.game = controller.progress.game;
-        this.cell = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size() - 1);
-        this.uiPlateau = uiPlateau;
-        this.uiRuche = uiPlateau.ruche;
+        super(controller, uiPlateau);
+        cellClicked = new Cell(game.state.board.getHexagon(pos), game.state.board.getHexagon(pos).value().size() - 1);
+        uiRuche = uiPlateau.ruche;
     }
 
     @Override
@@ -48,34 +39,33 @@ public class TilePlateauHandler implements EventHandler<MouseEvent>
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             Decision decision = game.state.turn.getCurrent().decision;
-            if (decision instanceof HumanDecision)
+
+            if (!(decision instanceof HumanDecision))
             {
-                System.out.println(cell);
+                return;
+            }
 
-                HumanDecision human_decision = (HumanDecision) decision;
+            HumanDecision human_decision = (HumanDecision) decision;
 
-                switch (controller.builder.getState())
-                {
-                    case BEGIN:
-                        System.out.println("Source selectionnée");
+            switch (controller.builder.getState())
+            {
+                case BEGIN:
+                    System.out.println("Source selectionnée");
 
-                        /* ACTION BUILDER */
-                        controller.builder.setSource(cell);
-                        controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cell));
+                    controller.builder.setSource(cellClicked);
+                    controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
 
-                        /* MAJ GRPAHIQUE */
-                        uiRuche.selectCell(cell.comb.pos); //MAJ graphique : mettre en evidence la source
-                        uiRuche.surlignerCells(controller.builder.possibleDestinations); //MAJ graphique : surligner les destinations
-                        break;
-                    case SOURCE_SELECTED:
-                        System.out.println("Destination selectionnée");
-                        HandlersUtils.moveOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                    case TILE_SELECTED:
-                        System.out.println("Placement selectionné");
-                        HandlersUtils.putOnBoard(controller, human_decision, cell, uiRuche);
-                        break;
-                }
+                    uiRuche.selectCell(action_source.comb.pos);
+                    uiRuche.surlignerCells(controller.builder.possibleDestinations);
+                    break;
+                case SOURCE_SELECTED:
+                    System.out.println("Destination selectionnée");
+                    moveOnBoard(human_decision, cellClicked);
+                    break;
+                case TILE_SELECTED:
+                    System.out.println("Placement selectionné");
+                    putOnBoard(human_decision, cellClicked);
+                    break;
             }
         }
     }
