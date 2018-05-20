@@ -30,10 +30,10 @@ public class MainLearning {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        int nbFirstChildren = 5;
+        int nbFirstChildren = 12;
         int[] looseTurn = new int[nbFirstChildren];
         Selection select = new Selection(nbFirstChildren);
-        AdamEtEve AE = new AdamEtEve(5);
+        AdamEtEve AE = new AdamEtEve(nbFirstChildren);
         EvaluationLearning[] evaluations = AE.generate("generationBeta");
 
         for (int i = 0; i < nbFirstChildren; i++) {
@@ -41,9 +41,9 @@ public class MainLearning {
             Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecisionLearning(evaluations[i]), new IADecisionLearning(EHARD));
             GameProgress progress = new GameProgress(game);
             GameStatus status;
-            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveUtil.nbTurns(game.state) < 100)) {
+            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && (HiveUtil.nbTurns(game.state) < 65)) {
 
-                if (HiveUtil.nbTurns(game.state) % 20 == 0) {
+                if (HiveUtil.nbTurns(game.state) % 20 == 0 && game.state.turn.getCurrent().color ==WHITE) {
                     System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
                 }
                 progress.doAction();
@@ -77,7 +77,7 @@ public class MainLearning {
         select.theBestLoosers(looseTurn);
         int[] winner = select.lesGagnants();
         Mate newGeneration;
-        newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(), 10);
+        newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 10);
         System.out.println("Les fils de la génération suivante : \n" + newGeneration);
 
     }

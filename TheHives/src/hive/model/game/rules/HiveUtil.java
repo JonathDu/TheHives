@@ -93,7 +93,7 @@ public class HiveUtil
             return true;
         
         // TODO : get from state.data.nbgroups
-        int nb_groups = state.data.nbgroups.get(cell.comb);
+        int nb_groups = HiveUtil.nbGroups(cell.comb);
         
         // when it equals to 1, the tile can be removed (when 0 the graph contains one tile,
         // and it never happens because the two first players already put 2 tiles)

@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author Coralie
  */
-public class Mate {
+public final class Mate {
 
     ArrayList<Integer>[] son;
     int nbSon;
@@ -29,51 +29,34 @@ public class Mate {
         return nbSon;
     }
 
-    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father, int numberSon) {
+    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father,ArrayList<Integer> brother, int numberSon) {
         nbSon = numberSon;
         try {
             init(numberSon);
             son[0] = mother;
             son[1] = father;
-            Random rnd = new Random();
-            int alea;
-            int aleaStat;
-            for (int i = 2; i < numberSon; i++) { // pour chaque enfant
-                for (int j = 0; j < 36; j++) { //pour chaque allèles
-                    alea = rnd.nextInt(100);
-                    if (alea <= 1) { // mutation
-                        aleaStat = rnd.nextInt(101);
-                        son[i].add(aleaStat);
-                    } else if (alea <= 50) {
-                        son[i].add(mother.get(j));
-
-                    } else {
-                        son[i].add(father.get(j));
-                    }
-                }
-            }
+            son[2] = brother;
+            Mates(mother, father, (numberSon/3)-1, 3);
+            Mates(mother, brother, (numberSon/3)-1,6);
+            Mates(mother, father, (numberSon/3)-1, 9);
             repertory(son);
         } catch (IOException ex) {
             Logger.getLogger(Mate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father) {
+    public void Mates(ArrayList<Integer> mother, ArrayList<Integer> father, int nbSon, int from) {
         init(15);
-        nbSon = 15;
-        son[0] = mother;
-        System.out.println("mere : "+mother.toString()+" pere : "+father.toString());
-        son[1] = father;
         Random rnd = new Random();
         int alea;
         int aleaStat;
-        for (int i = 2; i < 15; i++) { // pour chaque enfant
-            for (int j = 0; j < 36; j++) { //pour chaque ellèles
+        for (int i = from; i < nbSon+from; i++) { // pour chaque enfant
+            for (int j = 0; j < 27; j++) { //pour chaque allèles
                 alea = rnd.nextInt(100);
-                if (alea <= 1) { // mutation
+                if (alea <= 9) { // mutation
                     aleaStat = rnd.nextInt(101);
                     son[i].add(aleaStat);
-                } else if (alea <= 50) {
+                } else if (alea <= 54) {
                     son[i].add(mother.get(j));
 
                 } else {

@@ -143,6 +143,7 @@ public class HiveInterfaceIA implements InterfaceIA
     @Override
     public void currentPlayerPossibilities(Game game,ArrayList<Action> actions)
     {
+        actions.clear();
         Player current = game.state.turn.getCurrent();
         // PutAction
         for (InsectType type : InsectType.implemented_insects)
@@ -205,12 +206,18 @@ public class HiveInterfaceIA implements InterfaceIA
     }
     
     @Override
-    public int nbPossibilitiesQueen(Game game, Player p){
+    public int nbPossibilitiesQueen(Game game, Player p)
+    {
+        int nbPossibilities = 0;
         Tile tile = new Tile(InsectType.QUEEN_BEE, p.color);
-        
-        ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
-        int nbPossibilities = placements.size();
-        
+        nbPossibilities += game.rules.getPossiblePlacements(game.state, tile).size();
+        HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        Iterator<Cell> source_iterator = sources.iterator();
+        while (source_iterator.hasNext())
+        {
+            Cell source = source_iterator.next();
+            nbPossibilities += game.rules.getPossibleDestinations(game.state, source).size();
+        }
         return nbPossibilities;
     }
 

@@ -12,6 +12,7 @@ package hive.model.players.decisions.cerveau;
 public class Selection {
     int[] nbOfVictory;
     int nbSon;
+    
     public Selection(){
         nbOfVictory = new int[15];
         for(int i =0 ; i<15 ; i++){
@@ -65,35 +66,18 @@ public class Selection {
     }
     
     public int[] lesGagnants(){
-        int max[] = new int[2];
-        int maxValue, maxValue2;
-        
-        if(nbOfVictory[0]>nbOfVictory[1]){
-            max[0]= 0;
-            maxValue = nbOfVictory[0];
-            max[1]= 1;
-            maxValue2 = nbOfVictory[1];
-        }
-        else{
-            max[0]= 1;
-            maxValue = nbOfVictory[1];
-            max[1]= 0;
-            maxValue2 = nbOfVictory[0];
-        }
-        for(int i = 2 ; i < nbSon ; i++){
-            if(nbOfVictory[i]>maxValue){
-                if(nbOfVictory[i]>maxValue2){
-                    max[1]= max[0];
-                    maxValue2 = maxValue;
-                    max[0]= i;
-                    maxValue = nbOfVictory[i];
-                    
+        int max[] = new int[3];
+        int imax = 0;
+        for(int i =0; i<3;i++){
+            for(int j=1; j<nbSon;j++){
+                if(nbOfVictory[j]>nbOfVictory[imax]){
+                    imax = j;
                 }
-                max[1]= i;
-                maxValue2 = nbOfVictory[i];
             }
+            max[i]=nbOfVictory[imax];
+            nbOfVictory[imax]= (- nbOfVictory[imax]);
+            imax=0;
         }
-        System.out.println("gagnant 1 : "+max[0]+ "le 2eme : "+max[1]);
         return max;
     }
     

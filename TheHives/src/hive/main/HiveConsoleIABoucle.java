@@ -80,7 +80,7 @@ public class HiveConsoleIABoucle {
             printWhich(i);
             GameProgress progress = new GameProgress(game);
             Player player = null;
-            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveUtil.nbTurns(game.state)<150) {
+            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveUtil.nbTurns(game.state)<40) {
                 player = game.state.turn.getCurrent();
 
                 progress.doAction();

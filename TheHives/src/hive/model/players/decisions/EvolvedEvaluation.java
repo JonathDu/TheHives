@@ -9,7 +9,6 @@ import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.Player;
-import hive.model.players.actions.Action;
 import java.util.ArrayList;
 
 /**
@@ -68,7 +67,7 @@ public class EvolvedEvaluation {
                 values-= 100;
                 break;
             case 1:
-                values-= 100;
+                values-= 50;
                 break;
             default:
                 values+= 50;

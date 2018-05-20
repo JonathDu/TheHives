@@ -35,6 +35,7 @@ public class GameProgress
     {
         Decision decision = game.state.turn.getCurrent().decision;
         Action action = decision.getAction(game);
+        assert (new HiveInterfaceIA()).currentPlayerPossibilities2(game).contains(action);
         action.accept(applier);
     }
     
