@@ -115,6 +115,9 @@ class Bouton  extends Parent {
                         else if(origin=="regles"){
                             i.goToRegles();
                         }
+                        else if(origin=="stat"){
+                            i.goToStat();
+                        }
                     });
                     
                     pane.getChildren().add(pref);
