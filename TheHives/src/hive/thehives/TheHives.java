@@ -97,6 +97,11 @@ public class TheHives extends Application {
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
         this.scene = new Scene(new InterfacePlateau(DefaultGame.getCollection(), DefaultGame.getCollection(), this.cache, this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        String css = this.getClass().getResource("style.css").toExternalForm();
+
+
+
+        this.scene.getStylesheets().add(css);
         changeScene();
     }
 

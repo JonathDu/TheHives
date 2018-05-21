@@ -17,7 +17,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import static javafx.scene.input.KeyCode.O;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -63,47 +62,44 @@ public class InterfacePlateau extends Parent {
         Background backgroundMainGauche = new Background(baimMainGauche);
 
         this.mainGauche.pions.setBackground(backgroundMainGauche);
-        
-        
-        
+
         Image bimMainDroite = c.getImage("poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
         this.mainDroite.pions.setBackground(backgroundMainDroite);
-        
-        
-        
-        
-        
+
+        Image bimPlateau = c.getImage("PlateauCentral.png");
+        BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
+        Background backgroundPlateau = new Background(baimPlateau);
 
         StackPane centerPane = new StackPane();
-        ScrollPane p = new ScrollPane();
-        
-        BackgroundFill b = new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY);
+        ScrollPane scrollPane = new ScrollPane();
 
-        centerPane.setBackground(new Background(b));
-        p.setBackground(new Background(b));
-        
-        
 
+        centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setBackground(backgroundPlateau);
+
+        
+        
         ruche = new InterfaceRuche(c, controller);
         ruche.setHandler(this);
 
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
         centerPane.getChildren().add(ruche);
-        p.setContent(centerPane);
+        scrollPane.setContent(centerPane);
+
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
+
+        BorderPane.setMargin(scrollPane, new Insets(20, 20, 100, 20));
+        BorderPane.setMargin(mainDroite, new Insets(20, 20, 0, 20));
+        BorderPane.setMargin(mainGauche, new Insets(20, 20, 0, 20));
+
         pane.setTop(new InterfacePlateauTool(c, stage));
-
-        p.setHvalue(0.5);
-        p.setVvalue(0.5);
-
-        BorderPane.setMargin(p, new Insets(20, 20, 100, 20));
-        BorderPane.setMargin(mainDroite, new Insets(20,20,0, 20));
-        BorderPane.setMargin(mainGauche, new Insets(20,20,0, 20));
-
-        pane.setCenter(p);
+        pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
         pane.setBackground(background);
