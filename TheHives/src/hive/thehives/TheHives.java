@@ -5,6 +5,7 @@
  */
 package hive.thehives;
 
+import hive.vue.InterfaceStatistiques;
 import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceCharger;
 import hive.model.board.Board;
@@ -128,5 +129,10 @@ public class TheHives extends Application {
         primaryStage.setWidth(w);
         primaryStage.setHeight(h);
 
+    }
+
+    public void goToStat() {
+        this.scene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        changeScene();
     }
 }

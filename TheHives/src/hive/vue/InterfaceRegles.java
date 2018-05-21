@@ -20,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -30,11 +31,27 @@ import javafx.stage.Stage;
 public class InterfaceRegles extends Parent {
 
     public InterfaceRegles(Stage primaryStage, TheHives i) {
-         if(i.pleinEcran==1){
+        if(i.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-            
-            
+        }
+        CacheImage c = new CacheImage();
+        
+        
+        String rep;
+        if(i.langue == "Русский"){
+            rep = i.langue; 
+        }
+        else{
+            rep = "Français";
+        }
+        
+        String police;
+        if(i.langue == "Russe"){
+            police = "Copperplate";
+        }
+        else{
+            police = "Papyrus";
         }
         
         AnchorPane pane = new AnchorPane();
@@ -47,25 +64,74 @@ public class InterfaceRegles extends Parent {
         int maxJoueur = (int) ((int) width/2.5);
         int minJoueur = maxJoueur/2;
         
-        Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "regles");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "regles");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "regles");
-        utiles3.getChildren().addAll(preferences, sortie, ecran);
-        AnchorPane.setRightAnchor(utiles3, (double) 0);
-        AnchorPane.setTopAnchor(utiles3, (double) 0);
-        pane.getChildren().add(utiles3);
+        Image fond = c.getImage("Design/Fond/fondMontagne.png");
+        ImageView fondIm = new ImageView(fond);
+        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
+        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
+        AnchorPane.setRightAnchor(fondIm, (double) 0);
+        AnchorPane.setLeftAnchor(fondIm, (double) 0);
+        AnchorPane.setTopAnchor(fondIm, (double) 0);
+        AnchorPane.setBottomAnchor(fondIm, (double) 0);
+        pane.getChildren().add(fondIm);
         
-        Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "charger");
-        utiles1.getChildren().addAll(menu);
+        StackPane Preferences = new StackPane();
+        Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
+        ImageView prefIm = new ImageView(preferences); 
+        prefIm.setFitHeight(tailleDeCase/2);
+        prefIm.setFitWidth(tailleDeCase/2*1.07);
+        Preferences.getChildren().add(prefIm);
+        Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            Preferences p = new Preferences(primaryStage, i);
+            pane.getChildren().add(p);
+            StackPane pref = new StackPane();
+            Image imageQ = c.getImage("exit3.png");
+            ImageView ImQ = new ImageView(imageQ);
+            ImQ.setFitHeight(tailleDeCase/2.5);
+            ImQ.setFitWidth(tailleDeCase/2.5);
+            pref.getChildren().add(ImQ);
+            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
+                pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
+                i.goToRegles();
+            });
+            AnchorPane.setRightAnchor(pref, (double) 5);
+            AnchorPane.setTopAnchor(pref, (double) 5);
+            pane.getChildren().add(pref);
+        });
+        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
+        AnchorPane.setTopAnchor(Preferences, (double) 5);
+        pane.getChildren().add(Preferences);
         
-        AnchorPane.setLeftAnchor(utiles1, (double) 0);
-        AnchorPane.setTopAnchor(utiles1, (double) 0);
-        pane.getChildren().add(utiles1);
+        StackPane Plein = new StackPane();
+        Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
+        ImageView pleinIm = new ImageView(plein); 
+        pleinIm.setFitHeight(tailleDeCase/2);
+        pleinIm.setFitWidth(tailleDeCase/2*1.07);
+        Plein.getChildren().add(pleinIm);
+        Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.pleinEcran=1;
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
+        });
+        AnchorPane.setRightAnchor(Plein, (double) 10);
+        AnchorPane.setTopAnchor(Plein, (double) 5);
+        pane.getChildren().add(Plein);
+        
+        StackPane Menu = new StackPane();
+        Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
+        ImageView menuIm = new ImageView(menu); 
+        menuIm.setFitHeight(tailleDeCase/2);
+        menuIm.setFitWidth(tailleDeCase/2*1.07);
+        Menu.getChildren().add(menuIm);
+        Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.goToMenu();
+        });
+        AnchorPane.setLeftAnchor(Menu, (double) 5);
+        AnchorPane.setTopAnchor(Menu, (double) 5);
+        pane.getChildren().add(Menu);
+        
         
         //BorderPane choisir = new BorderPane();
-        Label regles = new Label();
+        //Label regles = new Label();
         Label but = new Label();
         Label debut = new Label();
         Label deplacement = new Label();
@@ -77,7 +143,7 @@ public class InterfaceRegles extends Parent {
         Label scarabee = new Label();
         Label exception = new Label();
         if(i.langue=="Français"){
-            regles.setText("Règles");
+            //regles.setText("Règles");
             but.setText("But du jeu");
             debut.setText("Début de partie");
             deplacement.setText("Déplacement");
@@ -90,7 +156,7 @@ public class InterfaceRegles extends Parent {
             exception.setText("Exception");
         }
         else if(i.langue=="English"){
-            regles.setText("Rules");
+            //regles.setText("Rules");
             but.setText("Games purpose");
             debut.setText("Start of the game");
             deplacement.setText("Movement");
@@ -103,7 +169,7 @@ public class InterfaceRegles extends Parent {
             exception.setText("Exception");
         }
         else if(i.langue=="Italiano"){
-            regles.setText("Regoli");
+           // regles.setText("Regoli");
             but.setText("L'obiettivo");// del gioco");
             debut.setText("Inizio del gioco");
             deplacement.setText("Spostamento");
@@ -116,7 +182,7 @@ public class InterfaceRegles extends Parent {
             exception.setText("Eccezione");
         }
         else if(i.langue=="Русский"){
-            regles.setText("Правила");
+            //regles.setText("Правила");
             but.setText("Цель игры");
             debut.setText("Начало игры");
             deplacement.setText("Перемещение");
@@ -129,7 +195,7 @@ public class InterfaceRegles extends Parent {
             exception.setText("Исключение");
         }
         else if(i.langue=="Deutsch"){
-            regles.setText("Regeln");
+            //regles.setText("Regeln");
             but.setText("Ziel des Spiels");
             debut.setText("Spielbeginn");
             deplacement.setText("Bewegung");
@@ -142,316 +208,342 @@ public class InterfaceRegles extends Parent {
             exception.setText("Ausnahme");
              
         }
-        regles.setFont(new Font("Copperplate", width/35));
-        regles.setAlignment(Pos.CENTER);
-        regles.setMinSize(width/60, 30);
-        regles.setMaxSize(width/2, 70);
-        AnchorPane.setTopAnchor(regles, (double) height/10);
-        AnchorPane.setLeftAnchor(regles, (double) tailleDeCase*2);
-        AnchorPane.setRightAnchor(regles, (double) tailleDeCase*2);
-        //AnchorPane.setBottomAnchor(choix, (double) height/1.1);
-        pane.getChildren().add(regles);
+        StackPane spR = new StackPane();
+        Image regles = c.getImage("Regles/" + rep +"/LesRegles.png");
+        ImageView reglesIm = new ImageView(regles); 
+        reglesIm.setFitHeight(tailleDeCase*0.8);
+        reglesIm.setFitWidth(tailleDeCase*0.8*5.09);
+        spR.getChildren().add(reglesIm);
+        AnchorPane.setTopAnchor(spR, (double) height/40);
+        AnchorPane.setLeftAnchor(spR, (double) tailleDeCase*2);
+        AnchorPane.setRightAnchor(spR, (double) tailleDeCase*2);
+        pane.getChildren().add(spR);
+        
+        StackPane sp_centre = new StackPane();
+        sp_centre.prefWidthProperty().bind(primaryStage.widthProperty());
+        
+        GridPane centre = new GridPane();
+        //centre.prefWidthProperty().bind(primaryStage.widthProperty());
+        centre.setMaxWidth(width*0.99);
+        centre.setMinWidth(width*0.99);
+        centre.setMaxHeight(height*0.6);
+        centre.setMinHeight(height*0.6);
+        Outils.fixerRepartition(centre, Outils.HORIZONTAL, 100);
+        Outils.fixerRepartition(centre, Outils.VERTICAL, 25, 50, 25);
+       
+        StackPane regles1 = new StackPane();
+        Image regle = c.getImage("Regles/PanneauAfficheRegle.png");
+        ImageView reglesIm1 = new ImageView(regle);
+        reglesIm1.setFitHeight(width*0.99*0.25*2);
+        reglesIm1.setFitWidth(width*0.99*0.25);
+        //AnchorPane.setTopAnchor(reglesIm1, (double) tailleDeCase*1.5);
+        //AnchorPane.setLeftAnchor(reglesIm1, (double) 10);
+        //pane.getChildren().add(reglesIm1);
+        regles1.getChildren().add(reglesIm1);
         
         
         GridPane placement = new GridPane();
-        int ligne = 100/4;
+        int ligne = 100/6;
         int colonne = 100/1;
-        Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne);
+        Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(placement, Outils.VERTICAL, colonne);
-//        grille.prefHeightProperty().bind(primaryStage.heightProperty());
-//        grille.prefWidthProperty().bind(primaryStage.widthProperty());
-        placement.setMaxWidth(width/14);
-        placement.setMinWidth(width/18);
-        placement.setMaxHeight(height*0.4);
-        placement.setMinHeight(height*0.3);
+        placement.setMaxWidth(width*0.99*0.2);
+        placement.setMinWidth(width*0.99*0.2);
+        placement.setMaxHeight(width*0.99*0.25*1.7);
+        placement.setMinHeight(width*0.99*0.25*1.7);
         double hauteurDeGrille = height*0.4;
         double hauteurDeLigne = hauteurDeGrille/4;
         
         
-        but.setFont(new Font("Copperplate", maxJoueur/20));
+        but.setFont(new Font(police, maxJoueur/20));
         but.setAlignment(Pos.CENTER);
         but.setMinSize(minJoueur, 30);
         but.setMaxSize(maxJoueur, 70);
+        but.setTextFill(Color.web("#fbe5b5"));
         StackPane b = new StackPane();
         b.getChildren().add(but);
         b.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("But de jeu ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane bdj = new StackPane();
-                Image butDeJeu = new Image("hive/vue/rsc/Regles/butDuJeu.png");
-                ImageView ImBDJ = new ImageView(butDeJeu);
-                ImBDJ.setFitHeight(width-(width/4)*2);
-                ImBDJ.setFitWidth(width-(width/4)*2);
-                bdj.getChildren().add(ImBDJ);
-
-                AnchorPane.setTopAnchor(bdj, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(bdj, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(bdj, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(bdj, (double) tailleDeCase*2);
-                pane.getChildren().add(bdj);
-            });
-        placement.add(b, 0, 0);
-        debut.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/butDuJeu.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        placement.add(b, 0, 1);
+        debut.setFont(new Font(police, maxJoueur/20));
         debut.setAlignment(Pos.CENTER);
+        debut.setTextFill(Color.web("#fbe5b5"));
         debut.setMinSize(minJoueur, 30);
         debut.setMaxSize(maxJoueur, 70);
         StackPane d = new StackPane();
         d.getChildren().add(debut);
         d.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Début de partie ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane ddp = new StackPane();
-                Image debutDePartie = new Image("hive/vue/rsc/Regles/Début de partie.png");
-                ImageView ImDDP = new ImageView(debutDePartie);
-                ImDDP.setFitHeight(width-(width/4)*2);
-                ImDDP.setFitWidth(width-(width/4)*2);
-                ddp.getChildren().add(ImDDP);
-
-                AnchorPane.setTopAnchor(ddp, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(ddp, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(ddp, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(ddp, (double) tailleDeCase*2);
-                pane.getChildren().add(ddp);
-            });
-        placement.add(d, 0, 1);
-        deplacement.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Début de partie.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        placement.add(d, 0, 2);
+        deplacement.setFont(new Font(police, maxJoueur/20));
         deplacement.setAlignment(Pos.CENTER);
+        deplacement.setTextFill(Color.web("#fbe5b5"));
         deplacement.setMinSize(minJoueur, 30);
         deplacement.setMaxSize(maxJoueur, 70);
         StackPane de = new StackPane();
         de.getChildren().add(deplacement);
         de.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Déplacement ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane dep = new StackPane();
-                Image depl = new Image("hive/vue/rsc/Regles/Déplacement.png");
-                ImageView ImD = new ImageView(depl);
-                ImD.setFitHeight(width-(width/4)*2);
-                ImD.setFitWidth(width-(width/4)*2);
-                dep.getChildren().add(ImD);
-
-                AnchorPane.setTopAnchor(dep, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(dep, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(dep, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(dep, (double) tailleDeCase*2);
-                pane.getChildren().add(dep);
-            });
-        placement.add(de, 0, 2);
-        tour.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Déplacement.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        placement.add(de, 0, 3);
+        tour.setFont(new Font(police, maxJoueur/20));
         tour.setAlignment(Pos.CENTER);
+        tour.setTextFill(Color.web("#fbe5b5"));
         tour.setMinSize(minJoueur, 30);
         tour.setMaxSize(maxJoueur, 70);
         StackPane t = new StackPane();
         t.getChildren().add(tour);
         t.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Déroulement tour ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane der = new StackPane();
-                Image deroul = new Image("hive/vue/rsc/Regles/deroulementTour.png");
-                ImageView ImDer = new ImageView(deroul);
-                ImDer.setFitHeight(width-(width/4)*2);
-                ImDer.setFitWidth(width-(width/4)*2);
-                der.getChildren().add(ImDer);
-
-                AnchorPane.setTopAnchor(der, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(der, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(der, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(der, (double) tailleDeCase*2);
-                pane.getChildren().add(der);
-            });
-        placement.add(t, 0, 3);
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/deroulementTour.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        placement.add(t, 0, 4);
+        regles1.getChildren().add(placement);
+        centre.add(regles1, 0, 0);
         
-        
-        AnchorPane.setTopAnchor(placement, (double) tailleDeCase*1.5);
+        /*AnchorPane.setTopAnchor(placement, (double) tailleDeCase*1.5);
         AnchorPane.setLeftAnchor(placement, (double) 10);
         //AnchorPane.setRightAnchor(placement, (double) tailleDeCase*2);
         AnchorPane.setBottomAnchor(placement, (double) tailleDeCase*2);
-        pane.getChildren().add(placement);
+        pane.getChildren().add(placement);*/
         
-        
+        StackPane regles2 = new StackPane();
+        ImageView reglesIm2 = new ImageView(regle);
+        reglesIm2.setFitHeight(width*0.99*0.25*2);
+        reglesIm2.setFitWidth(width*0.99*0.25);
+        //AnchorPane.setTopAnchor(reglesIm2, (double) tailleDeCase*1.5);
+        //AnchorPane.setLeftAnchor(reglesIm2, (double) 10);
+        //pane.getChildren().add(reglesIm1);
+        regles2.getChildren().add(reglesIm2);
         
         GridPane insectes = new GridPane();
-        int ligne2 = 100/6;
-        Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
+        int ligne2 = 100/8;
+        Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
         Outils.fixerRepartition(insectes, Outils.VERTICAL, colonne);
-//        grille.prefHeightProperty().bind(primaryStage.heightProperty());
-//        grille.prefWidthProperty().bind(primaryStage.widthProperty());
-        insectes.setMaxWidth(width/14);
-        insectes.setMinWidth(width/18);
-        insectes.setMaxHeight(height*0.4);
-        insectes.setMinHeight(height*0.3);
+        insectes.setMaxWidth(width*0.99*0.2);
+        insectes.setMinWidth(width*0.99*0.2);
+        insectes.setMaxHeight(width*0.99*0.25*1.7);
+        insectes.setMinHeight(width*0.99*0.25*1.7);
         double hauteurDeLigne2 = hauteurDeGrille/6;
         
-        araignee.setFont(new Font("Copperplate", maxJoueur/20));
+        araignee.setFont(new Font(police, maxJoueur/20));
         araignee.setAlignment(Pos.CENTER);
+        araignee.setTextFill(Color.web("#fbe5b5"));
         araignee.setMinSize(minJoueur, 30);
         araignee.setMaxSize(maxJoueur, 70);
         StackPane a = new StackPane();
         a.getChildren().add(araignee);
         a.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Araignée ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane ar = new StackPane();
-                Image ara = new Image("hive/vue/rsc/Regles/Araignée.png");
-                ImageView ImA = new ImageView(ara);
-                ImA.setFitHeight(width-(width/4)*2);
-                ImA.setFitWidth(width-(width/4)*2);
-                ar.getChildren().add(ImA);
-
-                AnchorPane.setTopAnchor(ar, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(ar, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(ar, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(ar, (double) tailleDeCase*2);
-                pane.getChildren().add(ar);
-            });
-        insectes.add(a, 0, 0);
-        fourmi.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Araignée.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(a, 0, 1);
+        fourmi.setFont(new Font(police, maxJoueur/20));
         fourmi.setAlignment(Pos.CENTER);
+        fourmi.setTextFill(Color.web("#fbe5b5"));
         fourmi.setMinSize(minJoueur, 30);
         fourmi.setMaxSize(maxJoueur, 70);
         StackPane f = new StackPane();
         f.getChildren().add(fourmi);
         f.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Fourmi ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane four = new StackPane();
-                Image fourm = new Image("hive/vue/rsc/Regles/Fourmis.png");
-                ImageView ImF = new ImageView(fourm);
-                ImF.setFitHeight(width-(width/4)*2);
-                ImF.setFitWidth(width-(width/4)*2);
-                four.getChildren().add(ImF);
-
-                AnchorPane.setTopAnchor(four, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(four, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(four, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(four, (double) tailleDeCase*2);
-                pane.getChildren().add(four);
-            });
-        insectes.add(f, 0, 1);
-        reine.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Fourmis.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(f, 0, 2);
+        reine.setFont(new Font(police, maxJoueur/20));
         reine.setAlignment(Pos.CENTER);
+        reine.setTextFill(Color.web("#fbe5b5"));
         reine.setMinSize(minJoueur, 30);
         reine.setMaxSize(maxJoueur, 70);
         StackPane r = new StackPane();
         r.getChildren().add(reine);
         r.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Reine ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane re = new StackPane();
-                Image rein = new Image("hive/vue/rsc/Regles/Reine.png");
-                ImageView ImR = new ImageView(rein);
-                ImR.setFitHeight(width-(width/4)*2);
-                ImR.setFitWidth(width-(width/4)*2);
-                re.getChildren().add(ImR);
-
-                AnchorPane.setTopAnchor(re, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(re, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(re, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(re, (double) tailleDeCase*2);
-                pane.getChildren().add(re);
-            });
-        insectes.add(r, 0, 2);
-        sauterelle.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Reine.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(r, 0, 3);
+        sauterelle.setFont(new Font(police, maxJoueur/20));
         sauterelle.setAlignment(Pos.CENTER);
+        sauterelle.setTextFill(Color.web("#fbe5b5"));
         sauterelle.setMinSize(minJoueur, 30);
         sauterelle.setMaxSize(maxJoueur, 70);
         StackPane s = new StackPane();
         s.getChildren().add(sauterelle);
         s.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Sauterelle ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane saut = new StackPane();
-                Image sauter = new Image("hive/vue/rsc/Regles/Sauterelle.png");
-                ImageView ImS = new ImageView(sauter);
-                ImS.setFitHeight(width-(width/4)*2);
-                ImS.setFitWidth(width-(width/4)*2);
-                saut.getChildren().add(ImS);
-
-                AnchorPane.setTopAnchor(saut, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(saut, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(saut, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(saut, (double) tailleDeCase*2);
-                pane.getChildren().add(saut);
-            });
-        insectes.add(s, 0, 3);
-        scarabee.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Sauterelle.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(s, 0, 4);
+        scarabee.setFont(new Font(police, maxJoueur/20));
         scarabee.setAlignment(Pos.CENTER);
+        scarabee.setTextFill(Color.web("#fbe5b5"));
         scarabee.setMinSize(minJoueur, 30);
         scarabee.setMaxSize(maxJoueur, 70);
         StackPane sc = new StackPane();
         sc.getChildren().add(scarabee);
         sc.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Scarabee ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane scar = new StackPane();
-                Image scarab = new Image("hive/vue/rsc/Regles/Scarabee.png");
-                ImageView ImSc = new ImageView(scarab);
-                ImSc.setFitHeight(width-(width/4)*2);
-                ImSc.setFitWidth(width-(width/4)*2);
-                scar.getChildren().add(ImSc);
-
-                AnchorPane.setTopAnchor(scar, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(scar, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(scar, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(scar, (double) tailleDeCase*2);
-                pane.getChildren().add(scar);
-            });
-        insectes.add(sc, 0, 4);
-        exception.setFont(new Font("Copperplate", maxJoueur/20));
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Scarabee.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(sc, 0, 5);
+        exception.setFont(new Font(police, maxJoueur/20));
         exception.setAlignment(Pos.CENTER);
+        exception.setTextFill(Color.web("#fbe5b5"));
         exception.setMinSize(minJoueur, 30);
         exception.setMaxSize(maxJoueur, 70);
         StackPane e = new StackPane();
         e.getChildren().add(exception);
         e.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-                System.out.println("Exception ! ");
-                //i.accueil();
-                pane.getChildren().remove(pane.getChildren().size()-1);
-                StackPane exc = new StackPane();
-                Image excep = new Image("hive/vue/rsc/Regles/Exception.png");
-                ImageView ImE = new ImageView(excep);
-                ImE.setFitHeight(width-(width/4)*2);
-                ImE.setFitWidth(width-(width/4)*2);
-                exc.getChildren().add(ImE);
-
-                AnchorPane.setTopAnchor(exc, (double) tailleDeCase);
-                AnchorPane.setLeftAnchor(exc, (double) tailleDeCase*2);
-                AnchorPane.setRightAnchor(exc, (double) tailleDeCase*2);
-                AnchorPane.setBottomAnchor(exc, (double) tailleDeCase*2);
-                pane.getChildren().add(exc);
-            });
-        insectes.add(e, 0, 5);
+            centre.getChildren().remove(centre.getChildren().size()-1);
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/Exception.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+        });
+        insectes.add(e, 0, 6);
         
-        AnchorPane.setTopAnchor(insectes, (double) tailleDeCase*1.5);
-        AnchorPane.setRightAnchor(insectes, (double) width/6);
+        //AnchorPane.setTopAnchor(insectes, (double) tailleDeCase*1.5);
+        //AnchorPane.setRightAnchor(insectes, (double) width/6);
         //AnchorPane.setRightAnchor(insectes, (double) tailleDeCase*2);
-        AnchorPane.setBottomAnchor(insectes, (double) tailleDeCase*2);
-        pane.getChildren().add(insectes);
+        //AnchorPane.setBottomAnchor(insectes, (double) tailleDeCase*2);
         
         
-        StackPane init = new StackPane();
-        Image initial = new Image("hive/vue/rsc/Regles/butDuJeu.png");
-        ImageView ImInit = new ImageView(initial);
-        ImInit.setFitHeight(width-(width/4)*2);
-        ImInit.setFitWidth(width-(width/4)*2);
-        init.getChildren().add(ImInit);
+        regles2.getChildren().add(insectes);
+        centre.add(regles2, 2, 0);
         
-        AnchorPane.setTopAnchor(init, (double) tailleDeCase);
-        AnchorPane.setLeftAnchor(init, (double) tailleDeCase*2);
-        AnchorPane.setRightAnchor(init, (double) tailleDeCase*2);
-        AnchorPane.setBottomAnchor(init, (double) tailleDeCase*2);
-        pane.getChildren().add(init);
+        //pane.getChildren().add(insectes);
         
         
+            StackPane sp = new StackPane();
+            Image image = c.getImage("Regles/" + rep +"/butDuJeu.png");
+            ImageView Im = new ImageView(image); 
+            Im.setFitHeight(width-(width/4)*2);
+            Im.setFitWidth(width-(width/4)*2);
+            sp.getChildren().add(Im);
+            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
+            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
+            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
+            //pane.getChildren().add(sp);
+            centre.add(sp, 1, 0);
+            
+            sp_centre.getChildren().add(centre);
+            
+        AnchorPane.setTopAnchor(sp_centre, (double) height*0.2);
+        AnchorPane.setBottomAnchor(sp_centre, (double) height*0.1);
+        pane.getChildren().add(sp_centre);
         this.getChildren().add(pane);
     }
     
