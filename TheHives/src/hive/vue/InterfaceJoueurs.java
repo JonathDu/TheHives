@@ -26,6 +26,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -36,7 +37,7 @@ public class InterfaceJoueurs extends Parent{
 
     String versionIA1;
     String versionIA2;
-    int est_h1=0, est_h2=0, est_ai1=0, est_ai2=0;
+    int est_ai_ai=0, est_h_ai=0, est_h_h=0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
     public InterfaceJoueurs(Stage primaryStage, TheHives i) {
@@ -93,7 +94,7 @@ public class InterfaceJoueurs extends Parent{
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToRegles();
+                i.goToChoixJoueur();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
@@ -132,9 +133,9 @@ public class InterfaceJoueurs extends Parent{
         pane.getChildren().add(Menu);
         
         GridPane grille = new GridPane();
-        int ligne = 100/6;
+        int ligne = 100/4;
         int colonne = 100/3;
-        Outils.fixerRepartition(grille, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne);
+        Outils.fixerRepartition(grille, Outils.HORIZONTAL, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(grille, Outils.VERTICAL, colonne, colonne, colonne);
 //        grille.prefHeightProperty().bind(primaryStage.heightProperty());
 //        grille.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -147,7 +148,7 @@ public class InterfaceJoueurs extends Parent{
         
         
         
-        Label joueur1 = new Label(); // jocatori, Spiler
+        Label joueur1 = new Label(); 
         Label joueur2 = new Label();
         
         Button valider = new Button(); // Invio, Enter Bestätigen
@@ -187,7 +188,198 @@ public class InterfaceJoueurs extends Parent{
             valider.setText("Bestätigen");
         }
         
-        joueur1.setFont(new Font("Copperplate", maxJoueur/10));
+        
+        final ToggleGroup j = new ToggleGroup();
+        RadioBouton bouton = new RadioBouton(primaryStage, i);
+        ToggleButton humains;
+        humains = bouton.creer("humains");
+        humains.setBackground(Background.EMPTY);
+        humains.setToggleGroup(j);
+        StackPane hh = new StackPane();
+        hh.getChildren().add(humains);
+        grille.add(hh, 0, 1);
+        ToggleButton hIA;
+        hIA = bouton.creer("h_IA");
+        hIA.setBackground(Background.EMPTY);
+        
+        
+       
+        hIA.setToggleGroup(j);
+        StackPane h_ia = new StackPane();
+        h_ia.getChildren().add(hIA);
+        grille.add(h_ia, 1, 1);
+        ToggleButton IAs;
+        IAs = bouton.creer("IAs");
+        IAs.setBackground(Background.EMPTY);
+        IAs.setToggleGroup(j);
+        StackPane ia_ia = new StackPane();
+        ia_ia.getChildren().add(IAs);
+        grille.add(ia_ia, 2, 1);
+        
+        Name1.setText(null);
+        Name2.setText(null);
+        final ToggleGroup ia1 = new ToggleGroup();
+        final ToggleGroup ia2 = new ToggleGroup();
+        j.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                Toggle old_toggle, Toggle new_toggle) {
+                if (j.getSelectedToggle() != null) {
+                    if(humains.isSelected()){
+                        if(est_ai_ai==1){
+                            grille.getChildren().remove(grille.getChildren().size()-6, grille.getChildren().size());
+                            est_ai_ai=0;
+                            versionIA1=null;
+                            versionIA2=null;
+                        }else if(est_h_ai==1){
+                            grille.getChildren().remove(grille.getChildren().size()-4, grille.getChildren().size());
+                            est_h_ai=0;
+                            versionIA1=null;
+                            Name1.setText(null);
+                        }
+                        est_h_h=1;
+                        Name1.setMinSize(width/10, 30);
+                        Name1.setMaxHeight(40);
+                        Name1.setAlignment(Pos.CENTER);
+                        StackPane n1 = new StackPane();
+                        n1.getChildren().add(Name1);
+                        grille.add(n1, 1, 2);
+                        Name2.setMinSize(width/10, 30);
+                        Name2.setMaxHeight(40);
+                        Name2.setAlignment(Pos.CENTER);
+                        StackPane n2 = new StackPane();
+                        n2.getChildren().add(Name2);
+                        grille.add(n2, 1, 3);
+                    }
+                    else if(hIA.isSelected()){
+                        if(est_ai_ai==1){
+                            grille.getChildren().remove(grille.getChildren().size()-6, grille.getChildren().size());
+                            est_ai_ai=0;
+                            versionIA1=null;
+                            versionIA2=null;
+                        }else if(est_h_h==1){
+                            grille.getChildren().remove(grille.getChildren().size()-2, grille.getChildren().size());
+                            est_h_h=0;
+                            Name1.setText(null);
+                            Name2.setText(null);
+                        }
+                        est_h_ai=1;
+                        Name1.setMinSize(width/10, 30);
+                        Name1.setMaxHeight(40);
+                        Name1.setAlignment(Pos.CENTER);
+                        StackPane n1 = new StackPane();
+                        n1.getChildren().add(Name1);
+                        grille.add(n1, 1, 2);
+                        ToggleButton facile;
+                        facile = bouton.creer("facile1"); //Facile, Einfach
+                        facile.setToggleGroup(ia1);
+                        StackPane f1 = new StackPane();
+                        f1.getChildren().add(facile);
+                        grille.add(f1, 0, 3);
+                        ToggleButton moyenne;
+                        moyenne = bouton.creer("moyenne1"); //Media, Mittel/Normal
+                        moyenne.setToggleGroup(ia1);
+                        StackPane m1 = new StackPane();
+                        m1.getChildren().add(moyenne);
+                        grille.add(m1, 1, 3);
+                        ToggleButton difficile;
+                        difficile = bouton.creer("difficile1"); //Difficile, Schwer
+                        difficile.setToggleGroup(ia1);
+                        StackPane d1 = new StackPane();
+                        d1.getChildren().add(difficile);
+                        grille.add(d1, 2, 3);
+                        ia1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                                public void changed(ObservableValue<? extends Toggle> ov,
+                                    Toggle old_toggle, Toggle new_toggle) {
+                                    if (ia1.getSelectedToggle() != null) {
+                                        versionIA1 = ia1.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA1 : " + versionIA1);
+                                    }
+                                }
+                            });
+                    }
+                    else if(IAs.isSelected()){
+                        if(est_h_ai==1){
+                            grille.getChildren().remove(grille.getChildren().size()-4, grille.getChildren().size());
+                            est_h_ai=0;
+                            versionIA1=null;
+                            Name1.setText(null);
+                        }else if(est_h_h==1){
+                            grille.getChildren().remove(grille.getChildren().size()-2, grille.getChildren().size());
+                            est_h_h=0;
+                            Name1.setText(null);
+                            Name2.setText(null);
+                        }
+                        est_ai_ai=1;
+                        ToggleButton facile1;
+                        facile1 = bouton.creer("facile1"); //Facile, Einfach
+                        facile1.setToggleGroup(ia1);
+                        StackPane f1 = new StackPane();
+                        f1.getChildren().add(facile1);
+                        grille.add(f1, 0, 2);
+                        ToggleButton moyenne1;
+                        moyenne1 = bouton.creer("moyenne1"); //Media, Mittel/Normal
+                        moyenne1.setToggleGroup(ia1);
+                        StackPane m1 = new StackPane();
+                        m1.getChildren().add(moyenne1);
+                        grille.add(m1, 1, 2);
+                        ToggleButton difficile1;
+                        difficile1 = bouton.creer("difficile1"); //Difficile, Schwer
+                        difficile1.setToggleGroup(ia1);
+                        StackPane d1 = new StackPane();
+                        d1.getChildren().add(difficile1);
+                        grille.add(d1, 2, 2);
+                        ia1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                                public void changed(ObservableValue<? extends Toggle> ov,
+                                    Toggle old_toggle, Toggle new_toggle) {
+                                    if (ia1.getSelectedToggle() != null) {
+                                        versionIA1 = ia1.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA1 : " + versionIA1);
+                                    }
+                                }
+                            });
+                        ToggleButton facile2;
+                        facile2 = bouton.creer("facile2"); //Facile, Einfach
+                        facile2.setToggleGroup(ia2);
+                        StackPane f2 = new StackPane();
+                        f2.getChildren().add(facile2);
+                        grille.add(f2, 0, 3);
+                        ToggleButton moyenne2;
+                        moyenne2 = bouton.creer("moyenne2"); //Media, Mittel/Normal
+                        moyenne2.setToggleGroup(ia2);
+                        StackPane m2 = new StackPane();
+                        m2.getChildren().add(moyenne2);
+                        grille.add(m2, 1, 3);
+                        ToggleButton difficile2;
+                        difficile2 = bouton.creer("difficile2"); //Difficile, Schwer
+                        difficile2.setToggleGroup(ia2);
+                        StackPane d2 = new StackPane();
+                        d2.getChildren().add(difficile2);
+                        grille.add(d2, 2, 3);
+                        ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+                                public void changed(ObservableValue<? extends Toggle> ov,
+                                    Toggle old_toggle, Toggle new_toggle) {
+                                    if (ia2.getSelectedToggle() != null) {
+                                        versionIA2 = ia2.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA2 : " + versionIA2);
+                                    }
+                                }
+                            });
+                    }
+                }
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        /*joueur1.setFont(new Font("Copperplate", maxJoueur/10));
         joueur1.setAlignment(Pos.CENTER);
         joueur1.setMinSize(minJoueur, 30);
         joueur1.setMaxSize(maxJoueur, 70);
@@ -353,7 +545,7 @@ public class InterfaceJoueurs extends Parent{
                 }
             }
         });
-        
+        */
        
         AnchorPane.setLeftAnchor(grille, (double) width/8);
         AnchorPane.setRightAnchor(grille, (double) width/8);
@@ -362,7 +554,7 @@ public class InterfaceJoueurs extends Parent{
         pane.getChildren().add(grille);
         
         DropShadow shadow = new DropShadow();
-        valider.setFont(new Font("Copperplate", width/35));
+        valider.setFont(new Font(police, width/35));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);
         });
