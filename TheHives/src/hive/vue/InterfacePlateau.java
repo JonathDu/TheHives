@@ -8,17 +8,24 @@ package hive.vue;
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
-import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
 import hive.thehives.TheHives;
-import javafx.beans.property.DoubleProperty;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import static javafx.scene.input.KeyCode.O;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -28,7 +35,6 @@ import javafx.stage.Stage;
  * @author jonathan
  */
 public class InterfacePlateau extends Parent {
-//
 
     BorderPane pane;
     GameController controller;
@@ -36,7 +42,13 @@ public class InterfacePlateau extends Parent {
     public InterfacePlateauMain mainDroite;
     public InterfaceRuche ruche;
 
-    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c,TheHives i, Stage stage, String joueur1, String joueur2) {
+    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, TheHives i, Stage stage, String joueur1, String joueur2) {
+
+        Image fond = c.getImage("fondMontagne.png");
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        Background background = new Background(backgroundFond);
+
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         pane.prefHeightProperty().bind(stage.heightProperty());
@@ -45,8 +57,36 @@ public class InterfacePlateau extends Parent {
         this.mainGauche = new InterfacePlateauMain(colJ1, stage, joueur1, c, controller, this, TeamColor.WHITE);
         this.mainDroite = new InterfacePlateauMain(colJ2, stage, joueur2, c, controller, this, TeamColor.BLACK);
 
+        Image bimMainauche = c.getImage("poseJetona.png");
+        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
+        Background backgroundMainGauche = new Background(baimMainGauche);
+
+        this.mainGauche.pions.setBackground(backgroundMainGauche);
+        
+        
+        
+        Image bimMainDroite = c.getImage("poseJetona.png");
+        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
+        Background backgroundMainDroite = new Background(baimMainDroite);
+
+        this.mainDroite.pions.setBackground(backgroundMainDroite);
+        
+        
+        
+        
+        
+
         StackPane centerPane = new StackPane();
         ScrollPane p = new ScrollPane();
+        
+        BackgroundFill b = new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY);
+
+        centerPane.setBackground(new Background(b));
+        p.setBackground(new Background(b));
+        
+        
 
         ruche = new InterfaceRuche(c, controller);
         ruche.setHandler(this);
@@ -55,25 +95,29 @@ public class InterfacePlateau extends Parent {
         centerPane.getChildren().add(ruche);
         p.setContent(centerPane);
         pane.setTop(new InterfacePlateauTool(c, stage));
-        
+
         p.setHvalue(0.5);
         p.setVvalue(0.5);
+
+        BorderPane.setMargin(p, new Insets(20, 20, 100, 20));
+        BorderPane.setMargin(mainDroite, new Insets(20,20,0, 20));
+        BorderPane.setMargin(mainGauche, new Insets(20,20,0, 20));
+
         pane.setCenter(p);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
+        pane.setBackground(background);
         this.getChildren().add(pane);
     }
 
     public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
-    
-    public void majTileMain(Tile tile, int nbTiles)
-    {   
-        if(tile.color == TeamColor.BLACK){
+
+    public void majTileMain(Tile tile, int nbTiles) {
+        if (tile.color == TeamColor.BLACK) {
             mainDroite.maj(tile, nbTiles);
-        }
-        else{
+        } else {
             mainGauche.maj(tile, nbTiles);
         }
     }
