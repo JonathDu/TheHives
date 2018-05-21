@@ -44,7 +44,7 @@ public class InterfacePlateau extends Parent {
     public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, TheHives i, Stage stage, String joueur1, String joueur2) {
 
         Image fond = c.getImage("fondMontagne.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         Background background = new Background(backgroundFond);
 
@@ -78,12 +78,9 @@ public class InterfacePlateau extends Parent {
         StackPane centerPane = new StackPane();
         ScrollPane scrollPane = new ScrollPane();
 
-
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setBackground(backgroundPlateau);
 
-        
-        
         ruche = new InterfaceRuche(c, controller);
         ruche.setHandler(this);
 
@@ -94,14 +91,15 @@ public class InterfacePlateau extends Parent {
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
 
-        BorderPane.setMargin(scrollPane, new Insets(20, 20, 100, 20));
+        BorderPane.setMargin(scrollPane, new Insets(0, 20, 100, 20));
         BorderPane.setMargin(mainDroite, new Insets(20, 20, 0, 20));
         BorderPane.setMargin(mainGauche, new Insets(20, 20, 0, 20));
-
-        pane.setTop(new InterfacePlateauTool(c, stage));
+        
         pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
+        pane.setTop(new InterfacePlateauTool(c, stage, i, joueur1, joueur2));
+
         pane.setBackground(background);
         this.getChildren().add(pane);
     }
