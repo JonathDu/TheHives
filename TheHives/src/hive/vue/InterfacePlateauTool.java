@@ -5,12 +5,15 @@
  */
 package hive.vue;
 
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,39 +22,60 @@ import javafx.stage.Stage;
  */
 public class InterfacePlateauTool extends Parent {
 
-    GridPane grille;
     Button boutonHome;
     Button boutonSave;
     Button boutonReplay;
     Button boutonAnnuler;
     Button boutonRejouer;
     Button boutonConseil;
-    Button boutonQuitter;
-    Button boutonPleinEcran;
-    Button bouton1;
-    Button bouton2;
+    Button boutonParam;
+    Button pleinEcran;
+    BorderPane pane;
+
+    HBox gauche;
+    HBox centre;
+    HBox droite;
+
+    StackPane centrage;
 
     CacheImage c;
 
     public InterfacePlateauTool(CacheImage c, Stage stage) {
         this.c = c;
-        grille = new GridPane();
-        grille.prefWidthProperty().bind(stage.widthProperty());
-        
-        Button bouton = creerBouton("home.png");
-        Button bouton1 = creerBouton("home.png");
 
-        for (int i = 0; i < 10; i++) {
-            ColumnConstraints r = new ColumnConstraints();
-            r.setPercentWidth(10);
-            r.setFillWidth(true);
-            grille.getColumnConstraints().add(r);
+        pane = new BorderPane();
+        pane.prefWidthProperty().bind(stage.widthProperty());
 
-        }
-        grille.add(bouton, 0, 0, 1, 1);
-        grille.add(bouton1, 9, 0, 1, 1);
+        gauche = new HBox();
+        droite = new HBox();
         
-        this.getChildren().add(grille);
+        boutonSave = creerBouton("BoutonDisquette.png");
+        boutonHome = creerBouton("bouttonRetourMenu.png");
+        boutonAnnuler =creerBouton("FlecheUndo.png");
+        boutonParam = creerBouton("BouttonParametre.png");
+        boutonConseil = creerBouton("Ampoule.png");
+        boutonReplay = creerBouton("FlecheRedo.png");
+        pleinEcran = creerBouton("pleinEcran.png");
+
+        centrage = new StackPane();
+
+        
+
+
+        centrage.getChildren().addAll(boutonConseil);
+        
+
+        pane.setLeft(gauche);
+        pane.setRight(droite);
+        pane.setCenter(centrage);
+
+        gauche.getChildren().add(boutonHome);
+        gauche.getChildren().add(boutonSave);
+        droite.getChildren().add(boutonParam);
+        droite.getChildren().add(pleinEcran);
+
+        this.getChildren().add(pane);
+
     }
 
     private Button creerBouton(String path) {
@@ -66,6 +90,5 @@ public class InterfacePlateauTool extends Parent {
         bouton.setBackground(Background.EMPTY);
         return bouton;
     }
-
 
 }
