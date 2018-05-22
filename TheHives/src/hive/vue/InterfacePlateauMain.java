@@ -16,6 +16,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -59,9 +62,10 @@ public class InterfacePlateauMain extends Parent {
             pions.getChildren().add(pilesPions.get(type));
         }
 
+
+
         ImageView panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
         panneau.setFitWidth(100);
-//        panneau.setPreserveRatio(true);
         panneau.setFitHeight(50);
         panneau.setSmooth(true);
         this.nomJoueur.setTextFill(Color.WHITE);
