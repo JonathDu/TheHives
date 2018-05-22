@@ -46,14 +46,15 @@ public class EvolvedHardIA implements IA{
             hia.doAction(state, currentAction);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
+                actionList[depth].clear();
                 return currentAction;
             }
-            else if(!hia.winCurrent(state)){
+            else{
                 tmp = EvolvedMiniMax.evolvedMiniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
-                    maxActionList = new ArrayList<>();
+                    maxActionList.clear();
                     maxActionList.add(currentAction);
                 }
                 else if(tmp == max){
@@ -65,6 +66,7 @@ public class EvolvedHardIA implements IA{
         Random rnd = new Random();
         assert !maxActionList.isEmpty();
         currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
+        assert currentAction !=null;
         return currentAction;
     }
 }

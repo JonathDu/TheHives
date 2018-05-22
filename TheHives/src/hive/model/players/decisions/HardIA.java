@@ -46,6 +46,7 @@ public class HardIA implements IA{
             hia.doAction(state, currentAction);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
+                actionList[depth].clear();
                 return currentAction;
             }
             else {
