@@ -6,7 +6,6 @@
 package hive.model.players.decisions.cerveau;
 
 import hive.model.players.decisions.IA.IA;
-import hive.model.players.decisions.*;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
@@ -59,7 +58,7 @@ public class HardIALearning implements IA{
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(!hia.winCurrent(state)){
+            else{
                 tmp = mini.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){
@@ -76,6 +75,7 @@ public class HardIALearning implements IA{
         Random rnd = new Random();
         assert !maxActionList.isEmpty();
         currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
+        assert currentAction !=null;
         return currentAction;
     }
 }
