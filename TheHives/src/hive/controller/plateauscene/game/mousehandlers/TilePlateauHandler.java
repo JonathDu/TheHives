@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.gamescene.game.handlers;
+package hive.controller.plateauscene.game.mousehandlers;
 
-import hive.controller.gamescene.game.GameController;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
@@ -21,9 +21,9 @@ public class TilePlateauHandler extends HandlerPlateau
 
     Cell cellClicked;
 
-    public TilePlateauHandler(GameController controller, InterfacePlateau uiPlateau, Cell cellClicked)
+    public TilePlateauHandler(GameController gameController, InterfacePlateau uiPlateau, Cell cellClicked)
     {
-        super(controller, uiPlateau);
+        super(gameController, uiPlateau);
         this.cellClicked = cellClicked;
     }
 

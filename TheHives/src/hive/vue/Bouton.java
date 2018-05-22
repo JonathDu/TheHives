@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,23 +29,23 @@ import javafx.scene.layout.Pane;
  */
 class Bouton  extends Parent {
 
-    public Bouton(Stage primaryStage, TheHives i, String type, Pane pane, String origin) {
-        
+    public Bouton(Stage primaryStage, Controller controller, String type, Pane pane, String origin) {
+
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        
+
         Image imageCase = new Image(getClass().getResourceAsStream("rsc/images/case.png"));
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
-        
+
         StackPane bouton = new StackPane();
         ImageView caseIm = new ImageView(imageCase);
         caseIm.setFitHeight(tailleDeCase);
         caseIm.setFitWidth(tailleDeCase);
         bouton.getChildren().add(caseIm);
-        
+
         if(type=="menu"){
-            
+
             //Image imageMenu = new Image(getClass().getResourceAsStream("Images/menu1.png"));
             Image image = new Image(getClass().getResourceAsStream("rsc/images/menu2.png"));
             //Image imageMenu = new Image(getClass().getResourceAsStream("Images/settings3.png"));
@@ -62,10 +63,10 @@ class Bouton  extends Parent {
             });*/
             bouton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                 System.out.println("Menu ! ");
-                i.goToMenu();
+                controller.goToMenu();
             });
-            
-            
+
+
         }
         else if(type=="preferences"){
             Image image = new Image(getClass().getResourceAsStream("rsc/images/settings1.png"));
@@ -87,7 +88,10 @@ class Bouton  extends Parent {
                 @Override
                 public void handle(MouseEvent event) {
                     System.out.println("Préférences ! ");
-                    /*Preferences p = new Preferences(primaryStage, i);
+
+
+
+                  /*  Preferences p = new Preferences(primaryStage, controller);
                     pane.getChildren().add(p);
                     StackPane pref = new StackPane();
                     Image imageQ = new Image(Bouton.this.getClass().getResourceAsStream("rsc/images/exit3.png"));
@@ -100,31 +104,31 @@ class Bouton  extends Parent {
                     pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                         pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
                         if(origin=="menu"){
-                            i.goToMenu();
+                            controller.goToMenu();
                         }
                         else if(origin=="joueurs"){
-                            i.goToChoixJoueur();
+                            controller.goToChoixJoueur();
                         }
                         else if(origin=="charger"){
                             try {
-                                i.goToChargerPartie();
+                                controller.goToChargerPartie();
                             } catch (IOException ex) {
                                 Logger.getLogger(Bouton.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         else if(origin=="regles"){
-                            i.goToRegles();
+                            controller.goToRegles();
                         }
                         else if(origin=="stat"){
-                            i.goToStat();
+                            controller.goToStat();
                         }
                     });
-                    
+
                     pane.getChildren().add(pref);
-                    
+
                     //i.accueil();*/
-                    
-                    Preferences p = new Preferences(primaryStage, i, origin);
+
+                    Preferences p = new Preferences(primaryStage, controller, origin);
                     pane.getChildren().add(p);
                 }
             });
@@ -171,13 +175,13 @@ class Bouton  extends Parent {
                 primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
             });
         }
-        
-        
-        
-        
-        
+
+
+
+
+
         this.getChildren().add(bouton);
-        
-        
+
+
     }
 }

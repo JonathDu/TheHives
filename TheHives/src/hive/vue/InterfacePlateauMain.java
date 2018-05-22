@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.GameController;
-import hive.controller.gamescene.game.handlers.TileMainHandler;
+import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateauscene.game.mousehandlers.TileMainHandler;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;
@@ -43,7 +43,7 @@ public class InterfacePlateauMain extends Parent {
 
     CacheImage c;
 
-    public InterfacePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController controller, InterfacePlateau plateau, TeamColor color) {
+    public InterfacePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController plateauController, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
@@ -58,7 +58,7 @@ public class InterfacePlateauMain extends Parent {
         pions.setPadding(new Insets(35));
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, type));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, plateau, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
 

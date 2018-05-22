@@ -5,12 +5,18 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.GameController;
+import hive.controller.Controller;
+import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateauscene.game.GraphicGameState;
 import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
+import hive.model.game.Game;
+import hive.model.game.PrecalculatedGame;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
+import hive.model.players.decisions.IADecision;
+import hive.model.players.decisions.Level;
 import hive.thehives.TheHives;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -36,13 +42,13 @@ import javafx.stage.Stage;
 public class InterfacePlateau extends Parent {
 
     BorderPane pane;
-    GameController controller;
+    GameController plateauController;
     public InterfacePlateauMain mainGauche;
     public InterfacePlateauMain mainDroite;
     public InterfaceRuche ruche;
+    GraphicGameState graphicGameState;
 
-    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, TheHives i, Stage stage, String joueur1, String joueur2) {
-
+    public InterfacePlateau(Stage stage, Controller controller, GameController plateauController, CacheImage c, String joueur1, String joueur2) {
         Image fond = c.getImage("fondMontagne.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
@@ -51,10 +57,11 @@ public class InterfacePlateau extends Parent {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         pane.prefHeightProperty().bind(stage.heightProperty());
-        controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        this.mainGauche = new InterfacePlateauMain(colJ1, stage, joueur1, c, controller, this, TeamColor.WHITE);
-        this.mainDroite = new InterfacePlateauMain(colJ2, stage, joueur2, c, controller, this, TeamColor.BLACK);
+        graphicGameState = new GraphicGameState(plateauController.progress.game, this);
+        
+        this.mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
+        this.mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
@@ -81,7 +88,7 @@ public class InterfacePlateau extends Parent {
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setBackground(backgroundPlateau);
 
-        ruche = new InterfaceRuche(c, controller);
+        ruche = new InterfaceRuche(c, plateauController);
         ruche.setHandler(this);
 
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
@@ -98,7 +105,7 @@ public class InterfacePlateau extends Parent {
         pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
-        pane.setTop(new InterfacePlateauTool(c, stage, i, joueur1, joueur2));
+        pane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2));
 
         pane.setBackground(background);
         this.getChildren().add(pane);
@@ -115,5 +122,4 @@ public class InterfacePlateau extends Parent {
             mainGauche.maj(tile, nbTiles);
         }
     }
-
 }

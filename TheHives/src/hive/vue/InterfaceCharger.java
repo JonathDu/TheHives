@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -30,36 +31,36 @@ import javafx.scene.layout.StackPane;
  */
 public class InterfaceCharger extends Parent {
 
-    
-    public InterfaceCharger(Stage primaryStage, TheHives i) throws IOException {
-        
+
+    public InterfaceCharger(Stage primaryStage, Controller controller) throws IOException {
+
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
         int maxJoueur = (int) ((int) width/2.5);
         int minJoueur = maxJoueur/2;
-       
-        if(i.pleinEcran==1){
+
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
             police = "Papyrus";
         }
-        
-        
+
+
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
-        
+
         CacheImage c = new CacheImage();
         Image fond;
-        if(i.type=="jour"){
+        if(controller.typeTheme=="jour"){
             fond = c.getImage("Design/Fond/fondMontagne.png");
         }
         else{
@@ -73,10 +74,10 @@ public class InterfaceCharger extends Parent {
         AnchorPane.setTopAnchor(fondIm, (double) 0);
         AnchorPane.setBottomAnchor(fondIm, (double) 0);
         pane.getChildren().add(fondIm);
-        
+
         StackPane Preferences = new StackPane();
         Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
-        ImageView prefIm = new ImageView(preferences); 
+        ImageView prefIm = new ImageView(preferences);
         prefIm.setFitHeight(tailleDeCase/2);
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
@@ -91,67 +92,67 @@ public class InterfaceCharger extends Parent {
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToRegles();
+                controller.goToRegles();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
             pane.getChildren().add(pref);*/
-            
-            Preferences p = new Preferences(primaryStage, i, "charger");
+
+            Preferences p = new Preferences(primaryStage, controller, "charger");
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
         pane.getChildren().add(Preferences);
-        
+
         StackPane Plein = new StackPane();
         Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein); 
+        ImageView pleinIm = new ImageView(plein);
         pleinIm.setFitHeight(tailleDeCase/2);
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran=1;
+            controller.pleinEcran=1;
             primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
         AnchorPane.setRightAnchor(Plein, (double) 10);
         AnchorPane.setTopAnchor(Plein, (double) 5);
         pane.getChildren().add(Plein);
-        
+
         StackPane Menu = new StackPane();
         Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
-        ImageView menuIm = new ImageView(menu); 
+        ImageView menuIm = new ImageView(menu);
         menuIm.setFitHeight(tailleDeCase/2);
         menuIm.setFitWidth(tailleDeCase/2*1.07);
         Menu.getChildren().add(menuIm);
         Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToMenu();
+            controller.goToMenu();
         });
         AnchorPane.setLeftAnchor(Menu, (double) 5);
         AnchorPane.setTopAnchor(Menu, (double) 5);
         pane.getChildren().add(Menu);
-        
+
         BorderPane choisir = new BorderPane();
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
         Button valider = new Button();
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             choix.setText("Choisissez la partie à charger");
             valider.setText("Valider");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             choix.setText("Choose the game to load");
             valider.setText("Commit");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             choix.setText("Scegliere partita salvata");
             valider.setText("Invio");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             choix.setText("Выберите игру для загрузки");
             valider.setText("Подтвердить");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             choix.setText("Gespeichertes Spiel wählen");
             valider.setText("Bestätigen");
         }
@@ -159,25 +160,25 @@ public class InterfaceCharger extends Parent {
         choix.setAlignment(Pos.CENTER);
         choix.setMinSize(width/60, 30);
         choix.setMaxSize(width/2, 70);
-        
+
         final ComboBox parties = new ComboBox();
         for(int j=0; j< 10; j++){
             parties.getItems().add(j);
         }
-       
+
         AnchorPane.setTopAnchor(choix, (double) height/10);
         AnchorPane.setLeftAnchor(choix, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(choix, (double) tailleDeCase*2);
         //AnchorPane.setBottomAnchor(choix, (double) height/1.1);
         pane.getChildren().add(choix);
-        
+
         AnchorPane.setTopAnchor(parties, (double) height/4);
         AnchorPane.setLeftAnchor(parties, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(parties, (double) tailleDeCase*2);
         //AnchorPane.setBottomAnchor(parties, (double) height/1.3);
         pane.getChildren().add(parties);
-        
-        
+
+
         valider.setFont(new Font(police, width/35));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);
@@ -197,20 +198,15 @@ public class InterfaceCharger extends Parent {
         //AnchorPane.setTopAnchor(valider, (double) height - 100);
         AnchorPane.setLeftAnchor(valider, (double) tailleDeCase*3);
         AnchorPane.setRightAnchor(valider, (double) tailleDeCase*3);
-        
+
 
         pane.getChildren().add(valider);
-        
-        
-        
-        
-        
-        
+
         this.getChildren().add(pane);
     }
 
-   
 
-   
-    
+
+
+
 }

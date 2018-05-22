@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import hive.vue.Bouton;
 import javafx.geometry.Pos;
@@ -29,33 +30,34 @@ import javafx.stage.Stage;
  */
 public class InterfaceStatistiques extends Parent {
 
-    public InterfaceStatistiques(Stage primaryStage, TheHives i) {
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        DropShadow shadow = new DropShadow();
-        int tailleDeCase = width/8;
-        int maxJoueur = (int) ((int) width/2.5);
-        int minJoueur = maxJoueur/2;
-       
-        if(i.pleinEcran==1){
+
+    public InterfaceStatistiques(Stage primaryStage, Controller controller) {
+      int height = (int) primaryStage.getHeight();
+      int width = (int) primaryStage.getWidth();
+      DropShadow shadow = new DropShadow();
+      int tailleDeCase = width/8;
+      int maxJoueur = (int) ((int) width/2.5);
+      int minJoueur = maxJoueur/2;
+        if(controller.pleinEcran==1){
+
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
             police = "Papyrus";
         }
-        
+
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
-        
+
         CacheImage c = new CacheImage();
         Image fond;
-        if(i.type=="jour"){
+        if(controller.typeTheme=="jour"){
             fond = c.getImage("Design/Fond/fondMontagne.png");
         }
         else{
@@ -69,10 +71,11 @@ public class InterfaceStatistiques extends Parent {
         AnchorPane.setTopAnchor(fondIm, (double) 0);
         AnchorPane.setBottomAnchor(fondIm, (double) 0);
         pane.getChildren().add(fondIm);
-        
+
+
         StackPane Preferences = new StackPane();
         Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
-        ImageView prefIm = new ImageView(preferences); 
+        ImageView prefIm = new ImageView(preferences);
         prefIm.setFitHeight(tailleDeCase/2);
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
@@ -87,61 +90,62 @@ public class InterfaceStatistiques extends Parent {
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToRegles();
+                controller.goToRegles();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
             pane.getChildren().add(pref);*/
-            
-            Preferences p = new Preferences(primaryStage, i, "stat");
+
+            Preferences p = new Preferences(primaryStage, controller, "stat");
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
         pane.getChildren().add(Preferences);
-        
+
         StackPane Plein = new StackPane();
         Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein); 
+        ImageView pleinIm = new ImageView(plein);
         pleinIm.setFitHeight(tailleDeCase/2);
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran=1;
+            controller.pleinEcran=1;
             primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
         AnchorPane.setRightAnchor(Plein, (double) 10);
         AnchorPane.setTopAnchor(Plein, (double) 5);
         pane.getChildren().add(Plein);
-        
+
+
         StackPane Menu = new StackPane();
         Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
-        ImageView menuIm = new ImageView(menu); 
+        ImageView menuIm = new ImageView(menu);
         menuIm.setFitHeight(tailleDeCase/2);
         menuIm.setFitWidth(tailleDeCase/2*1.07);
         Menu.getChildren().add(menuIm);
         Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToMenu();
+            controller.goToMenu();
         });
         AnchorPane.setLeftAnchor(Menu, (double) 5);
         AnchorPane.setTopAnchor(Menu, (double) 5);
         pane.getChildren().add(Menu);
-        
+
         Label stat = new Label();
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             stat.setText("Statistiques");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             stat.setText("Statistics");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             stat.setText("Statistiche");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             stat.setText("Статистика");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             stat.setText("Statistik");
         }
         stat.setFont(new Font(police, width/35));
@@ -152,11 +156,11 @@ public class InterfaceStatistiques extends Parent {
         AnchorPane.setLeftAnchor(stat, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(stat, (double) tailleDeCase*2);
         pane.getChildren().add(stat);
-        
+
         ListView<GridPane> liste = new ListView<>();
-        
-        
-        
+
+
+
         for(int j=0; j<10;j++){
             GridPane statistiques = new GridPane();int ligne = 100/2;
             int colonne = 100/2;
@@ -208,17 +212,17 @@ public class InterfaceStatistiques extends Parent {
             statistiques.add(s2, 1, 1);
             liste.getItems().add(statistiques);
         }
-        
-       
-        
+
+
+
         AnchorPane.setTopAnchor(liste, (double) tailleDeCase);
         AnchorPane.setLeftAnchor(liste, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(liste, (double) tailleDeCase*2);
         AnchorPane.setBottomAnchor(liste, (double) tailleDeCase);
         pane.getChildren().add(liste);
        // pane.getChildren().add(statistiques);
-        
+
         this.getChildren().add(pane);
     }
-    
+
 }
