@@ -9,8 +9,6 @@ import static hive.model.players.decisions.cerveau.RepertoryFamily.repertory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -29,20 +27,16 @@ public final class Mate {
         return nbSon;
     }
 
-    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father,ArrayList<Integer> brother, int numberSon) {
+    public Mate(ArrayList<Integer> mother, ArrayList<Integer> father,ArrayList<Integer> brother, int numberSon) throws IOException {
         nbSon = numberSon;
-        try {
-            init(numberSon);
-            son[0] = mother;
-            son[1] = father;
-            son[2] = brother;
-            Mates(mother, father, (numberSon/3)-1, 3);
-            Mates(mother, brother, (numberSon/3)-1,6);
-            Mates(mother, father, (numberSon/3)-1, 9);
-            repertory(son);
-        } catch (IOException ex) {
-            Logger.getLogger(Mate.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        init(numberSon);
+        son[0] = mother;
+        son[1] = father;
+        son[2] = brother;
+        Mates(mother, father, (numberSon/3)-1, 3);
+        Mates(mother, brother, (numberSon/3)-1,6);
+        Mates(brother, father, (numberSon/3)-1, 9);
+        repertory(son,"Family.txt");
     }
 
     public void Mates(ArrayList<Integer> mother, ArrayList<Integer> father, int nbSon, int from) {

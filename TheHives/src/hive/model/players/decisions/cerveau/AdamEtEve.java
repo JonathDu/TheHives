@@ -56,6 +56,13 @@ public class AdamEtEve {
         }
         return salut;
     }
-    
+    public EvaluationLearning[] initGeneration(String Dossier) {
+        EvaluationLearning[] salut = new EvaluationLearning[15];
+        for (int i = 0; i < nbSon; i++) {
+                salut[i]=new EvaluationLearning("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
+                System.out.println("C'est initialisé");
+        }
+        return salut;
+    }
 }
 

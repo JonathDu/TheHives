@@ -17,8 +17,8 @@ import java.util.ArrayList;
  */
 public class RepertoryFamily {
     
-    public static void repertory(ArrayList<Integer>[] family) throws FileNotFoundException, IOException {
-        FileWriter fos = new FileWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\family.txt");
+    public static void repertory(ArrayList<Integer>[] family,String nom) throws FileNotFoundException, IOException {
+        FileWriter fos = new FileWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom, true);
         // ecriture de la mere 
         fos.write("     mere : ");
         for(int i =0; i< family[0].size();i++){
@@ -29,16 +29,26 @@ public class RepertoryFamily {
         for(int i =0; i< family[1].size();i++){
             fos.write(family[1].get(i)+" ");
         }
+        fos.write("     brother : ");
+        // ecriture des fils 
+        for(int i =0; i< family[2].size();i++){
+            fos.write(family[1].get(i)+" ");
+        }
         fos.write("     \nfils : \n");
         //les fils :
-        for(int j=2;j<family.length;j++){
+        for(int j=3;j<family.length;j++){
             for(int i =0; i< family[1].size();i++){
                 fos.write(family[1].get(i)+" ");
+                if (j%3==2)
+                    fos.write("\n");
             }
             fos.write("     ");
         }
-        
+        fos.write("\n\n\n");
         
     }
-    
+    public static void clearFile(String nom) throws IOException{
+        FileWriter fos = new FileWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);
+        fos.write("");      
+    }
 }
