@@ -93,8 +93,6 @@ public class InterfaceRuche extends Parent {
 
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
-                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_RELEASED, handler);
-                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_DRAGGED, handler);
                 
             }
         }

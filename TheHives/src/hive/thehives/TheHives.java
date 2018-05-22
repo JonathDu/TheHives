@@ -11,6 +11,7 @@ import hive.vue.InterfaceCharger;
 import hive.model.board.Board;
 import hive.model.board.TilesStack;
 import hive.model.game.DefaultGame;
+import hive.model.game.Game;
 import hive.model.players.PlayerCollection;
 import hive.vue.CacheImage;
 import hive.vue.InterfaceMenu;
@@ -98,8 +99,6 @@ public class TheHives extends Application {
     public void goToPlateau(String nomJoueur1, String nomJoueur2) {
         this.scene = new Scene(new InterfacePlateau(DefaultGame.getCollection(), DefaultGame.getCollection(), this.cache, this, primaryStage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         String css = this.getClass().getResource("style.css").toExternalForm();
-
-
 
         this.scene.getStylesheets().add(css);
         changeScene();

@@ -16,11 +16,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -41,6 +44,7 @@ public class InterfacePlateauMain extends Parent {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
+        StackPane affichageJoueur = new StackPane();
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
         this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
@@ -51,16 +55,26 @@ public class InterfacePlateauMain extends Parent {
         pions.setPadding(new Insets(35));
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_RELEASED, new TileMainHandler(controller, plateau, color, type));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_PRESSED, new TileMainHandler(controller, plateau, color, type));
             pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, type));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_DRAGGED, new TileMainHandler(controller, plateau, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
 
+        ImageView panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
+        panneau.setFitWidth(100);
+//        panneau.setPreserveRatio(true);
+        panneau.setFitHeight(50);
+        panneau.setSmooth(true);
+        this.nomJoueur.setTextFill(Color.WHITE);
+        this.nomJoueur.setWrapText(true);
+        this.nomJoueur.setFont(new Font(20));
+        affichageJoueur.getChildren().add(panneau);
+        affichageJoueur.getChildren().add(this.nomJoueur);
+
+        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+
         pions.setBackground(new Background(bf));
 
-        pions.getChildren().add(this.nomJoueur);
+        pions.getChildren().add(affichageJoueur);
         pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
     }

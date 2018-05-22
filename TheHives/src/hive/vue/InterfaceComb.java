@@ -56,10 +56,6 @@ public class InterfaceComb extends Parent {
         for (int i = 0; i < comb.value().size(); i++) {
             pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
             pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_PRESSED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_RELEASED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-
             this.getChildren().add(pions.get(i));
         }
 

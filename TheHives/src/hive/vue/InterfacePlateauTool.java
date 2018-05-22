@@ -6,9 +6,12 @@
 package hive.vue;
 
 import hive.thehives.TheHives;
+import java.io.IOException;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -42,7 +45,7 @@ public class InterfacePlateauTool extends Parent {
     HBox droite;
     String j1;
     String j2;
-    
+
     int width;
     int tailleDeCase;
 
@@ -75,6 +78,19 @@ public class InterfacePlateauTool extends Parent {
             i.goToMenu();
         });
 
+        boutonRegle.setOnMouseClicked(value -> {
+
+            Stage primaryStage = new Stage();
+            Parent root;
+            root = new InterfaceRegles(stage, i, true);
+            primaryStage.setTitle("Regles");
+            primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.show();
+            // Hide this current window (if this is what you want)
+            //((Node) (value.getSource())).getScene().getWindow().hide();
+
+        });
+
         boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             Preferences p = new Preferences(stage, i);
             pane.getChildren().add(p);
@@ -99,8 +115,6 @@ public class InterfacePlateauTool extends Parent {
             stage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
 
-
-        
         Group g = new Group();
         g.getChildren().add(centre);
         pane.setLeft(gauche);
@@ -122,8 +136,8 @@ public class InterfacePlateauTool extends Parent {
         Button bouton = new Button();
         ImageView image;
         image = new ImageView(c.getImage("Design/FenetrePlateau/" + path));
-        image.setFitHeight(tailleDeCase/2);
-        image.setFitWidth(tailleDeCase/2*1.07);
+        image.setFitHeight(tailleDeCase / 2);
+        image.setFitWidth(tailleDeCase / 2 * 1.07);
         image.setSmooth(true);
         image.setCache(true);
         bouton.setGraphic(image);
