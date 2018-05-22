@@ -48,19 +48,19 @@ public class HivePutRules implements PutRules, Serializable
         TilesInfluence current_occurences = state.data.influences.get(state.turn.getCurrent().color);
         TilesInfluence opponent_occurences = state.data.influences.get(state.turn.getOpponent().color);
         
-        Set<Map.Entry<Honeycomb, AtomicInteger>> mapping = current_occurences.entrySet();
+        Set<Map.Entry<Honeycomb, Integer>> mapping = current_occurences.entrySet();
         
         // iterates on current influenced combs
-        Iterator<Map.Entry<Honeycomb, AtomicInteger>> iterator = mapping.iterator();
+        Iterator<Map.Entry<Honeycomb, Integer>> iterator = mapping.iterator();
         while(iterator.hasNext())
         {
-            Map.Entry<Honeycomb, AtomicInteger> pair = iterator.next();
+            Map.Entry<Honeycomb, Integer> pair = iterator.next();
             // the comb must be empty to put a tile (influenced combs may be occupied by current or opponent tiles)
             if(!pair.getKey().value().isEmpty())
                 continue;
             
             // if it's not influenced, the pair <comb, 0> should not be contained in the map, otherwise we find a positive value
-            assert pair.getValue().get() > 0;
+            assert pair.getValue() > 0;
             
             // the comb must not be in conflict with opponents tiles
             if(opponent_occurences.containsKey(pair.getKey()))

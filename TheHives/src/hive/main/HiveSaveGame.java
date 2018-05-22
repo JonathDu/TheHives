@@ -82,7 +82,7 @@ public class HiveSaveGame
         {
             int k = 0;
             GameStatus status;
-            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && k < n)
+            while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES && k++ < n)
                 progress.doAction();
 
             switch(status)

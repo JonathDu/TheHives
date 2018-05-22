@@ -5,7 +5,6 @@
  */
 package hive.model.game.utildata;
 
-import hive.model.board.Honeycomb;
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
 

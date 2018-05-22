@@ -63,5 +63,7 @@ public class HiveSave
         System.out.println(res.state.board.hexagons);
         System.out.println(game.state.data.tiles);
         System.out.println(res.state.data.tiles);
+        System.out.println(game.state.data.influences);
+        System.out.println(res.state.data.influences);
     }
 }

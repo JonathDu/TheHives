@@ -47,8 +47,6 @@ public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGrap
     
     public final void setHexagons()
     {
-        System.out.println(dim);
-        System.out.println(maker.dim);
         for (int y = 0; y < dim.y; ++y)
         {
             for (int x = 0; x < dim.x; ++x)
