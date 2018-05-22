@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import hive.vue.Bouton;
 import javafx.geometry.Pos;
@@ -25,8 +26,8 @@ import javafx.stage.Stage;
  */
 public class InterfaceStatistiques extends Parent {
 
-    public InterfaceStatistiques(Stage primaryStage, TheHives i) {
-        if(i.pleinEcran==1){
+    public InterfaceStatistiques(Stage primaryStage, Controller controller) {
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
             
@@ -44,16 +45,16 @@ public class InterfaceStatistiques extends Parent {
         int minJoueur = maxJoueur/2;
         
         Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "stat");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "stat");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "stat");
+        Bouton preferences = new Bouton(primaryStage, controller, "preferences", pane, "stat");
+        Bouton sortie = new Bouton(primaryStage, controller, "sortie", pane, "stat");
+        Bouton ecran = new Bouton(primaryStage, controller, "ecran", pane, "stat");
         utiles3.getChildren().addAll(preferences, sortie, ecran);
         AnchorPane.setRightAnchor(utiles3, (double) 0);
         AnchorPane.setTopAnchor(utiles3, (double) 0);
         pane.getChildren().add(utiles3);
         
         Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "stat");
+        Bouton menu = new Bouton(primaryStage, controller, "menu", pane, "stat");
         utiles1.getChildren().addAll(menu);
         
         AnchorPane.setLeftAnchor(utiles1, (double) 0);
@@ -61,19 +62,19 @@ public class InterfaceStatistiques extends Parent {
         pane.getChildren().add(utiles1);
         
         Label stat = new Label();
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             stat.setText("Statistiques");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             stat.setText("Statistics");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             stat.setText("Statistiche");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             stat.setText("Статистика");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             stat.setText("Statistik");
         }
         stat.setFont(new Font("Copperplate", width/35));

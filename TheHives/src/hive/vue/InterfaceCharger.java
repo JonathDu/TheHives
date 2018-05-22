@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -28,9 +29,9 @@ import javafx.scene.layout.AnchorPane;
 public class InterfaceCharger extends Parent {
 
     
-    public InterfaceCharger(Stage primaryStage, TheHives i) throws IOException {
+    public InterfaceCharger(Stage primaryStage, Controller controller) throws IOException {
         
-        if(i.pleinEcran==1){
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
@@ -44,16 +45,16 @@ public class InterfaceCharger extends Parent {
         int tailleDeCase = width/8;
         
         Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "charger");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "charger");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "charger");
+        Bouton preferences = new Bouton(primaryStage, controller, "preferences", pane, "charger");
+        Bouton sortie = new Bouton(primaryStage, controller, "sortie", pane, "charger");
+        Bouton ecran = new Bouton(primaryStage, controller, "ecran", pane, "charger");
         utiles3.getChildren().addAll(preferences, sortie, ecran);
         AnchorPane.setRightAnchor(utiles3, (double) 0);
         AnchorPane.setTopAnchor(utiles3, (double) 0);
         pane.getChildren().add(utiles3);
         
         Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "charger");
+        Bouton menu = new Bouton(primaryStage, controller, "menu", pane, "charger");
         utiles1.getChildren().addAll(menu);
         
         AnchorPane.setLeftAnchor(utiles1, (double) 0);
@@ -63,23 +64,23 @@ public class InterfaceCharger extends Parent {
         BorderPane choisir = new BorderPane();
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
         Button valider = new Button();
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             choix.setText("Choisissez la partie à charger");
             valider.setText("Valider");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             choix.setText("Choose the game to load");
             valider.setText("Commit");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             choix.setText("Scegliere partita salvata");
             valider.setText("Invio");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             choix.setText("Выберите игру для загрузки");
             valider.setText("Подтвердить");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             choix.setText("Gespeichertes Spiel wählen");
             valider.setText("Bestätigen");
         }

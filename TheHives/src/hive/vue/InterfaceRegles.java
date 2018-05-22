@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.awt.Dimension;
 import javafx.geometry.Pos;
@@ -30,8 +31,8 @@ import javafx.stage.Stage;
  */
 public class InterfaceRegles extends Parent {
 
-    public InterfaceRegles(Stage primaryStage, TheHives i) {
-        if(i.pleinEcran==1){
+    public InterfaceRegles(Stage primaryStage, Controller controller) {
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
@@ -39,15 +40,15 @@ public class InterfaceRegles extends Parent {
         
         
         String rep;
-        if(i.langue == "Русский"){
-            rep = i.langue; 
+        if(controller.langue == "Русский"){
+            rep = controller.langue; 
         }
         else{
             rep = "Français";
         }
         
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
@@ -81,7 +82,7 @@ public class InterfaceRegles extends Parent {
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, i);
+            Preferences p = new Preferences(primaryStage, controller);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -91,7 +92,7 @@ public class InterfaceRegles extends Parent {
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToRegles();
+                controller.goToRegles();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
@@ -108,7 +109,7 @@ public class InterfaceRegles extends Parent {
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran=1;
+            controller.pleinEcran=1;
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
         });
@@ -123,7 +124,7 @@ public class InterfaceRegles extends Parent {
         menuIm.setFitWidth(tailleDeCase/2*1.07);
         Menu.getChildren().add(menuIm);
         Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToMenu();
+            controller.goToMenu();
         });
         AnchorPane.setLeftAnchor(Menu, (double) 5);
         AnchorPane.setTopAnchor(Menu, (double) 5);
@@ -142,7 +143,7 @@ public class InterfaceRegles extends Parent {
         Label sauterelle = new Label();
         Label scarabee = new Label();
         Label exception = new Label();
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             //regles.setText("Règles");
             but.setText("But du jeu");
             debut.setText("Début de partie");
@@ -155,7 +156,7 @@ public class InterfaceRegles extends Parent {
             scarabee.setText("Scarabee");
             exception.setText("Exception");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             //regles.setText("Rules");
             but.setText("Games purpose");
             debut.setText("Start of the game");
@@ -168,7 +169,7 @@ public class InterfaceRegles extends Parent {
             scarabee.setText("Beetle");
             exception.setText("Exception");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
            // regles.setText("Regoli");
             but.setText("L'obiettivo");// del gioco");
             debut.setText("Inizio del gioco");
@@ -181,7 +182,7 @@ public class InterfaceRegles extends Parent {
             scarabee.setText("Scarabeo");
             exception.setText("Eccezione");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             //regles.setText("Правила");
             but.setText("Цель игры");
             debut.setText("Начало игры");
@@ -194,7 +195,7 @@ public class InterfaceRegles extends Parent {
             scarabee.setText("Жук");
             exception.setText("Исключение");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             //regles.setText("Regeln");
             but.setText("Ziel des Spiels");
             debut.setText("Spielbeginn");

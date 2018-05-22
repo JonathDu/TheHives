@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.gamescene.game.handlers;
+package hive.controller.plateauscene.game.mousehandlers;
 
-import hive.controller.gamescene.game.GameController;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.game.Game;
 import hive.vue.InterfacePlateau;
 import javafx.event.EventHandler;

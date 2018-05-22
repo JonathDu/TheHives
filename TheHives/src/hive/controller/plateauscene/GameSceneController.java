@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.gamescene;
+package hive.controller.plateauscene;
 
-import hive.controller.gamescene.game.ActionBuilder;
-import hive.controller.gamescene.game.GameController;
+import hive.controller.plateauscene.game.ActionBuilder;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.GameProgress;
 
 /**

@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -18,12 +19,12 @@ import javafx.stage.Stage;
  */
 class RadioBouton extends ToggleButton{
     Stage primaryStage;
-    TheHives i;
+    Controller controller;
     
     
-    RadioBouton(Stage primaryStage, TheHives i) {
+    RadioBouton(Stage primaryStage, Controller controller) {
         this.primaryStage = primaryStage;
-        this.i = i;
+        this.controller = controller;
         
     }
     
@@ -37,7 +38,7 @@ class RadioBouton extends ToggleButton{
         CacheImage c = new CacheImage();
         
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
@@ -105,19 +106,19 @@ class RadioBouton extends ToggleButton{
             flecheImNG.setFitWidth(flecheLargeur);
             bouton.setGraphic(flecheImNG);*/
             bouton.setUserData("facile");
-            if(i.langue=="Français"){
+            if(controller.langue=="Français"){
                 bouton.setText("Facile");
             }
-            else if(i.langue=="English"){
+            else if(controller.langue=="English"){
                 bouton.setText("Easy");
             }
-            else if(i.langue=="Italiano"){
+            else if(controller.langue=="Italiano"){
                 bouton.setText("Facile");
             }
-            else if(i.langue=="Русский"){
+            else if(controller.langue=="Русский"){
                 bouton.setText("Легкий");
             }
-            else if(i.langue=="Deutsch"){
+            else if(controller.langue=="Deutsch"){
                 bouton.setText("Einfach");
             }
             bouton.setFont(new Font(police, tailleDeCase/7));
@@ -133,19 +134,19 @@ class RadioBouton extends ToggleButton{
             }*/
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
-            if(i.langue=="Français"){
+            if(controller.langue=="Français"){
                 bouton.setText("Moyenne");
             }
-            else if(i.langue=="English"){
+            else if(controller.langue=="English"){
                 bouton.setText("Medium");
             }
-            else if(i.langue=="Italiano"){
+            else if(controller.langue=="Italiano"){
                 bouton.setText("Media");
             }
-            else if(i.langue=="Русский"){
+            else if(controller.langue=="Русский"){
                 bouton.setText("Средний");
             }
-            else if(i.langue=="Deutsch"){
+            else if(controller.langue=="Deutsch"){
                 bouton.setText("Normal");
             }
             bouton.setFont(new Font(police, tailleDeCase/7));
@@ -161,19 +162,19 @@ class RadioBouton extends ToggleButton{
             }*/
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
-            if(i.langue=="Français"){
+            if(controller.langue=="Français"){
             bouton.setText("Difficile");
             }
-            else if(i.langue=="English"){
+            else if(controller.langue=="English"){
                 bouton.setText("Hard");
             }
-            else if(i.langue=="Italiano"){
+            else if(controller.langue=="Italiano"){
                 bouton.setText("Difficile");
             }
-            else if(i.langue=="Русский"){
+            else if(controller.langue=="Русский"){
                 bouton.setText("Сложный");
             }
-            else if(i.langue=="Deutsch"){
+            else if(controller.langue=="Deutsch"){
                 bouton.setText("Schwer");
             }
             bouton.setFont(new Font(police, tailleDeCase/7));

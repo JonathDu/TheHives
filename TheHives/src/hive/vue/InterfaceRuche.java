@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.handlers.SocleHandler;
-import hive.controller.gamescene.game.GameController;
+import hive.controller.plateauscene.game.mousehandlers.SocleHandler;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
 import javafx.scene.Parent;
@@ -29,11 +29,11 @@ public class InterfaceRuche extends Parent {
     private int longueurPion = 40;
     int width, height;
 
-    private GameController controller;
+    private GameController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
-    public InterfaceRuche(CacheImage c, GameController controller) {
+    public InterfaceRuche(CacheImage c, GameController plateauController) {
 //        this.width = width;
 //        this.height = height;
 //
@@ -46,10 +46,10 @@ public class InterfaceRuche extends Parent {
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
-        this.board = controller.progress.game.state.board;
-        this.controller = controller;
-        hauteur = controller.progress.game.state.board.getData().sizeY();
-        largeur = controller.progress.game.state.board.getData().sizeX();
+        this.board = plateauController.progress.game.state.board;
+        this.plateauController = plateauController;
+        hauteur = plateauController.progress.game.state.board.getData().sizeY();
+        largeur = plateauController.progress.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
@@ -91,7 +91,7 @@ public class InterfaceRuche extends Parent {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
-                SocleHandler handler = new SocleHandler(controller, plateau, pos);
+                SocleHandler handler = new SocleHandler(plateauController, plateau, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_RELEASED, handler);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_DRAGGED, handler);
@@ -109,11 +109,11 @@ public class InterfaceRuche extends Parent {
     }
 
     public void majSource(Cell source) {
-        tab.getAt(source.comb.pos).majComb(source.comb, plateau, controller);
+        tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
     }
     
     public void majDestination(Cell destination) {
-        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, controller);
+        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController);
     }
     
     public void majDestinations(ArrayList<Cell> destinations) {
@@ -124,7 +124,7 @@ public class InterfaceRuche extends Parent {
     }
     
     public void majPlacement(Cell placement) {
-        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, controller);
+        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, plateauController);
     }
 
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {

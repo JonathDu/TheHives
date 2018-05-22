@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -28,7 +29,7 @@ import javafx.scene.layout.Pane;
  */
 class Bouton  extends Parent {
 
-    public Bouton(Stage primaryStage, TheHives i, String type, Pane pane, String origin) {
+    public Bouton(Stage primaryStage, Controller controller, String type, Pane pane, String origin) {
         
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
@@ -62,7 +63,7 @@ class Bouton  extends Parent {
             });*/
             bouton.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
                 System.out.println("Menu ! ");
-                i.goToMenu();
+                controller.goToMenu();
             });
             
             
@@ -87,7 +88,7 @@ class Bouton  extends Parent {
                 @Override
                 public void handle(MouseEvent event) {
                     System.out.println("Préférences ! ");
-                    Preferences p = new Preferences(primaryStage, i);
+                    Preferences p = new Preferences(primaryStage, controller);
                     pane.getChildren().add(p);
                     StackPane pref = new StackPane();
                     Image imageQ = new Image(Bouton.this.getClass().getResourceAsStream("rsc/images/exit3.png"));
@@ -100,23 +101,23 @@ class Bouton  extends Parent {
                     pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                         pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
                         if(origin=="menu"){
-                            i.goToMenu();
+                            controller.goToMenu();
                         }
                         else if(origin=="joueurs"){
-                            i.goToChoixJoueur();
+                            controller.goToChoixJoueur();
                         }
                         else if(origin=="charger"){
                             try {
-                                i.goToChargerPartie();
+                                controller.goToChargerPartie();
                             } catch (IOException ex) {
                                 Logger.getLogger(Bouton.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                         else if(origin=="regles"){
-                            i.goToRegles();
+                            controller.goToRegles();
                         }
                         else if(origin=="stat"){
-                            i.goToStat();
+                            controller.goToStat();
                         }
                     });
                     

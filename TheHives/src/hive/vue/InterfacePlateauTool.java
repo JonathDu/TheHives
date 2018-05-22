@@ -5,6 +5,8 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
+import hive.model.players.decisions.Level;
 import hive.thehives.TheHives;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -48,7 +50,7 @@ public class InterfacePlateauTool extends Parent {
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage, TheHives i, String j1, String j2) {
+    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2) {
         width = (int) stage.getWidth();
         tailleDeCase = width / 8;
         this.c = c;
@@ -72,11 +74,11 @@ public class InterfacePlateauTool extends Parent {
         boutonRegle = creerBouton("Boutonlivre.png");
 
         boutonHome.setOnMouseClicked(value -> {
-            i.goToMenu();
+            controller.goToMenu();
         });
 
         boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(stage, i);
+            Preferences p = new Preferences(stage, controller);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -86,7 +88,14 @@ public class InterfacePlateauTool extends Parent {
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size() - 2, pane.getChildren().size());
-                i.goToPlateau(j1, j2);
+                
+                
+                //TODO : A modifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                controller.goToPlateau(j1, j2, Level.EASY, Level.EASY);
+                
+                
+                
+                
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
@@ -94,7 +103,7 @@ public class InterfacePlateauTool extends Parent {
         });
 
         pleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran = 1;
+            controller.pleinEcran = 1;
             stage.setFullScreen(true);
             stage.setFullScreenExitHint("Sortie de plein écran - esc");
         });

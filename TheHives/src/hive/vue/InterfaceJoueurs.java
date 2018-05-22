@@ -5,6 +5,8 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
+import hive.model.players.decisions.Level;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -40,9 +42,9 @@ public class InterfaceJoueurs extends Parent{
     int est_ai_ai=0, est_h_ai=0, est_h_h=0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
-    public InterfaceJoueurs(Stage primaryStage, TheHives i) {
+    public InterfaceJoueurs(Stage primaryStage, Controller controller) {
         
-        if(i.pleinEcran==1){
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
@@ -50,7 +52,7 @@ public class InterfaceJoueurs extends Parent{
         CacheImage c = new CacheImage();
         
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
@@ -84,7 +86,7 @@ public class InterfaceJoueurs extends Parent{
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, i);
+            Preferences p = new Preferences(primaryStage, controller);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -94,7 +96,7 @@ public class InterfaceJoueurs extends Parent{
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToChoixJoueur();
+                controller.goToChoixJoueur();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
@@ -111,7 +113,7 @@ public class InterfaceJoueurs extends Parent{
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran=1;
+            controller.pleinEcran=1;
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
         });
@@ -126,7 +128,7 @@ public class InterfaceJoueurs extends Parent{
         menuIm.setFitWidth(tailleDeCase/2*1.07);
         Menu.getChildren().add(menuIm);
         Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToMenu();
+            controller.goToMenu();
         });
         AnchorPane.setLeftAnchor(Menu, (double) 5);
         AnchorPane.setTopAnchor(Menu, (double) 5);
@@ -152,35 +154,35 @@ public class InterfaceJoueurs extends Parent{
         Label joueur2 = new Label();
         
         Button valider = new Button(); // Invio, Enter Bestätigen
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             joueur1.setText("Joueur 1");
             joueur2.setText("Joueur 2");
             Name1.setPromptText("Votre prenom"); // nome , Name
             Name2.setPromptText("Votre prenom");
             valider.setText("Valider");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             joueur1.setText("Player 1");
             joueur2.setText("Player 2");
             Name1.setPromptText("Name");
             Name2.setPromptText("Name");
             valider.setText("Commit");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             joueur1.setText("Jocatore 1");
             joueur2.setText("Jocatore 2");
             Name1.setPromptText("Nome");
             Name2.setPromptText("Nome");
             valider.setText("Invio");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             joueur1.setText("Игрок 1");
             joueur2.setText("Игрок 2");
             Name1.setPromptText("Имя");
             Name2.setPromptText("Имя");
             valider.setText("Подтвердить");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             joueur1.setText("Spiler 1");
             joueur2.setText("Spiler 2");
             Name1.setPromptText("Name");
@@ -190,7 +192,7 @@ public class InterfaceJoueurs extends Parent{
         
         
         final ToggleGroup j = new ToggleGroup();
-        RadioBouton bouton = new RadioBouton(primaryStage, i);
+        RadioBouton bouton = new RadioBouton(primaryStage, controller);
         ToggleButton humains;
         humains = bouton.creer("humains");
         humains.setBackground(Background.EMPTY);
@@ -575,14 +577,17 @@ public class InterfaceJoueurs extends Parent{
                 }
                 else{
                     joueur_1 = versionIA1;
-                }   
+                }
                 if(Name2.getText()!=null){
                     joueur_2 = Name2.getCharacters().toString();
                 }
                 else{
                     joueur_2 = versionIA2;
                 }   //i.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
-                i.goToPlateau(joueur_1, joueur_2);
+                
+                Level level1 = Level.EASY; //TODO : faire une fonction qui donne le level de l'IA1 et l'IA2
+                Level level2 = Level.EASY;
+                controller.goToPlateau(joueur_1, joueur_2, level1, level2);
                 
         System.out.println(joueur_1);
         System.out.println(joueur_2);

@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.GameController;
-import hive.controller.gamescene.game.handlers.TilePlateauHandler;
+import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateauscene.game.mousehandlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import java.util.ArrayList;
@@ -49,16 +49,16 @@ public class InterfaceComb extends Parent {
 //        this.getChildren().add(this.pions.get(this.pions.size() - 1));
 //    }
 
-    public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController plateauController) {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
         for (int i = 0; i < comb.value().size(); i++) {
             pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_PRESSED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_RELEASED, new TilePlateauHandler(controller, plateau, new Cell(comb, i)));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_PRESSED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
+            pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_RELEASED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
 
             this.getChildren().add(pions.get(i));
         }

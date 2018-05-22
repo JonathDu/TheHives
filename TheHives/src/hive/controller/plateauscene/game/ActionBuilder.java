@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.gamescene.game;
+package hive.controller.plateauscene.game;
 
 import hive.model.board.Cell;
 import hive.model.board.Tile;

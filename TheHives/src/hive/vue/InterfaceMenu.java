@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import javafx.application.Platform;
 import static javafx.geometry.Pos.CENTER;
 import javafx.scene.Group;
@@ -39,7 +40,7 @@ public class InterfaceMenu extends Parent{
     
     Stage stage;
     int pleinEcran = 0;
-    public InterfaceMenu(Stage primaryStage, TheHives i){
+    public InterfaceMenu(Stage primaryStage, Controller controller){
         
         
         int height = (int) primaryStage.getHeight();
@@ -47,12 +48,12 @@ public class InterfaceMenu extends Parent{
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
        
-        if(i.pleinEcran==1){
+        if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
         String police;
-        if(i.langue == "Russe"){
+        if(controller.langue == "Russe"){
             police = "Copperplate";
         }
         else{
@@ -97,35 +98,35 @@ public class InterfaceMenu extends Parent{
         Label credits = new Label();
         Label regles = new Label();
 
-        if(i.langue=="Français"){
+        if(controller.langue=="Français"){
             newGame.setText("Nouvelle partie");
             chargerPartie.setText("Charger Partie");
             statistiques.setText("Statistiques");
             credits.setText("Crèdits");
             regles.setText("Règles");
         }
-        else if(i.langue=="English"){
+        else if(controller.langue=="English"){
             newGame.setText("New Game");
             chargerPartie.setText("Load Game");
             statistiques.setText("Scores");
             credits.setText("Credits");
             regles.setText("Rules");
         }
-        else if(i.langue=="Italiano"){
+        else if(controller.langue=="Italiano"){
             newGame.setText("Nuova Partita");
             chargerPartie.setText("Carica Partita");
             statistiques.setText("Statistica");
             credits.setText("Crediti");
             regles.setText("Regoli");
         }
-        else if(i.langue=="Русский"){
+        else if(controller.langue=="Русский"){
             newGame.setText("Новая Игра");
             chargerPartie.setText("Загрузить Игру");
             statistiques.setText("Статистика");
             credits.setText("Разработчики");
             regles.setText("Правила");
         }
-        else if(i.langue=="Deutsch"){
+        else if(controller.langue=="Deutsch"){
             newGame.setText("Neues Spiel");
             chargerPartie.setText("Spiel Laden");
             statistiques.setText("Statistik");
@@ -149,7 +150,7 @@ public class InterfaceMenu extends Parent{
         Statistiques.getChildren().add(gaucheIm);
         Statistiques.getChildren().add(statistiques);
         Statistiques.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToStat();
+            controller.goToStat();
         });
         AnchorPane.setLeftAnchor(Statistiques, (double) 5);
         AnchorPane.setBottomAnchor(Statistiques, (double) height*0.09);
@@ -166,7 +167,7 @@ public class InterfaceMenu extends Parent{
         Credits.getChildren().add(droiteIm);
         Credits.getChildren().add(credits);
         Credits.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToStat();
+            controller.goToStat();
         });
         AnchorPane.setRightAnchor(Credits, (double) 5);
         AnchorPane.setBottomAnchor(Credits, (double) height*0.09);
@@ -194,7 +195,7 @@ public class InterfaceMenu extends Parent{
         NewGame.getChildren().add(flecheImNG);
         NewGame.getChildren().add(newGame);
         NewGame.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToChoixJoueur();
+            controller.goToChoixJoueur();
         });
         menu_hex.add(NewGame, 0, 1);
         StackPane ChargerPartie = new StackPane();
@@ -208,7 +209,7 @@ public class InterfaceMenu extends Parent{
         ChargerPartie.getChildren().add(chargerPartie);
         ChargerPartie.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             try {
-                i.goToChargerPartie();
+                controller.goToChargerPartie();
             } catch (IOException ex) {
                 Logger.getLogger(InterfaceMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -224,7 +225,7 @@ public class InterfaceMenu extends Parent{
         Regles.getChildren().add(flecheImR);
         Regles.getChildren().add(regles);
         Regles.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToRegles();
+            controller.goToRegles();
         });
         menu_hex.add(Regles, 0, 3);
         hex.getChildren().add(menu_hex);
@@ -237,7 +238,7 @@ public class InterfaceMenu extends Parent{
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, i);
+            Preferences p = new Preferences(primaryStage, controller);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -247,7 +248,7 @@ public class InterfaceMenu extends Parent{
             pref.getChildren().add(ImQ);
             pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
                 pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                i.goToMenu();
+                controller.goToMenu();
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
@@ -264,7 +265,7 @@ public class InterfaceMenu extends Parent{
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.pleinEcran=1;
+            controller.pleinEcran=1;
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
         });

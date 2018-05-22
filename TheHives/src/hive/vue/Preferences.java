@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import java.awt.Dimension;
 import javafx.event.EventHandler;
@@ -38,7 +39,7 @@ import javafx.util.Callback;
  */
 class Preferences extends Parent{
      
-    Preferences(Stage primaryStage, TheHives i){
+    Preferences(Stage primaryStage, Controller controller){
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         int tailleDeCase = width/8;
@@ -105,7 +106,7 @@ class Preferences extends Parent{
         
         final ComboBox<String> choix = new ComboBox<String>();
         choix.getItems().addAll("Français", "English", "Italiano", "Deutsch", "Русский");
-        choix.setValue(i.langue);
+        choix.setValue(controller.langue);
         choix.setCellFactory(
             new Callback<ListView<String>, ListCell<String>>() {
                 @Override public ListCell<String> call(ListView<String> param) {
@@ -219,7 +220,7 @@ class Preferences extends Parent{
             public void handle(MouseEvent event) {
                 System.out.println("Enregistrer ! ");
                 System.out.println(choix.getValue());
-                i.langue = choix.getValue();
+                controller.langue = choix.getValue();
                 System.out.println(aide_oui.isSelected());
                 
             }
