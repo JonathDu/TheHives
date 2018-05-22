@@ -14,6 +14,7 @@ import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,7 +23,7 @@ import java.util.Iterator;
  *
  * @author Thomas
  */
-public class HiveRules implements Rules
+public class HiveRules implements Rules, Serializable
 {
     public HivePutRules put_rules;
     public HiveMoveRules move_rules;
@@ -83,6 +84,8 @@ public class HiveRules implements Rules
         else
             return getPossiblePlacementsConstantTime(state);
     }
+    
+    
 
     @Override
     public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)

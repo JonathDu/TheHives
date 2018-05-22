@@ -25,6 +25,8 @@ public class UtilData
     public ArrayList<Cell> placements; // to register possible placements (for put action) only once, as it does not depend of the tile
     public NbGroupsPerComb nbgroups;
     
+    public UtilData() {} // for serialization
+    
     public UtilData(PositionsPerInsectPerTeam tiles, int nb_tiles, int nb_combs, ActionsTrace trace, TilesInfluencePerTeam influences, NbGroupsPerComb nbgroups)
     {
         this.tiles = tiles;

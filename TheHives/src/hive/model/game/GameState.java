@@ -9,18 +9,21 @@ import hive.model.game.utildata.UtilData;
 import hive.model.board.Board;
 import hive.model.players.Player;
 import hive.model.players.Players;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class GameState
+public class GameState implements Serializable
 {
     public Board board;
     public Players players;
     public PlayerTurn turn;
     
     public UtilData data;
+    
+    public GameState() {} // for serialization
     
     public GameState(Board board, Players players, PlayerTurn turn, UtilData data)
     {

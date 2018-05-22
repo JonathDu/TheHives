@@ -7,15 +7,18 @@ package hive.model.board;
 
 import hive.model.players.TeamColor;
 import hive.model.insects.InsectType;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class Tile
+public class Tile implements Serializable
 {
     public InsectType type;
     public TeamColor color;
+    
+    public Tile() {} // for serialization
     
     public Tile(InsectType type, TeamColor color)
     {

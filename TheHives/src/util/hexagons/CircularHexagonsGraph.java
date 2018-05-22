@@ -5,6 +5,7 @@
  */
 package util.hexagons;
 
+import java.io.Serializable;
 import util.Matrix;
 import util.MatrixElementFactory;
 import util.Vector2i;
@@ -15,12 +16,13 @@ import util.Vector2i;
  * @param <E>
  * @param <H>
  */
-public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<H>
+public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<H> implements Serializable
 {
-
     Matrix<E> matrix;
     Matrix<H> hexagons;
     CircularPositionMaker maker;
+    
+    public CircularHexagonsGraph() {} // for serialization
 
     public CircularHexagonsGraph(Matrix<E> matrix, NeighborsShifter shifter, MatrixElementFactory<H> factory)
     {

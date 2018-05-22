@@ -1,0 +1,2440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.8.0_131" class="java.beans.XMLDecoder">
+ <object class="hive.model.game.Game" id="Game0">
+  <void class="hive.model.game.Game" method="getField">
+   <string>state</string>
+   <void method="set">
+    <object idref="Game0"/>
+    <object class="hive.model.game.GameState" id="GameState0">
+     <void class="hive.model.game.GameState" method="getField">
+      <string>board</string>
+      <void method="set">
+       <object idref="GameState0"/>
+       <object class="hive.model.board.Board"/>
+      </void>
+     </void>
+     <void class="hive.model.game.GameState" method="getField">
+      <string>players</string>
+      <void method="set">
+       <object idref="GameState0"/>
+       <object class="hive.model.players.Players">
+        <void method="add">
+         <object class="hive.model.players.Player" id="Player0">
+          <void class="hive.model.players.Player" method="getField">
+           <string>color</string>
+           <void method="set">
+            <object idref="Player0"/>
+            <object class="java.lang.Enum" id="TeamColor0" method="valueOf">
+             <class>hive.model.players.TeamColor</class>
+             <string>WHITE</string>
+            </object>
+           </void>
+          </void>
+          <void class="hive.model.players.Player" method="getField">
+           <string>decision</string>
+           <void method="set">
+            <object idref="Player0"/>
+            <object class="hive.model.players.decisions.IADecision"/>
+           </void>
+          </void>
+          <void class="hive.model.players.Player" method="getField">
+           <string>collection</string>
+           <void method="set">
+            <object idref="Player0"/>
+            <object class="hive.model.players.PlayerCollection">
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType0" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>QUEEN_BEE</string>
+              </object>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType1" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>SPIDER</string>
+              </object>
+              <int>1</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType2" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>BEETLE</string>
+              </object>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType3" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>GRASSHOPPER</string>
+              </object>
+              <int>2</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType4" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>SOLDIER_ANT</string>
+              </object>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType5" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>MOSQUITO</string>
+              </object>
+              <int>1</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType6" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>LADYBUG</string>
+              </object>
+              <int>1</int>
+             </void>
+             <void method="put">
+              <object class="java.lang.Enum" id="InsectType7" method="valueOf">
+               <class>hive.model.insects.InsectType</class>
+               <string>PILL_BUG</string>
+              </object>
+              <int>1</int>
+             </void>
+            </object>
+           </void>
+          </void>
+         </object>
+        </void>
+        <void method="add">
+         <object class="hive.model.players.Player" id="Player1">
+          <void class="hive.model.players.Player" method="getField">
+           <string>color</string>
+           <void method="set">
+            <object idref="Player1"/>
+            <object class="java.lang.Enum" id="TeamColor1" method="valueOf">
+             <class>hive.model.players.TeamColor</class>
+             <string>BLACK</string>
+            </object>
+           </void>
+          </void>
+          <void class="hive.model.players.Player" method="getField">
+           <string>decision</string>
+           <void method="set">
+            <object idref="Player1"/>
+            <object class="hive.model.players.decisions.IADecision"/>
+           </void>
+          </void>
+          <void class="hive.model.players.Player" method="getField">
+           <string>collection</string>
+           <void method="set">
+            <object idref="Player1"/>
+            <object class="hive.model.players.PlayerCollection">
+             <void method="put">
+              <object idref="InsectType0"/>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType1"/>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType2"/>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType3"/>
+              <int>0</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType4"/>
+              <int>3</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType5"/>
+              <int>1</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType6"/>
+              <int>1</int>
+             </void>
+             <void method="put">
+              <object idref="InsectType7"/>
+              <int>1</int>
+             </void>
+            </object>
+           </void>
+          </void>
+         </object>
+        </void>
+       </object>
+      </void>
+     </void>
+     <void class="hive.model.game.GameState" method="getField">
+      <string>turn</string>
+      <void method="set">
+       <object idref="GameState0"/>
+       <object class="hive.model.game.PlayerTurn"/>
+      </void>
+     </void>
+     <void class="hive.model.game.GameState" method="getField">
+      <string>data</string>
+      <void method="set">
+       <object idref="GameState0"/>
+       <object class="hive.model.game.utildata.UtilData" id="UtilData0">
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>tiles</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <object class="hive.model.game.utildata.PositionsPerInsectPerTeam" id="PositionsPerInsectPerTeam0">
+           <void id="PositionsPerInsect0" method="get">
+            <object idref="TeamColor0"/>
+            <void method="get">
+             <object idref="InsectType0"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell0">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell0"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb0">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb0"/>
+                    <object class="util.Vector2i" id="Vector2i0">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i0"/>
+                       <int>11</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i0"/>
+                       <int>10</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType1"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell1">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell1"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb1">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb1"/>
+                    <object class="util.Vector2i" id="Vector2i1">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i1"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i1"/>
+                       <int>11</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType2"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell2">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell2"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb2">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb2"/>
+                    <object class="util.Vector2i" id="Vector2i2">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i2"/>
+                       <int>14</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i2"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell3">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell3"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb3">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb3"/>
+                    <object class="util.Vector2i" id="Vector2i3">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i3"/>
+                       <int>10</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i3"/>
+                       <int>10</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType3"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell4">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell4"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb4">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb4"/>
+                    <object class="util.Vector2i" id="Vector2i4">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i4"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i4"/>
+                       <int>11</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType4"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell5">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell5"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb5">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb5"/>
+                    <object class="util.Vector2i" id="Vector2i5">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i5"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i5"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell6">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell6"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb6">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb6"/>
+                    <object class="util.Vector2i" id="Vector2i6">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i6"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i6"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell7">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell7"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb7">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb7"/>
+                    <object class="util.Vector2i" id="Vector2i7">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i7"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i7"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+           </void>
+           <void id="PositionsPerInsect1" method="get">
+            <object idref="TeamColor1"/>
+            <void method="get">
+             <object idref="InsectType0"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell8">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell8"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb8">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb8"/>
+                    <object class="util.Vector2i" id="Vector2i8">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i8"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i8"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType1"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell9">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell9"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb9">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb9"/>
+                    <object class="util.Vector2i" id="Vector2i9">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i9"/>
+                       <int>16</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i9"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell10">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell10"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb10">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb10"/>
+                    <object class="util.Vector2i" id="Vector2i10">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i10"/>
+                       <int>15</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i10"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType2"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell11">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell11"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb11">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb11"/>
+                    <object class="util.Vector2i" id="Vector2i11">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i11"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i11"/>
+                       <int>14</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell12">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell12"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb12">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb12"/>
+                    <object class="util.Vector2i" id="Vector2i12">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i12"/>
+                       <int>11</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i12"/>
+                       <int>13</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+            <void method="get">
+             <object idref="InsectType3"/>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell13">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell13"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb13">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb13"/>
+                    <object class="util.Vector2i" id="Vector2i13">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i13"/>
+                       <int>10</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i13"/>
+                       <int>14</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell14">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell14"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb14">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb14"/>
+                    <object class="util.Vector2i" id="Vector2i14">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i14"/>
+                       <int>11</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i14"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+             <void method="add">
+              <object class="hive.model.board.Cell" id="Cell15">
+               <void class="hive.model.board.Cell" method="getField">
+                <string>comb</string>
+                <void method="set">
+                 <object idref="Cell15"/>
+                 <object class="hive.model.board.Honeycomb" id="Honeycomb15">
+                  <void class="hive.model.board.Honeycomb" method="getField">
+                   <string>pos</string>
+                   <void method="set">
+                    <object idref="Honeycomb15"/>
+                    <object class="util.Vector2i" id="Vector2i15">
+                     <void class="util.Vector2" method="getField">
+                      <string>x</string>
+                      <void method="set">
+                       <object idref="Vector2i15"/>
+                       <int>17</int>
+                      </void>
+                     </void>
+                     <void class="util.Vector2" method="getField">
+                      <string>y</string>
+                      <void method="set">
+                       <object idref="Vector2i15"/>
+                       <int>12</int>
+                      </void>
+                     </void>
+                    </object>
+                   </void>
+                  </void>
+                 </object>
+                </void>
+               </void>
+              </object>
+             </void>
+            </void>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>nb_tiles</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <int>16</int>
+         </void>
+        </void>
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>nb_combs</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <int>16</int>
+         </void>
+        </void>
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>trace</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <object class="hive.model.game.ActionsTrace">
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction0">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction0"/>
+               <object idref="Cell5"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction0"/>
+               <object class="hive.model.board.Tile" id="Tile0">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile0"/>
+                  <object idref="InsectType4"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile0"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction1">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction1"/>
+               <object idref="Cell8"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction1"/>
+               <object class="hive.model.board.Tile" id="Tile1">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile1"/>
+                  <object idref="InsectType0"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile1"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction2">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction2"/>
+               <object class="hive.model.board.Cell" id="Cell16">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell16"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb16">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb16"/>
+                     <object class="util.Vector2i" id="Vector2i16">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i16"/>
+                        <int>11</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i16"/>
+                        <int>11</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction2"/>
+               <object class="hive.model.board.Tile" id="Tile2">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile2"/>
+                  <object idref="InsectType0"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile2"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction3">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction3"/>
+               <object idref="Cell12"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction3"/>
+               <object class="hive.model.board.Tile" id="Tile3">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile3"/>
+                  <object idref="InsectType2"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile3"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction4">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction4"/>
+               <object idref="Cell4"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction4"/>
+               <object class="hive.model.board.Tile" id="Tile4">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile4"/>
+                  <object idref="InsectType3"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile4"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction5">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction5"/>
+               <object class="hive.model.board.Cell" id="Cell17">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell17"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb17">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb17"/>
+                     <object class="util.Vector2i" id="Vector2i17">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i17"/>
+                        <int>11</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i17"/>
+                        <int>14</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction5"/>
+               <object class="hive.model.board.Tile" id="Tile5">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile5"/>
+                  <object idref="InsectType2"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile5"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction6">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction6"/>
+               <object idref="Cell1"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction6"/>
+               <object class="hive.model.board.Tile" id="Tile6">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile6"/>
+                  <object idref="InsectType1"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile6"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction0">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction0"/>
+               <object idref="Cell17"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction0"/>
+               <object idref="Cell11"/>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction1">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction1"/>
+               <object idref="Cell16"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction1"/>
+               <object idref="Cell0"/>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction7">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction7"/>
+               <object class="hive.model.board.Cell" id="Cell18">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell18"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb18">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb18"/>
+                     <object class="util.Vector2i" id="Vector2i18">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i18"/>
+                        <int>13</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i18"/>
+                        <int>14</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction7"/>
+               <object class="hive.model.board.Tile" id="Tile7">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile7"/>
+                  <object idref="InsectType1"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile7"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction8">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction8"/>
+               <object idref="Cell2"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction8"/>
+               <object class="hive.model.board.Tile" id="Tile8">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile8"/>
+                  <object idref="InsectType2"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile8"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction9">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction9"/>
+               <object idref="Cell13"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction9"/>
+               <object class="hive.model.board.Tile" id="Tile9">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile9"/>
+                  <object idref="InsectType3"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile9"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction10">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction10"/>
+               <object idref="Cell3"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction10"/>
+               <object class="hive.model.board.Tile" id="Tile10">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile10"/>
+                  <object idref="InsectType2"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile10"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction11">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction11"/>
+               <object class="hive.model.board.Cell" id="Cell19">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell19"/>
+                  <object idref="Honeycomb6"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction11"/>
+               <object class="hive.model.board.Tile" id="Tile11">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile11"/>
+                  <object idref="InsectType3"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile11"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction12">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction12"/>
+               <object class="hive.model.board.Cell" id="Cell20">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell20"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb19">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb19"/>
+                     <object class="util.Vector2i" id="Vector2i19">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i19"/>
+                        <int>11</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i19"/>
+                        <int>9</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction12"/>
+               <object class="hive.model.board.Tile" id="Tile12">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile12"/>
+                  <object idref="InsectType4"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile12"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction2">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction2"/>
+               <object idref="Cell18"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction2"/>
+               <object idref="Cell10"/>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction13">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction13"/>
+               <object class="hive.model.board.Cell" id="Cell21">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell21"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb20">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb20"/>
+                     <object class="util.Vector2i" id="Vector2i20">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i20"/>
+                        <int>14</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i20"/>
+                        <int>11</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction13"/>
+               <object class="hive.model.board.Tile" id="Tile13">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile13"/>
+                  <object idref="InsectType4"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile13"/>
+                  <object idref="TeamColor0"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction14">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction14"/>
+               <object idref="Cell9"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction14"/>
+               <object class="hive.model.board.Tile" id="Tile14">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile14"/>
+                  <object idref="InsectType1"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile14"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction3">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction3"/>
+               <object idref="Cell20"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction3"/>
+               <object class="hive.model.board.Cell" id="Cell22">
+                <void class="hive.model.board.Cell" method="getField">
+                 <string>comb</string>
+                 <void method="set">
+                  <object idref="Cell22"/>
+                  <object class="hive.model.board.Honeycomb" id="Honeycomb21">
+                   <void class="hive.model.board.Honeycomb" method="getField">
+                    <string>pos</string>
+                    <void method="set">
+                     <object idref="Honeycomb21"/>
+                     <object class="util.Vector2i" id="Vector2i21">
+                      <void class="util.Vector2" method="getField">
+                       <string>x</string>
+                       <void method="set">
+                        <object idref="Vector2i21"/>
+                        <int>9</int>
+                       </void>
+                      </void>
+                      <void class="util.Vector2" method="getField">
+                       <string>y</string>
+                       <void method="set">
+                        <object idref="Vector2i21"/>
+                        <int>13</int>
+                       </void>
+                      </void>
+                     </object>
+                    </void>
+                   </void>
+                  </object>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction4">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction4"/>
+               <object idref="Cell19"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction4"/>
+               <object idref="Cell14"/>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction5">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction5"/>
+               <object idref="Cell22"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction5"/>
+               <object idref="Cell7"/>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.PutAction" id="PutAction15">
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>where</string>
+              <void method="set">
+               <object idref="PutAction15"/>
+               <object idref="Cell15"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.PutAction" method="getField">
+              <string>tile</string>
+              <void method="set">
+               <object idref="PutAction15"/>
+               <object class="hive.model.board.Tile" id="Tile15">
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>type</string>
+                 <void method="set">
+                  <object idref="Tile15"/>
+                  <object idref="InsectType3"/>
+                 </void>
+                </void>
+                <void class="hive.model.board.Tile" method="getField">
+                 <string>color</string>
+                 <void method="set">
+                  <object idref="Tile15"/>
+                  <object idref="TeamColor1"/>
+                 </void>
+                </void>
+               </object>
+              </void>
+             </void>
+            </object>
+           </void>
+           <void method="add">
+            <object class="hive.model.players.actions.MoveAction" id="MoveAction6">
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>source</string>
+              <void method="set">
+               <object idref="MoveAction6"/>
+               <object idref="Cell21"/>
+              </void>
+             </void>
+             <void class="hive.model.players.actions.MoveAction" method="getField">
+              <string>destination</string>
+              <void method="set">
+               <object idref="MoveAction6"/>
+               <object idref="Cell6"/>
+              </void>
+             </void>
+            </object>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>influences</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <object class="hive.model.game.utildata.TilesInfluencePerTeam" id="TilesInfluencePerTeam0">
+           <void method="get">
+            <object idref="TeamColor0"/>
+            <void method="put">
+             <object idref="Honeycomb1"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb22">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb22"/>
+                <object class="util.Vector2i" id="Vector2i22">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i22"/>
+                   <int>12</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i22"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb23">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb23"/>
+                <object class="util.Vector2i" id="Vector2i23">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i23"/>
+                   <int>15</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i23"/>
+                   <int>11</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb16"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb18"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb8"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb24">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb24"/>
+                <object class="util.Vector2i" id="Vector2i24">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i24"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i24"/>
+                   <int>11</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb25">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb25"/>
+                <object class="util.Vector2i" id="Vector2i25">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i25"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i25"/>
+                   <int>9</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb3"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb26">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb26"/>
+                <object class="util.Vector2i" id="Vector2i26">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i26"/>
+                   <int>14</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i26"/>
+                   <int>14</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb27">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb27"/>
+                <object class="util.Vector2i" id="Vector2i27">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i27"/>
+                   <int>9</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i27"/>
+                   <int>9</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb28">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb28"/>
+                <object class="util.Vector2i" id="Vector2i28">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i28"/>
+                   <int>9</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i28"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb6"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb14"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb5"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb4"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb20"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb19"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb29">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb29"/>
+                <object class="util.Vector2i" id="Vector2i29">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i29"/>
+                   <int>14</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i29"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb7"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb2"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb11"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb10"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb30">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb30"/>
+                <object class="util.Vector2i" id="Vector2i30">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i30"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i30"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb0"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+           </void>
+           <void method="get">
+            <object idref="TeamColor1"/>
+            <void method="put">
+             <object idref="Honeycomb15"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb31">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb31"/>
+                <object class="util.Vector2i" id="Vector2i31">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i31"/>
+                   <int>16</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i31"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb23"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb13"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb21"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb18"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb16"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb8"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb32">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb32"/>
+                <object class="util.Vector2i" id="Vector2i32">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i32"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i32"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb33">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb33"/>
+                <object class="util.Vector2i" id="Vector2i33">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i33"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i33"/>
+                   <int>12</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb12"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb9"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb34">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb34"/>
+                <object class="util.Vector2i" id="Vector2i34">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i34"/>
+                   <int>17</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i34"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb6"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb14"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb35">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb35"/>
+                <object class="util.Vector2i" id="Vector2i35">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i35"/>
+                   <int>18</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i35"/>
+                   <int>12</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb5"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb36">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb36"/>
+                <object class="util.Vector2i" id="Vector2i36">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i36"/>
+                   <int>12</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i36"/>
+                   <int>15</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb37">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb37"/>
+                <object class="util.Vector2i" id="Vector2i37">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i37"/>
+                   <int>18</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i37"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb38">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb38"/>
+                <object class="util.Vector2i" id="Vector2i38">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i38"/>
+                   <int>9</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i38"/>
+                   <int>14</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb29"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb7"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb2"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb39">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb39"/>
+                <object class="util.Vector2i" id="Vector2i39">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i39"/>
+                   <int>17</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i39"/>
+                   <int>11</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb11"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb40">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb40"/>
+                <object class="util.Vector2i" id="Vector2i40">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i40"/>
+                   <int>16</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i40"/>
+                   <int>11</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb10"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb41">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb41"/>
+                <object class="util.Vector2i" id="Vector2i41">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i41"/>
+                   <int>10</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i41"/>
+                   <int>15</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object idref="Honeycomb17"/>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+            <void method="put">
+             <object class="hive.model.board.Honeycomb" id="Honeycomb42">
+              <void class="hive.model.board.Honeycomb" method="getField">
+               <string>pos</string>
+               <void method="set">
+                <object idref="Honeycomb42"/>
+                <object class="util.Vector2i" id="Vector2i42">
+                 <void class="util.Vector2" method="getField">
+                  <string>x</string>
+                  <void method="set">
+                   <object idref="Vector2i42"/>
+                   <int>15</int>
+                  </void>
+                 </void>
+                 <void class="util.Vector2" method="getField">
+                  <string>y</string>
+                  <void method="set">
+                   <object idref="Vector2i42"/>
+                   <int>13</int>
+                  </void>
+                 </void>
+                </object>
+               </void>
+              </void>
+             </object>
+             <object class="java.util.concurrent.atomic.AtomicInteger"/>
+            </void>
+           </void>
+          </object>
+         </void>
+        </void>
+        <void class="hive.model.game.utildata.UtilData" method="getField">
+         <string>nbgroups</string>
+         <void method="set">
+          <object idref="UtilData0"/>
+          <object class="hive.model.game.utildata.NbGroupsPerComb">
+           <void method="put">
+            <object idref="Honeycomb1"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb5"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb15"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb4"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb13"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb2"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb7"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb11"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb8"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb10"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb12"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb3"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb9"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb6"/>
+            <int>1</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb0"/>
+            <int>2</int>
+           </void>
+           <void method="put">
+            <object idref="Honeycomb14"/>
+            <int>1</int>
+           </void>
+          </object>
+         </void>
+        </void>
+       </object>
+      </void>
+     </void>
+    </object>
+   </void>
+  </void>
+  <void class="hive.model.game.Game" method="getField">
+   <string>rules</string>
+   <void method="set">
+    <object idref="Game0"/>
+    <object class="hive.model.game.rules.HiveRules"/>
+   </void>
+  </void>
+ </object>
+</java>

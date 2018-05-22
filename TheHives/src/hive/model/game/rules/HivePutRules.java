@@ -10,6 +10,7 @@ import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.game.GameState;
 import hive.model.game.utildata.TilesInfluence;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,7 +22,7 @@ import util.hexagons.iterators.NeighborsIterator;
  *
  * @author Thomas
  */
-public class HivePutRules implements PutRules
+public class HivePutRules implements PutRules, Serializable
 {
 
     @Override

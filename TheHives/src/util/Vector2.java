@@ -5,15 +5,19 @@
  */
 package util;
 
+import java.io.Serializable;
+
 /**
  * Vector (x, y) (2 dimensions)
  * @author lucas
  * @param <T>
  */
-public abstract class Vector2<T>
+public abstract class Vector2<T> implements Serializable
 {
     public T x;
     public T y;
+    
+    public Vector2() {} // for serialization
     
     public Vector2(T x, T y)
     {
