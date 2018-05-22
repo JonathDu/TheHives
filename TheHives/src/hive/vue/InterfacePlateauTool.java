@@ -74,7 +74,7 @@ public class InterfacePlateauTool extends Parent {
         });
 
         boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(stage, i);
+            /*Preferences p = new Preferences(stage, i);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -88,7 +88,10 @@ public class InterfacePlateauTool extends Parent {
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);
+            pane.getChildren().add(pref);*/
+            
+            Preferences p = new Preferences(stage, i, "plateau");
+            pane.getChildren().add(p);
         });
 
         pleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {

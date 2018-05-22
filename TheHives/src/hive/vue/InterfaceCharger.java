@@ -15,11 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -30,35 +33,104 @@ public class InterfaceCharger extends Parent {
     
     public InterfaceCharger(Stage primaryStage, TheHives i) throws IOException {
         
+        int height = (int) primaryStage.getHeight();
+        int width = (int) primaryStage.getWidth();
+        DropShadow shadow = new DropShadow();
+        int tailleDeCase = width/8;
+        int maxJoueur = (int) ((int) width/2.5);
+        int minJoueur = maxJoueur/2;
+       
         if(i.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
+        String police;
+        if(i.langue == "Russe"){
+            police = "Copperplate";
+        }
+        else{
+            police = "Papyrus";
+        }
+        
         
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
         
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width/8;
+        CacheImage c = new CacheImage();
+        Image fond;
+        if(i.type=="jour"){
+            fond = c.getImage("Design/Fond/fondMontagne.png");
+        }
+        else{
+            fond = c.getImage("Design/Fond/fondNuit.png");
+        }
+        ImageView fondIm = new ImageView(fond);
+        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
+        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
+        AnchorPane.setRightAnchor(fondIm, (double) 0);
+        AnchorPane.setLeftAnchor(fondIm, (double) 0);
+        AnchorPane.setTopAnchor(fondIm, (double) 0);
+        AnchorPane.setBottomAnchor(fondIm, (double) 0);
+        pane.getChildren().add(fondIm);
         
-        Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "charger");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "charger");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "charger");
-        utiles3.getChildren().addAll(preferences, sortie, ecran);
-        AnchorPane.setRightAnchor(utiles3, (double) 0);
-        AnchorPane.setTopAnchor(utiles3, (double) 0);
-        pane.getChildren().add(utiles3);
+        StackPane Preferences = new StackPane();
+        Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
+        ImageView prefIm = new ImageView(preferences); 
+        prefIm.setFitHeight(tailleDeCase/2);
+        prefIm.setFitWidth(tailleDeCase/2*1.07);
+        Preferences.getChildren().add(prefIm);
+        Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            /*Preferences p = new Preferences(primaryStage, i);
+            pane.getChildren().add(p);
+            StackPane pref = new StackPane();
+            Image imageQ = c.getImage("exit3.png");
+            ImageView ImQ = new ImageView(imageQ);
+            ImQ.setFitHeight(tailleDeCase/2.5);
+            ImQ.setFitWidth(tailleDeCase/2.5);
+            pref.getChildren().add(ImQ);
+            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
+                pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
+                i.goToRegles();
+            });
+            AnchorPane.setRightAnchor(pref, (double) 5);
+            AnchorPane.setTopAnchor(pref, (double) 5);
+            pane.getChildren().add(pref);*/
+            
+            Preferences p = new Preferences(primaryStage, i, "charger");
+            pane.getChildren().add(p);
+        });
+        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
+        AnchorPane.setTopAnchor(Preferences, (double) 5);
+        pane.getChildren().add(Preferences);
         
-        Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "charger");
-        utiles1.getChildren().addAll(menu);
+        StackPane Plein = new StackPane();
+        Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
+        ImageView pleinIm = new ImageView(plein); 
+        pleinIm.setFitHeight(tailleDeCase/2);
+        pleinIm.setFitWidth(tailleDeCase/2*1.07);
+        Plein.getChildren().add(pleinIm);
+        Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.pleinEcran=1;
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
+        });
+        AnchorPane.setRightAnchor(Plein, (double) 10);
+        AnchorPane.setTopAnchor(Plein, (double) 5);
+        pane.getChildren().add(Plein);
         
-        AnchorPane.setLeftAnchor(utiles1, (double) 0);
-        AnchorPane.setTopAnchor(utiles1, (double) 0);
-        pane.getChildren().add(utiles1);
+        StackPane Menu = new StackPane();
+        Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
+        ImageView menuIm = new ImageView(menu); 
+        menuIm.setFitHeight(tailleDeCase/2);
+        menuIm.setFitWidth(tailleDeCase/2*1.07);
+        Menu.getChildren().add(menuIm);
+        Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.goToMenu();
+        });
+        AnchorPane.setLeftAnchor(Menu, (double) 5);
+        AnchorPane.setTopAnchor(Menu, (double) 5);
+        pane.getChildren().add(Menu);
         
         BorderPane choisir = new BorderPane();
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
@@ -83,7 +155,7 @@ public class InterfaceCharger extends Parent {
             choix.setText("Gespeichertes Spiel wählen");
             valider.setText("Bestätigen");
         }
-        choix.setFont(new Font("Copperplate", width/35));
+        choix.setFont(new Font(police, width/35));
         choix.setAlignment(Pos.CENTER);
         choix.setMinSize(width/60, 30);
         choix.setMaxSize(width/2, 70);
@@ -106,8 +178,7 @@ public class InterfaceCharger extends Parent {
         pane.getChildren().add(parties);
         
         
-        DropShadow shadow = new DropShadow();
-        valider.setFont(new Font("Copperplate", width/35));
+        valider.setFont(new Font(police, width/35));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);
         });

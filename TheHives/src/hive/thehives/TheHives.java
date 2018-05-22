@@ -5,6 +5,7 @@
  */
 package hive.thehives;
 
+import hive.vue.InterfaceCredits;
 import hive.vue.InterfaceStatistiques;
 import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceCharger;
@@ -47,6 +48,7 @@ public class TheHives extends Application {
     CacheImage cache;
     public String langue = "Français";
     public int pleinEcran = 0;
+    public String type = "jour";
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -126,9 +128,21 @@ public class TheHives extends Application {
         this.scene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
+    
+    public void goToCredits() {
+        this.scene = new Scene(new InterfaceCredits(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        changeScene();
+    }
 
     public void changeScene() {
-        Image souris = cache.getImage("souris.png");
+        Image souris;
+        /*if(type=="jour"){
+            souris = cache.getImage("AbeilleMiniNoir.png");
+        }
+        else{
+            souris = cache.getImage("AbeilleMiniBlanche.png");
+        }*/
+        souris = cache.getImage("souris.png");
         ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
         this.scene.setCursor(sourisIm);
         //scene.getStylesheets().add("/style.css");
@@ -136,10 +150,12 @@ public class TheHives extends Application {
         Double h = primaryStage.getHeight();
         primaryStage.setScene(scene);
 
+        primaryStage.centerOnScreen();
         primaryStage.setWidth(w);
         primaryStage.setHeight(h);
 
     }
+
 
     
 }

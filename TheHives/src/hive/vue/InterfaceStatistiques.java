@@ -54,7 +54,13 @@ public class InterfaceStatistiques extends Parent {
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
         
         CacheImage c = new CacheImage();
-        Image fond = c.getImage("Design/Fond/fondMontagne.png");
+        Image fond;
+        if(i.type=="jour"){
+            fond = c.getImage("Design/Fond/fondMontagne.png");
+        }
+        else{
+            fond = c.getImage("Design/Fond/fondNuit.png");
+        }
         ImageView fondIm = new ImageView(fond);
         fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
         fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
@@ -71,7 +77,7 @@ public class InterfaceStatistiques extends Parent {
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, i);
+            /*Preferences p = new Preferences(primaryStage, i);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -85,7 +91,10 @@ public class InterfaceStatistiques extends Parent {
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);
+            pane.getChildren().add(pref);*/
+            
+            Preferences p = new Preferences(primaryStage, i, "stat");
+            pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
