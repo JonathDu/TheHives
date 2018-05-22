@@ -20,6 +20,7 @@ import hive.model.players.decisions.cerveau.Mate;
 import static hive.model.players.decisions.cerveau.RepertoryFamily.clearFile;
 import hive.model.players.decisions.cerveau.Selection;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -33,7 +34,7 @@ public class MainLearning {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        int nbFirstChildren = 12;
+        int nbFirstChildren = 3;
         int nbGeneration = 1;
         String dossier[] = new String[2];
         dossier[0]="generationAlpha";
@@ -87,8 +88,10 @@ public class MainLearning {
             select.theBestLoosers(looseTurn);
             int[] winner = select.lesGagnants();
             Mate newGeneration;
-            newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 10);
-            System.out.println("Les fils de la génération suivante : \n" + newGeneration);
+            System.out.println("Les fils de la génération suivante : ");
+            newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 12);
+            
+                    
             evaluations =  AE.initGeneration(dossier[dossierSuivant]);
             dossierSuivant = (dossierSuivant+1)%2;
             nbGeneration--;

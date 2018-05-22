@@ -111,14 +111,12 @@ public class EvaluationLearning {
         Player current = hia.currentPlayer(state);
         ArrayList<Tile> neighboursOpponent = hia.queenNeighbours(opponent, state);
         ArrayList<Tile> neighboursCurrent = hia.queenNeighbours(current, state);
-        Tile tuile;
-        while (!neighboursOpponent.isEmpty()) {
-            tuile = neighboursOpponent.remove(0);
+        
+        for(Tile tuile : neighboursOpponent){
             value += insectsValueNeighboursQueenOpponent(tuile, state);
 
         }
-        while (!neighboursCurrent.isEmpty()) {
-            tuile = neighboursCurrent.remove(0);
+        for(Tile tuile : neighboursCurrent) {
             value -= insectsValueNeighboursQueenCurrent(tuile, state);
 
         }
@@ -126,10 +124,8 @@ public class EvaluationLearning {
     }
 
     int insectsValue(ArrayList<Tile> freeTile) {
-        Tile currentTile;
         int value = 0;
-        while (!freeTile.isEmpty()) {
-            currentTile = freeTile.remove(0);
+        for(Tile currentTile : freeTile)
             switch (currentTile.type) {
                 case QUEEN_BEE:
                     value += evalValues.get(6);
@@ -148,15 +144,13 @@ public class EvaluationLearning {
                     break;
             }
 
-        }
+        
         return value;
     }
 
     int insectsValueBloc(ArrayList<Tile> blocTile) {
-        Tile currentTile;
         int value = 0;
-        while (!blocTile.isEmpty()) {
-            currentTile = blocTile.remove(0);
+        for(Tile currentTile : blocTile)
             switch (currentTile.type) {
                 case QUEEN_BEE:
                     value += evalValues.get(11);
@@ -174,8 +168,6 @@ public class EvaluationLearning {
                     value += evalValues.get(15);
                     break;
             }
-
-        }
         return value;
     }
 

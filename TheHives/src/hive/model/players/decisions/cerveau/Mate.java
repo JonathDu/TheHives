@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public final class Mate {
 
-    ArrayList<Integer>[] son;
+    public ArrayList<Integer>[] son;
     int nbSon;
 
     public ArrayList<Integer>[] getSon() {
@@ -28,23 +28,27 @@ public final class Mate {
     }
 
     public Mate(ArrayList<Integer> mother, ArrayList<Integer> father,ArrayList<Integer> brother, int numberSon) throws IOException {
+        
         nbSon = numberSon;
         init(numberSon);
         son[0] = mother;
         son[1] = father;
         son[2] = brother;
-        Mates(mother, father, (numberSon/3)-1, 3);
-        Mates(mother, brother, (numberSon/3)-1,6);
-        Mates(brother, father, (numberSon/3)-1, 9);
+        Mates(mother, father,3,3);
+        Mates(mother, brother,3,6);
+        Mates(brother, father,3,9);
+        for(int i = 0; i<nbSon;i++){
+            System.out.println(son[i]);
+        }
         repertory(son,"Family.txt");
     }
 
     public void Mates(ArrayList<Integer> mother, ArrayList<Integer> father, int nbSon, int from) {
-        init(15);
+        
         Random rnd = new Random();
         int alea;
         int aleaStat;
-        for (int i = from; i < nbSon+from; i++) { // pour chaque enfant
+        for (int i = from; i < (nbSon+from); i++) { // pour chaque enfant
             for (int j = 0; j < 27; j++) { //pour chaque allèles
                 alea = rnd.nextInt(100);
                 if (alea <= 9) { // mutation
