@@ -16,9 +16,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -40,6 +39,8 @@ public class InterfacePlateauMain extends Parent {
     public boolean isCourant;
     private TeamColor couleur;
     EnumMap<InsectType, InterfacePions> pilesPions;
+    public ImageView afficheTour;
+    private ImageView panneau;
 
     CacheImage c;
 
@@ -62,17 +63,22 @@ public class InterfacePlateauMain extends Parent {
             pions.getChildren().add(pilesPions.get(type));
         }
 
-
-
-        ImageView panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
-        panneau.setFitWidth(100);
-        panneau.setFitHeight(50);
+        panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
+        afficheTour = new ImageView(c.getImage("bee.png"));
+        afficheTour.setFitWidth(30);
+        afficheTour.setPreserveRatio(true);
+        afficheTour.setSmooth(true);
+        StackPane.setAlignment(afficheTour, Pos.TOP_LEFT);
+        StackPane.setAlignment(panneau, Pos.CENTER);
+        panneau.setFitWidth(150);
+        panneau.setFitHeight(60);
         panneau.setSmooth(true);
         this.nomJoueur.setTextFill(Color.WHITE);
         this.nomJoueur.setWrapText(true);
         this.nomJoueur.setFont(new Font(20));
         affichageJoueur.getChildren().add(panneau);
         affichageJoueur.getChildren().add(this.nomJoueur);
+        affichageJoueur.getChildren().add(this.afficheTour);
 
         affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
@@ -94,5 +100,15 @@ public class InterfacePlateauMain extends Parent {
 
     public void maj(Tile tile, int nbTiles) {
         pilesPions.get(tile.type).maj(this.couleur, nbTiles, tile.type);
+    }
+
+    public void setIsCourant(boolean c) {
+        afficheTour.setVisible(c);
+        if (c) {
+            panneau.setEffect(new DropShadow(10, Color.GOLD));
+        } else {
+            panneau.setEffect(new DropShadow(10, Color.TRANSPARENT));
+        }
+
     }
 }
