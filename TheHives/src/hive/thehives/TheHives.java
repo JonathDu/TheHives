@@ -121,6 +121,11 @@ public class TheHives extends Application {
         this.scene = new Scene(new InterfaceRegles(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
         changeScene();
     }
+    
+    public void goToStat() {
+        this.scene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        changeScene();
+    }
 
     public void changeScene() {
         Image souris = cache.getImage("souris.png");
@@ -136,8 +141,5 @@ public class TheHives extends Application {
 
     }
 
-    public void goToStat() {
-        this.scene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
-        changeScene();
-    }
+    
 }

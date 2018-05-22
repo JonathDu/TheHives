@@ -99,7 +99,7 @@ public class InterfaceMenu extends Parent{
 
         if(i.langue=="Français"){
             newGame.setText("Nouvelle partie");
-            chargerPartie.setText("Charger Partie");
+            chargerPartie.setText("Reprendre Partie");
             statistiques.setText("Statistiques");
             credits.setText("Crèdits");
             regles.setText("Règles");
@@ -137,40 +137,6 @@ public class InterfaceMenu extends Parent{
         double flecheHauteur = flecheLargeur/7.24;
         double flecheLargeur_en_bas = width/3;
         double flecheHauteur_en_bas = flecheLargeur_en_bas/5.4;
-        
-        StackPane Statistiques = new StackPane();
-        Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
-        ImageView gaucheIm = new ImageView(gauche); 
-        gaucheIm.setFitHeight(flecheHauteur_en_bas);
-        gaucheIm.setFitWidth(flecheLargeur_en_bas);
-        statistiques.setFont(new Font(police, flecheHauteur_en_bas-10));
-        statistiques.setTextFill(Color.web("#fbe5b5"));
-        statistiques.setAlignment(CENTER);
-        Statistiques.getChildren().add(gaucheIm);
-        Statistiques.getChildren().add(statistiques);
-        Statistiques.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToStat();
-        });
-        AnchorPane.setLeftAnchor(Statistiques, (double) 5);
-        AnchorPane.setBottomAnchor(Statistiques, (double) height*0.09);
-        pane.getChildren().add(Statistiques);
-        
-        StackPane Credits = new StackPane();
-        Image droite = c.getImage("Design/MenuPrincipaux/FlecheEnBasDroite.png");
-        ImageView droiteIm = new ImageView(droite); 
-        droiteIm.setFitHeight(flecheHauteur_en_bas);
-        droiteIm.setFitWidth(flecheLargeur_en_bas);
-        credits.setFont(new Font(police, flecheHauteur_en_bas-10));
-        credits.setTextFill(Color.web("#fbe5b5"));
-        credits.setAlignment(CENTER);
-        Credits.getChildren().add(droiteIm);
-        Credits.getChildren().add(credits);
-        Credits.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            i.goToStat();
-        });
-        AnchorPane.setRightAnchor(Credits, (double) 5);
-        AnchorPane.setBottomAnchor(Credits, (double) height*0.09);
-        pane.getChildren().add(Credits);
         
         GridPane menu_hex = new GridPane();
         int ligne = 100/5;
@@ -272,9 +238,39 @@ public class InterfaceMenu extends Parent{
         AnchorPane.setTopAnchor(Plein, (double) 5);
         pane.getChildren().add(Plein);
         
-       
+        StackPane Statistiques = new StackPane();
+        Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
+        ImageView gaucheIm = new ImageView(gauche);  
+        gaucheIm.setFitHeight(flecheHauteur_en_bas);
+        gaucheIm.setFitWidth(flecheLargeur_en_bas);
+        statistiques.setFont(new Font(police, flecheHauteur-10));
+        statistiques.setTextFill(Color.web("#fbe5b5"));
+        statistiques.setAlignment(CENTER);
+        Statistiques.getChildren().add(gaucheIm);
+        Statistiques.getChildren().add(statistiques);
+        Statistiques.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.goToStat();
+        });
+        AnchorPane.setLeftAnchor(Statistiques, (double) 5);
+        AnchorPane.setBottomAnchor(Statistiques, (double) height*0.12);
+        pane.getChildren().add(Statistiques);
         
-        
+        StackPane Credits = new StackPane();
+        Image droite = c.getImage("Design/MenuPrincipaux/FlecheEnBasDroite.png");
+        ImageView droiteIm = new ImageView(droite); 
+        droiteIm.setFitHeight(flecheHauteur_en_bas);
+        droiteIm.setFitWidth(flecheLargeur_en_bas);
+        credits.setFont(new Font(police, flecheHauteur_en_bas-10));
+        credits.setTextFill(Color.web("#fbe5b5"));
+        credits.setAlignment(CENTER);
+        Credits.getChildren().add(droiteIm);
+        Credits.getChildren().add(credits);
+        Credits.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.goToStat();
+        });
+        AnchorPane.setRightAnchor(Credits, (double) 5);
+        AnchorPane.setBottomAnchor(Credits, (double) height*0.12);
+        pane.getChildren().add(Credits);
         
         
         
