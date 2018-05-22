@@ -30,10 +30,11 @@ public class InterfacePlateauTool extends Parent {
     Button boutonSave;
     Button boutonReplay;
     Button boutonAnnuler;
-    Button boutonRejouer;
+    Button boutonRecommencer;
     Button boutonConseil;
     Button boutonParam;
     Button pleinEcran;
+    Button boutonRegle;
     BorderPane pane;
 
     HBox gauche;
@@ -68,6 +69,7 @@ public class InterfacePlateauTool extends Parent {
         boutonConseil = creerBouton("Ampoule.png");
         boutonReplay = creerBouton("FlecheRedo.png");
         pleinEcran = creerBouton("pleinEcran.png");
+        boutonRegle = creerBouton("Boutonlivre.png");
 
         boutonHome.setOnMouseClicked(value -> {
             i.goToMenu();
@@ -110,6 +112,7 @@ public class InterfacePlateauTool extends Parent {
 
         gauche.getChildren().add(boutonHome);
         gauche.getChildren().add(boutonSave);
+        droite.getChildren().add(boutonRegle);
         droite.getChildren().add(boutonParam);
         droite.getChildren().add(pleinEcran);
         centre.getChildren().add(boutonAnnuler);

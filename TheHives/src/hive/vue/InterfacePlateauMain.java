@@ -51,7 +51,10 @@ public class InterfacePlateauMain extends Parent {
         pions.setPadding(new Insets(35));
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_RELEASED, new TileMainHandler(controller, plateau, color, type));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_PRESSED, new TileMainHandler(controller, plateau, color, type));
             pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(controller, plateau, color, type));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_DRAGGED, new TileMainHandler(controller, plateau, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
 
