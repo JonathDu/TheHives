@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.Evolved;
 
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import static hive.model.players.decisions.EvolvedEvaluation.evolvedEvaluation;
+import static hive.model.players.decisions.Evolved.EvolvedEvaluation.evolvedEvaluation;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;

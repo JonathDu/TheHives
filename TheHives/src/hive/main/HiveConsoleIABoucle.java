@@ -12,7 +12,7 @@ import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveUtil;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import java.util.Scanner;
 
 /**

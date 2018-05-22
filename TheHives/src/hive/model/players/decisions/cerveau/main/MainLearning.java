@@ -5,7 +5,7 @@
  */
 package hive.model.players.decisions.cerveau.main;
 
-import hive.model.players.decisions.cerveau.IADecisionLearning;
+import hive.model.players.decisions.IADecisionLearning;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.PrecalculatedGame;
@@ -13,7 +13,7 @@ import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveUtil;
 import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
-import static hive.model.players.decisions.Level.EHARD;
+import static hive.model.players.decisions.IA.Level.EHARD;
 import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.Mate;
