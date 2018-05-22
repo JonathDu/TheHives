@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.cerveau;
+package hive.model.players.decisions;
 
+import hive.model.players.decisions.IA.IA;
+import hive.model.players.decisions.IA.Level;
+import hive.model.players.decisions.Evolved.EvolvedHardIA;
 import hive.model.players.decisions.*;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import hive.model.players.decisions.cerveau.EvaluationLearning;
+import hive.model.players.decisions.cerveau.HardIALearning;
 import java.util.ArrayList;
 
 /**

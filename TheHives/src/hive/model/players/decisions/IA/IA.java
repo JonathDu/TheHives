@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.IA;
 
 import hive.model.game.Game;
 import hive.model.players.actions.Action;

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.IA;
 
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
-import static hive.model.players.decisions.Evaluation.evaluation;
+import static hive.model.players.decisions.IA.Evaluation.evaluation;
 import java.util.ArrayList;
 import java.util.Random;
 

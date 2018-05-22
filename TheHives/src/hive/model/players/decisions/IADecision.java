@@ -5,6 +5,12 @@
  */
 package hive.model.players.decisions;
 
+import hive.model.players.decisions.IA.EasyIA;
+import hive.model.players.decisions.IA.MediumIA;
+import hive.model.players.decisions.IA.IA;
+import hive.model.players.decisions.IA.HardIA;
+import hive.model.players.decisions.IA.Level;
+import hive.model.players.decisions.Evolved.EvolvedHardIA;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;

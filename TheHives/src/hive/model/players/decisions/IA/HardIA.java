@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.IA;
 
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
@@ -16,7 +16,7 @@ import java.util.Random;
  *
  * @author Coralie
  */
-public class EvolvedHardIA implements IA{   
+public class HardIA implements IA{   
     ArrayList<Action> [] actionList;
     //mettre évaluation + construteur
     
@@ -48,12 +48,12 @@ public class EvolvedHardIA implements IA{
                 hia.undoAction(state);
                 return currentAction;
             }
-            else if(!hia.winCurrent(state)){
-                tmp = EvolvedMiniMax.evolvedMiniMaxOpponent(state, depth-1, max,actionList);
+            else {
+                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
-                    maxActionList = new ArrayList<>();
+                    maxActionList.clear();
                     maxActionList.add(currentAction);
                 }
                 else if(tmp == max){

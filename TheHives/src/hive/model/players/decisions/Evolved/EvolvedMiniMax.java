@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions;
+package hive.model.players.decisions.Evolved;
 
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import hive.model.players.actions.NoAction;
-import static hive.model.players.decisions.Evaluation.evaluation;
+import static hive.model.players.decisions.Evolved.EvolvedEvaluation.evolvedEvaluation;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
@@ -18,11 +17,11 @@ import java.util.ArrayList;
  *
  * @author Coralie
  */
-public class MiniMax{
-    static public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
+public class EvolvedMiniMax{
+    static public int evolvedMiniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
-            return evaluation(state);
+            return evolvedEvaluation(state);
         }
         else{
             int vMax = -50000;
@@ -30,15 +29,13 @@ public class MiniMax{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
-                hia.doAction(state, new NoAction());
-                vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList),vMax);
-                hia.undoAction(state);
+                vMax=max(evolvedMiniMaxOpponent(state, depth-1, vMax,actionList),vMax);
             }
             else{
                 while(!actionList[depth].isEmpty()){
                     currentAction = actionList[depth].remove(0);
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxOpponent(state, depth-1, vMax,actionList);
+                    tmp = evolvedMiniMaxOpponent(state, depth-1, vMax,actionList);
                     hia.undoAction(state);
                     vMax = max(tmp,vMax);
                     if(vMax > min){
@@ -50,10 +47,10 @@ public class MiniMax{
             return vMax;
         }
     }
-    static public int miniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList){
+    static public int evolvedMiniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state)|| hia.winOpponent(state)){
-            return -(evaluation(state));
+            return -(evolvedEvaluation(state));
         }
         else{
             int vMin = 50000;
@@ -61,15 +58,13 @@ public class MiniMax{
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
-                hia.doAction(state, new NoAction());
-                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
-                hia.undoAction(state);
+                vMin=min(evolvedMiniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
             }
             else{
                 while(!actionList[depth].isEmpty()){
                     currentAction = actionList[depth].remove(0);
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList);
+                    tmp = evolvedMiniMaxCurrentPlayer(state, depth-1, vMin,actionList);
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
                     if(vMin < max){
