@@ -47,9 +47,8 @@ public class PathAtLengthIterator<E> implements Iterator<Hexagon<E>>
     }
     
     // calculate pathes from path of size length
-    public int calculateFromLength(int length, int to_remove)
+    private int calculateFromLength(int length, int to_remove)
     {
-        assert length >= 1;
         Map<Hexagon<E>, Set<Hexagon<E>>> map = new HashMap<>();
         int count = 0;
         for(int i = 0; i < to_remove; ++i)

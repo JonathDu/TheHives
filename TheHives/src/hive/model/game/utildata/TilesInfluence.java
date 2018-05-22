@@ -30,8 +30,6 @@ public class TilesInfluence extends HashMap<Honeycomb, AtomicInteger>
             if(n.addAndGet(delta) == 0)
                 remove(comb);
         }
-        
-        assert get(comb).get() > 0;
     }
     
     private void addDeltaInfluence(Honeycomb comb, int delta)

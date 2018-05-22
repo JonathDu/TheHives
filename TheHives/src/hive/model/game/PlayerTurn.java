@@ -18,8 +18,8 @@ import java.util.ListIterator;
 
 public class PlayerTurn implements ListIterator<Player>, Serializable
 {
-    Player current;
-    Player opponent;
+    public Player current;
+    public Player opponent;
     
     public PlayerTurn() {} // for serialization
     

@@ -15,7 +15,7 @@ import java.io.Serializable;
  */
 public class Matrix<E> implements Serializable
 {
-    Object[][] data;
+    public Object[][] data; // public for xml serialization
     
     public Matrix() {} // for serialization
 

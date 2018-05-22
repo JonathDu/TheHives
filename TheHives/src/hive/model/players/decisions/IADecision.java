@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class IADecision implements Decision, Serializable
 {
-    Level qI;
+    public Level qI;
     
     public IADecision() {} // for serialization
 

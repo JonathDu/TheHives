@@ -14,7 +14,7 @@ import util.Vector2i;
  */
 public class CircularPositionMaker implements Serializable
 {
-    Vector2i dim;
+    public Vector2i dim;
     
     public CircularPositionMaker() {} // for serialization
     

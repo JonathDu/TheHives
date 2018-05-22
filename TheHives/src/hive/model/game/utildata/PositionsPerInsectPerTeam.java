@@ -14,7 +14,6 @@ import java.util.EnumMap;
  */
 public class PositionsPerInsectPerTeam extends EnumMap<TeamColor, PositionsPerInsect>
 {
-
     public PositionsPerInsectPerTeam()
     {
         super(TeamColor.class);

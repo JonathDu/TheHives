@@ -11,7 +11,8 @@ import hive.model.HiveInterfaceIA;
 import hive.model.board.Board;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
-import hive.model.game.LoaderXML;
+import hive.model.game.GameLoader;
+import util.LoaderXML;
 import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveUtil;
 import hive.model.game.utildata.UtilData;
@@ -41,8 +42,7 @@ public class HiveSaveGame
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
         Scanner sc = new Scanner(System.in);
-        LoaderXML<Game> loader = new LoaderXML<>();
-        LoaderXML<Board> l = new LoaderXML<>();
+        GameLoader loader = new GameLoader();
         
         String choice;
         do

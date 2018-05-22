@@ -16,7 +16,8 @@ import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
- *
+ * To know how many groups of neighbors there are around each comb
+ * (groups of neighbors are consecutives neighbors that have a non-empty stack)
  * @author Thomas
  */
 public class NbGroupsPerComb extends HashMap<Honeycomb, Integer>
