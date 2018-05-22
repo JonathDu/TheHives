@@ -87,7 +87,7 @@ class Bouton  extends Parent {
                 @Override
                 public void handle(MouseEvent event) {
                     System.out.println("Préférences ! ");
-                    Preferences p = new Preferences(primaryStage, i);
+                    /*Preferences p = new Preferences(primaryStage, i);
                     pane.getChildren().add(p);
                     StackPane pref = new StackPane();
                     Image imageQ = new Image(Bouton.this.getClass().getResourceAsStream("rsc/images/exit3.png"));
@@ -122,7 +122,10 @@ class Bouton  extends Parent {
                     
                     pane.getChildren().add(pref);
                     
-                    //i.accueil();
+                    //i.accueil();*/
+                    
+                    Preferences p = new Preferences(primaryStage, i, origin);
+                    pane.getChildren().add(p);
                 }
             });
         }

@@ -53,15 +53,6 @@ class RadioBouton extends ToggleButton{
             humainsIm.setFitHeight(hauteurDeLigne);
             humainsIm.setFitWidth(hauteurDeLigne);
             bouton.setGraphic(humainsIm);
-            //bouton.setFont(new Font("Copperplate", tailleDeCase/5));
-            /*if(type=="humain1"){
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/4);
-            }
-            else{
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/1.8);
-            }*/
         }
         else if(type=="h_IA"){
             bouton.setUserData("Humain_IA");
@@ -70,15 +61,6 @@ class RadioBouton extends ToggleButton{
             h_iaIm.setFitHeight(hauteurDeLigne);
             h_iaIm.setFitWidth(hauteurDeLigne);
             bouton.setGraphic(h_iaIm);
-            //bouton.setFont(new Font("Copperplate", tailleDeCase/5));
-            /*if(type=="IA1"){
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/4);
-            }
-            else{
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/1.8);
-            }*/
         }
         else if(type=="IAs"){
             bouton.setUserData("IAs");
@@ -87,23 +69,7 @@ class RadioBouton extends ToggleButton{
             ia_iaIm.setFitHeight(hauteurDeLigne);
             ia_iaIm.setFitWidth(hauteurDeLigne);
             bouton.setGraphic(ia_iaIm);
-            //bouton.setFont(new Font("Copperplate", tailleDeCase/5));
-            /*if(type=="IA1"){
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/4);
-            }
-            else{
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/1.8);
-            }*/
         }else if(type=="facile1" || type=="facile2"){
-            /*Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
-            ImageView flecheImNG = new ImageView(fleche); 
-            double flecheHauteur = hauteurDeLigne*0.2;
-            double flecheLargeur = flecheHauteur*7.24;
-            flecheImNG.setFitHeight(flecheHauteur);
-            flecheImNG.setFitWidth(flecheLargeur);
-            bouton.setGraphic(flecheImNG);*/
             bouton.setUserData("facile");
             if(i.langue=="Français"){
                 bouton.setText("Facile");
@@ -123,14 +89,6 @@ class RadioBouton extends ToggleButton{
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="facile1"){
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/4+width/9);
-            }
-            else{
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
             if(i.langue=="Français"){
@@ -151,14 +109,6 @@ class RadioBouton extends ToggleButton{
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="facile1"){
-                bouton.setLayoutX(width/2);
-                bouton.setLayoutY(height/4+width/9);
-            }
-            else{
-                bouton.setLayoutX(width/2);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
             if(i.langue=="Français"){
@@ -179,14 +129,46 @@ class RadioBouton extends ToggleButton{
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="difficile1"){
-                bouton.setLayoutX(width/2+width/4);
-                bouton.setLayoutY(height/4+width/9);
+        }else if(type=="jour"){
+            bouton.setUserData("jour");
+            if(i.langue=="Français"){
+            bouton.setText("Jour");
             }
-            else{
-                bouton.setLayoutX(width/2+width/4);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
+            else if(i.langue=="English"){
+                bouton.setText("Day");
+            }
+            else if(i.langue=="Italiano"){
+                bouton.setText("Giorno");
+            }
+            else if(i.langue=="Русский"){
+                bouton.setText("День");
+            }
+            else if(i.langue=="Deutsch"){
+                bouton.setText("Tag");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
+            bouton.setMinSize(width/10, 30);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);
+        }else if(type=="nuit"){
+            bouton.setUserData("nuit");
+            if(i.langue=="Français"){
+            bouton.setText("Nuit");
+            }
+            else if(i.langue=="English"){
+                bouton.setText("Night");
+            }
+            else if(i.langue=="Italiano"){
+                bouton.setText("Notte");
+            }
+            else if(i.langue=="Русский"){
+                bouton.setText("Ночь");
+            }
+            else if(i.langue=="Deutsch"){
+                bouton.setText("Nacht");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
+            bouton.setMinSize(width/10, 30);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);
         }
         return bouton;
     

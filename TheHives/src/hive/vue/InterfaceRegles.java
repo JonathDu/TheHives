@@ -64,11 +64,17 @@ public class InterfaceRegles extends Parent {
 
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width / 8;
-        int maxJoueur = (int) ((int) width / 2.5);
-        int minJoueur = maxJoueur / 2;
+        int tailleDeCase = width/8;
+        int maxJoueur = (int) ((int) width/2.5);
+        int minJoueur = maxJoueur/2;
 
-        Image fond = c.getImage("Design/Fond/fondMontagne.png");
+        Image fond;
+        if(i.type=="jour"){
+            fond = c.getImage("Design/Fond/fondMontagne.png");
+        }
+        else{
+            fond = c.getImage("Design/Fond/fondNuit.png");
+        }
         ImageView fondIm = new ImageView(fond);
         fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
         fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
@@ -85,7 +91,7 @@ public class InterfaceRegles extends Parent {
         prefIm.setFitWidth(tailleDeCase / 2 * 1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, i);
+            /*Preferences p = new Preferences(primaryStage, i);
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -99,7 +105,10 @@ public class InterfaceRegles extends Parent {
             });
             AnchorPane.setRightAnchor(pref, (double) 5);
             AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);
+            pane.getChildren().add(pref);*/
+
+            Preferences p = new Preferences(primaryStage, i, "regles");
+            pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase / 2 * 1.07 + 15);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
@@ -198,7 +207,9 @@ public class InterfaceRegles extends Parent {
         Label sauterelle = new Label();
         Label scarabee = new Label();
         Label exception = new Label();
-        if (i.langue == "Français") {
+        Label jeu = new Label();
+        Label insecte = new Label();
+        if(i.langue=="Français"){
             //regles.setText("Règles");
             but.setText("But du jeu");
             debut.setText("Début de partie");
@@ -206,11 +217,14 @@ public class InterfaceRegles extends Parent {
             tour.setText("Déroulement tour");
             araignee.setText("Araignée");
             fourmi.setText("Fourmi");
-            reine.setText("Reine des abeilles");
+            reine.setText("Reine");
             sauterelle.setText("Sauterelle");
             scarabee.setText("Scarabee");
             exception.setText("Exception");
-        } else if (i.langue == "English") {
+            jeu.setText("Jeu");
+            insecte.setText("Insecte");
+        }
+        else if(i.langue=="English"){
             //regles.setText("Rules");
             but.setText("Games purpose");
             debut.setText("Start of the game");
@@ -222,8 +236,11 @@ public class InterfaceRegles extends Parent {
             sauterelle.setText("Grasshopper");
             scarabee.setText("Beetle");
             exception.setText("Exception");
-        } else if (i.langue == "Italiano") {
-            // regles.setText("Regoli");
+            jeu.setText("Game");
+            insecte.setText("Insect");
+        }
+        else if(i.langue=="Italiano"){
+           // regles.setText("Regoli");
             but.setText("L'obiettivo");// del gioco");
             debut.setText("Inizio del gioco");
             deplacement.setText("Spostamento");
@@ -234,7 +251,10 @@ public class InterfaceRegles extends Parent {
             sauterelle.setText("Cavalletta");
             scarabee.setText("Scarabeo");
             exception.setText("Eccezione");
-        } else if (i.langue == "Русский") {
+            jeu.setText("Gioco");
+            insecte.setText("Insetto");
+        }
+        else if(i.langue=="Русский"){
             //regles.setText("Правила");
             but.setText("Цель игры");
             debut.setText("Начало игры");
@@ -246,7 +266,10 @@ public class InterfaceRegles extends Parent {
             sauterelle.setText("Кузнечик");
             scarabee.setText("Жук");
             exception.setText("Исключение");
-        } else if (i.langue == "Deutsch") {
+            jeu.setText("Игра");
+            insecte.setText("Насекомое");
+        }
+        else if(i.langue=="Deutsch"){
             //regles.setText("Regeln");
             but.setText("Ziel des Spiels");
             debut.setText("Spielbeginn");
@@ -258,6 +281,8 @@ public class InterfaceRegles extends Parent {
             sauterelle.setText("Grashüpfer");
             scarabee.setText("Käfer");
             exception.setText("Ausnahme");
+            jeu.setText("Spiel");
+            insecte.setText("Insekt");
 
         }
         StackPane spR = new StackPane();
@@ -298,14 +323,23 @@ public class InterfaceRegles extends Parent {
         int colonne = 100 / 1;
         Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(placement, Outils.VERTICAL, colonne);
-        placement.setMaxWidth(width * 0.99 * 0.2);
-        placement.setMinWidth(width * 0.99 * 0.2);
-        placement.setMaxHeight(width * 0.99 * 0.25 * 1.7);
-        placement.setMinHeight(width * 0.99 * 0.25 * 1.7);
-        double hauteurDeGrille = height * 0.4;
-        double hauteurDeLigne = hauteurDeGrille / 4;
+        placement.setMaxWidth(width*0.99*0.2);
+        placement.setMinWidth(width*0.99*0.2);
+        placement.setMaxHeight(width*0.99*0.25*1.7);
+        placement.setMinHeight(width*0.99*0.25*1.7);
+        double hauteurDeGrille = height*0.4;
+        double hauteurDeLigne = hauteurDeGrille/4;
 
-        but.setFont(new Font(police, maxJoueur / 20));
+        jeu.setFont(new Font(police, maxJoueur/13));
+        jeu.setAlignment(Pos.CENTER);
+        jeu.setMinSize(minJoueur, 30);
+        jeu.setMaxSize(maxJoueur, 70);
+        jeu.setTextFill(Color.web("#fbe5b5"));
+        StackPane j = new StackPane();
+        j.getChildren().add(jeu);
+        placement.add(j, 0, 0);
+
+        but.setFont(new Font(police, maxJoueur/20));
         but.setAlignment(Pos.CENTER);
         but.setMinSize(minJoueur, 30);
         but.setMaxSize(maxJoueur, 70);
@@ -418,13 +452,22 @@ public class InterfaceRegles extends Parent {
         int ligne2 = 100 / 8;
         Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
         Outils.fixerRepartition(insectes, Outils.VERTICAL, colonne);
-        insectes.setMaxWidth(width * 0.99 * 0.2);
-        insectes.setMinWidth(width * 0.99 * 0.2);
-        insectes.setMaxHeight(width * 0.99 * 0.25 * 1.7);
-        insectes.setMinHeight(width * 0.99 * 0.25 * 1.7);
-        double hauteurDeLigne2 = hauteurDeGrille / 6;
+        insectes.setMaxWidth(width*0.99*0.2);
+        insectes.setMinWidth(width*0.99*0.2);
+        insectes.setMaxHeight(width*0.99*0.25*1.7);
+        insectes.setMinHeight(width*0.99*0.25*1.7);
+        double hauteurDeLigne2 = hauteurDeGrille/6;
 
-        araignee.setFont(new Font(police, maxJoueur / 20));
+        insecte.setFont(new Font(police, maxJoueur/13));
+        insecte.setAlignment(Pos.CENTER);
+        insecte.setMinSize(minJoueur, 30);
+        insecte.setMaxSize(maxJoueur, 70);
+        insecte.setTextFill(Color.web("#fbe5b5"));
+        StackPane in = new StackPane();
+        in.getChildren().add(insecte);
+        insectes.add(in, 0, 0);
+
+        araignee.setFont(new Font(police, maxJoueur/20));
         araignee.setAlignment(Pos.CENTER);
         araignee.setTextFill(Color.web("#fbe5b5"));
         araignee.setMinSize(minJoueur, 30);
