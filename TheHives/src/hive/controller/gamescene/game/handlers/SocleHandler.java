@@ -4,11 +4,8 @@ import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.players.actions.Action;
-import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -46,7 +43,10 @@ public class SocleHandler extends HandlerPlateau
                 case SOURCE_SELECTED:
                     if (new Cell(combClicked, controller.builder.source.level).equals(controller.builder.source))
                     {
-                        System.err.println("Même source : aucune action");
+                        uiPlateau.ruche.deselectCell(combClicked.pos);
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        controller.builder.setBegin();
+                        System.err.println("Même source : on annule la selection");
                     } else if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
                         System.err.println("Destination impossible");
@@ -60,13 +60,14 @@ public class SocleHandler extends HandlerPlateau
                 case TILE_SELECTED:
                     if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
-                        System.err.println("Placement impossible");
+                        System.err.println("Placement impossible"); 
+                        //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
                     } else
                     {
                         System.out.println("Placement selectionné");
                         putOnBoard(new Cell(combClicked));
+                        event.consume();
                     }
-                    event.consume();
                     break;
             }
         }

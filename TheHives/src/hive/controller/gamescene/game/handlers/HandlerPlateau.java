@@ -6,14 +6,8 @@
 package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
-import hive.model.board.Cell;
-import hive.model.board.Tile;
 import hive.model.game.Game;
-import hive.model.players.actions.Action;
-import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import java.util.ArrayList;
-import java.util.Arrays;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 

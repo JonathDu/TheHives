@@ -9,7 +9,6 @@ import hive.controller.gamescene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
-import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import hive.vue.InterfacePlateauMain;
@@ -83,11 +82,17 @@ public class TileMainHandler extends HandlerPlateau
                         System.out.println("Changement de tile");
 
                         uiMain.desurlignerTile(controller.builder.tile);
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
+                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
                         uiMain.surlignerTile(controller.builder.tile);
+                        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     } else
                     {
-                        System.err.println("Aucun changement : tile deja selectionnée");
+                        System.err.println("Annuler la selection de la tile");
+                        uiMain.desurlignerTile(tileClicked);
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        controller.builder.setBegin();
                     }
                     event.consume();
                     break;

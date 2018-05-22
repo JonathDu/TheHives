@@ -7,7 +7,6 @@ package hive.controller.gamescene.game.handlers;
 
 import hive.controller.gamescene.game.GameController;
 import hive.model.board.Cell;
-import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import javafx.scene.input.MouseEvent;
@@ -64,6 +63,22 @@ public class TilePlateauHandler extends HandlerPlateau
                         controller.builder.setBegin();
                         event.consume();
                     }
+                    break;
+                case TILE_SELECTED:
+                    if (cellClicked.getTile().color == game.state.turn.getCurrent().color)
+                    {
+                        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).desurlignerTile(controller.builder.tile);
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        controller.builder.setBegin();
+
+                        controller.builder.setSource(cellClicked);
+                        controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
+
+                        uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
+                        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        System.out.println("Changement : on ne place pas, on selectionne une source");
+                    }
+                    event.consume();
                     break;
             }
         }
