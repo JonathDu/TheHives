@@ -30,6 +30,11 @@ public class InterfaceCharger extends Parent {
     
     public InterfaceCharger(Stage primaryStage, TheHives i) throws IOException {
         
+        if(i.pleinEcran==1){
+            primaryStage.setFullScreen(true);
+            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
+        }
+        
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
@@ -39,16 +44,16 @@ public class InterfaceCharger extends Parent {
         int tailleDeCase = width/8;
         
         Group utiles3 = new Group();
-        Bouton preferences = new Bouton(primaryStage, i, "preferences");
-        Bouton sortie = new Bouton(primaryStage, i, "sortie");
-        Bouton ecran = new Bouton(primaryStage, i, "ecran");
+        Bouton preferences = new Bouton(primaryStage, i, "preferences", pane, "charger");
+        Bouton sortie = new Bouton(primaryStage, i, "sortie", pane, "charger");
+        Bouton ecran = new Bouton(primaryStage, i, "ecran", pane, "charger");
         utiles3.getChildren().addAll(preferences, sortie, ecran);
         AnchorPane.setRightAnchor(utiles3, (double) 0);
         AnchorPane.setTopAnchor(utiles3, (double) 0);
         pane.getChildren().add(utiles3);
         
         Group utiles1 = new Group();
-        Bouton menu = new Bouton(primaryStage, i, "menu");
+        Bouton menu = new Bouton(primaryStage, i, "menu", pane, "charger");
         utiles1.getChildren().addAll(menu);
         
         AnchorPane.setLeftAnchor(utiles1, (double) 0);
@@ -56,7 +61,28 @@ public class InterfaceCharger extends Parent {
         pane.getChildren().add(utiles1);
         
         BorderPane choisir = new BorderPane();
-        Label choix = new Label("Choisissez la partie à charger");
+        Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
+        Button valider = new Button();
+        if(i.langue=="Français"){
+            choix.setText("Choisissez la partie à charger");
+            valider.setText("Valider");
+        }
+        else if(i.langue=="English"){
+            choix.setText("Choose the game to load");
+            valider.setText("Commit");
+        }
+        else if(i.langue=="Italiano"){
+            choix.setText("Scegliere partita salvata");
+            valider.setText("Invio");
+        }
+        else if(i.langue=="Русский"){
+            choix.setText("Выберите игру для загрузки");
+            valider.setText("Подтвердить");
+        }
+        else if(i.langue=="Deutsch"){
+            choix.setText("Gespeichertes Spiel wählen");
+            valider.setText("Bestätigen");
+        }
         choix.setFont(new Font("Copperplate", width/35));
         choix.setAlignment(Pos.CENTER);
         choix.setMinSize(width/60, 30);
@@ -81,7 +107,6 @@ public class InterfaceCharger extends Parent {
         
         
         DropShadow shadow = new DropShadow();
-        Button valider = new Button("Valider");
         valider.setFont(new Font("Copperplate", width/35));
         valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
             valider.setEffect(shadow);

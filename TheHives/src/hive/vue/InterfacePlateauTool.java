@@ -5,12 +5,19 @@
  */
 package hive.vue;
 
+import hive.thehives.TheHives;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -19,53 +26,109 @@ import javafx.stage.Stage;
  */
 public class InterfacePlateauTool extends Parent {
 
-    GridPane grille;
     Button boutonHome;
     Button boutonSave;
     Button boutonReplay;
     Button boutonAnnuler;
-    Button boutonRejouer;
+    Button boutonRecommencer;
     Button boutonConseil;
-    Button boutonQuitter;
-    Button boutonPleinEcran;
-    Button bouton1;
-    Button bouton2;
+    Button boutonParam;
+    Button pleinEcran;
+    Button boutonRegle;
+    BorderPane pane;
+
+    HBox gauche;
+    HBox centre;
+    HBox droite;
+    String j1;
+    String j2;
+    
+    int width;
+    int tailleDeCase;
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage) {
+    public InterfacePlateauTool(CacheImage c, Stage stage, TheHives i, String j1, String j2) {
+        width = (int) stage.getWidth();
+        tailleDeCase = width / 8;
         this.c = c;
-        grille = new GridPane();
-        grille.prefWidthProperty().bind(stage.widthProperty());
-        
-        Button bouton = creerBouton("home.png");
-        Button bouton1 = creerBouton("home.png");
+        this.j1 = j1;
+        this.j2 = j2;
 
-        for (int i = 0; i < 10; i++) {
-            ColumnConstraints r = new ColumnConstraints();
-            r.setPercentWidth(10);
-            r.setFillWidth(true);
-            grille.getColumnConstraints().add(r);
+        pane = new BorderPane();
+        pane.prefWidthProperty().bind(stage.widthProperty());
 
-        }
-        grille.add(bouton, 0, 0, 1, 1);
-        grille.add(bouton1, 9, 0, 1, 1);
+        gauche = new HBox();
+        droite = new HBox();
+        centre = new HBox();
+
+        boutonSave = creerBouton("BoutonDisquette.png");
+        boutonHome = creerBouton("bouttonRetourMenu.png");
+        boutonAnnuler = creerBouton("FlecheUndo.png");
+        boutonParam = creerBouton("BouttonParametre.png");
+        boutonConseil = creerBouton("Ampoule.png");
+        boutonReplay = creerBouton("FlecheRedo.png");
+        pleinEcran = creerBouton("pleinEcran.png");
+        boutonRegle = creerBouton("Boutonlivre.png");
+
+        boutonHome.setOnMouseClicked(value -> {
+            i.goToMenu();
+        });
+
+        boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            Preferences p = new Preferences(stage, i);
+            pane.getChildren().add(p);
+            StackPane pref = new StackPane();
+            Image imageQ = c.getImage("exit3.png");
+            ImageView ImQ = new ImageView(imageQ);
+            ImQ.setFitHeight(40);
+            ImQ.setPreserveRatio(true);
+            pref.getChildren().add(ImQ);
+            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
+                pane.getChildren().remove(pane.getChildren().size() - 2, pane.getChildren().size());
+                i.goToPlateau(j1, j2);
+            });
+            AnchorPane.setRightAnchor(pref, (double) 5);
+            AnchorPane.setTopAnchor(pref, (double) 5);
+            pane.getChildren().add(pref);
+        });
+
+        pleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+            i.pleinEcran = 1;
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("Sortie de plein écran - esc");
+        });
+
+
         
-        this.getChildren().add(grille);
+        Group g = new Group();
+        g.getChildren().add(centre);
+        pane.setLeft(gauche);
+        pane.setRight(droite);
+        pane.setCenter(g);
+
+        gauche.getChildren().add(boutonHome);
+        gauche.getChildren().add(boutonSave);
+        droite.getChildren().add(boutonRegle);
+        droite.getChildren().add(boutonParam);
+        droite.getChildren().add(pleinEcran);
+        centre.getChildren().add(boutonAnnuler);
+        centre.getChildren().add(boutonConseil);
+        centre.getChildren().add(boutonReplay);
+        this.getChildren().add(pane);
     }
 
     private Button creerBouton(String path) {
         Button bouton = new Button();
         ImageView image;
-        image = new ImageView(c.getImage(path));
-        image.setFitWidth(40);
-        image.setPreserveRatio(true);
+        image = new ImageView(c.getImage("Design/FenetrePlateau/" + path));
+        image.setFitHeight(tailleDeCase/2);
+        image.setFitWidth(tailleDeCase/2*1.07);
         image.setSmooth(true);
         image.setCache(true);
         bouton.setGraphic(image);
         bouton.setBackground(Background.EMPTY);
         return bouton;
     }
-
 
 }

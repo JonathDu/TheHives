@@ -26,7 +26,7 @@ public class InterfaceRuche extends Parent {
     private final Matrix<InterfaceComb> tab;
     private final int largeur;
     private final int hauteur;
-    private final int longueurPion = 40;
+    private int longueurPion = 40;
     int width, height;
 
     private GameController controller;
@@ -93,6 +93,9 @@ public class InterfaceRuche extends Parent {
 
                 SocleHandler handler = new SocleHandler(controller, plateau, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_RELEASED, handler);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_DRAGGED, handler);
+                
             }
         }
     }
