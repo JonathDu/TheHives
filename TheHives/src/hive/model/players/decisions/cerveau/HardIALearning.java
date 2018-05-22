@@ -6,7 +6,6 @@
 package hive.model.players.decisions.cerveau;
 
 import hive.model.players.decisions.IA.IA;
-import hive.model.players.decisions.*;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
