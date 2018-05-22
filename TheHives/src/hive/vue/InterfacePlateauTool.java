@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.thehives.TheHives;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -40,7 +41,6 @@ public class InterfacePlateauTool extends Parent {
     HBox droite;
     String j1;
     String j2;
-    StackPane centrage;
     
     int width;
     int tailleDeCase;
@@ -59,6 +59,7 @@ public class InterfacePlateauTool extends Parent {
 
         gauche = new HBox();
         droite = new HBox();
+        centre = new HBox();
 
         boutonSave = creerBouton("BoutonDisquette.png");
         boutonHome = creerBouton("bouttonRetourMenu.png");
@@ -96,26 +97,28 @@ public class InterfacePlateauTool extends Parent {
             stage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
 
-        centrage = new StackPane();
 
-        centrage.getChildren().addAll(boutonConseil);
-
+        
+        Group g = new Group();
+        g.getChildren().add(centre);
         pane.setLeft(gauche);
         pane.setRight(droite);
-        pane.setCenter(centrage);
+        pane.setCenter(g);
 
         gauche.getChildren().add(boutonHome);
         gauche.getChildren().add(boutonSave);
         droite.getChildren().add(boutonParam);
         droite.getChildren().add(pleinEcran);
-
+        centre.getChildren().add(boutonAnnuler);
+        centre.getChildren().add(boutonConseil);
+        centre.getChildren().add(boutonReplay);
         this.getChildren().add(pane);
     }
 
     private Button creerBouton(String path) {
         Button bouton = new Button();
         ImageView image;
-        image = new ImageView(c.getImage(path));
+        image = new ImageView(c.getImage("Design/FenetrePlateau/" + path));
         image.setFitHeight(tailleDeCase/2);
         image.setFitWidth(tailleDeCase/2*1.07);
         image.setSmooth(true);

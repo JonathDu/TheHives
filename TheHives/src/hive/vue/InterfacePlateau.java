@@ -56,21 +56,21 @@ public class InterfacePlateau extends Parent {
         this.mainGauche = new InterfacePlateauMain(colJ1, stage, joueur1, c, controller, this, TeamColor.WHITE);
         this.mainDroite = new InterfacePlateauMain(colJ2, stage, joueur2, c, controller, this, TeamColor.BLACK);
 
-        Image bimMainauche = c.getImage("poseJetona.png");
+        Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
         this.mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("poseJetona.png");
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
         this.mainDroite.pions.setBackground(backgroundMainDroite);
 
-        Image bimPlateau = c.getImage("PlateauCentral.png");
+        Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
         BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
