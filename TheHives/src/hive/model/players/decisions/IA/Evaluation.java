@@ -8,9 +8,11 @@ package hive.model.players.decisions.IA;
 import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.game.Game;
+import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 /**
  *
@@ -65,89 +67,61 @@ public class Evaluation {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
         ArrayList<Tile> neighbours = hia.queenNeighbours(opponent,state);
+        
+        value+=insectsValueNeighboursQueen(neighbours);
         Tile tuile;
         while(!neighbours.isEmpty()){
             tuile=neighbours.remove(0);
             if(tuile.color!=opponent.color){
-                value+=insectsValueNeighboursQueen(tuile);
+                value+=insectsValueNeighboursQueen(neighbours);
             }
         }
         return value;
     }
     
     static int insectsValue(ArrayList<Tile> freeTile){
-        Tile currentTile;
-        int value = 0;
-            while(!freeTile.isEmpty()){
-                currentTile = freeTile.remove(0);
-                switch (currentTile.type) 
-                {
-                    case  QUEEN_BEE:
-                        value += 100;
-                        break;
-                    case  GRASSHOPPER:
-                        value += 20;
-                        break;
-                    case  SOLDIER_ANT:
-                        value += 50;
-                        break;
-                    case  SPIDER:
-                        value += 5;
-                        break;
-                    case  BEETLE:
-                        value += 10;
-                        break;
-                }
-                
-            }
-            return value;
+        return evaluateList(freeTile, blockTilesValues);
     }
     
     static int insectsValueBloc(ArrayList<Tile> blocTile){
-        Tile currentTile;
-        int value = 0;
-            while(!blocTile.isEmpty()){
-                currentTile = blocTile.remove(0);
-                switch (currentTile.type) 
-                {
-                    case  QUEEN_BEE:
-                        value += 100;
-                        break;
-                    case  GRASSHOPPER:
-                        value += 20;
-                        break;
-                    case  SOLDIER_ANT:
-                        value += 50;
-                        break;
-                    case  SPIDER:
-                        value += 5;
-                        break;
-                    case  BEETLE:
-                        value += 10;
-                        break;
-                }
-                
-            }
-            return value;
+        return evaluateList(blocTile, blockTilesValues);
     }
     
-    static int insectsValueNeighboursQueen(Tile freeTile){
-                switch (freeTile.type) 
-                {
-                    case  QUEEN_BEE:
-                        return 0;
-                    case  GRASSHOPPER:
-                        return 100;
-                    case  SOLDIER_ANT:
-                        return 30;
-                    case  SPIDER:
-                        return 40;
-                    case  BEETLE:
-                        return 30;
-                    default :
-                        return 0;
-                   
-                }
-        
+    static int insectsValueNeighboursQueen(ArrayList<Tile> queenNeighboursTile){
+        return evaluateList(queenNeighboursTile, QueenNeighbourValues);
     }
+    static int evaluateList(ArrayList<Tile> Tile, EnumMap<InsectType, Integer> map){
+        int value = 0;
+        for(Tile tile : Tile)
+            value += map.get(tile.type);
+        return value;
+    }
+    
+    static EnumMap<InsectType, Integer> blockTilesValues;
+    static EnumMap<InsectType, Integer> freeTilesValues;
+    static EnumMap<InsectType, Integer> QueenNeighbourValues;
+    static
+    {
+        EnumMap<InsectType, Integer> blockTilesValues = new EnumMap<>(InsectType.class);
+        blockTilesValues.put(InsectType.QUEEN_BEE, 100);
+        blockTilesValues.put(InsectType.GRASSHOPPER, 20);
+        blockTilesValues.put(InsectType.SOLDIER_ANT, 50);
+        blockTilesValues.put(InsectType.SPIDER, 5);
+        blockTilesValues.put(InsectType.BEETLE, 10);
+        EnumMap<InsectType, Integer> freeTilesValues = new EnumMap<>(InsectType.class);
+        freeTilesValues.put(InsectType.QUEEN_BEE, 100);
+        freeTilesValues.put(InsectType.GRASSHOPPER, 20);
+        freeTilesValues.put(InsectType.SOLDIER_ANT, 50);
+        freeTilesValues.put(InsectType.SPIDER, 5);
+        freeTilesValues.put(InsectType.BEETLE, 10);
+         EnumMap<InsectType, Integer> QueenNeighbourValues = new EnumMap<>(InsectType.class);
+        QueenNeighbourValues.put(InsectType.QUEEN_BEE, 0);
+        QueenNeighbourValues.put(InsectType.GRASSHOPPER, 100);
+        QueenNeighbourValues.put(InsectType.SOLDIER_ANT, 30);
+        QueenNeighbourValues.put(InsectType.SPIDER, 40);
+        QueenNeighbourValues.put(InsectType.BEETLE, 30);
+           
+    }
+    
+    
 }
