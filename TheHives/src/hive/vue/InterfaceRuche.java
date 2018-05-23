@@ -5,17 +5,13 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.handlers.SocleHandler;
-import hive.controller.gamescene.game.GameController;
+import hive.controller.plateauscene.game.mousehandlers.SocleHandler;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
-import hive.model.board.Honeycomb;
 import javafx.scene.Parent;
-import hive.vue.InterfaceComb;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import util.Matrix;
@@ -30,27 +26,30 @@ public class InterfaceRuche extends Parent {
     private final Matrix<InterfaceComb> tab;
     private final int largeur;
     private final int hauteur;
-    private final int longueurPion = 40;
+    private int longueurPion = 40;
     int width, height;
 
-    private GameController controller;
+    private GameController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
-    public InterfaceRuche(CacheImage c, GameController controller) {
+    public InterfaceRuche(CacheImage c, GameController plateauController) {
 //        this.width = width;
 //        this.height = height;
 //
 //
 //        longueurPion = width/60;
 //        largeurPion = (int) (longueurPion / 1.4);
+
+
+
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
-        this.board = controller.progress.game.state.board;
-        this.controller = controller;
-        hauteur = controller.progress.game.state.board.getData().sizeY();
-        largeur = controller.progress.game.state.board.getData().sizeX();
+        this.board = plateauController.progress.game.state.board;
+        this.plateauController = plateauController;
+        hauteur = plateauController.progress.game.state.board.getData().sizeY();
+        largeur = plateauController.progress.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
@@ -68,6 +67,9 @@ public class InterfaceRuche extends Parent {
                 this.getChildren().add(tab.getAt(pos));
             }
         }
+        
+        
+        
 //        this.setOnScroll((event) -> {
 //
 //            if (event.getDeltaY() < 0 && longueurPion > 10) {
@@ -89,8 +91,9 @@ public class InterfaceRuche extends Parent {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
-                SocleHandler handler = new SocleHandler(controller, plateau, pos);
-                tab.getAt(pos).socle.addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                SocleHandler handler = new SocleHandler(plateauController, plateau, pos);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                
             }
         }
     }
@@ -103,23 +106,34 @@ public class InterfaceRuche extends Parent {
         tab.getAt(pos).setNotSelected();
     }
 
-    public void majCells(ArrayList<Cell> cells) {
-        for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).majTile(board.getHexagon(cells.get(i).comb.pos), plateau, controller);
-        }
+    public void majSource(Cell source) {
+        tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
+    }
+    
+    public void majDestination(Cell destination) {
+        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController);
+    }
+    
+    public void majDestinations(ArrayList<Cell> destinations) {
+        destinations.forEach((destination) ->
+        {
+            majDestination(destination);
+        });
+    }
+    
+    public void majPlacement(Cell placement) {
+        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, plateauController);
     }
 
-    public void surlignerCells(ArrayList<Cell> cells) { //pour les destinations possible
+    public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb( 4,246,118));
         }
     }
 
-    public void desurlignerCells(ArrayList<Cell> cells) {
+    public void desurlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
-
             tab.getAt(cells.get(i).comb.pos).setNotSelected();
-
         }
     }
 

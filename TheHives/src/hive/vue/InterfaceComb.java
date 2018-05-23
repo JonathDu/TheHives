@@ -5,17 +5,14 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.GameController;
-import hive.controller.gamescene.game.handlers.TilePlateauHandler;
+import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateauscene.game.mousehandlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
-import hive.model.players.TeamColor;
 import java.util.ArrayList;
-import javafx.event.EventType;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javax.sound.midi.ControllerEventListener;
 
 /**
  *
@@ -43,27 +40,23 @@ public class InterfaceComb extends Parent {
         this.getChildren().add(socle);
     }
 
-    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
+//    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
+//        Cell cell = new Cell(comb, level);
+//        int i = 0;
+//        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
+//        pion.addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
+//        this.pions.add(tile.level, pion);
+//        this.getChildren().add(this.pions.get(this.pions.size() - 1));
+//    }
 
-        int i = 0;
-        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
-        pion.addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
-        this.pions.add(tile.level, pion);
-        this.getChildren().add(this.pions.get(this.pions.size() - 1));
-    }
-
-    public void majTile(Honeycomb comb, InterfacePlateau plateau, GameController controller) {
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController plateauController) {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
-        for (int i = comb.value().size() - 1; i >= 0; i--) {
-            int index = comb.value().size()-1 - i;
-
-
-            pions.add(index, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(index).addEventHandler(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, comb.pos));
-
-            this.getChildren().add(pions.get(index));
+        for (int i = 0; i < comb.value().size(); i++) {
+            pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
+            this.getChildren().add(pions.get(i));
         }
 
     }
@@ -99,21 +92,12 @@ public class InterfaceComb extends Parent {
             while (this.comb.value().get(i) != null) {
                 InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
                 this.getChildren().add(pionx);
-<<<<<<< HEAD
-                this.pion = pionx;
-                i++;
-            }
-        } else {
-            this.pion = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
-            this.getChildren().add(pion);
-=======
                 this.pions = pionx;
                 i++;
             }
         } else {
             this.pions = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
             this.getChildren().add(pions);
->>>>>>> Controlleur
 
         }
     }

@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import hive.thehives.TheHives;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
@@ -18,104 +19,163 @@ import javafx.stage.Stage;
  */
 class RadioBouton extends ToggleButton{
     Stage primaryStage;
-    TheHives i;
-    
-    
-    RadioBouton(Stage primaryStage, TheHives i) {
+    Controller controller;
+
+
+    RadioBouton(Stage primaryStage, Controller controller) {
         this.primaryStage = primaryStage;
-        this.i = i;
-        
+        this.controller = controller;
+
     }
-    
-    public ToggleButton creer(String type){   
+
+    public ToggleButton creer(String type){
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         int tailleDeCase = width/8;
         double hauteurDeGrille = height*0.7;
-        double hauteurDeLigne = hauteurDeGrille/6;
-        ToggleButton bouton = new ToggleButton("");
-            
-        if(type=="humain1" || type=="humain2"){
-            bouton.setUserData("Humain");
-            Image imageHumain = new Image("hive/vue/rsc/images/humain5.png");
-            ImageView humainIm = new ImageView(imageHumain);
-            humainIm.setFitHeight(hauteurDeLigne);
-            humainIm.setFitWidth(hauteurDeLigne);
-            bouton.setGraphic(humainIm);
-            bouton.setFont(new Font("Copperplate", tailleDeCase/5));
-            /*if(type=="humain1"){
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/4);
-            }
-            else{
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/1.8);
-            }*/
+        double hauteurDeLigne = hauteurDeGrille/3.5;
+
+        CacheImage c = new CacheImage();
+
+        String police;
+        if(controller.langue == "Russe"){
+            police = "Copperplate";
         }
-        else if(type=="IA1" || type=="IA2"){
-            bouton.setUserData("IA");
-            Image imageIA = new Image("hive/vue/rsc/images/ai2.png");
-            ImageView IAIm = new ImageView(imageIA);
-            IAIm.setFitHeight(hauteurDeLigne);
-            IAIm.setFitWidth(hauteurDeLigne);
-            bouton.setGraphic(IAIm);
-            bouton.setFont(new Font("Copperplate", tailleDeCase/5));
-            /*if(type=="IA1"){
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/4);
-            }
-            else{
-                bouton.setLayoutX(width/2+width/4-width/10);
-                bouton.setLayoutY(height/1.8);
-            }*/
+        else{
+            police = "Papyrus";
+        }
+
+        ToggleButton bouton = new ToggleButton("");
+
+        if(type=="humains"){
+            bouton.setUserData("Humains");
+            Image humains = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
+            ImageView humainsIm = new ImageView(humains);
+            humainsIm.setFitHeight(hauteurDeLigne);
+            humainsIm.setFitWidth(hauteurDeLigne);
+            bouton.setGraphic(humainsIm);
+        }
+        else if(type=="h_IA"){
+            bouton.setUserData("Humain_IA");
+            Image h_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
+            ImageView h_iaIm = new ImageView(h_ia);
+            h_iaIm.setFitHeight(hauteurDeLigne);
+            h_iaIm.setFitWidth(hauteurDeLigne);
+            bouton.setGraphic(h_iaIm);
+        }
+        else if(type=="IAs"){
+            bouton.setUserData("IAs");
+            Image ia_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");
+            ImageView ia_iaIm = new ImageView(ia_ia);
+            ia_iaIm.setFitHeight(hauteurDeLigne);
+            ia_iaIm.setFitWidth(hauteurDeLigne);
+            bouton.setGraphic(ia_iaIm);
         }else if(type=="facile1" || type=="facile2"){
             bouton.setUserData("facile");
-            bouton.setText("Facile");
-            bouton.setFont(new Font("Copperplate", tailleDeCase/7));
+            if(controller.langue=="Français"){
+                bouton.setText("Facile");
+            }
+            else if(controller.langue=="English"){
+                bouton.setText("Easy");
+            }
+            else if(controller.langue=="Italiano"){
+                bouton.setText("Facile");
+            }
+            else if(controller.langue=="Русский"){
+                bouton.setText("Легкий");
+            }
+            else if(controller.langue=="Deutsch"){
+                bouton.setText("Einfach");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="facile1"){
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/4+width/9);
-            }
-            else{
-                bouton.setLayoutX(width/2-width/4);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
-            bouton.setText("Moyenne");
-            bouton.setFont(new Font("Copperplate", tailleDeCase/7));
+            if(controller.langue=="Français"){
+                bouton.setText("Moyenne");
+            }
+            else if(controller.langue=="English"){
+                bouton.setText("Medium");
+            }
+            else if(controller.langue=="Italiano"){
+                bouton.setText("Media");
+            }
+            else if(controller.langue=="Русский"){
+                bouton.setText("Средний");
+            }
+            else if(controller.langue=="Deutsch"){
+                bouton.setText("Normal");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="facile1"){
-                bouton.setLayoutX(width/2);
-                bouton.setLayoutY(height/4+width/9);
-            }
-            else{
-                bouton.setLayoutX(width/2);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
+            if(controller.langue=="Français"){
             bouton.setText("Difficile");
-            bouton.setFont(new Font("Copperplate", tailleDeCase/7));
+            }
+            else if(controller.langue=="English"){
+                bouton.setText("Hard");
+            }
+            else if(controller.langue=="Italiano"){
+                bouton.setText("Difficile");
+            }
+            else if(controller.langue=="Русский"){
+                bouton.setText("Сложный");
+            }
+            else if(controller.langue=="Deutsch"){
+                bouton.setText("Schwer");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
-            /*if(type=="difficile1"){
-                bouton.setLayoutX(width/2+width/4);
-                bouton.setLayoutY(height/4+width/9);
+        }else if(type=="jour"){
+            bouton.setUserData("jour");
+            if(controller.langue=="Français"){
+            bouton.setText("Jour");
             }
-            else{
-                bouton.setLayoutX(width/2+width/4);
-                bouton.setLayoutY(height/1.8+width/9);
-            }*/
+            else if(controller.langue=="English"){
+                bouton.setText("Day");
+            }
+            else if(controller.langue=="Italiano"){
+                bouton.setText("Giorno");
+            }
+            else if(controller.langue=="Русский"){
+                bouton.setText("День");
+            }
+            else if(controller.langue=="Deutsch"){
+                bouton.setText("Tag");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
+            bouton.setMinSize(width/10, 30);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);
+        }else if(type=="nuit"){
+            bouton.setUserData("nuit");
+            if(controller.langue=="Français"){
+            bouton.setText("Nuit");
+            }
+            else if(controller.langue=="English"){
+                bouton.setText("Night");
+            }
+            else if(controller.langue=="Italiano"){
+                bouton.setText("Notte");
+            }
+            else if(controller.langue=="Русский"){
+                bouton.setText("Ночь");
+            }
+            else if(controller.langue=="Deutsch"){
+                bouton.setText("Nacht");
+            }
+            bouton.setFont(new Font(police, tailleDeCase/7));
+            bouton.setMinSize(width/10, 30);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);
         }
         return bouton;
-    
-    
-    
-    
+
+
+
+
     }
-    
+
 }

@@ -5,18 +5,32 @@
  */
 package hive.vue;
 
-import hive.controller.gamescene.game.GameController;
+import hive.controller.Controller;
+import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateauscene.game.GraphicGameState;
+import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
+import hive.model.game.PrecalculatedGame;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
-import javafx.beans.property.DoubleProperty;
+import hive.model.players.decisions.IADecision;
+import hive.model.players.decisions.Level;
+import hive.thehives.TheHives;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -26,49 +40,86 @@ import javafx.stage.Stage;
  * @author jonathan
  */
 public class InterfacePlateau extends Parent {
-//
 
     BorderPane pane;
-    GameController controller;
+    GameController plateauController;
     public InterfacePlateauMain mainGauche;
     public InterfacePlateauMain mainDroite;
     public InterfaceRuche ruche;
+    GraphicGameState graphicGameState;
 
-    public InterfacePlateau(PlayerCollection colJ1, PlayerCollection colJ2, CacheImage c, Stage stage, String joueur1, String joueur2) {
+    public InterfacePlateau(Stage stage, Controller controller, GameController plateauController, CacheImage c, String joueur1, String joueur2) {
+        Image fond = c.getImage("fondMontagne.png");
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        Background background = new Background(backgroundFond);
+
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
         pane.prefHeightProperty().bind(stage.heightProperty());
-        controller = new GameController(DefaultGame.get(new HumanDecision(), new HumanDecision()));
 
-        InterfacePlateauMain mainGauche = new InterfacePlateauMain(colJ1,stage, joueur1, c, controller, this, TeamColor.WHITE);
-        InterfacePlateauMain mainDroite = new InterfacePlateauMain(colJ2,stage, joueur2, c, controller, this, TeamColor.BLACK);
+        graphicGameState = new GraphicGameState(plateauController.progress.game, this);
+        
+        this.mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
+        this.mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
+
+        Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
+        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
+        Background backgroundMainGauche = new Background(baimMainGauche);
+
+        this.mainGauche.pions.setBackground(backgroundMainGauche);
+
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
+        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
+        Background backgroundMainDroite = new Background(baimMainDroite);
+
+        this.mainDroite.pions.setBackground(backgroundMainDroite);
+
+        Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
+        BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
+        Background backgroundPlateau = new Background(baimPlateau);
 
         StackPane centerPane = new StackPane();
-        ScrollPane p = new ScrollPane();
+        ScrollPane scrollPane = new ScrollPane();
 
-        ruche = new InterfaceRuche(c, controller);
+        centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        scrollPane.setBackground(backgroundPlateau);
+
+        ruche = new InterfaceRuche(c, plateauController);
         ruche.setHandler(this);
-//        p.setOnDragDetected((event) -> {
-//            double x= -event.getX();
-//            System.out.println(x);
-//            p.setHvalue(x/20);
-//
-//        });
+
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
         centerPane.getChildren().add(ruche);
-        p.setContent(centerPane);
+        scrollPane.setContent(centerPane);
+
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
+
+        BorderPane.setMargin(scrollPane, new Insets(0, 20, 100, 20));
+        BorderPane.setMargin(mainDroite, new Insets(20, 20, 0, 20));
+        BorderPane.setMargin(mainGauche, new Insets(20, 20, 0, 20));
         
-        p.setHvalue(0.5);
-        p.setVvalue(0.5);
-        pane.setCenter(p);
+        pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
+        pane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2));
+
+        pane.setBackground(background);
         this.getChildren().add(pane);
     }
-    
-    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color)
-    {
-        return null;
+
+    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
+        return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
+    public void majTileMain(Tile tile, int nbTiles) {
+        if (tile.color == TeamColor.BLACK) {
+            mainDroite.maj(tile, nbTiles);
+        } else {
+            mainGauche.maj(tile, nbTiles);
+        }
+    }
 }

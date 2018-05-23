@@ -5,6 +5,7 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
@@ -22,7 +23,7 @@ import javafx.application.Platform;
  */
 public class InterfaceUtiles extends Parent{
 
-    public InterfaceUtiles(Stage primaryStage, TheHives i) {
+    public InterfaceUtiles(Stage primaryStage, Controller controller) {
         
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
@@ -134,7 +135,7 @@ public class InterfaceUtiles extends Parent{
         });
         Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             System.out.println("Menu ! ");
-            i.goToMenu();
+            controller.goToMenu();
         });
         Utiles.getChildren().add(Menu);
         this.getChildren().add(Utiles);
