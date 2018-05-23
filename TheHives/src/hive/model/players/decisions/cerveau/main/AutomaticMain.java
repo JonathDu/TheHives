@@ -45,7 +45,7 @@ public class AutomaticMain {
             System.out.println("Fin de la selected phase");
 
             boss = winEval;
-            for(int i =0 ; i<7; i++){
+            for(int i =0 ; i<5; i++){
                 generation = new GeneratePhase(boss,firstP.getNewGeneration().getSon(),firstP.getDossierSuivant());
                 winEval = new EvaluationLearning(generation.getNewGeneration().getSon()[0]);
                 if(generation.isNoWinners()){
@@ -64,7 +64,7 @@ public class AutomaticMain {
             } catch (IOException ex) {
                 Logger.getLogger(AutomaticMain.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(boss.toString());
+            System.out.println(boss.getEvalValues());
         }
         
         
