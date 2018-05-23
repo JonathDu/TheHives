@@ -86,27 +86,7 @@ public class InterfacePlateauTool extends Parent {
         });
 
         boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(stage, controller, "tool");
-//            pane.getChildren().add(p);
-//            StackPane pref = new StackPane();
-//            Image imageQ = c.getImage("exit3.png");
-//            ImageView ImQ = new ImageView(imageQ);
-//            ImQ.setFitHeight(40);
-//            ImQ.setPreserveRatio(true);
-//            pref.getChildren().add(ImQ);
-//            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
-//                pane.getChildren().remove(pane.getChildren().size() - 2, pane.getChildren().size());
-//
-//
-//                //TODO : A modifier !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//                controller.goToPlateau(j1, j2, Level.EASY, Level.EASY);
-//
-//
-//
-//
-//            });
-//            AnchorPane.setRightAnchor(pref, (double) 5);
-//            AnchorPane.setTopAnchor(pref, (double) 5);
+            Preferences p = new Preferences(stage, controller, new CacheImage());
             pane.getChildren().add(p);
 
         });

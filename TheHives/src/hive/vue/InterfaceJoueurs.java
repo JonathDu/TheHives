@@ -99,20 +99,7 @@ public class InterfaceJoueurs extends Parent{
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
 
-            Preferences p = new Preferences(primaryStage, controller, "joueurs");
-//            pane.getChildren().add(p);
-//            StackPane pref = new StackPane();
-//            Image imageQ = c.getImage("exit3.png");
-//            ImageView ImQ = new ImageView(imageQ);
-//            ImQ.setFitHeight(tailleDeCase/2.5);
-//            ImQ.setFitWidth(tailleDeCase/2.5);
-//            pref.getChildren().add(ImQ);
-//            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
-//                pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-//                controller.goToChoixJoueur();
-//            });
-//            AnchorPane.setRightAnchor(pref, (double) 5);
-//            AnchorPane.setTopAnchor(pref, (double) 5);
+            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
@@ -214,7 +201,7 @@ public class InterfaceJoueurs extends Parent{
 
 
         final ToggleGroup j = new ToggleGroup();
-        RadioBouton bouton = new RadioBouton(primaryStage, controller);
+        MyRadioBouton bouton = new MyRadioBouton(primaryStage, controller);
         ToggleButton humains;
         humains = bouton.creer("humains");
         humains.setBackground(Background.EMPTY);

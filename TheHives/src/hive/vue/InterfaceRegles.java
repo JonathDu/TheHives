@@ -111,7 +111,7 @@ public class InterfaceRegles extends Parent {
             AnchorPane.setTopAnchor(pref, (double) 5);
             pane.getChildren().add(pref);*/
 
-            Preferences p = new Preferences(primaryStage, controller, "regles");
+            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase / 2 * 1.07 + 15);
