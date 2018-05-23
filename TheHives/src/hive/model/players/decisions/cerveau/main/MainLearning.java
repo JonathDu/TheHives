@@ -34,7 +34,7 @@ public class MainLearning {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-        int nbFirstChildren = 12;
+        int nbFirstChildren = 3;
         int nbGeneration = 1;
         String dossier[] = new String[2];
         dossier[0]="generationAlpha";
