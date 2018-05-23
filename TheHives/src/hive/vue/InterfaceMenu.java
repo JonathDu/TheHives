@@ -61,7 +61,7 @@ public class InterfaceMenu extends Parent{
 
         CacheImage c = new CacheImage();
         Image fond;
-        if(controller.typeTheme=="jour"){
+        if(controller.typeTheme=="Jour"){
             fond = c.getImage("Design/Fond/fondMontagne.png");
         }
         else{
