@@ -8,6 +8,7 @@ package hive.model.players.actions;
 import hive.model.board.Tile;
 import hive.model.board.Cell;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -36,5 +37,37 @@ public class PutAction implements Action, Serializable
     public String toString()
     {
         return "(" + tile + " put at " + where + ")";
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 59 * hash + Objects.hashCode(this.where);
+        hash = 59 * hash + Objects.hashCode(this.tile);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final PutAction other = (PutAction) obj;
+        if (!Objects.equals(this.where, other.where))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.tile, other.tile))
+        {
+            return false;
+        }
+        return true;
     }
 }

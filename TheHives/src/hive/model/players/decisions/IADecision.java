@@ -10,6 +10,7 @@ import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  *
@@ -53,6 +54,33 @@ public class IADecision implements Decision, Serializable
         hia.endSimulation(state, decisions);
         return a;
         
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.qI);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final IADecision other = (IADecision) obj;
+        if (this.qI != other.qI)
+        {
+            return false;
+        }
+        return true;
     }
     
 }

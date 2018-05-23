@@ -32,14 +32,6 @@ public class Vector2f extends Vector2<Float>
     }
     
     @Override
-    public Vector2f add(Vector2<Float> v)
-    {
-        x += v.x;
-        y += v.y;
-        return this;
-    }
-    
-    @Override
     public Vector2f opposite()
     {
         x = -x;
@@ -48,17 +40,34 @@ public class Vector2f extends Vector2<Float>
     }
     
     @Override
+    public Vector2f add(Vector2<Float> v)
+    {
+        x += v.x;
+        y += v.y;
+        return this;
+    }
+    
+    @Override
+    public Vector2f substract(Vector2<Float> v)
+    {
+        this.x -= v.x;
+        this.y -= v.y;
+        return this;
+    }
+    
+    @Override
+    public Vector2f multiply(Vector2<Float> v)
+    {
+        this.x *= v.x;
+        this.y *= v.y;
+        return this;
+    }
+    
+    @Override
     public Vector2f multiply(int coef)
     {
         this.x *= coef;
         this.y *= coef;
-        return this;
-    }
-    
-    public Vector2f multiply(Vector2<Float> coefs)
-    {
-        this.x *= coefs.x;
-        this.y *= coefs.y;
         return this;
     }
 }

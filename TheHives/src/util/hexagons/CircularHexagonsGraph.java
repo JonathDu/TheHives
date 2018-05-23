@@ -6,6 +6,7 @@
 package util.hexagons;
 
 import java.io.Serializable;
+import java.util.Objects;
 import util.Matrix;
 import util.MatrixElementFactory;
 import util.Vector2i;
@@ -138,4 +139,38 @@ public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGrap
         }
         return res;
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.matrix);
+        hash = 97 * hash + Objects.hashCode(this.shifter);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final CircularHexagonsGraph<?, ?> other = (CircularHexagonsGraph<?, ?>) obj;
+        if (!Objects.equals(this.matrix, other.matrix))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.shifter, other.shifter))
+        {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
