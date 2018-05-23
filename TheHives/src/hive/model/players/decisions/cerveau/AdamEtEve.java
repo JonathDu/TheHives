@@ -6,9 +6,11 @@
 package hive.model.players.decisions.cerveau;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
@@ -105,6 +107,25 @@ public class AdamEtEve {
             }
             
         }
+    }
+    
+    public void saveBoss(ArrayList<Integer> boss) throws FileNotFoundException, IOException {
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss.txt");
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+            oos.writeObject(boss);
+        }
+        
+    }
+    
+    public ArrayList<Integer> dlBoss() throws FileNotFoundException, IOException, ClassNotFoundException{
+        ArrayList<Integer> salut ;
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss.txt");
+        try (FileInputStream fos = new FileInputStream(file)){
+            ObjectInputStream oos= new ObjectInputStream(fos);
+            salut = (ArrayList<Integer>) oos.readObject();
+        }
+        return salut;
     }
     
     public EvaluationLearning[] initGeneration(String Dossier) {
