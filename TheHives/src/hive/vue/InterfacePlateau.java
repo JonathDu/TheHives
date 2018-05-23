@@ -52,29 +52,29 @@ public class InterfacePlateau extends Parent {
 
         graphicGameState = new GraphicGameState(plateauController.progress.game, this);
 
-        this.mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
-        this.mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
+        mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
+        mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
-        this.mainGauche.pions.setBackground(backgroundMainGauche);
+        mainGauche.pions.setBackground(backgroundMainGauche);
 
         Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
-        this.mainDroite.pions.setBackground(backgroundMainDroite);
+        mainDroite.pions.setBackground(backgroundMainDroite);
 
         Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
-        
+
         BackgroundSize bsiPlateau = new BackgroundSize(50, 100, true, true, true, true);
         BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
-        
+
         StackPane centerPane = new StackPane();
         ScrollPane scrollPane = new ScrollPane();
 
@@ -111,22 +111,14 @@ public class InterfacePlateau extends Parent {
     public void majTileMain(Tile tile, int nbTiles) {
         if (tile.color == TeamColor.BLACK) {
             mainDroite.maj(tile, nbTiles);
-            mainDroite.setIsCourant(false);
-            mainGauche.setIsCourant(true);
         } else {
             mainGauche.maj(tile, nbTiles);
-            mainDroite.setIsCourant(true);
-            mainGauche.setIsCourant(false);
         }
     }
-    
-    public void majJoueurCourant(TeamColor color){
-        if (color == TeamColor.BLACK) {
-            mainDroite.setIsCourant(false);
-            mainGauche.setIsCourant(true);
-        } else {
-            mainDroite.setIsCourant(true);
-            mainGauche.setIsCourant(false);
-        }
+
+    public void majJoueurCourant(TeamColor color) {
+        mainDroite.setIsCourant(color == TeamColor.WHITE);
+        mainGauche.setIsCourant(color == TeamColor.BLACK);
+
     }
 }
