@@ -6,7 +6,6 @@
 package hive.controller;
 
 import hive.controller.plateauscene.game.GameController;
-import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.game.PrecalculatedGame;
 import hive.model.players.decisions.Decision;
@@ -21,11 +20,11 @@ import hive.vue.InterfaceMenu;
 import hive.vue.InterfacePlateau;
 import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceStatistiques;
+import hive.vue.Preferences;
 import java.io.IOException;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 /**
@@ -41,10 +40,10 @@ public final class Controller {
     public int pleinEcran = 0;
     public String typeTheme;
 
-    public Controller(Stage primaryStage, Scene currentScene, CacheImage cacheImage) {
-        this.currentScene = currentScene;
-        this.primaryStage = primaryStage;
-        this.cacheImage = cacheImage;
+    public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage) {
+        currentScene = _currentScene;
+        primaryStage = _primaryStage;
+        cacheImage = _cacheImage;
         goToMenu();
     }
 
@@ -91,11 +90,26 @@ public final class Controller {
     }
 
     public void goToCredits() {
-        currentScene = new Scene(new InterfaceCredits(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight(), Color.LIGHTBLUE);
+        currentScene = new Scene(new InterfaceCredits(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     private Decision getDecision(Level level) {
         return level == null ? new HumanDecision() : new IADecision(level);
+    }
+    
+    public Preferences getPreferences()
+    {
+        return new Preferences(primaryStage, this, cacheImage);
+    }
+    
+    public void validerParametres(String nomLangue, boolean activerAide, String nomTheme)
+    {
+        langue = nomLangue;
+        typeTheme = nomTheme;
+        if(currentScene.getRoot() instanceof InterfaceMenu)
+        {
+            ((InterfaceMenu)currentScene.getRoot()).maj();
+        }
     }
 }

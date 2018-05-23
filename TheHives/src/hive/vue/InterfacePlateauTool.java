@@ -94,7 +94,7 @@ public class InterfacePlateauTool extends Parent {
         });
 
         boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(stage, controller, "tool");
+            Preferences p = new Preferences(stage, controller, new CacheImage());
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");

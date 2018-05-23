@@ -99,7 +99,7 @@ public class InterfaceJoueurs extends Parent{
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
 
-            Preferences p = new Preferences(primaryStage, controller, "joueurs");
+            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
             StackPane pref = new StackPane();
             Image imageQ = c.getImage("exit3.png");
@@ -214,7 +214,7 @@ public class InterfaceJoueurs extends Parent{
 
 
         final ToggleGroup j = new ToggleGroup();
-        RadioBouton bouton = new RadioBouton(primaryStage, controller);
+        MyRadioBouton bouton = new MyRadioBouton(primaryStage, controller);
         ToggleButton humains;
         humains = bouton.creer("humains");
         humains.setBackground(Background.EMPTY);
