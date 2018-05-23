@@ -43,7 +43,7 @@ public class MiniMaxLearning{
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     hia.doAction(state,currentAction);
                     tmp = miniMaxOpponent(state, depth-1, vMax,actionList);
                     hia.undoAction(state);
@@ -74,7 +74,7 @@ public class MiniMaxLearning{
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     hia.doAction(state,currentAction);
                     tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList);
                     hia.undoAction(state);

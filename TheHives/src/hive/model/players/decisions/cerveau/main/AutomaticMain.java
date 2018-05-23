@@ -33,37 +33,40 @@ public class AutomaticMain {
         EvaluationLearning boss;
         EvaluationLearning winEval;
         AdamEtEve AE = new AdamEtEve(12);
-        do{
+        for(int j =0;j<5;j++){
             do{
-                firstP = new FirstPhase();
-            }while(firstP.isNoWinners());
-            System.out.println("Fin de la First phase");
-            winEval = new EvaluationLearning(firstP.getNewGeneration().getSon()[0]);
-            selection = new SelectedPhase(winEval,EHARD);
-        }while(selection.isNoWinners());
-        System.out.println("Fin de la selected phase");
-        
-        boss = winEval;
-        for(int i =0 ; i<1 ; i++){
-            generation = new GeneratePhase(boss,firstP.getNewGeneration().getSon(),firstP.getDossierSuivant());
-            winEval = new EvaluationLearning(generation.getNewGeneration().getSon()[0]);
-            if(generation.isNoWinners()){
-                System.out.println("Il n'y a pas de gagnant à la génération "+i);
-            }
-            else{
-                selection = new SelectedPhase(boss,winEval);
-                if(!selection.isNoWinners()){
-                    boss = winEval;
+                do{
+                    firstP = new FirstPhase();
+                }while(firstP.isNoWinners());
+                System.out.println("Fin de la First phase");
+                winEval = new EvaluationLearning(firstP.getNewGeneration().getSon()[0]);
+                selection = new SelectedPhase(winEval,EHARD);
+            }while(selection.isNoWinners());
+            System.out.println("Fin de la selected phase");
+
+            boss = winEval;
+            for(int i =0 ; i<7; i++){
+                generation = new GeneratePhase(boss,firstP.getNewGeneration().getSon(),firstP.getDossierSuivant());
+                winEval = new EvaluationLearning(generation.getNewGeneration().getSon()[0]);
+                if(generation.isNoWinners()){
+                    System.out.println("Il n'y a pas de gagnant à la génération "+i);
+                }
+                else{
+                    selection = new SelectedPhase(boss,winEval);
+                    if(!selection.isNoWinners()){
+                        boss = winEval;
+                    }
                 }
             }
+            System.out.println("Fin de la derniere phase");
+            try {
+                AE.saveBoss(boss.getEvalValues(), "bossTest"+j); // C'est ici qu'il faut changer le nom du boss (changer juste le string pas le "+j")
+            } catch (IOException ex) {
+                Logger.getLogger(AutomaticMain.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(boss.toString());
         }
-        System.out.println("Fin de la derniere phase");
-        try {
-            AE.saveBoss(boss.getEvalValues());
-        } catch (IOException ex) {
-            Logger.getLogger(AutomaticMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println(boss.toString());
+        
         
     }
     

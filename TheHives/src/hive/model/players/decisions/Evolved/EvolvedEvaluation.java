@@ -85,14 +85,12 @@ public class EvolvedEvaluation {
         Player current = hia.currentPlayer(state);
         ArrayList<Tile> neighboursOpponent = hia.queenNeighbours(opponent, state);
         ArrayList<Tile> neighboursCurrent = hia.queenNeighbours(current, state);
-        Tile tuile;
-        while (!neighboursOpponent.isEmpty()) {
-            tuile = neighboursOpponent.remove(0);
+        
+        for(Tile tuile : neighboursOpponent){
             value += evolvedInsectsValueNeighboursQueenOpponent(tuile, state);
 
         }
-        while (!neighboursCurrent.isEmpty()) {
-            tuile = neighboursCurrent.remove(0);
+        for(Tile tuile : neighboursCurrent){
             value -= evolvedInsectsValueNeighboursQueenCurrent(tuile, state);
 
         }
@@ -100,10 +98,10 @@ public class EvolvedEvaluation {
     }
     
     static int EvolvedInsectsValue(ArrayList<Tile> freeTile){
-        Tile currentTile;
+        
         int value = 0;
-            while(!freeTile.isEmpty()){
-                currentTile = freeTile.remove(0);
+            
+            for(Tile currentTile : freeTile){
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
@@ -128,10 +126,9 @@ public class EvolvedEvaluation {
     }
     
     static int evolvedInsectsValueBloc(ArrayList<Tile> blocTile){
-        Tile currentTile;
+       
         int value = 0;
-            while(!blocTile.isEmpty()){
-                currentTile = blocTile.remove(0);
+            for(Tile currentTile : blocTile){
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:

@@ -44,10 +44,10 @@ public class Selection {
         int min[] = new int[3];
         int imin = 0;
         int n =0;
-        while(turnWin[imin]==0 && n<nbSon){
-            n++;
+        do{
             imin = n;
-        }
+            n++;
+        }while( n<nbSon && turnWin[imin]==0);
         if(imin==nbSon){
             noWarrior = true;
             min[0]=0;
@@ -65,10 +65,10 @@ public class Selection {
             turnWin[imin]= 0;
             imin=0;
             n=0;
-            while(turnWin[imin]==0 && n<nbSon){
-                n++;
+            do{
                 imin = n;
-            }
+                n++;
+            }while(n<nbSon && turnWin[imin]==0);
             if(i==0 && n==nbSon){
                 noWarrior = true;
                 min[1]=0;

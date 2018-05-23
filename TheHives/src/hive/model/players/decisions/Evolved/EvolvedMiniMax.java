@@ -37,7 +37,7 @@ public class EvolvedMiniMax{
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
                     tmp = evolvedMiniMaxOpponent(state, depth-1, vMax,actionList);
@@ -70,7 +70,7 @@ public class EvolvedMiniMax{
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
                     tmp = evolvedMiniMaxCurrentPlayer(state, depth-1, vMin,actionList);
