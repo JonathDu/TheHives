@@ -75,7 +75,7 @@ public class Selection {
                 }
             }
             max[i]=nbOfVictory[imax];
-            nbOfVictory[imax]= (- nbOfVictory[imax]);
+            nbOfVictory[imax]= (- 20);
             imax=0;
         }
         return max;

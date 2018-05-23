@@ -80,12 +80,12 @@ public class MainLearning {
                         }
                         break;
                     default:
-                        select.addVictory(i);
+                        //select.addVictory(i);
                         break;
                 }
 
             }
-            select.theBestLoosers(looseTurn);
+            //select.theBestLoosers(looseTurn);
             int[] winner = select.lesGagnants();
             Mate newGeneration;
             System.out.println("Les fils de la génération suivante : ");
