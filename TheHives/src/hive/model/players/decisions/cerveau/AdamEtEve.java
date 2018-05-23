@@ -109,13 +109,12 @@ public class AdamEtEve {
         }
     }
     
-    public void saveBoss(ArrayList<Integer> boss) throws FileNotFoundException, IOException {
-        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss.txt");
+    public void saveBoss(ArrayList<Integer> boss, String bo) throws FileNotFoundException, IOException {
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss"+bo);
         try (FileOutputStream fos = new FileOutputStream(file)) {
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(boss);
         }
-        
     }
     
     public ArrayList<Integer> dlBoss() throws FileNotFoundException, IOException, ClassNotFoundException{
