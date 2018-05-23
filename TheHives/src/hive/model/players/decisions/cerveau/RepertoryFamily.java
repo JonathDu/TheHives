@@ -6,10 +6,10 @@
 package hive.model.players.decisions.cerveau;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 /**
  *
  * @author Quentin
@@ -49,5 +49,15 @@ public class RepertoryFamily {
     public static void clearFile(String nom) throws IOException{
         FileWriter fos = new FileWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);
         fos.write("");      
+    }
+    
+    public static void readFile(String nom) throws IOException{
+        FileReader fos = new FileReader("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);
+         char[] buf = new char[1];
+        int n ;
+         while ((n = fos.read(buf)) >= 0) {
+             System.out.print(buf);
+         }
+         System.out.println();
     }
 }
