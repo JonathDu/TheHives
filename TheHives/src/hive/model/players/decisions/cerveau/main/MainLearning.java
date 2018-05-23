@@ -90,8 +90,7 @@ public class MainLearning {
             Mate newGeneration;
             System.out.println("Les fils de la génération suivante : ");
             newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 12);
-            
-                    
+            AE.registerGen(dossier[dossierSuivant], newGeneration.son);
             evaluations =  AE.initGeneration(dossier[dossierSuivant]);
             dossierSuivant = (dossierSuivant+1)%2;
             nbGeneration--;

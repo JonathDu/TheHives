@@ -87,6 +87,26 @@ public class AdamEtEve {
         }
         return salut;
     }
+    public void registerGen(String Dossier, ArrayList<Integer> [] son){
+        FileOutputStream fos;
+        ObjectOutputStream oos;
+        for (int i = 0; i < nbSon; i++) {
+            try {
+                File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
+                System.out.println(file.getAbsolutePath());
+                fos = new FileOutputStream(file);
+                oos= new ObjectOutputStream(fos);
+                oos.writeObject(son[i]);
+                fos.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }
+    
     public EvaluationLearning[] initGeneration(String Dossier) {
         EvaluationLearning[] salut = new EvaluationLearning[15];
         for (int i = 0; i < nbSon; i++) {
