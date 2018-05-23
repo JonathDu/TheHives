@@ -208,4 +208,8 @@ public class InterfaceStatistiques extends Parent {
         this.getChildren().add(pane);
     }
 
+    
+    public void majRetourPreference()
+    {
+    }
 }

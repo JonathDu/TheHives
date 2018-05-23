@@ -563,7 +563,7 @@ public class InterfaceMenu extends Parent{
 
     }
     
-    public void maj()
+    public void majRetourPreference()
     {
         System.out.println("TODO : set le BG");
         System.out.println("TODO : MAJ langue");

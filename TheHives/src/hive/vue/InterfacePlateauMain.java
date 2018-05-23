@@ -110,4 +110,8 @@ public class InterfacePlateauMain extends Parent {
         }
 
     }
+    
+    public void majRetourPreference()
+    {
+    }
 }

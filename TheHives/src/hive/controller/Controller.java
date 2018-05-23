@@ -140,7 +140,7 @@ public final class Controller
         typeTheme = nomTheme;
         if (currentScene.getRoot() instanceof InterfaceMenu)
         {
-            ((InterfaceMenu) currentScene.getRoot()).maj();
+            ((InterfaceMenu) currentScene.getRoot()).majRetourPreference();
         }
         //TODO !!!
     }

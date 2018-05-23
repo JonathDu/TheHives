@@ -482,6 +482,8 @@ public class InterfaceJoueurs extends Parent{
 
     }
 
-
+    public void majRetourPreference()
+    {
+    }
 
 }

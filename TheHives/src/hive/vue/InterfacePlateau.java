@@ -121,4 +121,8 @@ public class InterfacePlateau extends Parent {
         mainGauche.setIsCourant(color == TeamColor.BLACK);
 
     }
+    
+    public void majRetourPreference()
+    {
+    }
 }

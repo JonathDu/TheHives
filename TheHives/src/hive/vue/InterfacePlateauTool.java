@@ -135,5 +135,9 @@ public class InterfacePlateauTool extends Parent {
         bouton.setBackground(Background.EMPTY);
         return bouton;
     }
+    
+    public void majRetourPreference()
+    {
+    }
 
 }

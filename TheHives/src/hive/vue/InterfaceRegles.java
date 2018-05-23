@@ -556,5 +556,9 @@ public class InterfaceRegles extends Parent {
         pane.getChildren().add(sp_centre);
         this.getChildren().add(pane);
     }
+    
+    public void majRetourPreference()
+    {
+    }
 
 }

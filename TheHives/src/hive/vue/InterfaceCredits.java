@@ -188,4 +188,8 @@ public class InterfaceCredits extends Parent {
         this.getChildren().add(pane);
     }
     
+    public void majRetourPreference()
+    {
+    }
+    
 }

@@ -185,7 +185,9 @@ public class InterfaceCharger extends Parent {
     }
 
 
-
+    public void majRetourPreference()
+    {
+    }
 
 
 }
