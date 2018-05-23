@@ -32,7 +32,7 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Parent {
+public class InterfacePlateau extends Interface {
 
     BorderPane borderPane;
     GameController plateauController;
@@ -47,11 +47,10 @@ public class InterfacePlateau extends Parent {
     BorderPane centerMainD;
 
     public InterfacePlateau(Stage stage, Controller controller, GameController plateauController, CacheImage c, String joueur1, String joueur2) {
-        Image fond = c.getImage("fondMontagne.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
-        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-        Background background = new Background(backgroundFond);
-
+        super(stage, controller, c);
+        
+        
+        
         this.controller = controller;
         borderPane = new BorderPane();
         centerPane = new StackPane();
@@ -113,10 +112,12 @@ public class InterfacePlateau extends Parent {
         borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game));
+        borderPane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game, this.boutonPleinEcran, this.boutonPreference));
 
         borderPane.setBackground(background);
-        this.getChildren().add(borderPane);
+        this.panePrincipale.getChildren().add(borderPane);
+        this.getChildren().add(panePrincipale);
+        
     }
 
     public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {

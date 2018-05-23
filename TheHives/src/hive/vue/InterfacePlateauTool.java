@@ -28,15 +28,15 @@ import javafx.stage.Stage;
  */
 public class InterfacePlateauTool extends Parent {
 
-    Button boutonHome;
-    Button boutonSave;
-    Button boutonReplay;
-    Button boutonAnnuler;
-    Button boutonRecommencer;
-    Button boutonConseil;
-    Button boutonParam;
-    Button pleinEcran;
-    Button boutonRegle;
+    HiveBouton boutonHome;
+    HiveBouton boutonSave;
+    HiveBouton boutonReplay;
+    HiveBouton boutonAnnuler;
+    HiveBouton boutonRecommencer;
+    HiveBouton boutonConseil;
+    HiveBouton boutonParam;
+    HiveBouton pleinEcran;
+    HiveBouton boutonRegle;
     BorderPane pane;
 
     HBox gauche;
@@ -46,16 +46,16 @@ public class InterfacePlateauTool extends Parent {
     String j2;
 
     int width;
-    int tailleDeCase;
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game) {
+    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game, HiveBouton pleinEcran, HiveBouton param) {
         width = (int) stage.getWidth();
-        tailleDeCase = width / 8;
         this.c = c;
         this.j1 = j1;
         this.j2 = j2;
+        
+        String repertoire ="Design/FenetrePlateau/";
 
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
@@ -64,14 +64,18 @@ public class InterfacePlateauTool extends Parent {
         droite = new HBox();
         centre = new HBox();
 
-        boutonSave = creerBouton("BoutonDisquette.png");
-        boutonHome = creerBouton("bouttonRetourMenu.png");
-        boutonAnnuler = creerBouton("FlecheUndo.png");
-        boutonParam = creerBouton("BouttonParametre.png");
-        boutonConseil = creerBouton("Ampoule.png");
-        boutonReplay = creerBouton("FlecheRedo.png");
-        pleinEcran = creerBouton("pleinEcran.png");
-        boutonRegle = creerBouton("Boutonlivre.png");
+        boutonSave = new HiveBouton(c.getImage(repertoire+"BoutonDisquette.png"), width);
+        boutonHome = new HiveBouton(c.getImage(repertoire+"bouttonRetourMenu.png"), width);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire+"FlecheUndo.png"), width);
+        boutonConseil = new HiveBouton(c.getImage(repertoire+"Ampoule.png"), width  );
+        boutonReplay = new HiveBouton(c.getImage(repertoire+"FlecheRedo.png"), width);
+        this.pleinEcran = pleinEcran;
+        boutonRegle = new HiveBouton(c.getImage(repertoire+"Boutonlivre.png"), width);
+        boutonParam = param;
+        
+        
+        
+
 
         boutonHome.setOnMouseClicked(value -> {
             controller.goToMenu();
@@ -123,18 +127,6 @@ public class InterfacePlateauTool extends Parent {
         this.getChildren().add(pane);
     }
 
-    private Button creerBouton(String path) {
-        Button bouton = new Button();
-        ImageView image;
-        image = new ImageView(c.getImage("Design/FenetrePlateau/" + path));
-        image.setFitHeight(tailleDeCase / 2);
-        image.setFitWidth(tailleDeCase / 2 * 1.07);
-        image.setSmooth(true);
-        image.setCache(true);
-        bouton.setGraphic(image);
-        bouton.setBackground(Background.EMPTY);
-        return bouton;
-    }
     
     public void majRetourPreference()
     {

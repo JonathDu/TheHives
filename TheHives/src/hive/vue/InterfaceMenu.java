@@ -48,7 +48,7 @@ public class InterfaceMenu extends Parent{
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
         int tailleDeCase = width/8;
-
+        
         if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
