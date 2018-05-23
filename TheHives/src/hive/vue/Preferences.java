@@ -36,6 +36,7 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
+
 public class Preferences extends Parent
 {
 
@@ -97,7 +98,6 @@ public class Preferences extends Parent
 
         this.getChildren().add(panePrincipale);
     }
-
     private void setObjetsGraphiques()
     {
         imageFond.setImage(cacheImage.getImage("PlateauCentral.png"));

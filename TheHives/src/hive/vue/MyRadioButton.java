@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import java.awt.Dimension;
 import hive.thehives.TheHives;
 import java.util.ResourceBundle;
 import javafx.scene.control.ToggleButton;
@@ -32,10 +33,48 @@ class MyRadioBouton extends ToggleButton{
     public ToggleButton creer(String type){
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width/8;
-        double hauteurDeGrille = height*0.7;
-        double hauteurDeLigne = hauteurDeGrille/3.5;
+        
+        
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        
+        double max_height = dimension.getHeight();
+        double max_width = dimension.getWidth();
+        
+        int tailleDeCase;
+        
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
+        double hauteurDeGrille = tailleDeCase*4.2;
+        double hauteurDeLigne = hauteurDeGrille/4;
+        double largeurDeGrille = width-50;
+        double largeurDeColonne = largeurDeGrille/3; 
 
+        double largeurBouton;
+        double hauteurBouton;
+        if(width>max_width*0.75){
+            largeurBouton = largeurDeColonne*0.6;
+        }
+        else
+            largeurBouton = largeurDeColonne;
+        hauteurBouton=largeurBouton/7.2375;
+        /*if(width>max_width/2){
+            largeurBouton = width/5;
+            hauteurBouton=largeurBouton/7.2375;
+        }
+        else if(height > max_height/2){
+           
+        }
+        else{
+            largeurBouton = tailleDeCase*2.5;
+            hauteurBouton = largeurBouton/3;
+        }*/
+        
+        //= width/5;
+        
         CacheImage c = new CacheImage();
 
         String police = controller.getPolice();
@@ -67,6 +106,7 @@ class MyRadioBouton extends ToggleButton{
             bouton.setGraphic(ia_iaIm);
         }else if(type=="facile1" || type=="facile2"){
             bouton.setUserData("facile");
+
             bouton.setText(controller.gestionnaireLangage.getText("text_facile"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
@@ -87,13 +127,13 @@ class MyRadioBouton extends ToggleButton{
             bouton.setUserData("jour");
             bouton.setText(controller.gestionnaireLangage.getText("text_jour"));
             bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
+            bouton.setMinSize(tailleDeCase*0.8, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="nuit"){
             bouton.setUserData("nuit");
             bouton.setText(controller.gestionnaireLangage.getText("text_nuit"));
             bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
+            bouton.setMinSize(tailleDeCase*0.8, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }
         return bouton;

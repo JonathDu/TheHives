@@ -36,7 +36,13 @@ class Bouton  extends Parent {
 
         Image imageCase = new Image(getClass().getResourceAsStream("rsc/images/case.png"));
         DropShadow shadow = new DropShadow();
-        int tailleDeCase = width/8;
+        int tailleDeCase;
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
 
         StackPane bouton = new StackPane();
         ImageView caseIm = new ImageView(imageCase);

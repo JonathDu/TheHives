@@ -46,6 +46,8 @@ public final class Controller
 
     public int pleinEcran = 0;
     public String typeTheme;
+    public double old_height;
+    public double old_width;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
@@ -65,6 +67,9 @@ public final class Controller
         currentScene.setCursor(sourisIm);
 
         primaryStage.setScene(currentScene);
+        if(primaryStage.getWidth() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() && primaryStage.getHeight() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()){
+            primaryStage.centerOnScreen();
+        }
     }
 
     public void goToMenu()
