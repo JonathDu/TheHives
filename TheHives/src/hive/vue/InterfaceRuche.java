@@ -26,23 +26,15 @@ public class InterfaceRuche extends Parent {
     private final Matrix<InterfaceComb> tab;
     private final int largeur;
     private final int hauteur;
-    private int longueurPion = 40;
+    private final int longueurPion = 40;
     int width, height;
 
-    private GameController plateauController;
+    private final GameController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
+    
     public InterfaceRuche(CacheImage c, GameController plateauController) {
-//        this.width = width;
-//        this.height = height;
-//
-//
-//        longueurPion = width/60;
-//        largeurPion = (int) (longueurPion / 1.4);
-
-
-
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
@@ -156,4 +148,8 @@ public class InterfaceRuche extends Parent {
 //            }
 //        }
 //    }
+    
+    public void majRetourPreference()
+    {
+    }
 }

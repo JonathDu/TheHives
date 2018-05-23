@@ -6,15 +6,18 @@
 package hive.model.game;
 
 import hive.model.game.rules.Rules;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class Game
+public class Game implements Serializable
 {
     public GameState state;
     public Rules rules;
+    
+    public Game() {} // for serialization
     
     public Game(GameState state, Rules rules)
     {

@@ -6,16 +6,19 @@
 package hive.model.players;
 
 import hive.model.players.decisions.Decision;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class Player
+public class Player implements Serializable
 {
     public TeamColor color;
     public Decision decision;
     public PlayerCollection collection;
+    
+    public Player() {} // for serialization
     
     public Player(TeamColor color, Decision decision, PlayerCollection collection)
     {

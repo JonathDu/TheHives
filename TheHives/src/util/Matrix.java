@@ -5,16 +5,19 @@
  */
 package util;
 
+import java.io.Serializable;
+
 /**
  * Matrix
  *
  * @author Thomas
  * @param <E>
  */
-public class Matrix<E>
+public class Matrix<E> implements Serializable
 {
-
-    Object[][] data;
+    public Object[][] data; // public for xml serialization
+    
+    public Matrix() {} // for serialization
 
     public Matrix(int sizeX, int sizeY)
     {
@@ -133,6 +136,17 @@ public class Matrix<E>
         return true;
     }
 
-    
+    @Override
+    public String toString()
+    {
+        String str = "";
+        for(Object[] line : data)
+        {
+            for(Object e : line)
+                str += e.toString() + " ";
+            str += "\n";
+        }
+        return str;
+    }
 
 }

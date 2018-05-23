@@ -8,6 +8,7 @@ package hive.model.game;
 import util.iterators.CircularListIterator;
 import hive.model.players.Player;
 import hive.model.players.Players;
+import java.io.Serializable;
 import java.util.ListIterator;
 
 /**
@@ -15,10 +16,12 @@ import java.util.ListIterator;
  * @author Thomas
  */
 
-public class PlayerTurn implements ListIterator<Player>
+public class PlayerTurn implements ListIterator<Player>, Serializable
 {
-    Player current;
-    Player opponent;
+    public Player current;
+    public Player opponent;
+    
+    public PlayerTurn() {} // for serialization
     
     public PlayerTurn(Players players)
     {

@@ -5,6 +5,7 @@
  */
 package util.hexagons;
 
+import java.io.Serializable;
 import util.Matrix;
 import util.MatrixElementFactory;
 import util.Vector2i;
@@ -15,26 +16,37 @@ import util.Vector2i;
  * @param <E>
  * @param <H>
  */
-public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<H>
+public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGraph<H> implements Serializable
 {
-
-    Matrix<E> matrix;
-    Matrix<H> hexagons;
-    CircularPositionMaker maker;
+    public Matrix<E> matrix;
+    public Matrix<H> hexagons;
+    public CircularPositionMaker maker;
+    public NeighborsShifter shifter;
+    public Vector2i dim;
+    
+    public CircularHexagonsGraph() {} // for serialization
 
     public CircularHexagonsGraph(Matrix<E> matrix, NeighborsShifter shifter, MatrixElementFactory<H> factory)
     {
         super();
         this.matrix = matrix;
         assert matrix.sizeX() % 2 == 0 && matrix.sizeY() % 2 == 0;
-
-        Vector2i dim = matrix.getDimensions();
-
+        
+        this.shifter = shifter;
+        this.dim = matrix.getDimensions();
+        
         this.maker = new CircularPositionMaker(dim);
 
         hexagons = new Matrix<>(dim.x, dim.y);
         hexagons.setAll(factory);
 
+        setHexagons();
+        
+        setCenter(hexagons.getAt(dim.x / 2, dim.y / 2));
+    }
+    
+    public final void setHexagons()
+    {
         for (int y = 0; y < dim.y; ++y)
         {
             for (int x = 0; x < dim.x; ++x)
@@ -51,7 +63,6 @@ public class CircularHexagonsGraph<E, H extends Hexagon<E>> extends HexagonsGrap
                 }
             }
         }
-        setCenter(hexagons.getAt(dim.x / 2, dim.y / 2));
     }
 
     public H getHexagon(Vector2i pos)

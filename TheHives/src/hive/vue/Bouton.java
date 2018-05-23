@@ -134,7 +134,7 @@ class Bouton  extends Parent {
 
                     //i.accueil();*/
 
-                    Preferences p = new Preferences(primaryStage, controller, origin);
+                    Preferences p = new Preferences(primaryStage, controller, new CacheImage());
                     pane.getChildren().add(p);
                 }
             });

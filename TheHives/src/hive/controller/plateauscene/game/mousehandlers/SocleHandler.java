@@ -3,6 +3,7 @@ package hive.controller.plateauscene.game.mousehandlers;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
+import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
@@ -91,7 +92,6 @@ public class SocleHandler extends HandlerPlateau
 
         controller.builder.setPlacement(placement);
         playProducedAction();
-
         uiPlateau.majTileMain(controller.builder.tile, controller.progress.game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
         uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
     }

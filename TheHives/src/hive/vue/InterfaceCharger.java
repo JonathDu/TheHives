@@ -10,6 +10,12 @@ import java.awt.Dimension;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import hive.model.game.Game;
+import hive.thehives.TheHives;
+import java.awt.Dimension;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -51,15 +57,11 @@ public class InterfaceCharger extends Parent {
         /*if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        }*/
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
 
+        }*/
+
+        
+        String police = controller.getPolice();
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -89,7 +91,9 @@ public class InterfaceCharger extends Parent {
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, controller, "charger");
+
+
+            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
@@ -151,26 +155,11 @@ public class InterfaceCharger extends Parent {
         BorderPane choisir = new BorderPane();
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
         Button valider = new Button();
-        if(controller.langue=="Français"){
-            choix.setText("Choisissez la partie à charger");
-            valider.setText("Valider");
-        }
-        else if(controller.langue=="English"){
-            choix.setText("Choose the game to load");
-            valider.setText("Commit");
-        }
-        else if(controller.langue=="Italiano"){
-            choix.setText("Scegliere partita salvata");
-            valider.setText("Invio");
-        }
-        else if(controller.langue=="Русский"){
-            choix.setText("Выберите игру для загрузки");
-            valider.setText("Подтвердить");
-        }
-        else if(controller.langue=="Deutsch"){
-            choix.setText("Gespeichertes Spiel wählen");
-            valider.setText("Bestätigen");
-        }
+
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
+        choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
+
+        
         choix.setFont(new Font(police, width/35));
         choix.setAlignment(Pos.CENTER);
         choix.setMinSize(width/60, 30);
@@ -205,6 +194,8 @@ public class InterfaceCharger extends Parent {
             @Override
             public void handle(MouseEvent event) {
                 System.out.println(parties.getValue());
+                Game game = controller.chargerGame("test.xml");
+                controller.goToPlateau(game);
             }
         });
         if(height==max_height){
@@ -221,7 +212,9 @@ public class InterfaceCharger extends Parent {
     }
 
 
-
+    public void majRetourPreference()
+    {
+    }
 
 
 }

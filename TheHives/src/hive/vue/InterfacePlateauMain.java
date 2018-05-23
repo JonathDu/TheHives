@@ -16,9 +16,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -36,10 +34,13 @@ import javafx.stage.Stage;
 public class InterfacePlateauMain extends Parent {
 
     public VBox pions;
-    Label nomJoueur;
+    private Label labelNomJoueur;
     public boolean isCourant;
-    private TeamColor couleur;
-    EnumMap<InsectType, InterfacePions> pilesPions;
+    private final TeamColor couleur;
+    public EnumMap<InsectType, InterfacePions> pilesPions;
+    public ImageView afficheTour;
+    private final ImageView panneau;
+    private StackPane affichageJoueur;
 
     CacheImage c;
 
@@ -47,39 +48,48 @@ public class InterfacePlateauMain extends Parent {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
-        StackPane affichageJoueur = new StackPane();
-        pions.setAlignment(Pos.TOP_CENTER);
-        this.nomJoueur = new Label(nomJoueur);
-        this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
-        pions.prefHeightProperty().bind(stage.heightProperty());
-        BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
+        affichageJoueur = new StackPane();
+
+        labelNomJoueur = new Label(nomJoueur);
 
         pilesPions = new EnumMap<InsectType, InterfacePions>(InsectType.class);
-        pions.setPadding(new Insets(35));
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
             pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, plateau, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
+        
+        pions.setPadding(new Insets(50, 20, 20, 10));
+        pions.setAlignment(Pos.TOP_CENTER);
 
+        panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
+        afficheTour = new ImageView(c.getImage("bee.png"));
 
+        afficheTour.setFitWidth(30);
+        afficheTour.setPreserveRatio(true);
+        afficheTour.setSmooth(true);
 
-        ImageView panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
-        panneau.setFitWidth(100);
-        panneau.setFitHeight(50);
+        StackPane.setAlignment(afficheTour, Pos.TOP_LEFT);
+        StackPane.setAlignment(panneau, Pos.CENTER);
+        StackPane.setAlignment(labelNomJoueur, Pos.CENTER);
+
+        panneau.setFitWidth(150);
+        panneau.setFitHeight(60);
         panneau.setSmooth(true);
-        this.nomJoueur.setTextFill(Color.WHITE);
-        this.nomJoueur.setWrapText(true);
-        this.nomJoueur.setFont(new Font(20));
-        affichageJoueur.getChildren().add(panneau);
-        affichageJoueur.getChildren().add(this.nomJoueur);
 
+        labelNomJoueur.setTextFill(Color.WHITE);
+        labelNomJoueur.setAlignment(Pos.CENTER);
+        labelNomJoueur.setMaxWidth(150);
+        labelNomJoueur.setMaxHeight(40);
+        labelNomJoueur.setFont(new Font(20));
+
+        affichageJoueur.getChildren().add(panneau);
+        affichageJoueur.getChildren().add(labelNomJoueur);
+        affichageJoueur.getChildren().add(afficheTour);
+        afficheTour.setVisible(false);
         affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
-        pions.setBackground(new Background(bf));
-
         pions.getChildren().add(affichageJoueur);
-        pions.getChildren().get(0).setOpacity(1);
         this.getChildren().add(pions);
     }
 
@@ -94,5 +104,19 @@ public class InterfacePlateauMain extends Parent {
 
     public void maj(Tile tile, int nbTiles) {
         pilesPions.get(tile.type).maj(this.couleur, nbTiles, tile.type);
+    }
+
+    public void setIsCourant(boolean c) {
+        afficheTour.setVisible(c);
+        if (c) {
+            panneau.setEffect(new DropShadow(10, Color.GOLD));
+        } else {
+            panneau.setEffect(new DropShadow(10, Color.TRANSPARENT));
+        }
+
+    }
+    
+    public void majRetourPreference()
+    {
     }
 }

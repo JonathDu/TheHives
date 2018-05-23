@@ -6,15 +6,18 @@
 package hive.model.players.actions;
 
 import hive.model.board.Cell;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class MoveAction implements Action
+public class MoveAction implements Action, Serializable
 {
     public Cell source;
     public Cell destination;
+    
+    public MoveAction() {} // for serialization
     
     public MoveAction(Cell source, Cell destination)
     {

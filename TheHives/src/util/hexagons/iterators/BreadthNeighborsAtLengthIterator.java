@@ -8,7 +8,6 @@ package util.hexagons.iterators;
 import java.util.ArrayDeque;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Queue;
@@ -46,7 +45,7 @@ public class BreadthNeighborsAtLengthIterator<E> implements Iterator<Hexagon<E>>
         remove(1);
     }
     
-    void remove(int k)
+    private void remove(int k)
     {
         ++m;
         int count = 0;

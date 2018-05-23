@@ -12,25 +12,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
- *
+ * It "draws" a circle of influence around a tile
+ * (a way to precalculate the neighbors and indirectly potential placements for put actions)
  * @author Thomas
  */
-public class OccurencesPerHoneycomb extends HashMap<Honeycomb, AtomicInteger>
+public class TilesInfluence extends HashMap<Honeycomb, Integer>
 {
     private void addDeltaOccurences(Honeycomb comb, int delta)
     {
-        assert get(comb) == null || (get(comb) != null && get(comb).get() > 0);
+        assert get(comb) == null || (get(comb) != null && get(comb) > 0);
         
-        AtomicInteger n = get(comb);
+        Integer n = get(comb);
         if(n == null)
-            put(comb, new AtomicInteger(delta));
+            put(comb, new Integer(delta));
         else
         {
-            if(n.addAndGet(delta) == 0)
+            put(comb, n + delta);
+            if(get(comb) == 0)
                 remove(comb);
         }
-        
-        assert get(comb).get() > 0;
     }
     
     private void addDeltaInfluence(Honeycomb comb, int delta)

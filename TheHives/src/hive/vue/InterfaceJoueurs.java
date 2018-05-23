@@ -17,7 +17,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -50,13 +49,7 @@ public class InterfaceJoueurs extends Parent{
 
         CacheImage c = new CacheImage();
 
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -96,7 +89,7 @@ public class InterfaceJoueurs extends Parent{
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
 
-            Preferences p = new Preferences(primaryStage, controller, "joueurs");
+            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
@@ -172,42 +165,13 @@ public class InterfaceJoueurs extends Parent{
         Label joueur1 = new Label();
         Label joueur2 = new Label();
 
-        Button valider = new Button(); // Invio, Enter Bestätigen
-        if(controller.langue=="Français"){
-            joueur1.setText("Joueur 1");
-            joueur2.setText("Joueur 2");
-            Name1.setPromptText("Votre prenom"); // nome , Name
-            Name2.setPromptText("Votre prenom");
-            valider.setText("Valider");
-        }
-        else if(controller.langue=="English"){
-            joueur1.setText("Player 1");
-            joueur2.setText("Player 2");
-            Name1.setPromptText("Name");
-            Name2.setPromptText("Name");
-            valider.setText("Commit");
-        }
-        else if(controller.langue=="Italiano"){
-            joueur1.setText("Jocatore 1");
-            joueur2.setText("Jocatore 2");
-            Name1.setPromptText("Nome");
-            Name2.setPromptText("Nome");
-            valider.setText("Invio");
-        }
-        else if(controller.langue=="Русский"){
-            joueur1.setText("Игрок 1");
-            joueur2.setText("Игрок 2");
-            Name1.setPromptText("Имя");
-            Name2.setPromptText("Имя");
-            valider.setText("Подтвердить");
-        }
-        else if(controller.langue=="Deutsch"){
-            joueur1.setText("Spiler 1");
-            joueur2.setText("Spiler 2");
-            Name1.setPromptText("Name");
-            Name2.setPromptText("Name");
-            valider.setText("Bestätigen");
-        }
+        Button valider = new Button();
+        
+        joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
+        joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
+        Name1.setText(controller.gestionnaireLangage.getText("text_nom"));
+        Name2.setText(controller.gestionnaireLangage.getText("text_nom"));
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
 
         Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
         ImageView hexagoneIm = new ImageView(hexagone);
@@ -219,7 +183,7 @@ public class InterfaceJoueurs extends Parent{
         final ToggleGroup ia2 = new ToggleGroup();
 
         final ToggleGroup j = new ToggleGroup();
-        RadioBouton bouton = new RadioBouton(primaryStage, controller);
+        MyRadioBouton bouton = new MyRadioBouton(primaryStage, controller);
         ToggleButton humains;
         humains = bouton.creer("humains");
         humains.setBackground(Background.EMPTY);
@@ -261,7 +225,7 @@ public class InterfaceJoueurs extends Parent{
             grille.add(m1, 1, 3);
             ToggleButton difficile;
             difficile = bouton.creer("difficile1"); //Difficile, Schwer
-            difficile.setBackground(Background.EMPTY);
+            //difficile.setBackground(Background.EMPTY);
             difficile.setToggleGroup(ia1);
             StackPane d1 = new StackPane();
             d1.getChildren().add(difficile);
@@ -570,6 +534,8 @@ public class InterfaceJoueurs extends Parent{
 
     }
 
-
+    public void majRetourPreference()
+    {
+    }
 
 }

@@ -24,7 +24,7 @@ public class TheHives extends Application
 
     public int HEIGHT = 600;
     public int WIDTH = 800;
-    Dimension dimension;
+    Dimension screenSize;
     Group root;
     Scene scene;
     Stage primaryStage;
@@ -37,14 +37,14 @@ public class TheHives extends Application
         cache = new CacheImage();
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
-        dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         this.primaryStage = primaryStage;
 
         setPrimaryStage();
 
         primaryStage.show();
 
-        Controller controller = new Controller(primaryStage, scene, cache);
+        Controller controller = new Controller(primaryStage, scene, cache, screenSize);
     }
 
     private void setPrimaryStage()
@@ -53,9 +53,9 @@ public class TheHives extends Application
         primaryStage.setWidth(WIDTH);
         primaryStage.setMinHeight(400);
         primaryStage.setMinWidth(600);
-        primaryStage.setMaxHeight((int) dimension.getHeight() + 20);
-        primaryStage.setMaxWidth((int) dimension.getWidth() + 20);
-        primaryStage.setTitle("The Hive");
+        primaryStage.setMaxHeight((int) screenSize.getHeight() + 20);
+        primaryStage.setMaxWidth((int) screenSize.getWidth() + 20);
+        primaryStage.setTitle("The Hives");
         primaryStage.sizeToScene();
     }
 
