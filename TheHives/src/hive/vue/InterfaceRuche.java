@@ -148,4 +148,8 @@ public class InterfaceRuche extends Parent {
 //            }
 //        }
 //    }
+    
+    public void majRetourPreference()
+    {
+    }
 }

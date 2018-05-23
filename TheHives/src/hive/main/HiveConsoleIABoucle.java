@@ -9,7 +9,7 @@ import hive.model.GameProgress;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.players.Player;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
@@ -81,7 +81,7 @@ public class HiveConsoleIABoucle {
 
                 // mettre un sleep ici ?
             }
-            System.out.println("Turn : " + HiveFunctions.nbTurns(game.state));
+            System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
             if (game.rules.getStatus(game.state) != GameStatus.CURRENT_WINS) {
                 if (player == game.state.players.get(0)) {
                     System.out.println("Joueur 1 a gagné");

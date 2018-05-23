@@ -6,6 +6,11 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.model.game.Game;
+import hive.model.players.decisions.Level;
+import hive.thehives.TheHives;
+import java.io.IOException;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,7 +50,7 @@ public class InterfacePlateauTool extends Parent {
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2) {
+    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game) {
         width = (int) stage.getWidth();
         tailleDeCase = width / 8;
         this.c = c;
@@ -70,6 +75,10 @@ public class InterfacePlateauTool extends Parent {
 
         boutonHome.setOnMouseClicked(value -> {
             controller.goToMenu();
+        });
+        
+        boutonSave.setOnMouseClicked(value -> {
+            controller.enregistrerGame(game, "test.xml");
         });
 
         boutonRegle.setOnMouseClicked(value -> {
@@ -125,6 +134,10 @@ public class InterfacePlateauTool extends Parent {
         bouton.setGraphic(image);
         bouton.setBackground(Background.EMPTY);
         return bouton;
+    }
+    
+    public void majRetourPreference()
+    {
     }
 
 }

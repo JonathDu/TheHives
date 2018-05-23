@@ -8,6 +8,7 @@ package hive.vue;
 import hive.controller.Controller;
 import hive.thehives.TheHives;
 import hive.vue.Bouton;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -43,13 +44,7 @@ public class InterfaceStatistiques extends Parent {
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -133,21 +128,9 @@ public class InterfaceStatistiques extends Parent {
         pane.getChildren().add(Menu);
 
         Label stat = new Label();
-        if(controller.langue=="Français"){
-            stat.setText("Statistiques");
-        }
-        else if(controller.langue=="English"){
-            stat.setText("Statistics");
-        }
-        else if(controller.langue=="Italiano"){
-            stat.setText("Statistiche");
-        }
-        else if(controller.langue=="Русский"){
-            stat.setText("Статистика");
-        }
-        else if(controller.langue=="Deutsch"){
-            stat.setText("Statistik");
-        }
+        
+        stat.setText(controller.gestionnaireLangage.getText("text_statistiques"));
+        
         stat.setFont(new Font(police, width/35));
         stat.setAlignment(Pos.CENTER);
         stat.setMinSize(width/60, 30);
@@ -225,4 +208,8 @@ public class InterfaceStatistiques extends Parent {
         this.getChildren().add(pane);
     }
 
+    
+    public void majRetourPreference()
+    {
+    }
 }

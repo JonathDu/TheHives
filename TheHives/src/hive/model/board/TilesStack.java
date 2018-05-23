@@ -5,13 +5,14 @@
  */
 package hive.model.board;
 
+import java.io.Serializable;
 import java.util.Stack;
 
 /**
  *
  * @author Thomas
  */
-public class TilesStack extends Stack<Tile>
+public class TilesStack extends Stack<Tile> implements Serializable
 {
     public TilesStack()
     {

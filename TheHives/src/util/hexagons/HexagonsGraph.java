@@ -5,12 +5,14 @@
  */
 package util.hexagons;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Thomas
- * @param <E>
+ * @param <H>
  */
-public class HexagonsGraph<H>
+public class HexagonsGraph<H> implements Serializable
 {
     H center;
     

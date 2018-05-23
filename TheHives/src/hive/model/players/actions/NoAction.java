@@ -5,13 +5,16 @@
  */
 package hive.model.players.actions;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Thomas
  */
-public class NoAction implements Action
+public class NoAction implements Action, Serializable
 {
-
+    public NoAction() {} // for serialization
+    
     @Override
     public void accept(ActionVisitor visitor)
     {

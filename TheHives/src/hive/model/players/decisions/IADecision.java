@@ -8,15 +8,18 @@ package hive.model.players.decisions;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class IADecision implements Decision
+public class IADecision implements Decision, Serializable
 {
-    Level qI;
+    public Level qI;
+    
+    public IADecision() {} // for serialization
 
     public IADecision(Level qI) {
         this.qI = qI;

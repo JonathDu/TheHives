@@ -6,6 +6,9 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.thehives.TheHives;
+import java.awt.Dimension;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -39,20 +42,9 @@ public class InterfaceRegles extends Parent {
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
 
-        String rep;
-        if(controller.langue == "Русский"){
-            rep = controller.langue;
-        }
-        else{
-            rep = "Français";
-        }
+        String rep = "";
 
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        } else {
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -155,19 +147,9 @@ public class InterfaceRegles extends Parent {
         }
         CacheImage c = new CacheImage();
 
-        String rep;
-        if (controller.langue == "Русский") {
-            rep = controller.langue;
-        } else {
-            rep = "Français";
-        }
+        String rep = "";
 
-        String police;
-        if (controller.langue == "Russe") {
-            police = "Copperplate";
-        } else {
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -207,82 +189,20 @@ public class InterfaceRegles extends Parent {
         Label exception = new Label();
         Label jeu = new Label();
         Label insecte = new Label();
-        if(controller.langue=="Français"){
-            //regles.setText("Règles");
-            but.setText("But du jeu");
-            debut.setText("Début de partie");
-            deplacement.setText("Déplacement");
-            tour.setText("Déroulement tour");
-            araignee.setText("Araignée");
-            fourmi.setText("Fourmi");
-            reine.setText("Reine");
-            sauterelle.setText("Sauterelle");
-            scarabee.setText("Scarabee");
-            exception.setText("Exception");
-            jeu.setText("Jeu");
-            insecte.setText("Insecte");
-        }
-        else if(controller.langue=="English"){
-            //regles.setText("Rules");
-            but.setText("Games purpose");
-            debut.setText("Start of the game");
-            deplacement.setText("Movement");
-            tour.setText("Round");
-            araignee.setText("Spider");
-            fourmi.setText("Ant");
-            reine.setText("Queen bee");
-            sauterelle.setText("Grasshopper");
-            scarabee.setText("Beetle");
-            exception.setText("Exception");
-            jeu.setText("Game");
-            insecte.setText("Insect");
-        }
-        else if(controller.langue=="Italiano"){
-           // regles.setText("Regoli");
-            but.setText("L'obiettivo");// del gioco");
-            debut.setText("Inizio del gioco");
-            deplacement.setText("Spostamento");
-            tour.setText("Turno");
-            araignee.setText("Ragno");
-            fourmi.setText("Formica");
-            reine.setText("Ape regina");
-            sauterelle.setText("Cavalletta");
-            scarabee.setText("Scarabeo");
-            exception.setText("Eccezione");
-            jeu.setText("Gioco");
-            insecte.setText("Insetto");
-        }
-        else if(controller.langue=="Русский"){
-            //regles.setText("Правила");
-            but.setText("Цель игры");
-            debut.setText("Начало игры");
-            deplacement.setText("Перемещение");
-            tour.setText("Раунд");
-            araignee.setText("Паук");
-            fourmi.setText("Муравей");
-            reine.setText("Королева пчел");
-            sauterelle.setText("Кузнечик");
-            scarabee.setText("Жук");
-            exception.setText("Исключение");
-            jeu.setText("Игра");
-            insecte.setText("Насекомое");
-        }
-        else if(controller.langue=="Deutsch"){
-            //regles.setText("Regeln");
-            but.setText("Ziel des Spiels");
-            debut.setText("Spielbeginn");
-            deplacement.setText("Bewegung");
-            tour.setText("Runde");
-            araignee.setText("Spinne");
-            fourmi.setText("Ameise");
-            reine.setText("Bienenkönigin");
-            sauterelle.setText("Grashüpfer");
-            scarabee.setText("Käfer");
-            exception.setText("Ausnahme");
-            jeu.setText("Spiel");
-            insecte.setText("Insekt");
 
-        }
+        but.setText(controller.gestionnaireLangage.getText("text_regle_but"));
+        debut.setText(controller.gestionnaireLangage.getText("text_regle_debut"));
+        deplacement.setText(controller.gestionnaireLangage.getText("text_regle_deplacement"));
+        tour.setText(controller.gestionnaireLangage.getText("text_regle_deroulement"));
+        araignee.setText(controller.gestionnaireLangage.getText("text_regle_araignee"));
+        fourmi.setText(controller.gestionnaireLangage.getText("text_regle_fourmi"));
+        reine.setText(controller.gestionnaireLangage.getText("text_regle_reine"));
+        sauterelle.setText(controller.gestionnaireLangage.getText("text_regle_sauterelle"));
+        scarabee.setText(controller.gestionnaireLangage.getText("text_regle_scrarabee"));
+        exception.setText(controller.gestionnaireLangage.getText("text_regle_exception"));
+        jeu.setText(controller.gestionnaireLangage.getText("text_regle_jeu"));
+        insecte.setText(controller.gestionnaireLangage.getText("text_regle_insect"));
+
         StackPane spR = new StackPane();
         Image regles = c.getImage("Regles/" + rep + "/LesRegles.png");
         ImageView reglesIm = new ImageView(regles);
@@ -631,6 +551,10 @@ public class InterfaceRegles extends Parent {
         AnchorPane.setBottomAnchor(sp_centre, (double) height * 0.1);
         pane.getChildren().add(sp_centre);
         this.getChildren().add(pane);
+    }
+
+    public void majRetourPreference()
+    {
     }
 
 }

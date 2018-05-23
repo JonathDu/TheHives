@@ -24,6 +24,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import hive.thehives.TheHives;
+import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,13 +58,7 @@ public class InterfaceJoueurs extends Parent{
 
         CacheImage c = new CacheImage();
 
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -153,42 +148,13 @@ public class InterfaceJoueurs extends Parent{
         Label joueur1 = new Label();
         Label joueur2 = new Label();
 
-        Button valider = new Button(); // Invio, Enter Bestätigen
-        if(controller.langue=="Français"){
-            joueur1.setText("Joueur 1");
-            joueur2.setText("Joueur 2");
-            Name1.setPromptText("Votre prenom"); // nome , Name
-            Name2.setPromptText("Votre prenom");
-            valider.setText("Valider");
-        }
-        else if(controller.langue=="English"){
-            joueur1.setText("Player 1");
-            joueur2.setText("Player 2");
-            Name1.setPromptText("Name");
-            Name2.setPromptText("Name");
-            valider.setText("Commit");
-        }
-        else if(controller.langue=="Italiano"){
-            joueur1.setText("Jocatore 1");
-            joueur2.setText("Jocatore 2");
-            Name1.setPromptText("Nome");
-            Name2.setPromptText("Nome");
-            valider.setText("Invio");
-        }
-        else if(controller.langue=="Русский"){
-            joueur1.setText("Игрок 1");
-            joueur2.setText("Игрок 2");
-            Name1.setPromptText("Имя");
-            Name2.setPromptText("Имя");
-            valider.setText("Подтвердить");
-        }
-        else if(controller.langue=="Deutsch"){
-            joueur1.setText("Spiler 1");
-            joueur2.setText("Spiler 2");
-            Name1.setPromptText("Name");
-            Name2.setPromptText("Name");
-            valider.setText("Bestätigen");
-        }
+        Button valider = new Button();
+        
+        joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
+        joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
+        Name1.setText(controller.gestionnaireLangage.getText("text_nom"));
+        Name2.setText(controller.gestionnaireLangage.getText("text_nom"));
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
 
         Image hexagone = c.getImage("Design/MenuPrincipaux/Hexagone.png");
         ImageView hexagoneIm = new ImageView(hexagone);
@@ -516,6 +482,8 @@ public class InterfaceJoueurs extends Parent{
 
     }
 
-
+    public void majRetourPreference()
+    {
+    }
 
 }

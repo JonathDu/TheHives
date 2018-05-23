@@ -113,7 +113,7 @@ public class InterfacePlateau extends Parent {
         borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2));
+        borderPane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game));
 
         borderPane.setBackground(background);
         this.getChildren().add(borderPane);
@@ -134,5 +134,9 @@ public class InterfacePlateau extends Parent {
     public void majJoueurCourant(TeamColor color) {
         mainDroite.setIsCourant(color == TeamColor.WHITE);
         mainGauche.setIsCourant(color == TeamColor.BLACK);
+    }
+
+    public void majRetourPreference()
+    {
     }
 }

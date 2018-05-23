@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.thehives.TheHives;
+import java.util.ResourceBundle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,13 +38,7 @@ class MyRadioBouton extends ToggleButton{
 
         CacheImage c = new CacheImage();
 
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
 
         ToggleButton bouton = new ToggleButton("");
 
@@ -72,110 +67,35 @@ class MyRadioBouton extends ToggleButton{
             bouton.setGraphic(ia_iaIm);
         }else if(type=="facile1" || type=="facile2"){
             bouton.setUserData("facile");
-            if(controller.langue=="Français"){
-                bouton.setText("Facile");
-            }
-            else if(controller.langue=="English"){
-                bouton.setText("Easy");
-            }
-            else if(controller.langue=="Italiano"){
-                bouton.setText("Facile");
-            }
-            else if(controller.langue=="Русский"){
-                bouton.setText("Легкий");
-            }
-            else if(controller.langue=="Deutsch"){
-                bouton.setText("Einfach");
-            }
+            bouton.setText(controller.gestionnaireLangage.getText("text_facile"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
-            if(controller.langue=="Français"){
-                bouton.setText("Moyenne");
-            }
-            else if(controller.langue=="English"){
-                bouton.setText("Medium");
-            }
-            else if(controller.langue=="Italiano"){
-                bouton.setText("Media");
-            }
-            else if(controller.langue=="Русский"){
-                bouton.setText("Средний");
-            }
-            else if(controller.langue=="Deutsch"){
-                bouton.setText("Normal");
-            }
+            bouton.setText(controller.gestionnaireLangage.getText("text_moyen"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
-            if(controller.langue=="Français"){
-            bouton.setText("Difficile");
-            }
-            else if(controller.langue=="English"){
-                bouton.setText("Hard");
-            }
-            else if(controller.langue=="Italiano"){
-                bouton.setText("Difficile");
-            }
-            else if(controller.langue=="Русский"){
-                bouton.setText("Сложный");
-            }
-            else if(controller.langue=="Deutsch"){
-                bouton.setText("Schwer");
-            }
+            bouton.setText(controller.gestionnaireLangage.getText("text_difficile"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="jour"){
             bouton.setUserData("jour");
-            if(controller.langue=="Français"){
-            bouton.setText("Jour");
-            }
-            else if(controller.langue=="English"){
-                bouton.setText("Day");
-            }
-            else if(controller.langue=="Italiano"){
-                bouton.setText("Giorno");
-            }
-            else if(controller.langue=="Русский"){
-                bouton.setText("День");
-            }
-            else if(controller.langue=="Deutsch"){
-                bouton.setText("Tag");
-            }
+            bouton.setText(controller.gestionnaireLangage.getText("text_jour"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="nuit"){
             bouton.setUserData("nuit");
-            if(controller.langue=="Français"){
-            bouton.setText("Nuit");
-            }
-            else if(controller.langue=="English"){
-                bouton.setText("Night");
-            }
-            else if(controller.langue=="Italiano"){
-                bouton.setText("Notte");
-            }
-            else if(controller.langue=="Русский"){
-                bouton.setText("Ночь");
-            }
-            else if(controller.langue=="Deutsch"){
-                bouton.setText("Nacht");
-            }
+            bouton.setText(controller.gestionnaireLangage.getText("text_nuit"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }
         return bouton;
-
-
-
-
     }
-
 }

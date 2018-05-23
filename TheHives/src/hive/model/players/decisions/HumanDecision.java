@@ -7,14 +7,17 @@ package hive.model.players.decisions;
 
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class HumanDecision implements Decision
+public class HumanDecision implements Decision, Serializable
 {
     Action action;
+    
+    public HumanDecision() {} // for serialization
     
     @Override
     public Action getAction(Game game)

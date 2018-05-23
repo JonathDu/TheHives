@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
@@ -30,7 +30,7 @@ public class GrasshopperBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return list;
         
         // for each side
@@ -62,7 +62,7 @@ public class GrasshopperBehavior implements InsectBehavior
     {
         assert cell.level == 0;
         
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return false;
         
         // for each side

@@ -141,4 +141,8 @@ public class InterfaceUtiles extends Parent{
         this.getChildren().add(Utiles);
         
     }
+    
+    public void majRetourPreference()
+    {
+    }
 }
