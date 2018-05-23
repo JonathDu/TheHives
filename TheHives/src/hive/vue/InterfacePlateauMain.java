@@ -51,7 +51,6 @@ public class InterfacePlateauMain extends Parent {
         pions.setAlignment(Pos.TOP_CENTER);
         this.nomJoueur = new Label(nomJoueur);
         this.nomJoueur.setAlignment(Pos.BOTTOM_CENTER);
-        pions.prefHeightProperty().bind(stage.heightProperty());
         BackgroundFill bf = new BackgroundFill(Color.GRAY, null, null);
 
         pilesPions = new EnumMap<InsectType, InterfacePions>(InsectType.class);
@@ -74,7 +73,7 @@ public class InterfacePlateauMain extends Parent {
         affichageJoueur.getChildren().add(panneau);
         affichageJoueur.getChildren().add(this.nomJoueur);
 
-        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+        //affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
         pions.setBackground(new Background(bf));
 

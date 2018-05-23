@@ -6,19 +6,13 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.thehives.TheHives;
-import java.awt.Dimension;
 import javafx.geometry.Pos;
-import static javafx.geometry.Pos.CENTER;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
