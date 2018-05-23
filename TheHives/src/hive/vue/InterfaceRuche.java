@@ -33,6 +33,7 @@ public class InterfaceRuche extends Parent {
     private final Board board;
     private InterfacePlateau plateau;
 
+    
     public InterfaceRuche(CacheImage c, GameController plateauController) {
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));

@@ -47,7 +47,8 @@ public final class Controller {
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        goToMenu();
+        //goToMenu();
+        goToPlateau("Joueur 1", "Joueur 2", null, null);
     }
 
     public void changeScene() {

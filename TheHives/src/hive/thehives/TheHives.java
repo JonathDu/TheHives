@@ -55,7 +55,7 @@ public class TheHives extends Application
         primaryStage.setMinWidth(600);
         primaryStage.setMaxHeight((int) screenSize.getHeight() + 20);
         primaryStage.setMaxWidth((int) screenSize.getWidth() + 20);
-        primaryStage.setTitle("The Hive");
+        primaryStage.setTitle("The Hives");
         primaryStage.sizeToScene();
     }
 
