@@ -27,7 +27,6 @@ public class RepertoryFamily {
             try (PrintWriter fos = new PrintWriter(bw)) {
                 // ecriture de la mere
                 String res;
-                System.out.println("coucou\n");
                 fos.print("\n\nmere : ");
                 for(int i =0; i< family[0].size();i++){
                     res =family[0].get(i)+" ";
