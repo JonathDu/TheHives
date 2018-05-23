@@ -60,12 +60,13 @@ public class AutomaticMain {
             }
             System.out.println("Fin de la derniere phase");
             try {
-                AE.saveBoss(boss.getEvalValues(), "bossTest"+j); // C'est ici qu'il faut changer le nom du boss (changer juste le string pas le "+j")
+                AE.saveBoss(boss.getEvalValues(), "bossTest"+j+".txt"); // C'est ici qu'il faut changer le nom du boss (changer juste le string pas le <+j+"txt">)
             } catch (IOException ex) {
                 Logger.getLogger(AutomaticMain.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println(boss.getEvalValues());
         }
+            
         
         
     }

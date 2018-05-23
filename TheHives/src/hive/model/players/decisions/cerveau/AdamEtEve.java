@@ -80,7 +80,7 @@ public class AdamEtEve {
     }
     
     public void saveBoss(ArrayList<Integer> boss, String bo) throws FileNotFoundException, IOException {
-        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss"+bo);
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss\\"+bo);
         try (FileOutputStream fos = new FileOutputStream(file)) {
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(boss);
@@ -89,7 +89,7 @@ public class AdamEtEve {
     
     public ArrayList<Integer> dlBoss() throws FileNotFoundException, IOException, ClassNotFoundException{
         ArrayList<Integer> salut ;
-        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss.txt");
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\BossbossTest0.txt");
         try (FileInputStream fos = new FileInputStream(file)){
             ObjectInputStream oos= new ObjectInputStream(fos);
             salut = (ArrayList<Integer>) oos.readObject();
