@@ -21,6 +21,7 @@ import hive.vue.InterfacePlateau;
 import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceStatistiques;
 import hive.vue.Preferences;
+import java.awt.Dimension;
 import java.io.IOException;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -36,14 +37,16 @@ public final class Controller {
     Scene currentScene;
     Stage primaryStage;
     CacheImage cacheImage;
+    public Dimension screenSize;
     public String langue = "Français";
     public int pleinEcran = 0;
     public String typeTheme;
 
-    public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage) {
+    public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize) {
         currentScene = _currentScene;
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
+        screenSize = _screenSize;
         goToMenu();
     }
 
