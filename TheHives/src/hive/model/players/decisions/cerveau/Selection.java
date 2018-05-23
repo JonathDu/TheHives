@@ -50,7 +50,10 @@ public class Selection {
         }
         if(imin==nbSon){
             noWarrior = true;
-            return null;
+            min[0]=0;
+            min[1]=1;
+            min[2]=2;
+            return min;
         }
         for(int i =0; i<3;i++){
             for(int j=1; j<nbSon;j++){
@@ -66,10 +69,18 @@ public class Selection {
                 n++;
                 imin = n;
             }
-            if(i<2 && imin==nbSon){
+            if(i==0 && imin==nbSon){
                 noWarrior = true;
-                return null;
+                min[1]=0;
+                min[2]=1;
+                return min; 
             }
+            if(i==1 && imin==nbSon){
+                noWarrior = true;
+                min[2]=0;
+                return min; 
+            }
+            
         }
         return min;
         
