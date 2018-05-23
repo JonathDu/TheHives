@@ -24,11 +24,12 @@ import java.util.logging.Logger;
  */
 public class GeneratePhase extends Phase{
     EvaluationLearning boss;
-    public GeneratePhase(EvaluationLearning boss, ArrayList<Integer>[] challegers, int dossiers){
+    
+    public GeneratePhase(EvaluationLearning boss, ArrayList<Integer>[] challengers, int dossiers){
         this.boss = boss;
         int nbChildren = 12;
         AdamEtEve AE = new AdamEtEve(nbChildren);
-        initEval( challegers);
+        initEval( challengers);
         dossier = new String[2];
         dossier[0]="generationAlpha";
         dossier[1]="generationBeta";
@@ -77,9 +78,10 @@ public class GeneratePhase extends Phase{
     }
     
    
-    public void initEval(ArrayList<Integer>[] challegers){
+    public final void initEval(ArrayList<Integer>[] challengers){
+        evaluations = new EvaluationLearning[12];
         for(int i =0; i<12;i++){
-            evaluations[i] = new EvaluationLearning( challegers[i]);
+            evaluations[i] = new EvaluationLearning(challengers[i]);
         }
     }
 }

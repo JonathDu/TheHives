@@ -44,7 +44,7 @@ public class Selection {
         int min[] = new int[3];
         int imin = 0;
         int n =0;
-        while(turnWin[imin]==0 && imin<nbSon){
+        while(turnWin[imin]==0 && n<nbSon){
             n++;
             imin = n;
         }
@@ -65,17 +65,17 @@ public class Selection {
             turnWin[imin]= 0;
             imin=0;
             n=0;
-            while(turnWin[imin]==0 && imin<nbSon){
+            while(turnWin[imin]==0 && n<nbSon){
                 n++;
                 imin = n;
             }
-            if(i==0 && imin==nbSon){
+            if(i==0 && n==nbSon){
                 noWarrior = true;
                 min[1]=0;
                 min[2]=1;
                 return min; 
             }
-            if(i==1 && imin==nbSon){
+            if(i==1 && n==nbSon){
                 noWarrior = true;
                 min[2]=0;
                 return min; 
