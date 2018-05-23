@@ -24,13 +24,20 @@ import java.util.logging.Logger;
  * @author Coralie
  */
 public class FirstPhase {
+    int[] winner;
+    int theWinner;
+    boolean noWinners;
+    Mate newGeneration;
+    EvaluationLearning[] evaluations;
+    String dossier[];
+    int dossierSuivant;
     
     FirstPhase(){
         int nbFirstChildren = 12;
-        String dossier[] = new String[2];
+        dossier = new String[2];
         dossier[0]="generationAlpha";
         dossier[1]="generationBeta";
-        int dossierSuivant =0;
+        dossierSuivant =0;
         int[] victoryTurn = new int[nbFirstChildren];
         Selection select = new Selection(nbFirstChildren);
         AdamEtEve AE = new AdamEtEve(nbFirstChildren);
@@ -39,7 +46,7 @@ public class FirstPhase {
         } catch (IOException ex) {
             Logger.getLogger(FirstPhase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        EvaluationLearning[] evaluations = AE.generate(dossier[dossierSuivant]);
+        evaluations = AE.generate(dossier[dossierSuivant]);
         dossierSuivant = (dossierSuivant+1)%2;
             for (int i = 0; i < nbFirstChildren; i++) {
                 System.out.println("Nous sommes à la partie de fils" + i);
@@ -72,25 +79,55 @@ public class FirstPhase {
                         } 
                         break;
                     default:
-                        //select.addVictory(i);
                         break;
                 }
 
             }
-            //select.theBestLoosers(looseTurn);
-            int[] winner = select.lesGagnants();
-            
-            Mate newGeneration;
-            System.out.println("Les fils de la génération suivante : ");
-            try {
-                newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 12);
-            } catch (IOException ex) {
-                Logger.getLogger(FirstPhase.class.getName()).log(Level.SEVERE, null, ex);
+           
+            winner = select.theBestWinners(victoryTurn);
+            if(select.isNoWarrior())
+                noWinners = true;
+            else {
+                noWinners = false;
+                theWinner = winner[0];
+                System.out.println("Les fils de la génération suivante : ");
+                try {
+                    newGeneration = new Mate(evaluations[winner[0]].getEvalValues(), evaluations[winner[1]].getEvalValues(),evaluations[winner[2]].getEvalValues(), 12);
+                } catch (IOException ex) {
+                    Logger.getLogger(FirstPhase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //manque un truc ici
+                evaluations =  AE.initGeneration(dossier[dossierSuivant]);
+                dossierSuivant = (dossierSuivant+1)%2;
             }
-            
-                    
-            evaluations =  AE.initGeneration(dossier[dossierSuivant]);
-            dossierSuivant = (dossierSuivant+1)%2;
         }
+
+    public int[] getWinner() {
+        return winner;
+    }
+
+    public int getTheWinner() {
+        return theWinner;
+    }
+
+    public boolean isNoWinners() {
+        return noWinners;
+    }
+
+    public Mate getNewGeneration() {
+        return newGeneration;
+    }
+
+    public EvaluationLearning[] getEvaluations() {
+        return evaluations;
+    }
+
+    public String[] getDossier() {
+        return dossier;
+    }
+
+    public int getDossierSuivant() {
+        return dossierSuivant;
+    }
     
 }

@@ -12,6 +12,7 @@ package hive.model.players.decisions.cerveau;
 public class Selection {
     int[] nbOfVictory;
     int nbSon;
+    boolean noWarrior;
     
     public Selection(){
         nbOfVictory = new int[15];
@@ -19,6 +20,7 @@ public class Selection {
             nbOfVictory[i]=0;
         }
         nbSon = 15;
+        noWarrior=false;
     }
     public Selection(int nbSon){
         nbOfVictory = new int[nbSon];
@@ -26,43 +28,51 @@ public class Selection {
             nbOfVictory[i]=0;
         }
         this.nbSon= nbSon;
+        noWarrior=false;
     }
     
     public void addVictory(int son){
         nbOfVictory[son]++;
     }
+
+    public boolean isNoWarrior() {
+        return noWarrior;
+    }
     
-    public void theBestLoosers(int[] turnLoose){
-        int max[] = new int[2];
-        int maxValue, maxValue2;
+    public int[] theBestWinners(int[] turnWin){
         
-        if(turnLoose[0]>turnLoose[1]){
-            max[0]= 0;
-            maxValue = turnLoose[0];
-            max[1]= 1;
-            maxValue2 = turnLoose[1];
+        int min[] = new int[3];
+        int imin = 0;
+        int n =0;
+        while(turnWin[imin]==0 && imin<nbSon){
+            n++;
+            imin = n;
         }
-        else{
-            max[0]= 1;
-            maxValue = turnLoose[1];
-            max[1]= 0;
-            maxValue2 = turnLoose[0];
+        if(imin==nbSon){
+            noWarrior = true;
+            return null;
         }
-        for(int i = 2 ; i < turnLoose.length ; i++){
-            if(turnLoose[i]>maxValue){
-                if(turnLoose[i]>maxValue2){
-                    max[1]= max[0];
-                    maxValue2 = maxValue;
-                    max[0]= i;
-                    maxValue = turnLoose[i];
-                    
+        for(int i =0; i<3;i++){
+            for(int j=1; j<nbSon;j++){
+                if(turnWin[j]!=0 && turnWin[j]<turnWin[imin]){
+                    imin = j;
                 }
-                max[1]= i;
-                maxValue2 = turnLoose[i];
+            }
+            min[i]=imin;
+            turnWin[imin]= 0;
+            imin=0;
+            n=0;
+            while(turnWin[imin]==0 && imin<nbSon){
+                n++;
+                imin = n;
+            }
+            if(i<2 && imin==nbSon){
+                noWarrior = true;
+                return null;
             }
         }
-        addVictory(max[0]);
-        addVictory(max[1]);
+        return min;
+        
     }
     
     public int[] lesGagnants(){
