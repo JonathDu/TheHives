@@ -19,38 +19,38 @@ import java.util.ArrayList;
 public class RepertoryFamily {
     
     public static void repertory(ArrayList<Integer>[] family,String nom) throws FileNotFoundException, IOException {
-        PrintWriter fos = new PrintWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);
-        // ecriture de la mere 
-        String res;
-        System.out.println("coucou\n");
-        fos.print("     mere : ");
-        for(int i =0; i< family[0].size();i++){
-            res =family[0].get(i).toString()+" ";
-            fos.write(res);
-        }
-        fos.print("     pere : ");
-        // ecriture des fils 
-        for(int i =0; i< family[1].size();i++){
-            fos.print(family[1].get(i).toString()+" ");
-        }
-        fos.print("     brother : ");
-        // ecriture des fils 
-        for(int i =0; i< family[2].size();i++){
-            fos.print(family[2].get(i).toString()+" ");
-        }
-        fos.print("     \nfils : \n");
-        //les fils :
-        for(int j=3;j<family.length;j++){
-            for(int i =0; i< family[j].size();i++){
-                fos.print(family[j].get(i).toString()+" ");
-                if (j%3==2)
-                    
-                    fos.print("\n");
+        File file = new File ("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);
+        try (PrintWriter fos = new PrintWriter ("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom)) {
+        
+            // ecriture de la mere 
+            String res;
+            System.out.println("coucou\n");
+            fos.print("mere : ");
+            for(int i =0; i< family[0].size();i++){
+                res =family[0].get(i)+" ";
+                fos.write(res);
             }
-            fos.print("     ");
+            fos.print("\npere : ");
+            // ecriture des fils 
+            for(int i =0; i< family[1].size();i++){
+                fos.print(family[1].get(i)+" ");
+            }
+            fos.print("\nbrother : ");
+            // ecriture des fils 
+            for(int i =0; i< family[2].size();i++){
+                fos.print(family[2].get(i)+" ");
+            }
+            fos.print("\nfils : \n");
+            //les fils :
+            for(int j=3;j<family.length;j++){
+                for(int i =0; i< family[j].size();i++){
+                    fos.print(family[j].get(i)+" ");
+                }
+                fos.print("     \n");
+            }
+            fos.print("\n\n\n");
+            fos.close();
         }
-        fos.print("\n\n\n");
-        fos.close();
     }
     public static void clearFile(String nom) throws IOException{
         FileWriter fos = new FileWriter("src\\hive\\model\\players\\decisions\\cerveau\\geniteurs\\"+nom);

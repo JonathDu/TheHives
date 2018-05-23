@@ -10,7 +10,9 @@ import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.Mate;
 import hive.model.players.decisions.cerveau.RepertoryFamily;
 import static hive.model.players.decisions.cerveau.RepertoryFamily.readFile;
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  *
@@ -25,10 +27,10 @@ public class LireGeneration {
     public static void main(String[] args) throws IOException {
         AdamEtEve AE = new AdamEtEve(3);
         Mate newGeneration;
-        EvaluationLearning[] evaluations = AE.generate("generationAlpha");
-        newGeneration = new Mate(evaluations[0].getEvalValues(), evaluations[1].getEvalValues(),evaluations[2].getEvalValues(), 12);
-        System.out.println("read!");
         RepertoryFamily.clearFile("Family.txt");
+        EvaluationLearning[] evaluations = AE.generate("generationAlpha");
+        newGeneration = new Mate(evaluations[0].getEvalValues(), evaluations[1].getEvalValues(), evaluations[2].getEvalValues(), 12);
+        System.out.println("read!");
         RepertoryFamily.readFile("Family.txt");
     }
     
