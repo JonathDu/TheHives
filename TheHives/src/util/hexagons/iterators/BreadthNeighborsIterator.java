@@ -5,7 +5,6 @@
  */
 package util.hexagons.iterators;
 
-import hive.model.board.Honeycomb;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -43,7 +42,7 @@ public class BreadthNeighborsIterator<E> implements Iterator<Hexagon<E>>
     }
 
     @Override
-    public Hexagon<E> next()
+    public final Hexagon<E> next()
     {
         assert hasNext();
         

@@ -9,13 +9,14 @@ import hive.model.board.Cell;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class HiveMoveRules implements MoveRules
+public class HiveMoveRules implements MoveRules, Serializable
 {
     public final InsectsBehaviors behaviors;
     

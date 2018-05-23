@@ -6,7 +6,7 @@
 package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.game.rules.HiveFunctions;
+import hive.model.game.rules.HiveUtil;
 import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
@@ -29,7 +29,7 @@ public class SoldierAntBehavior implements InsectBehavior
         
         ArrayList<Cell> list = new ArrayList<>();
         
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return list;
         
         Tile tmp = cell.comb.value().pop();
@@ -38,7 +38,7 @@ public class SoldierAntBehavior implements InsectBehavior
         // that have a wall next to it and free to access, from one to an other
         BreadthNeighborsIterator<TilesStack> iterator = new BreadthNeighborsIterator<>(
                 cell.comb,
-                neighbor -> HiveFunctions.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveFunctions.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
+                neighbor -> HiveUtil.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveUtil.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
         
         while(iterator.hasNext())
             list.add(new Cell((Honeycomb)iterator.next()));
@@ -53,7 +53,7 @@ public class SoldierAntBehavior implements InsectBehavior
     {
         assert cell.level == 0;
                 
-        if(HiveFunctions.isCrushed(cell) || !HiveFunctions.isConnexWithout(cell, state.data.nb_combs))
+        if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return false;
         
         Tile tmp = cell.comb.value().pop();
@@ -62,7 +62,7 @@ public class SoldierAntBehavior implements InsectBehavior
         // that have a wall next to it and free to access, from one to an other
         BreadthNeighborsIterator<TilesStack> iterator = new BreadthNeighborsIterator<>(
                 cell.comb,
-                neighbor -> HiveFunctions.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveFunctions.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
+                neighbor -> HiveUtil.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveUtil.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
         
         while(iterator.hasNext())
         {

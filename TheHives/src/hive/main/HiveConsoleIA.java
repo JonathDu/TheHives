@@ -7,12 +7,14 @@ package hive.main;
 
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
+import hive.model.board.Cell;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveFunctions;
-import hive.model.game.utildata.PrecalculatedData;
+import hive.model.game.utildata.PositionsPerInsectPerTeam;
+import hive.model.insects.InsectType;
 import hive.model.players.Player;
+import hive.model.players.TeamColor;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
 import java.util.Scanner;
@@ -32,11 +34,9 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.HARD), new IADecision(Level.EASY));
+        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.MEDIUM), new IADecision(Level.MEDIUM));
 
         GameProgress progress = new GameProgress(game);
-
-        System.out.println(game.state.board);
 
         //Thread.sleep(10000); // 10s
 
@@ -51,9 +51,22 @@ public class HiveConsoleIA {
 
             progress.doAction();
 
-
-
-            System.out.println(game.state.board);
+            PositionsPerInsectPerTeam tiles = game.state.data.tiles;
+            for(TeamColor color : TeamColor.values())
+            {
+                for(InsectType type : InsectType.values())
+                {
+                    for(Cell cell : tiles.get(color).get(type))
+                    {
+                        if(cell.comb.value().isEmpty())
+                        {
+                            System.out.println(tiles);
+                            System.out.println(game.state.board);
+                            Thread.sleep(10000);
+                        }
+                    }
+                }
+            }
         }
 
         switch(status)

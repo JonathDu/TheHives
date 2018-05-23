@@ -5,15 +5,18 @@
  */
 package util.hexagons;
 
+import java.io.Serializable;
 import util.Vector2i;
 
 /**
  *
  * @author lucas
  */
-public class CircularPositionMaker
+public class CircularPositionMaker implements Serializable
 {
-    Vector2i dim;
+    public Vector2i dim;
+    
+    public CircularPositionMaker() {} // for serialization
     
     public CircularPositionMaker(Vector2i dim)
     {

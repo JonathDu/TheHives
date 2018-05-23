@@ -5,14 +5,17 @@
  */
 package hive.model.players;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Thomas
  */
-public class Players extends ArrayList<Player>
+public class Players extends ArrayList<Player> implements Serializable
 {
+    public Players() {} // for serialization
+    
     public Players(Player p1, Player p2)
     {
         super();

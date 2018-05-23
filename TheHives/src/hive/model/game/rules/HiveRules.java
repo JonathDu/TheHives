@@ -10,15 +10,20 @@ import hive.model.board.Tile;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
+import hive.model.players.actions.Action;
+import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
+import hive.model.players.actions.PutAction;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  *
  * @author Thomas
  */
-public class HiveRules implements Rules
+public class HiveRules implements Rules, Serializable
 {
     public HivePutRules put_rules;
     public HiveMoveRules move_rules;
@@ -28,6 +33,44 @@ public class HiveRules implements Rules
         this.put_rules = new HivePutRules();
         this.move_rules = new HiveMoveRules();
     }
+    
+    public void setPossiblePlacements(GameState state, ArrayList<Action> actions)
+    {
+        Player current = state.turn.getCurrent();
+        // PutAction
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            ArrayList<Cell> placements = getPossiblePlacements(state, type);
+            if (current.collection.get(type) > 0)
+            {
+                Iterator<Cell> place = placements.iterator();
+                while (place.hasNext())
+                {
+                    actions.add(new PutAction(place.next(), new Tile(type, current.color)));
+                }
+            }
+        }
+    }
+    
+    public void setPossibleDestinations(GameState state, ArrayList<Action> actions)
+    {
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = state.data.tiles.get(state.turn.getCurrent().color).get(type);
+            Iterator<Cell> source_iterator = sources.iterator();
+            while (source_iterator.hasNext())
+            {
+                Cell source = source_iterator.next();
+                ArrayList<Cell> destinations = getPossibleDestinations(state, source);
+                Iterator<Cell> dest_iterator = destinations.iterator();
+                while (dest_iterator.hasNext())
+                {
+                    actions.add(new MoveAction(source, dest_iterator.next()));
+                }
+            }
+        }
+    }
+
     
     public ArrayList<Cell> getPossiblePlacements(GameState state, InsectType type)
     {
@@ -41,6 +84,8 @@ public class HiveRules implements Rules
         else
             return getPossiblePlacementsConstantTime(state);
     }
+    
+    
 
     @Override
     public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
@@ -101,7 +146,7 @@ public class HiveRules implements Rules
         if(!queen_cells.isEmpty())
         {
             assert queen_cells.size() == 1;
-            return HiveFunctions.isSurrounded(queen_cells.iterator().next());
+            return HiveUtil.isSurrounded(queen_cells.iterator().next());
         }
         else
             return false;
@@ -114,7 +159,7 @@ public class HiveRules implements Rules
     
     private boolean queenMustBePut(GameState state)
     {
-        return HiveFunctions.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
+        return HiveUtil.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
     }
     
     private boolean queenIsPut(GameState state)
@@ -124,7 +169,7 @@ public class HiveRules implements Rules
 
     private boolean nobodyCanPlay(GameState state)
     {
-        if(HiveFunctions.nbTurns(state) == 1)
+        if(HiveUtil.nbTurns(state) == 1)
             return false;
         return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }

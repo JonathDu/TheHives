@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import util.Iterators;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
+import util.hexagons.HexagonUtil;
 import util.hexagons.iterators.BreadthIterator;
 import util.hexagons.iterators.InfiniteNeighborsIterator;
 import util.hexagons.iterators.Neighbor;
@@ -27,7 +28,7 @@ import util.iterators.StoppingIterator;
  *
  * @author Thomas
  */
-public class HiveFunctions
+public class HiveUtil
 {
     // check if the tile is surrounded by 6 cells (at level 0)
     public static boolean isSurrounded(Cell cell)
@@ -84,58 +85,40 @@ public class HiveFunctions
     }
     
     // check the connexity when the cell is removed
-    public static boolean isConnexWithout(Cell cell, int nb_combs)
+    public static boolean isConnexWithout(GameState state, Cell cell)
     {
         assert !cell.comb.value().isEmpty();
         
         if(cell.comb.value().size() > 1)
             return true;
         
-        // neighbors iterator to turn twice around
-        InfiniteNeighborsIterator neighbors = new InfiniteNeighborsIterator(cell.comb);
-        CountingIterator<Honeycomb> counting = new CountingIterator(neighbors, 12);
-
-        // turn twice around the neighbors gives the number or connex groups
-        boolean visiting_group = false;
-        int nb_groups = 0;
-        Honeycomb to_see = null;
-        while(counting.hasNext())
-        {
-            Honeycomb n = counting.next();
-            TilesStack stack = n.value();
-            if(stack.isEmpty())
-            {
-                if(visiting_group)
-                    visiting_group = false;
-            }
-            else
-            {
-                to_see = n;
-                if(!visiting_group)
-                {
-                    visiting_group = true;
-                    ++nb_groups;
-                }
-            }
-        }
+        // TODO : get from state.data.nbgroups
+        int nb_groups = state.data.nbgroups.get(cell.comb);
         
-        // dividing by 2 gives the real number of connex groups
-        nb_groups /= 2;
-        // would mean it has no neighbors which is impossible
-        assert nb_groups != 0;
-        // hexagon is at most connected with 3 groups
-        assert nb_groups <= 3;
-        // if there is one group connex, it is connex anyway
-        if(nb_groups == 1)
+        // when it equals to 1, the tile can be removed (when 0 the graph contains one tile,
+        // and it never happens because the two first players already put 2 tiles)
+        if(nb_groups <= 1)
             return true;
         
-        // otherwise we initialized a neighbor to see
+        // we search a neighbor
+        Honeycomb to_see = null;
+        NeighborsIterator neighbors = new NeighborsIterator<>(cell.comb);
+        while(neighbors.hasNext())
+        {
+            Neighbor<TilesStack> neighbor = neighbors.next();
+            if(!neighbor.hexagon.value().isEmpty())
+            {
+                to_see = (Honeycomb)neighbor.hexagon;
+                break;
+            }
+        }
         assert to_see != null;
 
         // from this neighbor we are supposed to be able to go all over the graph even by removing the tile
+        // (which means we can count (nb_combs - 1) combs from it
         Tile tmp = cell.comb.value().pop();
         
-        boolean res = isConnex(to_see, nb_combs - 1);
+        boolean res = (countFrom(to_see) == state.data.nb_combs - 1);
 
         cell.comb.value().push(tmp);
 
@@ -143,10 +126,10 @@ public class HiveFunctions
     }
     
     // check connexity starting at cell by breath first search : connex if we counts all the tiles
-    public static boolean isConnex(Honeycomb comb, int expected)
+    private static int countFrom(Honeycomb comb)
     {
         BreadthIterator<TilesStack> iterator = new BreadthIterator<>(comb, hexagon -> !hexagon.value().isEmpty());
-        return Iterators.count(iterator) == expected;
+        return Iterators.count(iterator);
     }
     
     // color of a stack is the color of the tile at the top
@@ -174,6 +157,11 @@ public class HiveFunctions
     public static int nbTurns(GameState state)
     {
         return state.data.trace.size() / state.players.size() + 1;
+    }
+    
+    public static int nbGroups(Honeycomb comb)
+    {
+        return HexagonUtil.nbGroups(comb, stack -> !stack.isEmpty());
     }
 }
 

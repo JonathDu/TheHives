@@ -5,15 +5,17 @@
  */
 package util.hexagons;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Thomas
  * @param <E>
  */
-public class Hexagon<E>
+public class Hexagon<E> implements Serializable
 {
-    E value;
-    Hexagon<E> a, b, c, d, e, f;
+    public E value;
+    public transient Hexagon<E> a, b, c, d, e, f;
     
     public Hexagon()
     {
@@ -24,7 +26,7 @@ public class Hexagon<E>
     {
         this.value = e;
     }
-
+    
     public E value()
     {
         return value;
@@ -60,5 +62,11 @@ public class Hexagon<E>
         case E: e = h; break;
         case F: f = h; break;
         }
+    }
+    
+    @Override
+    public String toString()
+    {
+        return value.toString() + " -> (" + (a != null) + ", " + (b != null) + ", " + (c != null) + ", " + (d != null) + ", " + (e != null) + ", " + (f != null) + ")";
     }
 }

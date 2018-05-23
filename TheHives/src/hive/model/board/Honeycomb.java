@@ -5,6 +5,7 @@
  */
 package hive.model.board;
 
+import java.io.Serializable;
 import util.Vector2i;
 import util.hexagons.Hexagon;
 
@@ -12,9 +13,11 @@ import util.hexagons.Hexagon;
  * 
  * @author Thomas
  */
-public class Honeycomb extends Hexagon<TilesStack>
+public class Honeycomb extends Hexagon<TilesStack> implements Serializable
 {
     public Vector2i pos;
+    
+    public Honeycomb() {} // for serialization
     
     public Honeycomb(Vector2i pos)
     {

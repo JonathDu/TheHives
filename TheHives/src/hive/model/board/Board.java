@@ -5,6 +5,7 @@
  */
 package hive.model.board;
 
+import java.io.Serializable;
 import util.Matrix;
 import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
@@ -28,14 +29,14 @@ import util.hexagons.CircularHexagonsGraph;
  * 
  * @author Thomas
  */
-public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb>
+public class Board extends CircularHexagonsGraph<TilesStack, Honeycomb> implements Serializable
 {   
+    public Board() {} // for serialization
+    
     public Board(Matrix<TilesStack> matrix)
     {
         super(matrix, new HiveNeighborsShifter(), (x, y) -> new Honeycomb(new Vector2i(x, y)));
     }
-    
-    
     
     // to string
     @Override

@@ -5,17 +5,19 @@
  */
 package hive.model.board;
 
+import java.io.Serializable;
 import java.util.Objects;
-import util.hexagons.Hexagon;
 
 /**
  *
  * @author Thomas
  */
-public class Cell
+public class Cell implements Serializable
 {
-    public final Honeycomb comb;
-    public final int level;
+    public Honeycomb comb;
+    public int level;
+    
+    public Cell() {} // for serialization
     
     public Cell(Honeycomb comb)
     {

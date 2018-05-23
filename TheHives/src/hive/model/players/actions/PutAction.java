@@ -7,15 +7,18 @@ package hive.model.players.actions;
 
 import hive.model.board.Tile;
 import hive.model.board.Cell;
+import java.io.Serializable;
 
 /**
  *
  * @author Thomas
  */
-public class PutAction implements Action
+public class PutAction implements Action, Serializable
 {
     public Cell where;
     public Tile tile;
+    
+    public PutAction() {}
     
     public PutAction(Cell where, Tile tile)
     {
