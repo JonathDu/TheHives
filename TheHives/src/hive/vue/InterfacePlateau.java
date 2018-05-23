@@ -9,15 +9,7 @@ import hive.controller.Controller;
 import hive.controller.plateauscene.game.GameController;
 import hive.controller.plateauscene.game.GraphicGameState;
 import hive.model.board.Tile;
-import hive.model.game.DefaultGame;
-import hive.model.game.Game;
-import hive.model.game.PrecalculatedGame;
-import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
-import hive.model.players.decisions.HumanDecision;
-import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
-import hive.thehives.TheHives;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -59,26 +51,27 @@ public class InterfacePlateau extends Parent {
         pane.prefHeightProperty().bind(stage.heightProperty());
 
         graphicGameState = new GraphicGameState(plateauController.progress.game, this);
-        
-        this.mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
-        this.mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
+
+        mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
+        mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
-        this.mainGauche.pions.setBackground(backgroundMainGauche);
+        mainGauche.pions.setBackground(backgroundMainGauche);
 
         Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
-        this.mainDroite.pions.setBackground(backgroundMainDroite);
+        mainDroite.pions.setBackground(backgroundMainDroite);
 
         Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
-        BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, true, false);
+
+        BackgroundSize bsiPlateau = new BackgroundSize(50, 100, true, true, true, true);
         BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
 
@@ -101,7 +94,7 @@ public class InterfacePlateau extends Parent {
         BorderPane.setMargin(scrollPane, new Insets(0, 20, 100, 20));
         BorderPane.setMargin(mainDroite, new Insets(20, 20, 0, 20));
         BorderPane.setMargin(mainGauche, new Insets(20, 20, 0, 20));
-        
+
         pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
@@ -121,5 +114,11 @@ public class InterfacePlateau extends Parent {
         } else {
             mainGauche.maj(tile, nbTiles);
         }
+    }
+
+    public void majJoueurCourant(TeamColor color) {
+        mainDroite.setIsCourant(color == TeamColor.WHITE);
+        mainGauche.setIsCourant(color == TeamColor.BLACK);
+
     }
 }
