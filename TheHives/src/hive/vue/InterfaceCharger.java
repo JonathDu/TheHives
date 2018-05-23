@@ -6,16 +6,11 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.awt.Dimension;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import hive.model.game.Game;
-import hive.thehives.TheHives;
 import java.awt.Dimension;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -36,11 +31,11 @@ import javafx.scene.layout.StackPane;
  *
  * @author Adeline
  */
-public class InterfaceCharger extends Parent {
+public class InterfaceCharger extends Interface {
 
 
     public InterfaceCharger(Stage primaryStage, Controller controller) throws IOException {
-
+        super(primaryStage, controller, new CacheImage());
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
@@ -68,48 +63,20 @@ public class InterfaceCharger extends Parent {
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
         CacheImage c = new CacheImage();
-        Image fond;
-        if(controller.typeTheme=="jour"){
-            fond = c.getImage("Design/Fond/fondMontagne.png");
-        }
-        else{
-            fond = c.getImage("Design/Fond/fondNuit.png");
-        }
-        ImageView fondIm = new ImageView(fond);
-        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
-        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
-        AnchorPane.setRightAnchor(fondIm, (double) 0);
-        AnchorPane.setLeftAnchor(fondIm, (double) 0);
-        AnchorPane.setTopAnchor(fondIm, (double) 0);
-        AnchorPane.setBottomAnchor(fondIm, (double) 0);
-        pane.getChildren().add(fondIm);
 
-        StackPane Preferences = new StackPane();
-        Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
-        ImageView prefIm = new ImageView(preferences);
-        prefIm.setFitHeight(tailleDeCase/2);
-        prefIm.setFitWidth(tailleDeCase/2*1.07);
-        Preferences.getChildren().add(prefIm);
-        Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-
-
+        this.boutonPreference.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
-        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
-        AnchorPane.setTopAnchor(Preferences, (double) 5);
-        pane.getChildren().add(Preferences);
+        AnchorPane.setRightAnchor(this.boutonPreference, (double) tailleDeCase/2*1.07 + 15);
+        AnchorPane.setTopAnchor(this.boutonPreference, (double) 5);
+        pane.getChildren().add(this.boutonPreference);
         
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         double max_height = dimension.getHeight();
         double max_width = dimension.getWidth();
-        StackPane Plein = new StackPane();
-        Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein);
-        pleinIm.setFitHeight(tailleDeCase/2);
-        pleinIm.setFitWidth(tailleDeCase/2*1.07);
-        Plein.getChildren().add(pleinIm);
-        Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+
+        this.boutonPleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
            if(controller.pleinEcran==0){
                 primaryStage.setWidth(max_width);
                 primaryStage.setHeight(max_height);
@@ -135,9 +102,9 @@ public class InterfaceCharger extends Parent {
             //primaryStage.setFullScreen(true);
             //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
-        AnchorPane.setRightAnchor(Plein, (double) 10);
-        AnchorPane.setTopAnchor(Plein, (double) 5);
-        pane.getChildren().add(Plein);
+        AnchorPane.setRightAnchor(this.boutonPleinEcran, (double) 10);
+        AnchorPane.setTopAnchor(this.boutonPleinEcran, (double) 5);
+        pane.getChildren().add(this.boutonPleinEcran);
 
         StackPane Menu = new StackPane();
         Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
@@ -207,8 +174,8 @@ public class InterfaceCharger extends Parent {
         AnchorPane.setLeftAnchor(valider_sp, (double) width/2 -tailleDeCase);
         AnchorPane.setRightAnchor(valider_sp, (double) width/2 -tailleDeCase);
         pane.getChildren().add(valider_sp);
-
-        this.getChildren().add(pane);
+        
+        this.panePrincipale.getChildren().add(pane);
     }
 
 

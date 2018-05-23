@@ -80,6 +80,8 @@ public abstract class Interface extends Parent {
         boutonRetourMenu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             controller.goToMenu();
         });
+        
+        this.getChildren().add(panePrincipale);
     }
 
 }
