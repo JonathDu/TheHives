@@ -25,8 +25,6 @@ import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -55,7 +53,8 @@ public final class Controller
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        gestionnaireLangage = new GestionnaireLangage(Locale.FRANCE);
+        gestionnaireLangage = new GestionnaireLangage(Locale.FRENCH);
+        typeTheme = "Jour";
         goToMenu();
     }
 
@@ -173,6 +172,6 @@ public final class Controller
 
     public String getPolice()
     {
-        return "Papyrus"; //TODO : prendre en compte le russe ?
+        return "Papyrus";
     }
 }
