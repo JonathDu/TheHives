@@ -55,7 +55,13 @@ class Preferences extends Parent{
     Preferences(Stage primaryStage, Controller controller, String origin){
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width/8;
+        int tailleDeCase;
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
         int maxJoueur = width/2;
         int minJoueur = maxJoueur/2;
 

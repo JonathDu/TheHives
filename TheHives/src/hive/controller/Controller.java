@@ -40,6 +40,8 @@ public final class Controller {
     public String langue = "Français";
     public int pleinEcran = 0;
     public String typeTheme;
+    public double old_height;
+    public double old_width;
 
     public Controller(Stage primaryStage, Scene currentScene, CacheImage cacheImage) {
         this.currentScene = currentScene;
@@ -54,6 +56,9 @@ public final class Controller {
         currentScene.setCursor(sourisIm);
 
         primaryStage.setScene(currentScene);
+        if(primaryStage.getWidth() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() && primaryStage.getHeight() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()){
+            primaryStage.centerOnScreen();
+        }
     }
 
     public void goToMenu() {

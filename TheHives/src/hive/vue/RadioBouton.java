@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.thehives.TheHives;
+import java.awt.Dimension;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,10 +31,48 @@ class RadioBouton extends ToggleButton{
     public ToggleButton creer(String type){
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width/8;
-        double hauteurDeGrille = height*0.7;
-        double hauteurDeLigne = hauteurDeGrille/3.5;
+        
+        
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        
+        double max_height = dimension.getHeight();
+        double max_width = dimension.getWidth();
+        
+        int tailleDeCase;
+        
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
+        double hauteurDeGrille = tailleDeCase*4.2;
+        double hauteurDeLigne = hauteurDeGrille/4;
+        double largeurDeGrille = width-50;
+        double largeurDeColonne = largeurDeGrille/3; 
 
+        double largeurBouton;
+        double hauteurBouton;
+        if(width>max_width*0.75){
+            largeurBouton = largeurDeColonne*0.6;
+        }
+        else
+            largeurBouton = largeurDeColonne;
+        hauteurBouton=largeurBouton/7.2375;
+        /*if(width>max_width/2){
+            largeurBouton = width/5;
+            hauteurBouton=largeurBouton/7.2375;
+        }
+        else if(height > max_height/2){
+           
+        }
+        else{
+            largeurBouton = tailleDeCase*2.5;
+            hauteurBouton = largeurBouton/3;
+        }*/
+        
+        //= width/5;
+        
         CacheImage c = new CacheImage();
 
         String police;
@@ -72,64 +110,73 @@ class RadioBouton extends ToggleButton{
             bouton.setGraphic(ia_iaIm);
         }else if(type=="facile1" || type=="facile2"){
             bouton.setUserData("facile");
+            Image b_IA = c.getImage("niveau/Facile.png");
             if(controller.langue=="Français"){
-                bouton.setText("Facile");
+                b_IA = c.getImage("niveau/Facile.png");
             }
             else if(controller.langue=="English"){
-                bouton.setText("Easy");
+                b_IA = c.getImage("niveau/Easy.png");
             }
             else if(controller.langue=="Italiano"){
-                bouton.setText("Facile");
+                b_IA = c.getImage("niveau/Facile.png");
             }
             else if(controller.langue=="Русский"){
-                bouton.setText("Легкий");
+                b_IA = c.getImage("niveau/Легкий.png");
             }
             else if(controller.langue=="Deutsch"){
-                bouton.setText("Einfach");
+                b_IA = c.getImage("niveau/Einfach.png");
             }
-            bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
+            /*bouton.setFont(new Font(police, tailleDeCase/7));
+            bouton.setMinSize(tailleDeCase*0.8, 30);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);*/
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
         }else if(type=="moyenne1" || type=="moyenne2"){
             bouton.setUserData("moyenne");
+            Image b_IA = c.getImage("niveau/Moyenne.png");
             if(controller.langue=="Français"){
-                bouton.setText("Moyenne");
+                b_IA = c.getImage("niveau/Moyenne.png");
             }
             else if(controller.langue=="English"){
-                bouton.setText("Medium");
+                b_IA = c.getImage("niveau/Medium.png");
             }
             else if(controller.langue=="Italiano"){
-                bouton.setText("Media");
+                b_IA = c.getImage("niveau/Media.png");
             }
             else if(controller.langue=="Русский"){
-                bouton.setText("Средний");
+                b_IA = c.getImage("niveau/Средний.png");
             }
             else if(controller.langue=="Deutsch"){
-                bouton.setText("Normal");
+                b_IA = c.getImage("niveau/Normal.png");
             }
-            bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
         }else if(type=="difficile1" || type=="difficile2"){
             bouton.setUserData("difficile");
+            Image b_IA = c.getImage("niveau/Difficile.png");
             if(controller.langue=="Français"){
-            bouton.setText("Difficile");
+                b_IA = c.getImage("niveau/Difficile.png");
             }
             else if(controller.langue=="English"){
-                bouton.setText("Hard");
+                b_IA = c.getImage("niveau/Hard.png");
             }
             else if(controller.langue=="Italiano"){
-                bouton.setText("Difficile");
+                b_IA = c.getImage("niveau/Difficile.png");
             }
             else if(controller.langue=="Русский"){
-                bouton.setText("Сложный");
+                b_IA = c.getImage("niveau/Сложный.png");
             }
             else if(controller.langue=="Deutsch"){
-                bouton.setText("Schwer");
+                b_IA = c.getImage("niveau/Schwer.png");
             }
-            bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
         }else if(type=="jour"){
             bouton.setUserData("jour");
             if(controller.langue=="Français"){
@@ -148,7 +195,7 @@ class RadioBouton extends ToggleButton{
                 bouton.setText("Tag");
             }
             bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
+            bouton.setMinSize(tailleDeCase*0.8, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }else if(type=="nuit"){
             bouton.setUserData("nuit");
@@ -168,7 +215,7 @@ class RadioBouton extends ToggleButton{
                 bouton.setText("Nacht");
             }
             bouton.setFont(new Font(police, tailleDeCase/7));
-            bouton.setMinSize(width/10, 30);
+            bouton.setMinSize(tailleDeCase*0.8, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);
         }
         return bouton;

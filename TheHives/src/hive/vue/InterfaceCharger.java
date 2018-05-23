@@ -6,11 +6,12 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.thehives.TheHives;
+import java.awt.Dimension;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -37,14 +38,20 @@ public class InterfaceCharger extends Parent {
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
-        int tailleDeCase = width/8;
+        int tailleDeCase;
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
         int maxJoueur = (int) ((int) width/2.5);
         int minJoueur = maxJoueur/2;
 
-        if(controller.pleinEcran==1){
+        /*if(controller.pleinEcran==1){
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        }
+        }*/
         String police;
         if(controller.langue == "Russe"){
             police = "Copperplate";
@@ -82,29 +89,16 @@ public class InterfaceCharger extends Parent {
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            /*Preferences p = new Preferences(primaryStage, i);
-            pane.getChildren().add(p);
-            StackPane pref = new StackPane();
-            Image imageQ = c.getImage("exit3.png");
-            ImageView ImQ = new ImageView(imageQ);
-            ImQ.setFitHeight(tailleDeCase/2.5);
-            ImQ.setFitWidth(tailleDeCase/2.5);
-            pref.getChildren().add(ImQ);
-            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
-                pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                controller.goToRegles();
-            });
-            AnchorPane.setRightAnchor(pref, (double) 5);
-            AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);*/
-
             Preferences p = new Preferences(primaryStage, controller, "charger");
             pane.getChildren().add(p);
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
         pane.getChildren().add(Preferences);
-
+        
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double max_height = dimension.getHeight();
+        double max_width = dimension.getWidth();
         StackPane Plein = new StackPane();
         Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
         ImageView pleinIm = new ImageView(plein);
@@ -112,9 +106,30 @@ public class InterfaceCharger extends Parent {
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.pleinEcran=1;
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
+           if(controller.pleinEcran==0){
+                primaryStage.setWidth(max_width);
+                primaryStage.setHeight(max_height);
+                controller.old_height=height;
+                controller.old_width=width;
+               try {
+                   controller.goToChargerPartie();
+               } catch (IOException ex) {
+                   Logger.getLogger(InterfaceCharger.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                controller.pleinEcran=1;
+            }
+            else{
+                primaryStage.setWidth(controller.old_width);
+                primaryStage.setHeight(controller.old_height);
+               try {
+                   controller.goToChargerPartie();
+               } catch (IOException ex) {
+                   Logger.getLogger(InterfaceCharger.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                controller.pleinEcran=0;
+            }
+            //primaryStage.setFullScreen(true);
+            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
         AnchorPane.setRightAnchor(Plein, (double) 10);
         AnchorPane.setTopAnchor(Plein, (double) 5);
@@ -166,6 +181,8 @@ public class InterfaceCharger extends Parent {
             parties.getItems().add(j);
         }
 
+        parties.setMaxSize(tailleDeCase*3, tailleDeCase/2);
+        parties.setMinSize(tailleDeCase*3, tailleDeCase/2);
         AnchorPane.setTopAnchor(choix, (double) height/10);
         AnchorPane.setLeftAnchor(choix, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(choix, (double) tailleDeCase*2);
@@ -179,28 +196,26 @@ public class InterfaceCharger extends Parent {
         pane.getChildren().add(parties);
 
 
-        valider.setFont(new Font(police, width/35));
-        valider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) -> {
-            valider.setEffect(shadow);
-        });
-        valider.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event) -> {
-            valider.setEffect(null);
-        });
-        valider.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        StackPane valider_sp = new StackPane();
+        valider.setFont(new Font(police, tailleDeCase*0.23));
+        valider_sp.getChildren().add(valider);
+        valider_sp.setMaxSize(tailleDeCase, 40);
+        valider_sp.setMinSize(tailleDeCase, 40);
+        valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println("Enregistrer ! ");
+                System.out.println(parties.getValue());
             }
         });
-        valider.setMinHeight(20);
-        //valider.setMaxHeight(11);
-        AnchorPane.setBottomAnchor(valider, (double) 90);
-        //AnchorPane.setTopAnchor(valider, (double) height - 100);
-        AnchorPane.setLeftAnchor(valider, (double) tailleDeCase*3);
-        AnchorPane.setRightAnchor(valider, (double) tailleDeCase*3);
-
-
-        pane.getChildren().add(valider);
+        if(height==max_height){
+            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase*1.5);
+        }else{
+            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase);
+        }
+        //AnchorPane.setTopAnchor(valider, (double) height - 50);
+        AnchorPane.setLeftAnchor(valider_sp, (double) width/2 -tailleDeCase);
+        AnchorPane.setRightAnchor(valider_sp, (double) width/2 -tailleDeCase);
+        pane.getChildren().add(valider_sp);
 
         this.getChildren().add(pane);
     }

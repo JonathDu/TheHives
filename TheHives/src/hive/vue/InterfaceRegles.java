@@ -6,19 +6,14 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.thehives.TheHives;
 import java.awt.Dimension;
 import javafx.geometry.Pos;
-import static javafx.geometry.Pos.CENTER;
-import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -66,7 +61,13 @@ public class InterfaceRegles extends Parent {
 
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width/8;
+        int tailleDeCase;
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
         int maxJoueur = (int) ((int) width/2.5);
         int minJoueur = maxJoueur/2;
 
@@ -93,24 +94,6 @@ public class InterfaceRegles extends Parent {
         prefIm.setFitWidth(tailleDeCase / 2 * 1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            /*Preferences p = new Preferences(primaryStage, i);
-
-            pane.getChildren().add(p);
-            StackPane pref = new StackPane();
-            Image imageQ = c.getImage("exit3.png");
-            ImageView ImQ = new ImageView(imageQ);
-            ImQ.setFitHeight(tailleDeCase / 2.5);
-            ImQ.setFitWidth(tailleDeCase / 2.5);
-            pref.getChildren().add(ImQ);
-            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
-                pane.getChildren().remove(pane.getChildren().size() - 2, pane.getChildren().size());
-                i.goToRegles();
-
-            });
-            AnchorPane.setRightAnchor(pref, (double) 5);
-            AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);*/
-
             Preferences p = new Preferences(primaryStage, controller, "regles");
             pane.getChildren().add(p);
         });
@@ -118,16 +101,32 @@ public class InterfaceRegles extends Parent {
         AnchorPane.setTopAnchor(Preferences, (double) 5);
         pane.getChildren().add(Preferences);
 
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double max_height = dimension.getHeight();
+        double max_width = dimension.getWidth();
         StackPane Plein = new StackPane();
         Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
         ImageView pleinIm = new ImageView(plein);
-        pleinIm.setFitHeight(tailleDeCase / 2);
-        pleinIm.setFitWidth(tailleDeCase / 2 * 1.07);
+        pleinIm.setFitHeight(tailleDeCase/2);
+        pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.pleinEcran=1;
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
+           if(controller.pleinEcran==0){
+                primaryStage.setWidth(max_width);
+                primaryStage.setHeight(max_height);
+                controller.old_height=height;
+                controller.old_width=width;
+                controller.goToRegles();
+                controller.pleinEcran=1;
+            }
+            else{
+                primaryStage.setWidth(controller.old_width);
+                primaryStage.setHeight(controller.old_height);
+                controller.goToRegles();
+                controller.pleinEcran=0;
+            }
+            //primaryStage.setFullScreen(true);
+            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
         AnchorPane.setRightAnchor(Plein, (double) 10);
         AnchorPane.setTopAnchor(Plein, (double) 5);
