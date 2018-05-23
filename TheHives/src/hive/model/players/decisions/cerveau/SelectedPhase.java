@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.cerveau.main;
+package hive.model.players.decisions.cerveau;
 
 import hive.model.GameProgress;
 import hive.model.game.Game;

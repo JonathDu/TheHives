@@ -5,6 +5,7 @@
  */
 package hive.model.players.decisions.cerveau.main;
 
+import hive.model.players.decisions.cerveau.SelectedPhase;
 import hive.model.players.decisions.cerveau.GeneratePhase;
 import static hive.model.players.decisions.IA.Level.EHARD;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
