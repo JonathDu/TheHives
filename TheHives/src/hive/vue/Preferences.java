@@ -6,6 +6,8 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -39,7 +41,7 @@ public class Preferences extends Parent
 
     private final Stage primaryStage;
     private final Controller controller;
-
+    
     private final String police;
     private final CacheImage cacheImage;
 
@@ -74,7 +76,7 @@ public class Preferences extends Parent
         minJoueur = maxJoueur / 2;
 
         cacheImage = _cacheImage;
-        police = controller.langue.equals("Russe") ? "Copperplate" : "Papyrus";
+        police = controller.getPolice();
 
         imageFond = new ImageView();
         labelPreferences = new Label();
@@ -90,6 +92,7 @@ public class Preferences extends Parent
         stackAnnuler = new StackPane();
 
         setObjetsGraphiques();
+        setHandlers();
         Pane panePrincipale = placerObjetsGraphiques();
 
         this.getChildren().add(panePrincipale);
@@ -101,24 +104,24 @@ public class Preferences extends Parent
         imageFond.setFitHeight((width - 30) / 1.35);
         imageFond.setFitWidth(width - 30);
 
-        labelPreferences.setText("Préfèrences");
+        labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
         labelPreferences.setFont(new Font(police, maxJoueur / 10));
         labelPreferences.setTextFill(Color.web("#ffff66"));
         labelPreferences.setAlignment(Pos.CENTER);
         labelPreferences.setMinSize(minJoueur, 30);
         labelPreferences.setMaxSize(maxJoueur, 70);
 
-        labelLangue.setText("Langues");
+        labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
         labelLangue.setFont(new Font(police, maxJoueur / 14));
         labelLangue.setTextFill(Color.web("#ffff66"));
         labelLangue.setAlignment(Pos.CENTER);
         labelLangue.setMinSize(minJoueur, 30);
         labelLangue.setMaxSize(maxJoueur, 70);
 
-        comboLangue.getItems().addAll("Français", "English", "Italiano", "Deutsch", "Русский");
-        comboLangue.setValue(controller.langue);
+        comboLangue.getItems().addAll(controller.gestionnaireLangage.getImplementedLanguagesString());
+        comboLangue.setValue(controller.gestionnaireLangage.getCurrentLanguage().getDisplayName());
 
-        labelAide.setText("Activer l'aide");
+        labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
         labelAide.setFont(new Font(police, maxJoueur / 14));
         labelAide.setTextFill(Color.web("#ffff66"));
         labelAide.setAlignment(Pos.CENTER);
@@ -127,22 +130,32 @@ public class Preferences extends Parent
 
         checkBoxAide.setSelected(true);
 
-        labelTheme.setText("Thème");
+        labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
         labelTheme.setFont(new Font(police, maxJoueur / 14));
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
         labelTheme.setMinSize(minJoueur, 30);
         labelTheme.setMaxSize(maxJoueur, 70);
 
-        radioButtonJour.setText("Jour");
+        radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonJour.setSelected(true);
-        radioButtonNuit.setText("Nuit");
+        radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
         radioButtonNuit.setToggleGroup(groupRadioButtons);
 
-        buttonValider.setText("Valider");
+        buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
         buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
+
+        Image imageQ = cacheImage.getImage("exit3.png");
+        ImageView ImQ = new ImageView(imageQ);
+        ImQ.setFitHeight(tailleDeCase / 2.5);
+        ImQ.setFitWidth(tailleDeCase / 2.5);
+        stackAnnuler.getChildren().add(ImQ);
+    }
+    
+    private void setHandlers()
+    {
         buttonValider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) ->
         {
             buttonValider.setEffect(new DropShadow());
@@ -159,16 +172,11 @@ public class Preferences extends Parent
             controller.validerParametres(nomLangue, activerAide, nomTheme);
             setVisible(false);
         });
-
-        Image imageQ = cacheImage.getImage("exit3.png");
-        ImageView ImQ = new ImageView(imageQ);
-        ImQ.setFitHeight(tailleDeCase / 2.5);
-        ImQ.setFitWidth(tailleDeCase / 2.5);
-        stackAnnuler.getChildren().add(ImQ);
+        
         stackAnnuler.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
         {
             setVisible(false);
-        });
+        }); 
     }
 
     private Pane placerObjetsGraphiques()

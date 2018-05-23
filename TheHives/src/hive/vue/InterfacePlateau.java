@@ -105,7 +105,7 @@ public class InterfacePlateau extends Parent {
         pane.setCenter(scrollPane);
         pane.setLeft(mainGauche);
         pane.setRight(mainDroite);
-        pane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2));
+        pane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game));
 
         pane.setBackground(background);
         this.getChildren().add(pane);

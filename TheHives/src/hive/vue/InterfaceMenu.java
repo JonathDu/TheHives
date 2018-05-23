@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import hive.thehives.TheHives;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.layout.AnchorPane;
@@ -52,14 +53,8 @@ public class InterfaceMenu extends Parent{
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
-
+        String police = controller.getPolice();
+        
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
@@ -104,41 +99,11 @@ public class InterfaceMenu extends Parent{
         Label credits = new Label();
         Label regles = new Label();
 
-        if(controller.langue=="Français"){
-            newGame.setText("Nouvelle partie");
-            chargerPartie.setText("Reprendre Partie");
-            statistiques.setText("Statistiques");
-            credits.setText("Crèdits");
-            regles.setText("Règles");
-        }
-        else if(controller.langue=="English"){
-            newGame.setText("New Game");
-            chargerPartie.setText("Load Game");
-            statistiques.setText("Scores");
-            credits.setText("Credits");
-            regles.setText("Rules");
-        }
-        else if(controller.langue=="Italiano"){
-            newGame.setText("Nuova Partita");
-            chargerPartie.setText("Carica Partita");
-            statistiques.setText("Statistica");
-            credits.setText("Crediti");
-            regles.setText("Regoli");
-        }
-        else if(controller.langue=="Русский"){
-            newGame.setText("Новая Игра");
-            chargerPartie.setText("Загрузить Игру");
-            statistiques.setText("Статистика");
-            credits.setText("Разработчики");
-            regles.setText("Правила");
-        }
-        else if(controller.langue=="Deutsch"){
-            newGame.setText("Neues Spiel");
-            chargerPartie.setText("Spiel Laden");
-            statistiques.setText("Statistik");
-            credits.setText("Credits");
-            regles.setText("Regeln");
-        }
+        newGame.setText(controller.gestionnaireLangage.getText("text_nouvelle_partie"));
+        chargerPartie.setText(controller.gestionnaireLangage.getText("text_reprendre_partie"));
+        statistiques.setText(controller.gestionnaireLangage.getText("text_statistiques"));
+        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
+        regles.setText(controller.gestionnaireLangage.getText("text_regles"));
 
         double flecheLargeur = width/2-30;
         double flecheHauteur = flecheLargeur/7.24;
@@ -601,5 +566,6 @@ public class InterfaceMenu extends Parent{
     public void maj()
     {
         System.out.println("TODO : set le BG");
+        System.out.println("TODO : MAJ langue");
     }
 }

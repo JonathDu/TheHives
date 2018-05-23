@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.model.game.Game;
 import hive.model.players.decisions.Level;
 import hive.thehives.TheHives;
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class InterfacePlateauTool extends Parent {
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2) {
+    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game) {
         width = (int) stage.getWidth();
         tailleDeCase = width / 8;
         this.c = c;
@@ -78,6 +79,10 @@ public class InterfacePlateauTool extends Parent {
 
         boutonHome.setOnMouseClicked(value -> {
             controller.goToMenu();
+        });
+        
+        boutonSave.setOnMouseClicked(value -> {
+            controller.enregistrerGame(game, "test.xml");
         });
 
         boutonRegle.setOnMouseClicked(value -> {

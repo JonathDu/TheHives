@@ -9,6 +9,7 @@ import hive.controller.Controller;
 import hive.thehives.TheHives;
 import hive.vue.CacheImage;
 import hive.vue.Preferences;
+import java.util.ResourceBundle;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
@@ -42,13 +43,7 @@ public class InterfaceCredits extends Parent {
             primaryStage.setFullScreen(true);
             primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         }
-        String police;
-        if(controller.langue == "Russe"){
-            police = "Copperplate";
-        }
-        else{
-            police = "Papyrus";
-        }
+        String police = controller.getPolice();
         
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -114,46 +109,17 @@ public class InterfaceCredits extends Parent {
         pane.getChildren().add(Menu);
         
         Label credits = new Label();
-        
         Label ia = new Label();
         Label ihm = new Label();
         Label design = new Label();
         Label mdj = new Label();
-        if(controller.langue=="Français"){
-            credits.setText("Crèdits");
-            ia.setText("Intelligence artificielle :  Coralie Durhône, Quentin Guerre-Berthelot");
-            ihm.setText("Interactions homme-machine :  Adelina Prokhorova, Jonathan Dubois");
-            design.setText("Design :  Coralie Durhône, Lenny Ancel");
-            mdj.setText("Moteur de jeu :  Thomas Coggia, Lucas Touron");
-        }
-        else if(controller.langue=="English"){
-            credits.setText("Credits");
-            ia.setText("Artificial intelligence :  Coralie Durhône, Quentin Guerre-Berthelot");
-            ihm.setText("Human–computer interaction :  Adelina Prokhorova, Jonathan Dubois");
-            design.setText("Design :  Coralie Durhône, Lenny Ancel");
-            mdj.setText("Game engine :  Thomas Coggia, Lucas Touron");
-        }
-        else if(controller.langue=="Italiano"){
-            credits.setText("Crediti");
-            ia.setText("Intelligenza artificiale :  Coralie Durhône, Quentin Guerre-Berthelot");
-            ihm.setText("Interfaccia uomo-macchina :  Adelina Prokhorova, Jonathan Dubois");
-            design.setText("Design :  Coralie Durhône, Lenny Ancel");
-            mdj.setText("Motore di gioco :  Thomas Coggia, Lucas Touron");
-        }
-        else if(controller.langue=="Русский"){
-            credits.setText("Разработчики");
-            ia.setText("Искусственный интеллект :  Coralie Durhône, Quentin Guerre-Berthelot");
-            ihm.setText("Человеко-компьютерный интерфейс :  Adelina Prokhorova, Jonathan Dubois");
-            design.setText("Дизайн :  Coralie Durhône, Lenny Ancel");
-            mdj.setText("Игровой движок :  Thomas Coggia, Lucas Touron");
-        }
-        else if(controller.langue=="Deutsch"){
-            credits.setText("Credits");
-            ia.setText("Künstliche Intelligenz :  Coralie Durhône, Quentin Guerre-Berthelot");
-            ihm.setText("Mensch-Computer-Interaktion :  Adelina Prokhorova, Jonathan Dubois");
-            design.setText("Design :  Coralie Durhône, Lenny Ancel");
-            mdj.setText("Spiel-Engine :  Thomas Coggia, Lucas Touron");
-        }
+        
+        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
+        ia.setText(controller.gestionnaireLangage.getText("text_membres_IA"));
+        ihm.setText(controller.gestionnaireLangage.getText("text_membres_IHM"));
+        design.setText(controller.gestionnaireLangage.getText("text_membres_design"));
+        mdj.setText(controller.gestionnaireLangage.getText("text_membres_moteur"));
+        
         credits.setFont(new Font(police, width/35));
         credits.setAlignment(Pos.CENTER);
         credits.setMinSize(width/60, 30);
