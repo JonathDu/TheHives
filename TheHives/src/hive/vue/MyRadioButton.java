@@ -17,12 +17,12 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
-class RadioBouton extends ToggleButton{
+class MyRadioBouton extends ToggleButton{
     Stage primaryStage;
     Controller controller;
 
 
-    RadioBouton(Stage primaryStage, Controller controller) {
+    MyRadioBouton(Stage primaryStage, Controller controller) {
         this.primaryStage = primaryStage;
         this.controller = controller;
 

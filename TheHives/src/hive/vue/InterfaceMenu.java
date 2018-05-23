@@ -210,24 +210,7 @@ public class InterfaceMenu extends Parent{
         prefIm.setFitWidth(tailleDeCase/2*1.07);
         Preferences.getChildren().add(prefIm);
         Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            /*Preferences p = new Preferences(primaryStage, controller);
-            pane.getChildren().add(p);
-            StackPane pref = new StackPane();
-            Image imageQ = c.getImage("exit3.png");
-            ImageView ImQ = new ImageView(imageQ);
-            ImQ.setFitHeight(tailleDeCase/2.5);
-            ImQ.setFitWidth(tailleDeCase/2.5);
-            pref.getChildren().add(ImQ);
-            pref.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event1) -> {
-                pane.getChildren().remove(pane.getChildren().size()-2, pane.getChildren().size());
-                controller.goToMenu();
-            });
-            AnchorPane.setRightAnchor(pref, (double) 5);
-            AnchorPane.setTopAnchor(pref, (double) 5);
-            pane.getChildren().add(pref);*/
-
-            Preferences p = new Preferences(primaryStage, controller, "menu");
-            pane.getChildren().add(p);
+            pane.getChildren().add(controller.getPreferences());
         });
         AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 10);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
@@ -613,5 +596,10 @@ public class InterfaceMenu extends Parent{
         this.getChildren().add(pane);
 
 
+    }
+    
+    public void maj()
+    {
+        System.out.println("TODO : set le BG");
     }
 }

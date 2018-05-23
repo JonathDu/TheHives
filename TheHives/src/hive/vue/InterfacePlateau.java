@@ -122,4 +122,10 @@ public class InterfacePlateau extends Parent {
             mainGauche.maj(tile, nbTiles);
         }
     }
+
+    public void majJoueurCourant(TeamColor color) {
+        mainDroite.setIsCourant(color == TeamColor.WHITE);
+        mainGauche.setIsCourant(color == TeamColor.BLACK);
+
+    }
 }
