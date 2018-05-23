@@ -59,36 +59,6 @@ public class AdamEtEve {
         return salut;
     }
     
-    public EvaluationLearning[] generate(String Dossier, String Dossier2) {
-        EvaluationLearning[] salut = new EvaluationLearning[15];
-        
-        FileOutputStream fos;
-        Random rnd= new Random();
-        ObjectOutputStream oos;
-        ArrayList<Integer> l = new ArrayList<>();
-        for (int i = 0; i < nbSon; i++) {
-            try {
-                File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
-                System.out.println(file.getAbsolutePath());
-                fos = new FileOutputStream(file);
-                l.clear();
-                for(int j =0;j<27;j++){
-                    l.add(rnd.nextInt(201));
-                }
-                oos= new ObjectOutputStream(fos);
-                oos.writeObject(l);
-                fos.close();
-                salut[i]=new EvaluationLearning("src\\hive\\model\\players\\decisions\\cerveau\\"+Dossier+"\\fils"+i+".txt");
-                System.out.println("C'est initialisé");
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(AdamEtEve.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        }
-        return salut;
-    }
     public void registerGen(String Dossier, ArrayList<Integer> [] son){
         FileOutputStream fos;
         ObjectOutputStream oos;
@@ -109,13 +79,12 @@ public class AdamEtEve {
         }
     }
     
-    public void saveBoss(ArrayList<Integer> boss) throws FileNotFoundException, IOException {
-        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss.txt");
+    public void saveBoss(ArrayList<Integer> boss, String bo) throws FileNotFoundException, IOException {
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss"+bo);
         try (FileOutputStream fos = new FileOutputStream(file)) {
             ObjectOutputStream oos= new ObjectOutputStream(fos);
             oos.writeObject(boss);
         }
-        
     }
     
     public ArrayList<Integer> dlBoss() throws FileNotFoundException, IOException, ClassNotFoundException{
