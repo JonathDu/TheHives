@@ -27,61 +27,21 @@ import javafx.scene.text.Font;
  *
  * @author Adeline
  */
-public class InterfaceMenu extends Parent{
+public class InterfaceMenu extends Interface {
 
     Stage stage;
-    int pleinEcran = 0;
-    public InterfaceMenu(Stage primaryStage, Controller controller){
 
-
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        double max_height = dimension.getHeight();
-        double max_width = dimension.getWidth();
-        int tailleDeCase;
-        if(width/8>height/6){
-            tailleDeCase = height/6;
-        }
-        else{
-            tailleDeCase = width/8;
-        }
-
-        /*if(controller.pleinEcran==1){
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-
-        }*/
-
-
-        String police = controller.getPolice();
-
+    public InterfaceMenu(Stage primaryStage, Controller controller, CacheImage c) {
+        super(primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        CacheImage c = new CacheImage();
-        Image fond;
-        if(controller.typeTheme=="Jour"){
-            fond = c.getImage("Design/Fond/fondMontagne.png");
-        }
-        else{
-            fond = c.getImage("Design/Fond/fondNuit.png");
-        }
-        ImageView fondIm = new ImageView(fond);
-        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
-        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
-        AnchorPane.setRightAnchor(fondIm, (double) 0);
-        AnchorPane.setLeftAnchor(fondIm, (double) 0);
-        AnchorPane.setTopAnchor(fondIm, (double) 0);
-        AnchorPane.setBottomAnchor(fondIm, (double) 0);
-        pane.getChildren().add(fondIm);
-
         Image hive = c.getImage("Design/MenuPrincipaux/TheHives.png");
         ImageView hiveIm = new ImageView(hive);
-        hiveIm.setFitHeight(tailleDeCase*1.3);
-        hiveIm.setFitWidth(tailleDeCase*1.3*1.59);
+        hiveIm.setFitHeight(tailleDeCase * 1.3);
+        hiveIm.setFitWidth(tailleDeCase * 1.3 * 1.59);
         AnchorPane.setLeftAnchor(hiveIm, (double) 5);
         AnchorPane.setTopAnchor(hiveIm, (double) 5);
         pane.getChildren().add(hiveIm);
@@ -91,11 +51,11 @@ public class InterfaceMenu extends Parent{
         hex.prefWidthProperty().bind(primaryStage.widthProperty());
         Image hexagone = c.getImage("Design/MenuPrincipaux/Hexagone.png");
         ImageView hexagoneIm = new ImageView(hexagone);
-        hexagoneIm.setFitHeight(tailleDeCase*4);
-        hexagoneIm.setFitWidth(tailleDeCase*4);
+        hexagoneIm.setFitHeight(tailleDeCase * 4);
+        hexagoneIm.setFitWidth(tailleDeCase * 4);
         hex.getChildren().add(hexagoneIm);
 
-        Label newGame=new Label();
+        Label newGame = new Label();
         Label chargerPartie = new Label();
         Label statistiques = new Label();
         Label credits = new Label();
@@ -107,26 +67,26 @@ public class InterfaceMenu extends Parent{
         credits.setText(controller.gestionnaireLangage.getText("text_credit"));
         regles.setText(controller.gestionnaireLangage.getText("text_regles"));
 
-        double flecheLargeur = tailleDeCase*4-30;
-        double flecheHauteur = flecheLargeur/7.24;
-        double flecheLargeur_en_bas = (tailleDeCase*8)/3;
-        double flecheHauteur_en_bas = flecheLargeur_en_bas/5.4;
+        double flecheLargeur = tailleDeCase * 4 - 30;
+        double flecheHauteur = flecheLargeur / 7.24;
+        double flecheLargeur_en_bas = (tailleDeCase * 8) / 3;
+        double flecheHauteur_en_bas = flecheLargeur_en_bas / 5.4;
 
         GridPane menu_hex = new GridPane();
-        int ligne = 100/5;
-        int colonne = 100/1;
+        int ligne = 100 / 5;
+        int colonne = 100 / 1;
         Outils.fixerRepartition(menu_hex, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(menu_hex, Outils.VERTICAL, colonne);
-        menu_hex.setMaxWidth(tailleDeCase*4);
-        menu_hex.setMinWidth(tailleDeCase*4);
-        menu_hex.setMaxHeight(tailleDeCase*4);
-        menu_hex.setMinHeight(tailleDeCase*4);
+        menu_hex.setMaxWidth(tailleDeCase * 4);
+        menu_hex.setMinWidth(tailleDeCase * 4);
+        menu_hex.setMaxHeight(tailleDeCase * 4);
+        menu_hex.setMinHeight(tailleDeCase * 4);
         StackPane NewGame = new StackPane();
         Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView flecheImNG = new ImageView(fleche);
         flecheImNG.setFitHeight(flecheHauteur);
         flecheImNG.setFitWidth(flecheLargeur);
-        newGame.setFont(new Font(police, flecheHauteur-10));
+        newGame.setFont(new Font(police, flecheHauteur - 10));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
@@ -139,7 +99,7 @@ public class InterfaceMenu extends Parent{
         ImageView flecheImCP = new ImageView(fleche);
         flecheImCP.setFitHeight(flecheHauteur);
         flecheImCP.setFitWidth(flecheLargeur);
-        chargerPartie.setFont(new Font(police, flecheHauteur-10));
+        chargerPartie.setFont(new Font(police, flecheHauteur - 10));
         chargerPartie.setTextFill(Color.web("#fbe5b5"));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(flecheImCP);
@@ -156,7 +116,7 @@ public class InterfaceMenu extends Parent{
         ImageView flecheImR = new ImageView(fleche);
         flecheImR.setFitHeight(flecheHauteur);
         flecheImR.setFitWidth(flecheLargeur);
-        regles.setFont(new Font(police, flecheHauteur-10));
+        regles.setFont(new Font(police, flecheHauteur - 10));
         regles.setTextFill(Color.web("#fbe5b5"));
         regles.setAlignment(CENTER);
         Regles.getChildren().add(flecheImR);
@@ -168,53 +128,20 @@ public class InterfaceMenu extends Parent{
         hex.getChildren().add(menu_hex);
         pane.getChildren().add(hex);
 
-        StackPane Preferences = new StackPane();
-        Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
-        ImageView prefIm = new ImageView(preferences);
-        prefIm.setFitHeight(tailleDeCase/2);
-        prefIm.setFitWidth(tailleDeCase/2*1.07);
-        Preferences.getChildren().add(prefIm);
-        Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            pane.getChildren().add(controller.getPreferences());
-        });
-        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 10);
-        AnchorPane.setTopAnchor(Preferences, (double) 5);
-        pane.getChildren().add(Preferences);
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
+        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+        pane.getChildren().add(boutonPreference);
 
-        StackPane Plein = new StackPane();
-        Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein);
-        pleinIm.setFitHeight(tailleDeCase/2);
-        pleinIm.setFitWidth(tailleDeCase/2*1.07);
-        Plein.getChildren().add(pleinIm);
-        Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            if(controller.pleinEcran==0){
-                primaryStage.setWidth(max_width);
-                primaryStage.setHeight(max_height);
-                controller.old_height=height;
-                controller.old_width=width;
-                controller.goToMenu();
-                controller.pleinEcran=1;
-            }
-            else{
-                primaryStage.setWidth(controller.old_width);
-                primaryStage.setHeight(controller.old_height);
-                controller.goToMenu();
-                controller.pleinEcran=0;
-            }
-            //primaryStage.setFullScreen(true);
-            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        });
-        AnchorPane.setRightAnchor(Plein, (double) 5);
-        AnchorPane.setTopAnchor(Plein, (double) 5);
-        pane.getChildren().add(Plein);
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
+        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
+        pane.getChildren().add(boutonPleinEcran);
 
         StackPane Statistiques = new StackPane();
         Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
         ImageView gaucheIm = new ImageView(gauche);
         gaucheIm.setFitHeight(flecheHauteur_en_bas);
         gaucheIm.setFitWidth(flecheLargeur_en_bas);
-        statistiques.setFont(new Font(police, flecheHauteur-10));
+        statistiques.setFont(new Font(police, flecheHauteur - 10));
         statistiques.setTextFill(Color.web("#fbe5b5"));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(gaucheIm);
@@ -223,7 +150,7 @@ public class InterfaceMenu extends Parent{
             controller.goToStat();
         });
         AnchorPane.setLeftAnchor(Statistiques, (double) 5);
-        AnchorPane.setBottomAnchor(Statistiques, (double) height*0.12);
+        AnchorPane.setBottomAnchor(Statistiques, (double) height * 0.12);
         pane.getChildren().add(Statistiques);
 
         StackPane Credits = new StackPane();
@@ -231,7 +158,7 @@ public class InterfaceMenu extends Parent{
         ImageView droiteIm = new ImageView(droite);
         droiteIm.setFitHeight(flecheHauteur_en_bas);
         droiteIm.setFitWidth(flecheLargeur_en_bas);
-        credits.setFont(new Font(police, flecheHauteur_en_bas-10));
+        credits.setFont(new Font(police, flecheHauteur_en_bas - 10));
         credits.setTextFill(Color.web("#fbe5b5"));
         credits.setAlignment(CENTER);
         Credits.getChildren().add(droiteIm);
@@ -240,16 +167,14 @@ public class InterfaceMenu extends Parent{
             controller.goToCredits();
         });
         AnchorPane.setRightAnchor(Credits, (double) 5);
-        AnchorPane.setBottomAnchor(Credits, (double) height*0.12);
+        AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
         pane.getChildren().add(Credits);
 
-        this.getChildren().add(pane);
-
+        this.panePrincipale.getChildren().add(pane);
 
     }
 
-    public void majRetourPreference()
-    {
+    public void majRetourPreference() {
         System.out.println("TODO : set le BG");
         System.out.println("TODO : MAJ langue");
     }

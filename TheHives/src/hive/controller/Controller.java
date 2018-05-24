@@ -7,6 +7,7 @@ package hive.controller;
 
 import hive.controller.plateauscene.game.GameController;
 import hive.model.game.Game;
+import hive.model.game.GameLoader;
 import hive.model.game.PrecalculatedGame;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
@@ -44,7 +45,6 @@ public final class Controller
     public Dimension screenSize;
     public GestionnaireLangage gestionnaireLangage;
 
-    public int pleinEcran = 0;
     public String typeTheme;
     public double old_height;
     public double old_width;
@@ -74,13 +74,13 @@ public final class Controller
 
     public void goToMenu()
     {
-        currentScene = new Scene(new InterfaceMenu(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceMenu(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToChoixJoueur()
     {
-        currentScene = new Scene(new InterfaceJoueurs(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceJoueurs(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
@@ -105,25 +105,25 @@ public final class Controller
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene = new Scene(new InterfaceCharger(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceCharger(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToRegles()
     {
-        currentScene = new Scene(new InterfaceRegles(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceRegles(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToStat()
     {
-        currentScene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceStatistiques(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToCredits()
     {
-        currentScene = new Scene(new InterfaceCredits(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceCredits(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
@@ -151,7 +151,7 @@ public final class Controller
 
     public Game chargerGame(String fileName)
     {
-        LoaderXML<Game> loader = new LoaderXML<>();
+        LoaderXML<Game> loader = new GameLoader();
         Game game = null;
         try
         {
@@ -165,7 +165,7 @@ public final class Controller
 
     public void enregistrerGame(Game game, String fileName)
     {
-        LoaderXML<Game> loader = new LoaderXML<>();
+        LoaderXML<Game> loader = new GameLoader();
         try
         {
             loader.loadInFile(game, fileName);

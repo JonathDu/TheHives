@@ -31,20 +31,20 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateauMain extends Parent {
+public class NodePlateauMain extends Parent {
 
     public VBox pions;
     private Label labelNomJoueur;
     public boolean isCourant;
     private final TeamColor couleur;
-    public EnumMap<InsectType, InterfacePions> pilesPions;
+    public EnumMap<InsectType, NodePions> pilesPions;
     public ImageView afficheTour;
     private final ImageView panneau;
     private StackPane affichageJoueur;
 
     CacheImage c;
 
-    public InterfacePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController plateauController, InterfacePlateau plateau, TeamColor color) {
+    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController plateauController, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
@@ -52,9 +52,9 @@ public class InterfacePlateauMain extends Parent {
 
         labelNomJoueur = new Label(nomJoueur);
 
-        pilesPions = new EnumMap<InsectType, InterfacePions>(InsectType.class);
+        pilesPions = new EnumMap<InsectType, NodePions>(InsectType.class);
         for (InsectType type : InsectType.implemented_insects) {
-            pilesPions.put(type, new InterfacePions(color, col.get(type), type, c));
+            pilesPions.put(type, new NodePions(color, col.get(type), type, c));
             pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, plateau, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }

@@ -21,9 +21,9 @@ import util.Vector2i;
  *
  * @author jonathan
  */
-public class InterfaceRuche extends Parent {
+public class NodeRuche extends Parent {
 
-    private final Matrix<InterfaceComb> tab;
+    private final Matrix<NodeComb> tab;
     private final int largeur;
     private final int hauteur;
     private final int longueurPion = 40;
@@ -34,7 +34,7 @@ public class InterfaceRuche extends Parent {
     private InterfacePlateau plateau;
 
     
-    public InterfaceRuche(CacheImage c, GameController plateauController) {
+    public NodeRuche(CacheImage c, GameController plateauController) {
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
@@ -47,7 +47,7 @@ public class InterfaceRuche extends Parent {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
-                InterfaceComb cell = new InterfaceComb(c, longueurPion);
+                NodeComb cell = new NodeComb(c, longueurPion);
                 cell.setLayoutX(x * (longueurPion + h) + 100);
 
                 if (x % 2 != 0) {
@@ -84,7 +84,7 @@ public class InterfaceRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 SocleHandler handler = new SocleHandler(plateauController, plateau, pos);
-                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
                 
             }
         }

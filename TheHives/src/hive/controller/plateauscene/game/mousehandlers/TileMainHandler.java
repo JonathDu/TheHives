@@ -11,7 +11,7 @@ import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
-import hive.vue.InterfacePlateauMain;
+import hive.vue.NodePlateauMain;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -22,7 +22,7 @@ import javafx.scene.input.MouseEvent;
 public class TileMainHandler extends HandlerPlateau
 {
     TeamColor color;
-    InterfacePlateauMain uiMain;
+    NodePlateauMain uiMain;
     Tile tileClicked;
 
     public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, TeamColor color, InsectType insectType)

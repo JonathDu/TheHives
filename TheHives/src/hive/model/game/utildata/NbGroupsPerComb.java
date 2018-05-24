@@ -5,13 +5,11 @@
  */
 package hive.model.game.utildata;
 
-import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.rules.HiveUtil;
 import java.util.HashMap;
 import java.util.Iterator;
-import util.hexagons.HexagonUtil;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 

@@ -7,24 +7,14 @@ package hive.main;
 
 import hive.model.game.DefaultGame;
 import hive.model.GameProgress;
-import hive.model.HiveInterfaceIA;
-import hive.model.board.Board;
-import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.GameLoader;
-import util.LoaderXML;
 import hive.model.game.rules.GameStatus;
-import hive.model.game.rules.HiveUtil;
-import hive.model.game.utildata.UtilData;
-import hive.model.players.Player;
-import hive.model.players.actions.Action;
-import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.Level;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 /**
  *

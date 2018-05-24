@@ -17,6 +17,7 @@ import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.Decision;
+import hive.model.players.decisions.RandomDecision;
 import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.Iterator;

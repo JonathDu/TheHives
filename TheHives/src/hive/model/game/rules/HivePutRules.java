@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
@@ -69,34 +68,6 @@ public class HivePutRules implements PutRules, Serializable
             // we can add the cell at level 0
             list.add(new Cell(pair.getKey()));
         }
-        
-        /*Board board = state.board;
-        
-        if(state.data.nb_tiles == 0)
-        {
-            // return center
-            list.add(new Cell(state.board.getCenter()));
-            return list;
-        }
-        else if(state.data.nb_tiles == 1)
-        {
-            // return center neighbors
-            NeighborsIterator neighbors = new NeighborsIterator(state.board.getCenter());
-            while(neighbors.hasNext())
-                list.add(new Cell((Honeycomb)neighbors.next().hexagon));
-            return list;
-        }
-        
-        // naive version
-        for(int y = 0; y < board.getData().sizeY(); ++y)
-        {
-            for(int x = 0; x < board.getData().sizeX(); ++x)
-            {
-                Honeycomb comb = board.getHexagon(new Vector2i(x, y));
-                if(comb.value().isEmpty() && HiveFunctions.hasNeighbors(comb) && HiveFunctions.neighborsHaveSameColor(comb, state.turn.getCurrent().color))
-                    list.add(new Cell(comb));
-            }
-        }*/
         
         return list;
     }

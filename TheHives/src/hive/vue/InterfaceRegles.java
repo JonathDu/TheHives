@@ -6,10 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.awt.Dimension;
-import java.util.ResourceBundle;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,155 +22,45 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
-public class InterfaceRegles extends Parent {
+public class InterfaceRegles extends Interface {
 
     private AnchorPane pane;
-    Stage primaryStage;
-    Controller controller;
-    CacheImage c;
 
-    public InterfaceRegles(Stage primaryStage, Controller controller) {
-        this.c = new CacheImage();
-        this.controller = controller;
-        this.primaryStage = primaryStage;
-        if (controller.pleinEcran == 1) {
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        }
+    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c) {
+        super(primaryStage, controller, c);
 
-        String rep = "";
-
-        String police = controller.getPolice();
+        String rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        int tailleDeCase;
-        if(width/8>height/6){
-            tailleDeCase = height/6;
-        }
-        else{
-            tailleDeCase = width/8;
-        }
-        int maxJoueur = (int) ((int) width/2.5);
-        int minJoueur = maxJoueur/2;
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 15);
+        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+        pane.getChildren().add(boutonPreference);
 
-        Image fond;
-        if(controller.typeTheme=="jour"){
-            fond = c.getImage("Design/Fond/fondMontagne.png");
-        }
-        else{
-            fond = c.getImage("Design/Fond/fondNuit.png");
-        }
-        ImageView fondIm = new ImageView(fond);
-        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
-        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
-        AnchorPane.setRightAnchor(fondIm, (double) 0);
-        AnchorPane.setLeftAnchor(fondIm, (double) 0);
-        AnchorPane.setTopAnchor(fondIm, (double) 0);
-        AnchorPane.setBottomAnchor(fondIm, (double) 0);
-        pane.getChildren().add(fondIm);
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 10);
+        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
+        pane.getChildren().add(boutonPleinEcran);
 
-        StackPane Preferences = new StackPane();
-        Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
-        ImageView prefIm = new ImageView(preferences);
-        prefIm.setFitHeight(tailleDeCase / 2);
-        prefIm.setFitWidth(tailleDeCase / 2 * 1.07);
-        Preferences.getChildren().add(prefIm);
-        Preferences.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-
-            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
-            pane.getChildren().add(p);
-        });
-        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase / 2 * 1.07 + 15);
-        AnchorPane.setTopAnchor(Preferences, (double) 5);
-        pane.getChildren().add(Preferences);
-
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        double max_height = dimension.getHeight();
-        double max_width = dimension.getWidth();
-        StackPane Plein = new StackPane();
-        Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein);
-        pleinIm.setFitHeight(tailleDeCase/2);
-        pleinIm.setFitWidth(tailleDeCase/2*1.07);
-        Plein.getChildren().add(pleinIm);
-        Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-           if(controller.pleinEcran==0){
-                primaryStage.setWidth(max_width);
-                primaryStage.setHeight(max_height);
-                controller.old_height=height;
-                controller.old_width=width;
-                controller.goToRegles();
-                controller.pleinEcran=1;
-            }
-            else{
-                primaryStage.setWidth(controller.old_width);
-                primaryStage.setHeight(controller.old_height);
-                controller.goToRegles();
-                controller.pleinEcran=0;
-            }
-            //primaryStage.setFullScreen(true);
-            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        });
-        AnchorPane.setRightAnchor(Plein, (double) 10);
-        AnchorPane.setTopAnchor(Plein, (double) 5);
-        pane.getChildren().add(Plein);
-
-        StackPane Menu = new StackPane();
-        Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
-        ImageView menuIm = new ImageView(menu);
-        menuIm.setFitHeight(tailleDeCase / 2);
-        menuIm.setFitWidth(tailleDeCase / 2 * 1.07);
-        Menu.getChildren().add(menuIm);
-        Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.goToMenu();
-        });
-        AnchorPane.setLeftAnchor(Menu, (double) 5);
-        AnchorPane.setTopAnchor(Menu, (double) 5);
-        pane.getChildren().add(Menu);
+        AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
+        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
+        pane.getChildren().add(boutonRetourMenu);
 
         regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
 
     }
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, boolean fenetre) {
-        this.c = new CacheImage();
+    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
+        super(primaryStage, controller, c);
         this.controller = controller;
         this.primaryStage = primaryStage;
 
-        if (controller.pleinEcran == 1) {
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        }
-        CacheImage c = new CacheImage();
-
-        String rep = "";
-
-        String police = controller.getPolice();
+        String rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
-
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        int tailleDeCase = width / 8;
-        int maxJoueur = (int) ((int) width / 2.5);
-        int minJoueur = maxJoueur / 2;
-
-        Image fond = c.getImage("Design/Fond/fondMontagne.png");
-        ImageView fondIm = new ImageView(fond);
-        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
-        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
-        AnchorPane.setRightAnchor(fondIm, (double) 0);
-        AnchorPane.setLeftAnchor(fondIm, (double) 0);
-        AnchorPane.setTopAnchor(fondIm, (double) 0);
-        AnchorPane.setBottomAnchor(fondIm, (double) 0);
-        pane.getChildren().add(fondIm);
 
         regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
     }
@@ -245,14 +132,14 @@ public class InterfaceRegles extends Parent {
         int colonne = 100 / 1;
         Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(placement, Outils.VERTICAL, colonne);
-        placement.setMaxWidth(width*0.99*0.2);
-        placement.setMinWidth(width*0.99*0.2);
-        placement.setMaxHeight(width*0.99*0.25*1.7);
-        placement.setMinHeight(width*0.99*0.25*1.7);
-        double hauteurDeGrille = height*0.4;
-        double hauteurDeLigne = hauteurDeGrille/4;
+        placement.setMaxWidth(width * 0.99 * 0.2);
+        placement.setMinWidth(width * 0.99 * 0.2);
+        placement.setMaxHeight(width * 0.99 * 0.25 * 1.7);
+        placement.setMinHeight(width * 0.99 * 0.25 * 1.7);
+        double hauteurDeGrille = height * 0.4;
+        double hauteurDeLigne = hauteurDeGrille / 4;
 
-        jeu.setFont(new Font(police, maxJoueur/13));
+        jeu.setFont(new Font(police, maxJoueur / 13));
         jeu.setAlignment(Pos.CENTER);
         jeu.setMinSize(minJoueur, 30);
         jeu.setMaxSize(maxJoueur, 70);
@@ -261,7 +148,7 @@ public class InterfaceRegles extends Parent {
         j.getChildren().add(jeu);
         placement.add(j, 0, 0);
 
-        but.setFont(new Font(police, maxJoueur/20));
+        but.setFont(new Font(police, maxJoueur / 20));
         but.setAlignment(Pos.CENTER);
         but.setMinSize(minJoueur, 30);
         but.setMaxSize(maxJoueur, 70);
@@ -374,13 +261,13 @@ public class InterfaceRegles extends Parent {
         int ligne2 = 100 / 8;
         Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
         Outils.fixerRepartition(insectes, Outils.VERTICAL, colonne);
-        insectes.setMaxWidth(width*0.99*0.2);
-        insectes.setMinWidth(width*0.99*0.2);
-        insectes.setMaxHeight(width*0.99*0.25*1.7);
-        insectes.setMinHeight(width*0.99*0.25*1.7);
-        double hauteurDeLigne2 = hauteurDeGrille/6;
+        insectes.setMaxWidth(width * 0.99 * 0.2);
+        insectes.setMinWidth(width * 0.99 * 0.2);
+        insectes.setMaxHeight(width * 0.99 * 0.25 * 1.7);
+        insectes.setMinHeight(width * 0.99 * 0.25 * 1.7);
+        double hauteurDeLigne2 = hauteurDeGrille / 6;
 
-        insecte.setFont(new Font(police, maxJoueur/13));
+        insecte.setFont(new Font(police, maxJoueur / 13));
         insecte.setAlignment(Pos.CENTER);
         insecte.setMinSize(minJoueur, 30);
         insecte.setMaxSize(maxJoueur, 70);
@@ -389,7 +276,7 @@ public class InterfaceRegles extends Parent {
         in.getChildren().add(insecte);
         insectes.add(in, 0, 0);
 
-        araignee.setFont(new Font(police, maxJoueur/20));
+        araignee.setFont(new Font(police, maxJoueur / 20));
         araignee.setAlignment(Pos.CENTER);
         araignee.setTextFill(Color.web("#fbe5b5"));
         araignee.setMinSize(minJoueur, 30);
@@ -554,11 +441,10 @@ public class InterfaceRegles extends Parent {
         AnchorPane.setTopAnchor(sp_centre, (double) height * 0.2);
         AnchorPane.setBottomAnchor(sp_centre, (double) height * 0.1);
         pane.getChildren().add(sp_centre);
-        this.getChildren().add(pane);
+        this.panePrincipale.getChildren().add(pane);
     }
 
-    public void majRetourPreference()
-    {
+    public void majRetourPreference() {
     }
 
 }

@@ -26,7 +26,7 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateauTool extends Parent {
+public class NodePlateauTool extends Parent {
 
     HiveBouton boutonHome;
     HiveBouton boutonSave;
@@ -49,7 +49,7 @@ public class InterfacePlateauTool extends Parent {
 
     CacheImage c;
 
-    public InterfacePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game, HiveBouton pleinEcran, HiveBouton param) {
+    public NodePlateauTool(CacheImage c, Stage stage, Controller controller, String j1, String j2, Game game, HiveBouton pleinEcran, HiveBouton param) {
         width = (int) stage.getWidth();
         this.c = c;
         this.j1 = j1;
@@ -89,7 +89,7 @@ public class InterfacePlateauTool extends Parent {
 
             Stage primaryStage = new Stage();
             Parent root;
-            root = new InterfaceRegles(stage, controller, true);
+            root = new InterfaceRegles(stage, controller,c, true);
             primaryStage.setTitle("Regles");
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
@@ -98,17 +98,6 @@ public class InterfacePlateauTool extends Parent {
 
         });
 
-        boutonParam.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(stage, controller, new CacheImage());
-            pane.getChildren().add(p);
-
-        });
-
-        pleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.pleinEcran = 1;
-            stage.setFullScreen(true);
-            stage.setFullScreenExitHint("Sortie de plein écran - esc");
-        });
 
         Group g = new Group();
         g.getChildren().add(centre);
