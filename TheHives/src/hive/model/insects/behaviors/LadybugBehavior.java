@@ -8,7 +8,9 @@ package hive.model.insects.behaviors;
 import hive.model.board.Cell;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
+import hive.model.players.actions.Action;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -16,9 +18,8 @@ import java.util.ArrayList;
  */
 public class LadybugBehavior implements InsectBehavior
 {
-
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

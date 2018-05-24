@@ -7,7 +7,7 @@ package hive.model.game.rules;
 
 import hive.model.board.Cell;
 import hive.model.game.GameState;
-import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -15,6 +15,6 @@ import java.util.ArrayList;
  */
 public interface MoveRules
 {
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell);
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer);
     public boolean isFree(GameState state, Cell cell);
 }

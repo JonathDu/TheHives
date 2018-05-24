@@ -11,7 +11,10 @@ import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
+import hive.model.players.actions.Action;
+import hive.model.players.actions.MoveAction;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 import util.hexagons.iterators.LineAtSideIterator;
@@ -24,14 +27,12 @@ import util.iterators.StoppingIterator;
 public class GrasshopperBehavior implements InsectBehavior
 {
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
         assert cell.level == 0;
         
-        ArrayList<Cell> list = new ArrayList<>();
-        
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
-            return list;
+            return;
         
         // for each side
         for(HexagonSide side : HexagonSide.values())
@@ -52,9 +53,8 @@ public class GrasshopperBehavior implements InsectBehavior
                 line.next();
             }
             
-            list.add(new Cell((Honeycomb)line.getStoppingValue()));
+            consumer.accept(new Cell((Honeycomb)line.getStoppingValue()));
         }
-        return list;
     }
 
     @Override

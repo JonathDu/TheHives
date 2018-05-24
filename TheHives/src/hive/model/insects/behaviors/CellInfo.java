@@ -3,18 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game.rules;
+package hive.model.insects.behaviors;
 
 import hive.model.board.Cell;
-import hive.model.board.Tile;
-import hive.model.game.GameState;
-import java.util.function.Consumer;
 
 /**
  *
  * @author Thomas
+ * @param <I>
  */
-public interface PutRules
+public class CellInfo<I>
 {
-    public void consumePlacements(GameState state, Tile tile, Consumer<Cell> consumer);
+    Cell cell;
+    I info;
+    
+    public CellInfo(Cell cell, I info)
+    {
+        this.cell = cell;
+        this.info = info;
+    }
 }

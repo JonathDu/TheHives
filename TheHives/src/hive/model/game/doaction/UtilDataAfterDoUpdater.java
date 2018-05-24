@@ -41,7 +41,7 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         
@@ -62,7 +62,7 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         
@@ -86,7 +86,7 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         

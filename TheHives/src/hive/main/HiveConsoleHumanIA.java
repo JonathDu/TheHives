@@ -120,7 +120,8 @@ public class HiveConsoleHumanIA
             } while (insectType == null);
         } while (game.state.turn.getCurrent().collection.get(insectType) <= 0);
         
-        ArrayList<Cell> listPossibleDestinations = ((HiveRules)game.rules).getPossiblePlacements(game.state, insectType);
+        ArrayList<Cell> listPossibleDestinations = new ArrayList<>();
+        game.rules.consumePlacements(game.state, insectType, dest -> listPossibleDestinations.add(dest));
         System.out.println("Positions d'arrive possibles :");
         System.out.println(listPossibleDestinations);
         
@@ -140,7 +141,8 @@ public class HiveConsoleHumanIA
         System.out.println("Position depart : ");
         Vector2i startPos = new Vector2i(sc.nextInt(), sc.nextInt());
         Cell start = new Cell(game.state.board.getHexagon(startPos), game.state.board.getHexagon(startPos).value().size()-1);
-        ArrayList<Cell> listPossibleDestinations = game.rules.getPossibleDestinations(game.state, start);
+        ArrayList<Cell> listPossibleDestinations = new ArrayList<>();
+        game.rules.consumeDestinations(game.state, start, dest -> listPossibleDestinations.add(dest));
         System.out.println("Positions d'arrive possibles :");
         
         System.out.println(listPossibleDestinations);

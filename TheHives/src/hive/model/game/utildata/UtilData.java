@@ -24,7 +24,8 @@ public class UtilData
     public ActionsTrace trace; // to register all the actions done before
     public TilesInfluencePerTeam influences; // to register for each team where you can put (indirectly)
     public ArrayList<Cell> placements; // to register possible placements (for put action) only once, as it does not depend of the tile
-    public NbGroupsPerComb nbgroups;
+    public boolean placements_initialized;
+    public NbGroupsPerComb nbgroups; // to register how many consecutive non empty neighbors a comb have (useful to check connexity but the use is not implemented yet)
     
     public UtilData() {} // for serialization
     
@@ -36,7 +37,8 @@ public class UtilData
         this.last_undo = null;
         this.trace = trace;
         this.influences = influences;
-        this.placements = null;
+        this.placements = new ArrayList<>(100);
+        this.placements_initialized = false;
         this.nbgroups = nbgroups;
     }
 

@@ -5,6 +5,7 @@
  */
 package hive.model.game.utildata;
 
+import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class TilesInfluence extends HashMap<Honeycomb, Integer>
         
         Integer n = get(comb);
         if(n == null)
-            put(comb, new Integer(delta));
+            put(comb, delta);
         else
         {
             put(comb, n + delta);

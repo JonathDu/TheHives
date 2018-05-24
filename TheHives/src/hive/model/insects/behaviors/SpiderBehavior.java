@@ -13,6 +13,7 @@ import hive.model.board.TilesStack;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import util.hexagons.iterators.BreadthNeighborsAtLengthIterator;
 import util.hexagons.iterators.PathAtLengthIterator;
 
@@ -23,14 +24,12 @@ import util.hexagons.iterators.PathAtLengthIterator;
 public class SpiderBehavior implements InsectBehavior
 {
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
         assert cell.level == 0;
         
-        ArrayList<Cell> list = new ArrayList<>();
-        
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
-            return list;
+            return;
         
         Tile tmp = cell.comb.value().pop();
         
@@ -40,11 +39,9 @@ public class SpiderBehavior implements InsectBehavior
                 3);
         
         while(iterator.hasNext())
-            list.add(new Cell((Honeycomb)iterator.next()));
+            consumer.accept(new Cell((Honeycomb)iterator.next()));
         
         cell.comb.value().push(tmp);
-        
-        return list;
     }
 
     @Override

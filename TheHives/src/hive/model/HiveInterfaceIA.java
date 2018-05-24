@@ -11,6 +11,7 @@ import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveRules;
+import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
@@ -21,7 +22,6 @@ import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.ListIterator;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -100,56 +100,22 @@ public class HiveInterfaceIA implements InterfaceIA
         }
         return neighbours;
     }
+    
+    // does not treat NoAction case
     @Override
-    public ArrayList<Action> currentPlayerPossibilities2(Game game){
-        Player current = game.state.turn.getCurrent();
-        ArrayList<Action> actions = new ArrayList<>();
-        // PutAction
-        for(InsectType type : InsectType.implemented_insects)
-        {
-            Tile tile = new Tile(type, current.color);
-            /*for(int i = 0; i < current.collection.get(type); ++i)
-            {
-                Iterator<Cell> dest = destinations.iterator();
-                while(dest.hasNext())
-                    actions.add(new PutAction(dest.next(), tile));
-            }*/
-            ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
-            if(current.collection.get(type) > 0)
-            {
-                Iterator<Cell> place = placements.iterator();
-                while(place.hasNext())
-                    actions.add(new PutAction(place.next(), tile));
-            }
-        }
-
-
-        // MoveAction
-        for(InsectType type : InsectType.implemented_insects)
-        {
-            HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
-            Iterator<Cell> source_iterator = sources.iterator();
-            while(source_iterator.hasNext())
-            {
-                Cell source = source_iterator.next();
-                ArrayList<Cell> destinations = game.rules.getPossibleDestinations(game.state, source);
-                Iterator<Cell> dest_iterator = destinations.iterator();
-                while(dest_iterator.hasNext())
-                    actions.add(new MoveAction(source, dest_iterator.next()));
-            }
-        }
-        return actions;
+    public ArrayList<Action> currentPlayerPossibilities2(Game game)
+    {
+        return HiveUtil.getActions(game);
 
     }
-    // it does NOT copy equals tiles and equals cells
+    
+    // does not treat NoAction case
     @Override
     public void currentPlayerPossibilities(Game game, ArrayList<Action> actions)
     {
-        assert actions.isEmpty();
         actions.clear();
-        
-        ((HiveRules)game.rules).setPossiblePlacements(game.state, actions);
-        ((HiveRules)game.rules).setPossibleDestinations(game.state, actions);
+        HiveUtil.setPutActions(game, actions);
+        HiveUtil.setMoveActions(game, actions);
     }
 
     @Override
@@ -159,14 +125,11 @@ public class HiveInterfaceIA implements InterfaceIA
         for (InsectType type : InsectType.implemented_insects)
         {
             HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
-            Iterator<Cell> it = sources.iterator();
-            
-            while (it.hasNext())
+            for(Cell source : sources)
             {
-                Cell cell = it.next();
-                if (game.rules.isFree(game.state, cell))
+                if (game.rules.isFree(game.state, source))
                 {
-                    free_tiles.add(cell.getTile());
+                    free_tiles.add(source.getTile());
                 }
             }
         }
@@ -176,7 +139,8 @@ public class HiveInterfaceIA implements InterfaceIA
     public int nbPossibilitiesQueen(Game game, Player p){
         Tile tile = new Tile(InsectType.QUEEN_BEE, p.color);
         
-        ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
+        ArrayList<Cell> placements = new ArrayList<>();
+        game.rules.consumePlacements(game.state, tile, placement -> placements.add(placement));
         int nbPossibilities = placements.size();
         
         return nbPossibilities;
@@ -188,13 +152,11 @@ public class HiveInterfaceIA implements InterfaceIA
         for (InsectType type : InsectType.implemented_insects)
         {
             HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
-            Iterator<Cell> it = sources.iterator();
-            while (it.hasNext())
+            for(Cell source : sources)
             {
-                Cell cell = it.next();
-                if (!game.rules.isFree(game.state, cell))
+                if (!game.rules.isFree(game.state, source))
                 {
-                    blocked_tiles.add(cell.getTile());
+                    blocked_tiles.add(source.getTile());
                 }
             }
         }

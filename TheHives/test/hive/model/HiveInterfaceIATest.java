@@ -6,13 +6,10 @@
 package hive.model;
 
 import hive.model.board.Cell;
-import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.insects.InsectType;
-import hive.model.players.Player;
-import hive.model.players.PlayerCollection;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.Decision;
@@ -23,7 +20,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import util.Vector2i;
 
 /**

@@ -5,6 +5,7 @@
  */
 package hive.model.game.doaction;
 
+import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
@@ -47,11 +48,11 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         // trace
         data.trace.push(action);
         
-        // occurences
+        // influences (according to hive put rules (tiles put at level 0))
         data.influences.get(action.tile.color).addInfluence(action.where.comb);
         
         // placements
-        data.placements = null;
+        data.placements_initialized = false;
         
         // nbgroups
         
@@ -60,10 +61,12 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
     @Override
     public void visit(MoveAction action)
     {
-        // tiles
         Tile tile = action.source.getTile();
+        
+        // tiles
         data.tiles.get(tile.color).get(tile.type).remove(action.source);
         data.tiles.get(tile.color).get(tile.type).add(action.destination);
+
         
         // nb_tiles
         
@@ -81,13 +84,34 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         // trace
         data.trace.push(action);
         
-        // occurences
-        TilesInfluence current_occurences = data.influences.get(tile.color);
-        current_occurences.removeInfluence(action.source.comb);
-        current_occurences.addInfluence(action.destination.comb);
+        // influences
+        if(action.source.stack().size() == 1)
+            data.influences.get(tile.color).removeInfluence(action.source.comb);
+        else
+        {
+            assert action.source.level == action.source.stack().size() - 1; // must not be below an other tile
+            Tile below = new Cell(action.source).down().getTile();
+            if(tile.color != below.color)
+            {
+                data.influences.get(tile.color).removeInfluence(action.source.comb);
+                data.influences.get(below.color).addInfluence(action.source.comb);
+            }
+        }
+        if(action.destination.comb.value().size() == 0)
+            data.influences.get(tile.color).addInfluence(action.destination.comb);
+        else
+        {
+            assert action.destination.level == action.destination.stack().size(); // must not be below an other tile
+            Tile below = new Cell(action.destination).down().getTile();
+            if(tile.color != below.color)
+            {
+                data.influences.get(below.color).removeInfluence(action.destination.comb);
+                data.influences.get(tile.color).addInfluence(action.destination.comb);
+            }
+        }
         
         // placements
-        data.placements = null;
+        data.placements_initialized = false;
         
         // nbgroups
         
@@ -108,10 +132,10 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         // trace
         data.trace.push(action);
         
-        // occurences
+        // influences
         
         // placements
-        data.placements = null;
+        data.placements_initialized = false;
         
         // nbgroups
         
