@@ -14,19 +14,17 @@ import javafx.event.EventHandler;
  *
  * @author lucas
  */
-public final class FrameHandler implements EventHandler<ActionEvent>
+public final class FrameHandler extends PlateauHandlerData implements EventHandler<ActionEvent>
 {
-    private final GraphicGameState graphicGameState;
-    
-    public FrameHandler(GraphicGameState graphicGameState)
+    public FrameHandler(GameController controller)
     {
-        this.graphicGameState = graphicGameState;
+        super(controller);
     }
     
     @Override
     public void handle(ActionEvent event)
     {
-        if(graphicGameState.game.state.turn.getCurrent().decision instanceof IADecision && graphicGameState.timerJouerIA.getStatus() != Animation.Status.RUNNING)
-            graphicGameState.timerJouerIA.playFromStart();
+        if(controller.game.state.turn.getCurrent().decision instanceof IADecision && controller.timerJouerIA.getStatus() != Animation.Status.RUNNING)
+            controller.timerJouerIA.playFromStart();
     }
 }

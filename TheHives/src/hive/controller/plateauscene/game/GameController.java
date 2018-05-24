@@ -7,25 +7,41 @@ package hive.controller.plateauscene.game;
 
 import hive.model.GameProgress;
 import hive.model.game.Game;
+import hive.vue.InterfacePlateau;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 /**
  *
- * @author Thomas
+ * @author lucas
  */
 public class GameController
 {
-    // model
-    public GameProgress progress;
-    
-    // interface
-    
-    // controller
+
+    public Game game;
+    public InterfacePlateau uiPlateau;
+
     public ActionBuilder builder;
-    
-    
-    public GameController(Game game) // TODO +interface parameter
+    public Timeline timerJouerIA;
+    public Timeline timerFrame;
+
+    public GameController(Game game, InterfacePlateau uiPlateau)
     {
-        this.progress = new GameProgress(game);
+        this.game = game;
+        this.uiPlateau = uiPlateau;
+
         this.builder = new ActionBuilder();
+        
+        timerJouerIA = new Timeline(new KeyFrame(Duration.millis(200), new IAPlayerHandler(this)));
+        timerJouerIA.setCycleCount(1);
+
+        timerFrame = new Timeline(new KeyFrame(Duration.millis(500), new FrameHandler(this)));
+        timerFrame.setCycleCount(Timeline.INDEFINITE);
+    }
+    
+    public void start()
+    {
+        timerFrame.play();
     }
 }

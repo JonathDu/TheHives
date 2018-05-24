@@ -7,8 +7,9 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.GraphicGameState;
+import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Tile;
+import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,17 +36,16 @@ import javafx.stage.Stage;
 public class InterfacePlateau extends Interface {
 
     BorderPane borderPane;
-    GameController plateauController;
     public NodePlateauMain mainGauche;
     public NodePlateauMain mainDroite;
     public NodeRuche ruche;
-    GraphicGameState graphicGameState;
+    GameController gameController;
     private StackPane centerPane;
     ScrollPane scrollPane;
     BorderPane centerMainG;
     BorderPane centerMainD;
 
-    public InterfacePlateau(Stage stage, Controller controller, GameController plateauController, CacheImage c, String joueur1, String joueur2) {
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
         super(stage, controller, c);
         
         this.controller = controller;
@@ -55,10 +55,10 @@ public class InterfacePlateau extends Interface {
         centerMainG = new BorderPane();
         centerMainD = new BorderPane();
 
-        graphicGameState = new GraphicGameState(plateauController.progress.game, this);
+        gameController = new GameController(game, this);
 
-        mainGauche = new NodePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
-        mainDroite = new NodePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
+        mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, joueur1, c, gameController, this, TeamColor.WHITE);
+        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
@@ -90,7 +90,7 @@ public class InterfacePlateau extends Interface {
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
 
-        ruche = new NodeRuche(c, plateauController);
+        ruche = new NodeRuche(c, gameController);
         ruche.setHandler(this);
 
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
@@ -109,11 +109,12 @@ public class InterfacePlateau extends Interface {
         borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setTop(new NodePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game, this.boutonPleinEcran, this.boutonPreference));
+        borderPane.setTop(new NodePlateauTool(c, stage, controller, joueur1, joueur2, gameController.game, this.boutonPleinEcran, this.boutonPreference));
 
         borderPane.setBackground(background);
         this.panePrincipale.getChildren().add(borderPane);
         
+        gameController.start();
     }
 
     public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
