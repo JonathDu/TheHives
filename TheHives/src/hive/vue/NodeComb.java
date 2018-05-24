@@ -18,23 +18,23 @@ import javafx.scene.paint.Color;
  *
  * @author jonathan
  */
-public class InterfaceComb extends Parent {
+public class NodeComb extends Parent {
 
-    private ArrayList<InterfacePion> pions;
-    public InterfacePion socle;
+    private ArrayList<NodePion> pions;
+    public NodePion socle;
     private CacheImage c;
 
-    public InterfaceComb(CacheImage c) {
+    public NodeComb(CacheImage c) {
         this.c = c;
-        this.socle = new InterfacePion(null, null, c);
+        this.socle = new NodePion(null, null, c);
 //        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
 
-    public InterfaceComb(CacheImage c, int taille) {
+    public NodeComb(CacheImage c, int taille) {
         this.c = c;
-        this.socle = new InterfacePion(null, null, c, taille);
+        this.socle = new NodePion(null, null, c, taille);
 //        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
@@ -54,7 +54,7 @@ public class InterfaceComb extends Parent {
         this.getChildren().clear();
         this.getChildren().add(socle);
         for (int i = 0; i < comb.value().size(); i++) {
-            pions.add(i, new InterfacePion(comb.value().get(i).color, comb.value().get(i).type, c));
+            pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c));
             pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
             this.getChildren().add(pions.get(i));
         }

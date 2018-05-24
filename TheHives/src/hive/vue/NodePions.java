@@ -10,30 +10,27 @@ import hive.model.players.TeamColor;
 import java.util.ArrayList;
 import javafx.scene.Group;
 import javafx.scene.Parent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 /**
  *
  * @author jonathan
  */
-public class InterfacePions extends Parent {
+public class NodePions extends Parent {
 
     private int type;
-    private ArrayList<InterfacePion> pions;
-    private InterfacePion socle;
+    private ArrayList<NodePion> pions;
+    private NodePion socle;
     CacheImage c;
 
-    public InterfacePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {
-        socle = new InterfacePion(null, null, c);
+    public NodePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {
+        socle = new NodePion(null, null, c);
         pions = new ArrayList<>();
         this.c = c;
         Group g = new Group();
         g.getChildren().add(socle);
         for (int i = 0; i < nbPions; i++) {
-            InterfacePion pion = new InterfacePion(couleur, typePions, c);
+            NodePion pion = new NodePion(couleur, typePions, c);
             pion.setLayoutX(i * 10);
             g.getChildren().add(pion);
             pions.add(pion);
@@ -55,7 +52,7 @@ public class InterfacePions extends Parent {
         Group g = new Group();
         g.getChildren().add(socle);
         for (int i = 0; i < nbPions; i++) {
-            InterfacePion pion = new InterfacePion(couleur, typePions, c);
+            NodePion pion = new NodePion(couleur, typePions, c);
             pion.setLayoutX(i * 10);
             g.getChildren().add(pion);
             pions.add(pion);

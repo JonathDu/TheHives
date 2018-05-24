@@ -36,11 +36,10 @@ public class InterfacePlateau extends Interface {
 
     BorderPane borderPane;
     GameController plateauController;
-    public InterfacePlateauMain mainGauche;
-    public InterfacePlateauMain mainDroite;
-    public InterfaceRuche ruche;
+    public NodePlateauMain mainGauche;
+    public NodePlateauMain mainDroite;
+    public NodeRuche ruche;
     GraphicGameState graphicGameState;
-    private Controller controller;
     private StackPane centerPane;
     ScrollPane scrollPane;
     BorderPane centerMainG;
@@ -48,8 +47,6 @@ public class InterfacePlateau extends Interface {
 
     public InterfacePlateau(Stage stage, Controller controller, GameController plateauController, CacheImage c, String joueur1, String joueur2) {
         super(stage, controller, c);
-        
-        
         
         this.controller = controller;
         borderPane = new BorderPane();
@@ -60,8 +57,8 @@ public class InterfacePlateau extends Interface {
 
         graphicGameState = new GraphicGameState(plateauController.progress.game, this);
 
-        mainGauche = new InterfacePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
-        mainDroite = new InterfacePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
+        mainGauche = new NodePlateauMain(plateauController.progress.game.state.players.get(0).collection, stage, joueur1, c, plateauController, this, TeamColor.WHITE);
+        mainDroite = new NodePlateauMain(plateauController.progress.game.state.players.get(1).collection, stage, joueur2, c, plateauController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
@@ -93,7 +90,7 @@ public class InterfacePlateau extends Interface {
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
 
-        ruche = new InterfaceRuche(c, plateauController);
+        ruche = new NodeRuche(c, plateauController);
         ruche.setHandler(this);
 
         StackPane.setAlignment(ruche, Pos.TOP_CENTER);
@@ -112,7 +109,7 @@ public class InterfacePlateau extends Interface {
         borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setTop(new InterfacePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game, this.boutonPleinEcran, this.boutonPreference));
+        borderPane.setTop(new NodePlateauTool(c, stage, controller, joueur1, joueur2, plateauController.progress.game, this.boutonPleinEcran, this.boutonPreference));
 
         borderPane.setBackground(background);
         this.panePrincipale.getChildren().add(borderPane);
@@ -120,7 +117,7 @@ public class InterfacePlateau extends Interface {
         
     }
 
-    public InterfacePlateauMain getInterfacePlateauMain(TeamColor color) {
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
