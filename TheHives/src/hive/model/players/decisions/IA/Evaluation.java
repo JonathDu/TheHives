@@ -8,6 +8,7 @@ package hive.model.players.decisions.IA;
 import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.game.Game;
+import hive.model.game.rules.HiveUtil;
 import hive.model.players.Player;
 import java.util.ArrayList;
 
@@ -51,26 +52,32 @@ public class Evaluation {
         Player current = hia.currentPlayer(state);
         int queenOpponentPossibilities = hia.nbPossibilitiesQueen(state, opponent);
         int queenCurrentPossibilities = hia.nbPossibilitiesQueen(state, current);
+        if(hia.queenIsCurshed(current, state)){
+            values-=200;
+        }
+        if(hia.queenIsCurshed(opponent, state)){
+            values+=100;
+        }
         switch (queenOpponentPossibilities) {
             case 0:
-                values+= 50;
+                values+= 170;
                 break;
             case 1:
-                values+= 50;
+                values+= 152;
                 break;
             default:
-                values-= 50;
+                values-= 166;
                 break;
         }
         switch (queenCurrentPossibilities) {
             case 0:
-                values-= 100;
+                values-= 184;
                 break;
             case 1:
-                values-= 50;
+                values-= 170;
                 break;
             default:
-                values+= 50;
+                values+= 150;
                 break;
         }
         
@@ -105,19 +112,19 @@ public class Evaluation {
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
-                        value += 100;
-                        break;
-                    case  GRASSHOPPER:
-                        value += 20;
-                        break;
-                    case  SOLDIER_ANT:
                         value += 50;
                         break;
+                    case  GRASSHOPPER:
+                        value += 191;
+                        break;
+                    case  SOLDIER_ANT:
+                        value += 132;
+                        break;
                     case  SPIDER:
-                        value += 5;
+                        value += 56;
                         break;
                     case  BEETLE:
-                        value += 10;
+                        value += 50;
                         break;
                 }
                 
@@ -132,19 +139,19 @@ public class Evaluation {
                 switch (currentTile.type) 
                 {
                     case  QUEEN_BEE:
-                        value += 100;
+                        value += 64;
                         break;
                     case  GRASSHOPPER:
-                        value += 80;
+                        value += 144;
                         break;
                     case  SOLDIER_ANT:
-                        value += 90;
+                        value += 140;
                         break;
                     case  SPIDER:
-                        value += 80;
+                        value += 122;
                         break;
                     case  BEETLE:
-                        value += 80;
+                        value += 121;
                         break;
                 }
                 
@@ -159,17 +166,17 @@ public class Evaluation {
                 case QUEEN_BEE:
                     return 0;
                 default:
-                    return 100;
+                    return 93;
 
             }
         }else{
             switch (tile.type) {
                 case QUEEN_BEE:
-                    return 0;
+                    return 136;
                 case BEETLE:
                     return 200;
                 default:
-                    return 120;
+                    return 181;
 
             }
         }
@@ -179,15 +186,15 @@ public class Evaluation {
             if (freeTile.color == hia.currentPlayer(state).color) {
                 switch (freeTile.type) {
                     case QUEEN_BEE:
-                        return 0;
+                        return 16;
                     case GRASSHOPPER:
-                        return 175;
+                        return 200;
                     case SOLDIER_ANT:
-                        return 100;
+                        return 115;
                     case SPIDER:
-                        return 160;
+                        return 65;
                     case BEETLE:
-                        return 150;
+                        return 84;
                     default:
                         return 100;
 

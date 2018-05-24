@@ -67,7 +67,7 @@ public class AffichagBoss {
                     Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            boss = AE.dlBoss("TheBigBoss");
+            boss = AE.dlBoss("TheBigBossCoralie");
             System.out.println("TheBigBoss \n"+boss);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AffichagBoss.class.getName()).log(Level.SEVERE, null, ex);
