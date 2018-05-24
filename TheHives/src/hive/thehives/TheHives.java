@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class TheHives extends Application
 {
 
-    public int HEIGHT = 600;
+    public int HEIGHT = 700;
     public int WIDTH = 800;
     Dimension screenSize;
     Group root;

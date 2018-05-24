@@ -35,12 +35,12 @@ public class InterfaceJoueurs extends Interface {
 
     String versionIA1;
     String versionIA2;
-    
-    int est_ia_ia=0, est_h_ai=0, est_h_h=0, est_f1=0, est_f2=0, est_m1=0, est_m2=0, est_d1=0, est_d2=0;
+
+    int est_ia_ia = 0, est_h_ai = 0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
-    Level level1=null;
-    Level level2=null;
+    Level level1 = null;
+    Level level2 = null;
 
     public InterfaceJoueurs(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
@@ -79,12 +79,12 @@ public class InterfaceJoueurs extends Interface {
 
         double largeurBouton;
         double hauteurBouton;
-        if(width>max_screen_width*0.75){
-            largeurBouton = largeurDeColonne*0.6;
-        }
-        else
+        if (width > max_screen_width * 0.75) {
+            largeurBouton = largeurDeColonne * 0.6;
+        } else {
             largeurBouton = largeurDeColonne;
-        hauteurBouton=largeurBouton/7.2375;
+        }
+        hauteurBouton = largeurBouton / 7.2375;
 
         Label joueur1 = new Label();
         Label joueur2 = new Label();
@@ -99,16 +99,16 @@ public class InterfaceJoueurs extends Interface {
 
         Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
         ImageView hexagoneIm = new ImageView(hexagone);
-        hexagoneIm.setFitHeight(hauteurDeLigne+20);
-        hexagoneIm.setFitWidth(hauteurDeLigne+20);
+        hexagoneIm.setFitHeight(hauteurDeLigne + 20);
+        hexagoneIm.setFitWidth(hauteurDeLigne + 20);
         Image rectangle = c.getImage("niveau/RectangleCoupé.png");
         ImageView rectangleIm1 = new ImageView(rectangle);
-        rectangleIm1.setFitHeight(hauteurBouton+20);
-        rectangleIm1.setFitWidth(largeurBouton+20);
+        rectangleIm1.setFitHeight(hauteurBouton + 20);
+        rectangleIm1.setFitWidth(largeurBouton + 20);
         ImageView rectangleIm2 = new ImageView(rectangle);
-        rectangleIm2.setFitHeight(hauteurBouton+20);
-        rectangleIm2.setFitWidth(largeurBouton+20);
-        
+        rectangleIm2.setFitHeight(hauteurBouton + 20);
+        rectangleIm2.setFitWidth(largeurBouton + 20);
+
         Name1.setText(null);
         Name2.setText(null);
         Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
@@ -136,134 +136,132 @@ public class InterfaceJoueurs extends Interface {
         h_ia.getChildren().add(hexagoneIm);
         h_ia.getChildren().add(hIA);
         grille.add(h_ia, 1, 1);
-            Name1.setMinSize(tailleDeCase*0.8, 30);
-            Name1.setMaxHeight(40);
-            Name1.setAlignment(Pos.CENTER);
-            StackPane n1 = new StackPane();
-            n1.getChildren().add(Name1);
-            grille.add(n1, 1, 2);
-            ToggleButton facile;
-            facile = bouton.creer("facile"); //Facile, Einfach
-            facile.setBackground(Background.EMPTY);
-            facile.setToggleGroup(ia2);
-            StackPane f2 = new StackPane();
-            f2.getChildren().add(facile);
-            grille.add(f2, 0, 3);
-            ToggleButton moyenne;
-            moyenne = bouton.creer("moyenne"); //Media, Mittel/Normal
-            moyenne.setBackground(Background.EMPTY);
-            moyenne.setToggleGroup(ia2);
-            est_m2=1;
-            moyenne.setSelected(true);
-            StackPane m2 = new StackPane();
-            m2.getChildren().add(rectangleIm2);
-            m2.getChildren().add(moyenne);
-            grille.add(m2, 1, 3);
-            ToggleButton difficile;
-            difficile = bouton.creer("difficile"); //Difficile, Schwer
-            difficile.setBackground(Background.EMPTY);
-            difficile.setToggleGroup(ia2);
-            StackPane d2 = new StackPane();
-            d2.getChildren().add(difficile);
-            grille.add(d2, 2, 3);
-            versionIA2 = "moyenne";
-            ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-                    public void changed(ObservableValue<? extends Toggle> ov,
-                        Toggle old_toggle, Toggle new_toggle) {
-                        if (ia2.getSelectedToggle() != null) {
-                            if(facile.isSelected()){
-                                if(est_m2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    m2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_m2=0;
-                                }else if(est_d2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    d2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_d2=0;
-                                }
-                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                    grille.getChildren().remove(f2);
-                                    f2.getChildren().remove(facile);
-                                    f2.getChildren().add(rectangleIm2);
-                                    f2.getChildren().add(facile);
-                                    grille.add(f2, 0, 3);
-                                    est_f2=1;
-                                }
-                            }else if(moyenne.isSelected()){
-                                if(est_f2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    f2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_f2=0;
-                                }else if(est_d2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    d2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_d2=0;
-                                }
-                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                    grille.getChildren().remove(m2);
-                                    m2.getChildren().remove(moyenne);
-                                    m2.getChildren().add(rectangleIm2);
-                                    m2.getChildren().add(moyenne);
-                                    grille.add(m2, 1, 3);
-                                    est_m2=1;
-                                }
-                            }else if(difficile.isSelected()){
-                                if(est_f2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    f2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_f2=0;
-                                }else if(est_m2==1){
-                                    grille.getChildren().remove(f2);
-                                    grille.getChildren().remove(m2);
-                                    grille.getChildren().remove(d2);
-                                    m2.getChildren().remove(rectangleIm2);
-                                    grille.add(f2, 0, 3);
-                                    grille.add(m2, 1, 3);
-                                    grille.add(d2, 2, 3);
-                                    est_m2=0;
-                                }
-                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                    grille.getChildren().remove(d2);
-                                    d2.getChildren().remove(difficile);
-                                    d2.getChildren().add(rectangleIm2);
-                                    d2.getChildren().add(difficile);
-                                    grille.add(d2, 2, 3);
-                                    est_d2=1;
-                                }
-                            }
-                            
-                            versionIA2 = ia2.getSelectedToggle().getUserData().toString();
-                            System.out.println("IA2 : " + versionIA2);
+        Name1.setMinSize(tailleDeCase * 0.8, 30);
+        Name1.setMaxHeight(40);
+        Name1.setAlignment(Pos.CENTER);
+        StackPane n1 = new StackPane();
+        n1.getChildren().add(Name1);
+        grille.add(n1, 1, 2);
+        ToggleButton facile;
+        facile = bouton.creer("facile"); //Facile, Einfach
+        facile.setBackground(Background.EMPTY);
+        facile.setToggleGroup(ia2);
+        StackPane f2 = new StackPane();
+        f2.getChildren().add(facile);
+        grille.add(f2, 0, 3);
+        ToggleButton moyenne;
+        moyenne = bouton.creer("moyenne"); //Media, Mittel/Normal
+        moyenne.setBackground(Background.EMPTY);
+        moyenne.setToggleGroup(ia2);
+        est_m2 = 1;
+        moyenne.setSelected(true);
+        StackPane m2 = new StackPane();
+        m2.getChildren().add(rectangleIm2);
+        m2.getChildren().add(moyenne);
+        grille.add(m2, 1, 3);
+        ToggleButton difficile;
+        difficile = bouton.creer("difficile"); //Difficile, Schwer
+        difficile.setBackground(Background.EMPTY);
+        difficile.setToggleGroup(ia2);
+        StackPane d2 = new StackPane();
+        d2.getChildren().add(difficile);
+        grille.add(d2, 2, 3);
+        versionIA2 = "moyenne";
+        ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle old_toggle, Toggle new_toggle) {
+                if (ia2.getSelectedToggle() != null) {
+                    if (facile.isSelected()) {
+                        if (est_m2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            m2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_m2 = 0;
+                        } else if (est_d2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            d2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_d2 = 0;
+                        }
+                        if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                            grille.getChildren().remove(f2);
+                            f2.getChildren().remove(facile);
+                            f2.getChildren().add(rectangleIm2);
+                            f2.getChildren().add(facile);
+                            grille.add(f2, 0, 3);
+                            est_f2 = 1;
+                        }
+                    } else if (moyenne.isSelected()) {
+                        if (est_f2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            f2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_f2 = 0;
+                        } else if (est_d2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            d2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_d2 = 0;
+                        }
+                        if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                            grille.getChildren().remove(m2);
+                            m2.getChildren().remove(moyenne);
+                            m2.getChildren().add(rectangleIm2);
+                            m2.getChildren().add(moyenne);
+                            grille.add(m2, 1, 3);
+                            est_m2 = 1;
+                        }
+                    } else if (difficile.isSelected()) {
+                        if (est_f2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            f2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_f2 = 0;
+                        } else if (est_m2 == 1) {
+                            grille.getChildren().remove(f2);
+                            grille.getChildren().remove(m2);
+                            grille.getChildren().remove(d2);
+                            m2.getChildren().remove(rectangleIm2);
+                            grille.add(f2, 0, 3);
+                            grille.add(m2, 1, 3);
+                            grille.add(d2, 2, 3);
+                            est_m2 = 0;
+                        }
+                        if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                            grille.getChildren().remove(d2);
+                            d2.getChildren().remove(difficile);
+                            d2.getChildren().add(rectangleIm2);
+                            d2.getChildren().add(difficile);
+                            grille.add(d2, 2, 3);
+                            est_d2 = 1;
                         }
                     }
-                });
 
-
+                    versionIA2 = ia2.getSelectedToggle().getUserData().toString();
+                    System.out.println("IA2 : " + versionIA2);
+                }
+            }
+        });
 
         ToggleButton IAs;
         IAs = bouton.creer("IAs");
@@ -272,28 +270,25 @@ public class InterfaceJoueurs extends Interface {
         StackPane ia_ia = new StackPane();
         ia_ia.getChildren().add(IAs);
         grille.add(ia_ia, 2, 1);
-        
+
         StackPane f1 = new StackPane();
         StackPane m1 = new StackPane();
         StackPane d1 = new StackPane();
         StackPane n2 = new StackPane();
 
-
         j.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
                     Toggle old_toggle, Toggle new_toggle) {
                 if (j.getSelectedToggle() != null) {
-                    if(humains.isSelected()){
-                        if(est_ia_ia==1){
-                            est_f1=0;
-                            est_f2=0;
-                            est_m1=0;
-                            est_m2=0;
-                            est_d1=0;
-                            est_d2=0;
+                    if (humains.isSelected()) {
+                        if (est_ia_ia == 1) {
+                            est_f1 = 0;
+                            est_f2 = 0;
+                            est_m1 = 0;
+                            est_m2 = 0;
+                            est_d1 = 0;
+                            est_d2 = 0;
 
-        
-        
                             grille.getChildren().remove(h_ia);
                             grille.getChildren().remove(ia_ia);
                             grille.getChildren().remove(hh);
@@ -302,13 +297,13 @@ public class InterfaceJoueurs extends Interface {
                             grille.add(hh, 0, 1);
                             grille.add(h_ia, 1, 1);
                             grille.add(ia_ia, 2, 1);
-                            est_ia_ia=0;
-                            versionIA1=null;
-                            versionIA2=null;
-                        }else if(est_h_ai==1){
-                            est_m2=0;
-                            est_d1=0;
-                            est_d2=0;
+                            est_ia_ia = 0;
+                            versionIA1 = null;
+                            versionIA2 = null;
+                        } else if (est_h_ai == 1) {
+                            est_m2 = 0;
+                            est_d1 = 0;
+                            est_d2 = 0;
 
                             grille.getChildren().remove(h_ia);
                             grille.getChildren().remove(ia_ia);
@@ -318,8 +313,8 @@ public class InterfaceJoueurs extends Interface {
                             grille.add(hh, 0, 1);
                             grille.add(h_ia, 1, 1);
                             grille.add(ia_ia, 2, 1);
-                            est_h_ai=0;
-                            versionIA2=null;
+                            est_h_ai = 0;
+                            versionIA2 = null;
 
                             Name1.setText(null);
                         }
@@ -343,15 +338,14 @@ public class InterfaceJoueurs extends Interface {
                             n2.getChildren().add(Name2);
                             grille.add(n2, 1, 3);
                         }
-                    }
-                    else if(hIA.isSelected()){
-                        if(est_ia_ia==1){
-                            est_f1=0;
-                            est_f2=0;
-                            est_m1=0;
-                            est_m2=0;
-                            est_d1=0;
-                            est_d2=0;
+                    } else if (hIA.isSelected()) {
+                        if (est_ia_ia == 1) {
+                            est_f1 = 0;
+                            est_f2 = 0;
+                            est_m1 = 0;
+                            est_m2 = 0;
+                            est_d1 = 0;
+                            est_d2 = 0;
 
                             grille.getChildren().remove(h_ia);
                             grille.getChildren().remove(ia_ia);
@@ -412,109 +406,107 @@ public class InterfaceJoueurs extends Interface {
                             d2.getChildren().add(difficile2);
                             grille.add(d2, 2, 3);
                             ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-                                    public void changed(ObservableValue<? extends Toggle> ov,
+                                public void changed(ObservableValue<? extends Toggle> ov,
                                         Toggle old_toggle, Toggle new_toggle) {
-                                        if (ia2.getSelectedToggle() != null) {
-                                            if(facile2.isSelected()){
-                                                if(est_m2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    m2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_m2=0;
-                                                }else if(est_d2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(f2);
-                                                    f2.getChildren().remove(facile2);
-                                                    f2.getChildren().add(rectangleIm2);
-                                                    f2.getChildren().add(facile2);
-                                                    grille.add(f2, 0, 3);
-                                                    est_f2=1;
-                                                }
-                                            }else if(moyenne2.isSelected()){
-                                                if(est_f2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    f2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_f2=0;
-                                                }else if(est_d2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(m2);
-                                                    m2.getChildren().remove(moyenne2);
-                                                    m2.getChildren().add(rectangleIm2);
-                                                    m2.getChildren().add(moyenne2);
-                                                    grille.add(m2, 1, 3);
-                                                    est_m2=1;
-                                                }
-                                            }else if(difficile2.isSelected()){
-                                                if(est_f2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    f2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_f2=0;
-                                                }else if(est_m2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    m2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_m2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(difficile2);
-                                                    d2.getChildren().add(rectangleIm2);
-                                                    d2.getChildren().add(difficile2);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=1;
-                                                }
+                                    if (ia2.getSelectedToggle() != null) {
+                                        if (facile2.isSelected()) {
+                                            if (est_m2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                m2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_m2 = 0;
+                                            } else if (est_d2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 0;
                                             }
-
-                                            versionIA2 = ia2.getSelectedToggle().getUserData().toString();
-                                            System.out.println("IA2 : " + versionIA2);
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(f2);
+                                                f2.getChildren().remove(facile2);
+                                                f2.getChildren().add(rectangleIm2);
+                                                f2.getChildren().add(facile2);
+                                                grille.add(f2, 0, 3);
+                                                est_f2 = 1;
+                                            }
+                                        } else if (moyenne2.isSelected()) {
+                                            if (est_f2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                f2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_f2 = 0;
+                                            } else if (est_d2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 0;
+                                            }
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(m2);
+                                                m2.getChildren().remove(moyenne2);
+                                                m2.getChildren().add(rectangleIm2);
+                                                m2.getChildren().add(moyenne2);
+                                                grille.add(m2, 1, 3);
+                                                est_m2 = 1;
+                                            }
+                                        } else if (difficile2.isSelected()) {
+                                            if (est_f2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                f2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_f2 = 0;
+                                            } else if (est_m2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                m2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_m2 = 0;
+                                            }
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(difficile2);
+                                                d2.getChildren().add(rectangleIm2);
+                                                d2.getChildren().add(difficile2);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 1;
+                                            }
                                         }
-                                    }
-                                });
 
+                                        versionIA2 = ia2.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA2 : " + versionIA2);
+                                    }
+                                }
+                            });
 
                         }
-                    }
-                    else if(IAs.isSelected()){
-                        if(est_h_ai==1){
-                            est_f2=0;
-                            est_m2=0;
-                            est_d2=0;
+                    } else if (IAs.isSelected()) {
+                        if (est_h_ai == 1) {
+                            est_f2 = 0;
+                            est_m2 = 0;
+                            est_d2 = 0;
 
                             grille.getChildren().remove(h_ia);
                             grille.getChildren().remove(ia_ia);
@@ -571,100 +563,100 @@ public class InterfaceJoueurs extends Interface {
                             ia1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
                                 public void changed(ObservableValue<? extends Toggle> ov,
                                         Toggle old_toggle, Toggle new_toggle) {
-                                        if (ia1.getSelectedToggle() != null) {
-                                            if(facile1.isSelected()){
-                                                if(est_m1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    m1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_m1=0;
-                                                }else if(est_d1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    d1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_d1=0;
-                                                }
-                                                if(est_f1==0 && est_m1==0 && est_d1==0){
-                                                    grille.getChildren().remove(f1);
-                                                    f1.getChildren().remove(facile1);
-                                                    f1.getChildren().add(rectangleIm1);
-                                                    f1.getChildren().add(facile1);
-                                                    grille.add(f1, 0, 2);
-                                                    est_f1=1;
-                                                }
-                                            }else if(moyenne1.isSelected()){
-                                                if(est_f1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    f1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_f1=0;
-                                                }else if(est_d1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    d1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_d1=0;
-                                                }
-                                                if(est_f1==0 && est_m1==0 && est_d1==0){
-                                                    grille.getChildren().remove(m1);
-                                                    m1.getChildren().remove(moyenne1);
-                                                    m1.getChildren().add(rectangleIm1);
-                                                    m1.getChildren().add(moyenne1);
-                                                    grille.add(m1, 1, 2);
-                                                    est_m1=1;
-                                                }
-                                            }else if(difficile1.isSelected()){
-                                                if(est_f1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    f1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_f1=0;
-                                                }else if(est_m1==1){
-                                                    grille.getChildren().remove(f1);
-                                                    grille.getChildren().remove(m1);
-                                                    grille.getChildren().remove(d1);
-                                                    m1.getChildren().remove(rectangleIm1);
-                                                    grille.add(f1, 0, 2);
-                                                    grille.add(m1, 1, 2);
-                                                    grille.add(d1, 2, 2);
-                                                    est_m1=0;
-                                                }
-                                                if(est_f1==0 && est_m1==0 && est_d1==0){
-                                                    grille.getChildren().remove(d1);
-                                                    d1.getChildren().remove(difficile1);
-                                                    d1.getChildren().add(rectangleIm1);
-                                                    d1.getChildren().add(difficile1);
-                                                    grille.add(d1, 2, 2);
-                                                    est_d1=1;
-                                                }
+                                    if (ia1.getSelectedToggle() != null) {
+                                        if (facile1.isSelected()) {
+                                            if (est_m1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                m1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_m1 = 0;
+                                            } else if (est_d1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                d1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_d1 = 0;
                                             }
-
-                                            versionIA1 = ia1.getSelectedToggle().getUserData().toString();
-                                            System.out.println("IA1 : " + versionIA1);
+                                            if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                                                grille.getChildren().remove(f1);
+                                                f1.getChildren().remove(facile1);
+                                                f1.getChildren().add(rectangleIm1);
+                                                f1.getChildren().add(facile1);
+                                                grille.add(f1, 0, 2);
+                                                est_f1 = 1;
+                                            }
+                                        } else if (moyenne1.isSelected()) {
+                                            if (est_f1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                f1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_f1 = 0;
+                                            } else if (est_d1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                d1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_d1 = 0;
+                                            }
+                                            if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                                                grille.getChildren().remove(m1);
+                                                m1.getChildren().remove(moyenne1);
+                                                m1.getChildren().add(rectangleIm1);
+                                                m1.getChildren().add(moyenne1);
+                                                grille.add(m1, 1, 2);
+                                                est_m1 = 1;
+                                            }
+                                        } else if (difficile1.isSelected()) {
+                                            if (est_f1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                f1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_f1 = 0;
+                                            } else if (est_m1 == 1) {
+                                                grille.getChildren().remove(f1);
+                                                grille.getChildren().remove(m1);
+                                                grille.getChildren().remove(d1);
+                                                m1.getChildren().remove(rectangleIm1);
+                                                grille.add(f1, 0, 2);
+                                                grille.add(m1, 1, 2);
+                                                grille.add(d1, 2, 2);
+                                                est_m1 = 0;
+                                            }
+                                            if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                                                grille.getChildren().remove(d1);
+                                                d1.getChildren().remove(difficile1);
+                                                d1.getChildren().add(rectangleIm1);
+                                                d1.getChildren().add(difficile1);
+                                                grille.add(d1, 2, 2);
+                                                est_d1 = 1;
+                                            }
                                         }
 
+                                        versionIA1 = ia1.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA1 : " + versionIA1);
                                     }
-                                });
-                           
+
+                                }
+                            });
+
                             ToggleButton facile2;
                             facile2 = bouton.creer("facile"); //Facile, Einfach
                             facile2.setBackground(Background.EMPTY);
@@ -689,99 +681,99 @@ public class InterfaceJoueurs extends Interface {
                             ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
                                 public void changed(ObservableValue<? extends Toggle> ov,
                                         Toggle old_toggle, Toggle new_toggle) {
-                                        if (ia2.getSelectedToggle() != null) {
-                                            if(facile2.isSelected()){
-                                                if(est_m2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    m2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_m2=0;
-                                                }else if(est_d2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(f2);
-                                                    f2.getChildren().remove(facile2);
-                                                    f2.getChildren().add(rectangleIm2);
-                                                    f2.getChildren().add(facile2);
-                                                    grille.add(f2, 0, 3);
-                                                    est_f2=1;
-                                                }
-                                            }else if(moyenne2.isSelected()){
-                                                if(est_f2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    f2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_f2=0;
-                                                }else if(est_d2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(m2);
-                                                    m2.getChildren().remove(moyenne2);
-                                                    m2.getChildren().add(rectangleIm2);
-                                                    m2.getChildren().add(moyenne2);
-                                                    grille.add(m2, 1, 3);
-                                                    est_m2=1;
-                                                }
-                                            }else if(difficile2.isSelected()){
-                                                if(est_f2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    f2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_f2=0;
-                                                }else if(est_m2==1){
-                                                    grille.getChildren().remove(f2);
-                                                    grille.getChildren().remove(m2);
-                                                    grille.getChildren().remove(d2);
-                                                    m2.getChildren().remove(rectangleIm2);
-                                                    grille.add(f2, 0, 3);
-                                                    grille.add(m2, 1, 3);
-                                                    grille.add(d2, 2, 3);
-                                                    est_m2=0;
-                                                }
-                                                if(est_f2==0 && est_m2==0 && est_d2==0){
-                                                    grille.getChildren().remove(d2);
-                                                    d2.getChildren().remove(difficile2);
-                                                    d2.getChildren().add(rectangleIm2);
-                                                    d2.getChildren().add(difficile2);
-                                                    grille.add(d2, 2, 3);
-                                                    est_d2=1;
-                                                }
+                                    if (ia2.getSelectedToggle() != null) {
+                                        if (facile2.isSelected()) {
+                                            if (est_m2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                m2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_m2 = 0;
+                                            } else if (est_d2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 0;
                                             }
-
-                                            versionIA2 = ia2.getSelectedToggle().getUserData().toString();
-                                            System.out.println("IA2 : " + versionIA2);
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(f2);
+                                                f2.getChildren().remove(facile2);
+                                                f2.getChildren().add(rectangleIm2);
+                                                f2.getChildren().add(facile2);
+                                                grille.add(f2, 0, 3);
+                                                est_f2 = 1;
+                                            }
+                                        } else if (moyenne2.isSelected()) {
+                                            if (est_f2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                f2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_f2 = 0;
+                                            } else if (est_d2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 0;
+                                            }
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(m2);
+                                                m2.getChildren().remove(moyenne2);
+                                                m2.getChildren().add(rectangleIm2);
+                                                m2.getChildren().add(moyenne2);
+                                                grille.add(m2, 1, 3);
+                                                est_m2 = 1;
+                                            }
+                                        } else if (difficile2.isSelected()) {
+                                            if (est_f2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                f2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_f2 = 0;
+                                            } else if (est_m2 == 1) {
+                                                grille.getChildren().remove(f2);
+                                                grille.getChildren().remove(m2);
+                                                grille.getChildren().remove(d2);
+                                                m2.getChildren().remove(rectangleIm2);
+                                                grille.add(f2, 0, 3);
+                                                grille.add(m2, 1, 3);
+                                                grille.add(d2, 2, 3);
+                                                est_m2 = 0;
+                                            }
+                                            if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
+                                                grille.getChildren().remove(d2);
+                                                d2.getChildren().remove(difficile2);
+                                                d2.getChildren().add(rectangleIm2);
+                                                d2.getChildren().add(difficile2);
+                                                grille.add(d2, 2, 3);
+                                                est_d2 = 1;
+                                            }
                                         }
 
+                                        versionIA2 = ia2.getSelectedToggle().getUserData().toString();
+                                        System.out.println("IA2 : " + versionIA2);
                                     }
-                                
+
+                                }
+
                             });
                         }
                     }
@@ -803,61 +795,62 @@ public class InterfaceJoueurs extends Interface {
         valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-               
+
                 String joueur_1 = new String();
                 String joueur_2 = new String();
-                if(est_h_h==1){
-                    if(Name1.getText()==null){
+                if (est_h_h == 1) {
+                    if (Name1.getText() == null) {
                         joueur_1 = controller.gestionnaireLangage.getText("text_joueur1");
-                    }else{
+                    } else {
                         joueur_1 = Name1.getCharacters().toString();
                     }
-                    if(Name2.getText()==null){
+                    if (Name2.getText() == null) {
                         joueur_2 = controller.gestionnaireLangage.getText("text_joueur2");
-                    }else{
+                    } else {
                         joueur_2 = Name1.getCharacters().toString();
                     }
                     controller.goToPlateau(joueur_1, joueur_2, null, null);
-                }
-                else if(est_h_ai==1){
+                } else if (est_h_ai == 1) {
                     joueur_1 = Name1.getCharacters().toString();
-                    if(Name1.getText()==null){
+                    if (Name1.getText() == null) {
                         joueur_1 = controller.gestionnaireLangage.getText("text_joueur1");
                     }
-                    if(est_f2==1)
+                    if (est_f2 == 1) {
                         level2 = Level.EASY;
-                    else if(est_m2==1)
+                    } else if (est_m2 == 1) {
                         level2 = Level.MEDIUM;
-                    else if(est_d2==1)
+                    } else if (est_d2 == 1) {
                         level2 = Level.HARD;
-                    else
+                    } else {
                         level2 = Level.MEDIUM;
-                    
+                    }
+
                     controller.goToPlateau(joueur_1, null, null, level2);
-                    
-                }
-                else if(est_ia_ia==1){
-                    if(est_f1==1)
+
+                } else if (est_ia_ia == 1) {
+                    if (est_f1 == 1) {
                         level1 = Level.EASY;
-                    else if(est_m1==1)
+                    } else if (est_m1 == 1) {
                         level1 = Level.MEDIUM;
-                    else if(est_d1==1)
+                    } else if (est_d1 == 1) {
                         level1 = Level.HARD;
-                    else
+                    } else {
                         level1 = Level.MEDIUM;
-                    if(est_f2==1)
+                    }
+                    if (est_f2 == 1) {
                         level2 = Level.EASY;
-                    else if(est_m2==1)
+                    } else if (est_m2 == 1) {
                         level2 = Level.MEDIUM;
-                    else if(est_d2==1)
+                    } else if (est_d2 == 1) {
                         level2 = Level.HARD;
-                    else
+                    } else {
                         level2 = Level.MEDIUM;
-                    
+                    }
+
                     controller.goToPlateau(null, null, level1, level2);
                 }   //controller.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
 
-               System.out.println(joueur_1 + " " + joueur_2);
+                System.out.println(joueur_1 + " " + joueur_2);
                 //controller.goToPlateau(joueur_1, joueur_2, level1, level2);
             }
         });
@@ -873,17 +866,17 @@ public class InterfaceJoueurs extends Interface {
         this.panePrincipale.getChildren().add(pane);
 
     }
-    
-    public Level creerIA(String joueur){
-        if(joueur == null){
+
+    public Level creerIA(String joueur) {
+        if (joueur == null) {
             return null;
         }
-        switch(joueur){
+        switch (joueur) {
             case "facile":
                 return Level.EASY;
             case "moyenne":
                 return Level.MEDIUM;
-            case "difficile" : 
+            case "difficile":
                 return Level.HARD;
             default:
                 return Level.EASY;

@@ -7,11 +7,9 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -78,6 +76,9 @@ public class InterfacePlateau extends Interface {
         centerMainG = new BorderPane();
         centerMainD = new BorderPane();
 
+        borderPane.prefWidthProperty().bind(stage.widthProperty());
+        borderPane.prefHeightProperty().bind(stage.heightProperty());
+
         gameController = new GameController(game, this);
 
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, joueur1, c, gameController, this, TeamColor.WHITE);
@@ -110,8 +111,6 @@ public class InterfacePlateau extends Interface {
 
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setBackground(backgroundPlateau);
-        borderPane.prefWidthProperty().bind(stage.widthProperty());
-        borderPane.prefHeightProperty().bind(stage.heightProperty());
 
         ruche = new NodeRuche(c, gameController);
         ruche.setHandler(this);
@@ -128,16 +127,17 @@ public class InterfacePlateau extends Interface {
         BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
-
-        borderPane.setCenter(scrollPane);
+        
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-borderPane.setTop(setTool());
+        borderPane.setCenter(scrollPane);
+        borderPane.setTop(setTool());
 
-borderPane.setBackground(background);
-this.panePrincipale.getChildren().add(borderPane);
+        this.panePrincipale.getChildren().add(borderPane);
 
-gameController.start();
+        majJoueurCourant(TeamColor.WHITE);
+
+        gameController.start();
 
     }
 
@@ -160,24 +160,41 @@ gameController.start();
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
 
-
         boutonHome.setOnMouseClicked(value -> {
-            Stage primaryStage = new Stage();
-            primaryStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopup root = new NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Sauvegarder et quitter", "Annuler");
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
+            Stage quitStage = new Stage();
+            quitStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopup root = new NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Annuler", "Sauvegarder et quitter");
+            quitStage.setScene(new Scene(root));
+            quitStage.show();
 
             root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+                quitStage.close();
                 controller.goToMenu();
-                primaryStage.close();
+
             });
 
-            //controller.goToMenu();
+            root.quitter.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                quitStage.close();
+            });
+
+            root.validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                Stage saveStage = new Stage();
+                saveStage.initModality(Modality.APPLICATION_MODAL);
+                NodePopupSave rootSave = new NodePopupSave(controller, saveStage, game);
+                saveStage.setScene(new Scene(rootSave));
+                saveStage.show();
+
+            });
+
         });
 
         boutonSave.setOnMouseClicked(value -> {
-            controller.enregistrerGame(game, "test.xml");
+            Stage primaryStage = new Stage();
+            primaryStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopupSave root = new NodePopupSave(controller, primaryStage, game);
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
         });
 
         boutonRegle.setOnMouseClicked(value -> {

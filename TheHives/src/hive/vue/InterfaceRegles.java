@@ -53,8 +53,6 @@ public class InterfaceRegles extends Interface {
 
     public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
         super(primaryStage, controller, c);
-        this.controller = controller;
-        this.primaryStage = primaryStage;
 
         String rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 

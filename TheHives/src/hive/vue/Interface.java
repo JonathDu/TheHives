@@ -50,6 +50,8 @@ public abstract class Interface extends Parent {
         this.primaryStage = primaryStage;
         panePrincipale = new Pane();
         c = cacheImage;
+        panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
+        panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();

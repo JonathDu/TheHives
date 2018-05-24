@@ -70,6 +70,7 @@ public final class Controller
 
     public void goToMenu()
     {
+        
         currentScene = new Scene(new InterfaceMenu(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
