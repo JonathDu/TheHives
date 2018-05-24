@@ -38,7 +38,8 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Interface {
+public class InterfacePlateau extends Interface
+{
 
     BorderPane borderPane;
     public NodePlateauMain mainGauche;
@@ -66,7 +67,8 @@ public class InterfacePlateau extends Interface {
     String j1;
     String j2;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2)
+    {
 
         super(stage, controller, c);
 
@@ -132,16 +134,17 @@ public class InterfacePlateau extends Interface {
         borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-borderPane.setTop(setTool());
+        borderPane.setTop(setTool());
 
-borderPane.setBackground(background);
-this.panePrincipale.getChildren().add(borderPane);
+        borderPane.setBackground(background);
+        this.panePrincipale.getChildren().add(borderPane);
 
-gameController.start();
+        gameController.start();
 
     }
 
-    private BorderPane setTool() {
+    private BorderPane setTool()
+    {
         width = (int) primaryStage.getWidth();
 
         String repertoire = "Design/FenetrePlateau/";
@@ -160,15 +163,16 @@ gameController.start();
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
 
-
-        boutonHome.setOnMouseClicked(value -> {
+        boutonHome.setOnMouseClicked(value ->
+        {
             Stage primaryStage = new Stage();
             primaryStage.initModality(Modality.APPLICATION_MODAL);
             NodePopup root = new NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Sauvegarder et quitter", "Annuler");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
 
-            root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) ->
+            {
                 controller.goToMenu();
                 primaryStage.close();
             });
@@ -176,11 +180,13 @@ gameController.start();
             //controller.goToMenu();
         });
 
-        boutonSave.setOnMouseClicked(value -> {
+        boutonSave.setOnMouseClicked(value ->
+        {
             controller.enregistrerGame(game, "test.xml");
         });
 
-        boutonRegle.setOnMouseClicked(value -> {
+        boutonRegle.setOnMouseClicked(value ->
+        {
 
             Stage primaryStage = new Stage();
             Parent root;
@@ -188,6 +194,21 @@ gameController.start();
             primaryStage.setTitle("Regles");
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
+        });
+
+        boutonAnnuler.setOnMouseClicked(value ->
+        {
+            controller.undo(game);
+        });
+
+        boutonReplay.setOnMouseClicked(value ->
+        {
+            controller.redo(game);
+        });
+
+        boutonConseil.setOnMouseClicked(value ->
+        {
+            //TODO
         });
 
         Group g = new Group();
@@ -208,23 +229,29 @@ gameController.start();
 
     }
 
-    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color)
+    {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
-    public void majTileMain(Tile tile, int nbTiles) {
-        if (tile.color == TeamColor.BLACK) {
+    public void majTileMain(Tile tile, int nbTiles)
+    {
+        if (tile.color == TeamColor.BLACK)
+        {
             mainDroite.maj(tile, nbTiles);
-        } else {
+        } else
+        {
             mainGauche.maj(tile, nbTiles);
         }
     }
 
-    public void majJoueurCourant(TeamColor color) {
+    public void majJoueurCourant(TeamColor color)
+    {
         mainDroite.setIsCourant(color == TeamColor.BLACK);
         mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
-    public void majRetourPreference() {
+    public void majRetourPreference()
+    {
     }
 }

@@ -6,18 +6,13 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import hive.model.game.Game;
-import java.awt.Dimension;
 import java.io.IOException;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
- import javafx.scene.control.ListCell;
- import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -27,7 +22,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 /**
  *
@@ -77,7 +71,6 @@ public class InterfaceCharger extends Interface {
         AnchorPane.setLeftAnchor(sp, (double) tailleDeCase * 2);
         AnchorPane.setRightAnchor(sp, (double) tailleDeCase * 2);
         pane.getChildren().add(sp);
-
         
         double flecheLargeur = tailleDeCase * 4 - 30;
         double flecheHauteur = flecheLargeur / 7.24;
@@ -88,7 +81,7 @@ public class InterfaceCharger extends Interface {
         partiesIm.setFitHeight(flecheHauteur);
         partiesIm.setFitWidth(flecheLargeur);
         //parties_sp.getChildren().add(partiesIm);
-        final ComboBox parties = new ComboBox();
+        final ComboBox<StackPane> parties = new ComboBox();
         StackPane text_sp = new StackPane();
         Label text = new Label();
         text.setText("Choissisez la partie à charger");
@@ -100,11 +93,12 @@ public class InterfaceCharger extends Interface {
         text_sp.getChildren().add(fleche_Im);
         text_sp.getChildren().add(text);
         //parties.getItems().add(text_sp);
-        for (int j = 0; j < 20; j++) {
+        
+        for (String fileName : controller.getSavedFileNames()) {
             ImageView flecheIm = new ImageView(fleche);
             flecheIm.setFitHeight(flecheHauteur*0.5);
             flecheIm.setFitWidth(flecheLargeur);
-            Label label = new Label("aaaa");
+            Label label = new Label(fileName);
             label.setTextFill(Color.web("#fbe5b5"));
             label.setFont(new Font(police, tailleDeCase * 0.15));
             StackPane x = new StackPane();
@@ -116,7 +110,7 @@ public class InterfaceCharger extends Interface {
         }
         parties.setValue(text_sp);
         parties.setBackground(Background.EMPTY);
-        
+                
         
         //parties.setMaxSize(flecheLargeur, flecheHauteur);
         //parties.setMinSize(flecheLargeur, flecheHauteur);
@@ -145,8 +139,8 @@ public class InterfaceCharger extends Interface {
         valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                System.out.println(parties.getValue());
-                Game game = controller.chargerGame("test.xml");
+                String selectedFileName = ((Label)parties.getSelectionModel().getSelectedItem().getChildren().get(1)).getText();
+                Game game = controller.chargerGame(selectedFileName);
                 controller.goToPlateau(game);
             }
         });

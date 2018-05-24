@@ -24,8 +24,10 @@ import hive.vue.InterfaceRegles;
 import hive.vue.InterfaceStatistiques;
 import hive.vue.Preferences;
 import java.awt.Dimension;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Locale;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
@@ -83,7 +85,7 @@ public final class Controller
     public void goToPlateau(String nomJoueur1, String nomJoueur2, Level levelJ1, Level levelJ2)
     {
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
-        
+
         currentScene = new Scene(new InterfacePlateau(primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight());
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
@@ -146,7 +148,7 @@ public final class Controller
         Game game = null;
         try
         {
-            game = loader.loadFromFile(fileName);
+            game = loader.loadFromFile("savefiles/" + fileName);
         } catch (FileNotFoundException ex)
         {
             System.err.println("PAS DE FICHIER TROUVE");
@@ -170,18 +172,32 @@ public final class Controller
     {
         return "Papyrus";
     }
-    
+
     public void undo(Game game)
     {
         GameProgress progress = new GameProgress(game);
         progress.undoAction();
     }
-    
+
     public void redo(Game game)
     {
         GameProgress progress = new GameProgress(game);
         progress.doAction();
     }
-    
- 
+
+    public ArrayList<String> getSavedFileNames()
+    {
+        File folder = new File("savefiles/");
+        File[] listOfFiles = folder.listFiles();
+        ArrayList<String> files = new ArrayList<>();
+        for (File file : listOfFiles)
+        {
+            if (file.isFile())
+            {
+                files.add(file.getName());
+            }
+        }
+        return files;
+    }
+
 }

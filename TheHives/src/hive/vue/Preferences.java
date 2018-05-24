@@ -146,11 +146,9 @@ public class Preferences extends Parent
         if (controller.typeTheme.equals("Jour"))
         {
             radioButtonJour.setSelected(true);
-            //radioButtonNuit.setSelected(false);
         } else
         {
             radioButtonNuit.setSelected(true);
-            //radioButtonJour.setSelected(false);
         }
 
         buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
