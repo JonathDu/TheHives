@@ -105,7 +105,7 @@ public final class Controller
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene = new Scene(new InterfaceCharger(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceCharger(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 

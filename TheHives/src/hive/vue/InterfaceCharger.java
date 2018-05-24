@@ -6,16 +6,11 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.awt.Dimension;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import hive.model.game.Game;
-import hive.thehives.TheHives;
 import java.awt.Dimension;
 import java.io.IOException;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -36,11 +31,11 @@ import javafx.scene.layout.StackPane;
  *
  * @author Adeline
  */
-public class InterfaceCharger extends Parent {
+public class InterfaceCharger extends Interface {
 
 
-    public InterfaceCharger(Stage primaryStage, Controller controller) throws IOException {
-
+    public InterfaceCharger(Stage primaryStage, Controller controller, CacheImage c) throws IOException {
+        super(primaryStage, controller, c);
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
@@ -67,22 +62,6 @@ public class InterfaceCharger extends Parent {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        CacheImage c = new CacheImage();
-        Image fond;
-        if(controller.typeTheme=="jour"){
-            fond = c.getImage("Design/Fond/fondMontagne.png");
-        }
-        else{
-            fond = c.getImage("Design/Fond/fondNuit.png");
-        }
-        ImageView fondIm = new ImageView(fond);
-        fondIm.fitHeightProperty().bind(primaryStage.heightProperty());
-        fondIm.fitWidthProperty().bind(primaryStage.widthProperty());
-        AnchorPane.setRightAnchor(fondIm, (double) 0);
-        AnchorPane.setLeftAnchor(fondIm, (double) 0);
-        AnchorPane.setTopAnchor(fondIm, (double) 0);
-        AnchorPane.setBottomAnchor(fondIm, (double) 0);
-        pane.getChildren().add(fondIm);
 
         StackPane Preferences = new StackPane();
         Image preferences = c.getImage("Design/MenuPrincipaux/BouttonParametre.png");
@@ -207,8 +186,8 @@ public class InterfaceCharger extends Parent {
         AnchorPane.setLeftAnchor(valider_sp, (double) width/2 -tailleDeCase);
         AnchorPane.setRightAnchor(valider_sp, (double) width/2 -tailleDeCase);
         pane.getChildren().add(valider_sp);
-
-        this.getChildren().add(pane);
+        this.panePrincipale.getChildren().add(pane);
+        this.getChildren().add(panePrincipale);
     }
 
 
