@@ -11,6 +11,7 @@ import hive.model.board.TilesStack;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveRules;
+import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
@@ -180,6 +181,14 @@ public class HiveInterfaceIA implements InterfaceIA
         int nbPossibilities = placements.size();
         
         return nbPossibilities;
+    }
+    
+    public boolean queenIsCurshed(Player p, Game game)
+    {
+        HashSet<Cell> queens = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        Iterator<Cell> ite = queens.iterator();
+        Cell cell = ite.next();
+        return HiveUtil.isCrushed(cell);
     }
 
     public ArrayList<Tile> blockedTiles(Player p, Game game)
