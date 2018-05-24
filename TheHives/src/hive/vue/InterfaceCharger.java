@@ -16,11 +16,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+ import javafx.scene.control.ListCell;
+ import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 /**
  *
@@ -55,32 +62,83 @@ public class InterfaceCharger extends Interface {
         valider.setText(controller.gestionnaireLangage.getText("text_valider"));
         choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
 
-        choix.setFont(new Font(police, width / 35));
+        choix.setFont(new Font(police, tailleDeCase *0.3));
         choix.setAlignment(Pos.CENTER);
-        choix.setMinSize(width / 60, 30);
-        choix.setMaxSize(width / 2, 70);
+        choix.setTextFill(Color.web("#fbe5b5"));
+        
+        StackPane sp = new StackPane();
+        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
+        ImageView pancarteIm = new ImageView(pancarte);
+        pancarteIm.setFitHeight(tailleDeCase * 0.8);
+        pancarteIm.setFitWidth(tailleDeCase * 0.8 * 5.09);
+        sp.getChildren().add(pancarteIm);
+        sp.getChildren().add(choix);
+        AnchorPane.setTopAnchor(sp, (double) height / 40);
+        AnchorPane.setLeftAnchor(sp, (double) tailleDeCase * 2);
+        AnchorPane.setRightAnchor(sp, (double) tailleDeCase * 2);
+        pane.getChildren().add(sp);
 
+        
+        double flecheLargeur = tailleDeCase * 4 - 30;
+        double flecheHauteur = flecheLargeur / 7.24;
+        
+        StackPane parties_sp = new StackPane();
+        Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        ImageView partiesIm = new ImageView(fleche);
+        partiesIm.setFitHeight(flecheHauteur);
+        partiesIm.setFitWidth(flecheLargeur);
+        //parties_sp.getChildren().add(partiesIm);
         final ComboBox parties = new ComboBox();
-        for (int j = 0; j < 10; j++) {
-            parties.getItems().add(j);
+        StackPane text_sp = new StackPane();
+        Label text = new Label();
+        text.setText("Choissisez la partie à charger");
+        text.setTextFill(Color.web("#fbe5b5"));
+        text.setFont(new Font(police, tailleDeCase * 0.23));
+            ImageView fleche_Im = new ImageView(fleche);
+            fleche_Im.setFitHeight(flecheHauteur);
+            fleche_Im.setFitWidth(flecheLargeur);
+        text_sp.getChildren().add(fleche_Im);
+        text_sp.getChildren().add(text);
+        //parties.getItems().add(text_sp);
+        for (int j = 0; j < 20; j++) {
+            ImageView flecheIm = new ImageView(fleche);
+            flecheIm.setFitHeight(flecheHauteur*0.5);
+            flecheIm.setFitWidth(flecheLargeur);
+            Label label = new Label("aaaa");
+            label.setTextFill(Color.web("#fbe5b5"));
+            label.setFont(new Font(police, tailleDeCase * 0.15));
+            StackPane x = new StackPane();
+            x.getChildren().add(flecheIm);
+            x.getChildren().add(label);
+            //x.setMaxSize(flecheLargeur, flecheHauteur);
+            //x.setMinSize(flecheLargeur, flecheHauteur);
+            parties.getItems().add( x );
         }
+        parties.setValue(text_sp);
+        parties.setBackground(Background.EMPTY);
+        
+        
+        //parties.setMaxSize(flecheLargeur, flecheHauteur);
+        //parties.setMinSize(flecheLargeur, flecheHauteur);
+        
+        parties_sp.getChildren().add(parties);
 
-        parties.setMaxSize(tailleDeCase * 3, tailleDeCase / 2);
-        parties.setMinSize(tailleDeCase * 3, tailleDeCase / 2);
-        AnchorPane.setTopAnchor(choix, (double) height / 10);
-        AnchorPane.setLeftAnchor(choix, (double) tailleDeCase * 2);
-        AnchorPane.setRightAnchor(choix, (double) tailleDeCase * 2);
-        //AnchorPane.setBottomAnchor(choix, (double) height/1.1);
-        pane.getChildren().add(choix);
-
-        AnchorPane.setTopAnchor(parties, (double) height / 4);
-        AnchorPane.setLeftAnchor(parties, (double) tailleDeCase * 2);
-        AnchorPane.setRightAnchor(parties, (double) tailleDeCase * 2);
+        AnchorPane.setTopAnchor(parties_sp, (double) height/40 + tailleDeCase*0.9);
+        AnchorPane.setLeftAnchor(parties_sp, (double) tailleDeCase * 2);
+        AnchorPane.setRightAnchor(parties_sp, (double) tailleDeCase * 2);
         //AnchorPane.setBottomAnchor(parties, (double) height/1.3);
-        pane.getChildren().add(parties);
-
+        pane.getChildren().add(parties_sp);
+        
+        
         StackPane valider_sp = new StackPane();
+        Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        ImageView valIm = new ImageView(val);
+        valIm.setFitHeight(flecheHauteur);
+        valIm.setFitWidth(flecheLargeur);
+        valider_sp.getChildren().add(valIm);
         valider.setFont(new Font(police, tailleDeCase * 0.23));
+        valider.setTextFill(Color.web("#fbe5b5"));
+        valider.setBackground(Background.EMPTY);
         valider_sp.getChildren().add(valider);
         valider_sp.setMaxSize(tailleDeCase, 40);
         valider_sp.setMinSize(tailleDeCase, 40);
