@@ -6,6 +6,7 @@
 package hive.controller;
 
 import hive.controller.plateauscene.game.GameController;
+import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.GameLoader;
 import hive.model.game.PrecalculatedGame;
@@ -46,8 +47,6 @@ public final class Controller
     public GestionnaireLangage gestionnaireLangage;
 
     public String typeTheme;
-    public double old_height;
-    public double old_width;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
@@ -67,9 +66,6 @@ public final class Controller
         currentScene.setCursor(sourisIm);
 
         primaryStage.setScene(currentScene);
-        if(primaryStage.getWidth() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() && primaryStage.getHeight() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()){
-            primaryStage.centerOnScreen();
-        }
     }
 
     public void goToMenu()
@@ -87,8 +83,8 @@ public final class Controller
     public void goToPlateau(String nomJoueur1, String nomJoueur2, Level levelJ1, Level levelJ2)
     {
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
-        GameController plateauController = new GameController(game);
-        currentScene = new Scene(new InterfacePlateau(primaryStage, this, plateauController, cacheImage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight());
+        
+        currentScene = new Scene(new InterfacePlateau(primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight());
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
         changeScene();
@@ -96,8 +92,7 @@ public final class Controller
 
     public void goToPlateau(Game game)
     {
-        GameController plateauController = new GameController(game);
-        currentScene = new Scene(new InterfacePlateau(primaryStage, this, plateauController, cacheImage, "TODOj1", "TODOj1"), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfacePlateau(primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"), primaryStage.getWidth(), primaryStage.getHeight());
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
         changeScene();
@@ -142,11 +137,7 @@ public final class Controller
         Locale newLangue = gestionnaireLangage.langues.get(nomLangue);
         gestionnaireLangage.changerLangue(newLangue);
         typeTheme = nomTheme;
-        if (currentScene.getRoot() instanceof InterfaceMenu)
-        {
-            ((InterfaceMenu) currentScene.getRoot()).majRetourPreference();
-        }
-        //TODO !!!
+        //(Interface) currentScene.getRoot().majRetourPreference();
     }
 
     public Game chargerGame(String fileName)
@@ -179,4 +170,18 @@ public final class Controller
     {
         return "Papyrus";
     }
+    
+    public void undo(Game game)
+    {
+        GameProgress progress = new GameProgress(game);
+        progress.undoAction();
+    }
+    
+    public void redo(Game game)
+    {
+        GameProgress progress = new GameProgress(game);
+        progress.doAction();
+    }
+    
+ 
 }

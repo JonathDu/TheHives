@@ -5,10 +5,12 @@
  */
 package hive.controller.plateauscene.game.mousehandlers;
 
+import hive.controller.plateauscene.game.PlateauHandlerData;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -16,14 +18,14 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Thomas
  */
-public class TilePlateauHandler extends HandlerPlateau
+public class TilePlateauHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
 {
 
     Cell cellClicked;
 
-    public TilePlateauHandler(GameController gameController, InterfacePlateau uiPlateau, Cell cellClicked)
+    public TilePlateauHandler(GameController controller, Cell cellClicked)
     {
-        super(gameController, uiPlateau);
+        super(controller);
         this.cellClicked = cellClicked;
     }
 
@@ -41,7 +43,7 @@ public class TilePlateauHandler extends HandlerPlateau
             switch (controller.builder.getState())
             {
                 case BEGIN:
-                    if (cellClicked.getTile().color != controller.progress.game.state.turn.getCurrent().color)
+                    if (cellClicked.getTile().color != progress.game.state.turn.getCurrent().color)
                     {
                         return;
                     }

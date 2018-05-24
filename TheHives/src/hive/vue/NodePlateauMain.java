@@ -55,7 +55,7 @@ public class NodePlateauMain extends Parent {
         pilesPions = new EnumMap<InsectType, NodePions>(InsectType.class);
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new NodePions(color, col.get(type), type, c));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, plateau, color, type));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
         

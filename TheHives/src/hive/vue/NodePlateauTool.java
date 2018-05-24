@@ -15,10 +15,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
@@ -82,12 +78,12 @@ public class NodePlateauTool extends Parent {
             NodePopup root = new  NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Sauvegarder et quitter", "Annuler");
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-            
+
             root.valider.addEventHandler(EventType.ROOT, (event)->{
-                
-                
-                
-                
+
+
+
+
             });
 
 
@@ -106,6 +102,18 @@ public class NodePlateauTool extends Parent {
             primaryStage.setTitle("Regles");
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
+        });
+
+        boutonAnnuler.setOnMouseClicked(value -> {
+            controller.undo(game);
+        });
+
+        boutonReplay.setOnMouseClicked(value -> {
+            controller.redo(game);
+        });
+
+        boutonConseil.setOnMouseClicked(value -> {
+            //TODO
         });
 
         Group g = new Group();

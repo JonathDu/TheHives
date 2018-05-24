@@ -38,10 +38,10 @@ public class NodeRuche extends Parent {
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
 
-        this.board = plateauController.progress.game.state.board;
+        this.board = plateauController.game.state.board;
         this.plateauController = plateauController;
-        hauteur = plateauController.progress.game.state.board.getData().sizeY();
-        largeur = plateauController.progress.game.state.board.getData().sizeX();
+        hauteur = plateauController.game.state.board.getData().sizeY();
+        largeur = plateauController.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
@@ -83,8 +83,8 @@ public class NodeRuche extends Parent {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
-                SocleHandler handler = new SocleHandler(plateauController, plateau, pos);
-                tab.getAt(pos).addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+                SocleHandler handler = new SocleHandler(plateauController, pos);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
                 
             }
         }

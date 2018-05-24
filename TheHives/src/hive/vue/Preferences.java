@@ -39,7 +39,8 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
-public class Preferences extends Parent {
+public class Preferences extends Parent
+{
 
     private final Stage primaryStage;
     private final Controller controller;
@@ -99,7 +100,8 @@ public class Preferences extends Parent {
         this.getChildren().add(panePrincipale);
     }
 
-    private void setObjetsGraphiques() {
+    private void setObjetsGraphiques()
+    {
         imageFond.setImage(cacheImage.getImage("PlateauCentral.png"));
         imageFond.setFitHeight((width - 30) / 1.35);
         imageFond.setFitWidth(width - 30);
@@ -141,10 +143,14 @@ public class Preferences extends Parent {
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
         radioButtonNuit.setToggleGroup(groupRadioButtons);
-        if (controller.typeTheme.equals("Jour")) {
+        if (controller.typeTheme.equals("Jour"))
+        {
             radioButtonJour.setSelected(true);
-        } else {
+            //radioButtonNuit.setSelected(false);
+        } else
+        {
             radioButtonNuit.setSelected(true);
+            //radioButtonJour.setSelected(false);
         }
 
         buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
@@ -158,9 +164,10 @@ public class Preferences extends Parent {
         stackAnnuler.getChildren().add(ImQ);
     }
 
-    private void setHandlers() {
-        buttonValider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event)
-                -> {
+    private void setHandlers()
+    {
+        buttonValider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) ->
+        {
             buttonValider.setEffect(new DropShadow());
         });
         buttonValider.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event)
@@ -171,13 +178,14 @@ public class Preferences extends Parent {
                 -> {
             String nomLangue = comboLangue.getSelectionModel().getSelectedItem();
             boolean activerAide = checkBoxAide.isSelected();
-            String nomTheme = ((RadioButton) groupRadioButtons.getSelectedToggle()).getText();
+            String textSelectedRadioButton = ((RadioButton) groupRadioButtons.getSelectedToggle()).getText();
+            String nomTheme = textSelectedRadioButton.equals(controller.gestionnaireLangage.getText("text_jour")) ? "Jour" : "Nuit";
             controller.validerParametres(nomLangue, activerAide, nomTheme);
             setVisible(false);
         });
 
-        stackAnnuler.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event)
-                -> {
+        stackAnnuler.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             setVisible(false);
         });
     }
@@ -192,7 +200,7 @@ public class Preferences extends Parent {
         p.prefHeightProperty().bind(panePrincipale.heightProperty());
         AnchorPane.setTopAnchor(stackAnnuler, 10.0);
         AnchorPane.setRightAnchor(stackAnnuler, 10.0);
-        
+
 
         GridPane gridPane = new GridPane();
         gridPane.prefWidthProperty().bind(p.widthProperty());
@@ -224,12 +232,12 @@ public class Preferences extends Parent {
         GridPane.setHalignment(buttonValider, HPos.CENTER);
         gridPane.add(buttonValider, 0, 4, 3, 1);
 
-        
+
         AnchorPane.setTopAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
         AnchorPane.setBottomAnchor(gridPane, 0.0);
         AnchorPane.setLeftAnchor(gridPane, 0.0);
-        
+
         p.getChildren().add(gridPane);
         p.getChildren().add(stackAnnuler);
         panePrincipale.getChildren().add(p);

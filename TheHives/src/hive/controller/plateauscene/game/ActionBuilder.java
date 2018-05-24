@@ -46,7 +46,7 @@ public class ActionBuilder
 
     public void setTile(Tile tile)
     {
-        assert state == State.BEGIN || state == State.TILE_SELECTED; 
+        assert state == State.BEGIN || state == State.TILE_SELECTED || state == State.SOURCE_SELECTED; 
         this.tile = tile;
         state = State.TILE_SELECTED;
     }
