@@ -72,10 +72,15 @@ public abstract class Interface extends Parent {
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width);
 
         panePrincipale.setBackground(background);
+        Preferences pref = controller.getPreferences();
+        pref.setVisible(false);
+        panePrincipale.getChildren().add(pref);
+
 
         /* HANDLERS */
         boutonPreference.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            panePrincipale.getChildren().add(controller.getPreferences());
+            pref.toFront();
+            pref.setVisible(true);
         });
 
         boutonPleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {

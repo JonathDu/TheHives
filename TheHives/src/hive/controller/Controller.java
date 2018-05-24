@@ -67,9 +67,6 @@ public final class Controller
         currentScene.setCursor(sourisIm);
 
         primaryStage.setScene(currentScene);
-        if(primaryStage.getWidth() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() && primaryStage.getHeight() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()){
-            primaryStage.centerOnScreen();
-        }
     }
 
     public void goToMenu()
@@ -142,11 +139,7 @@ public final class Controller
         Locale newLangue = gestionnaireLangage.langues.get(nomLangue);
         gestionnaireLangage.changerLangue(newLangue);
         typeTheme = nomTheme;
-        if (currentScene.getRoot() instanceof InterfaceMenu)
-        {
-            ((InterfaceMenu) currentScene.getRoot()).majRetourPreference();
-        }
-        //TODO !!!
+        //(Interface) currentScene.getRoot().majRetourPreference();
     }
 
     public Game chargerGame(String fileName)

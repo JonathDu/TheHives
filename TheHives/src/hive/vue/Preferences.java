@@ -36,13 +36,12 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
-
 public class Preferences extends Parent
 {
 
     private final Stage primaryStage;
     private final Controller controller;
-    
+
     private final String police;
     private final CacheImage cacheImage;
 
@@ -98,6 +97,7 @@ public class Preferences extends Parent
 
         this.getChildren().add(panePrincipale);
     }
+
     private void setObjetsGraphiques()
     {
         imageFond.setImage(cacheImage.getImage("PlateauCentral.png"));
@@ -141,11 +141,16 @@ public class Preferences extends Parent
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
         radioButtonNuit.setToggleGroup(groupRadioButtons);
-        if(controller.typeTheme.equals("Jour"))
+        if (controller.typeTheme.equals("Jour"))
+        {
             radioButtonJour.setSelected(true);
-        else
+            //radioButtonNuit.setSelected(false);
+        } else
+        {
             radioButtonNuit.setSelected(true);
-        
+            //radioButtonJour.setSelected(false);
+        }
+
         buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
         buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
@@ -156,7 +161,7 @@ public class Preferences extends Parent
         ImQ.setFitWidth(tailleDeCase / 2.5);
         stackAnnuler.getChildren().add(ImQ);
     }
-    
+
     private void setHandlers()
     {
         buttonValider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) ->
@@ -171,15 +176,16 @@ public class Preferences extends Parent
         {
             String nomLangue = comboLangue.getSelectionModel().getSelectedItem();
             boolean activerAide = checkBoxAide.isSelected();
-            String nomTheme = ((RadioButton)groupRadioButtons.getSelectedToggle()).getText();
+            String textSelectedRadioButton = ((RadioButton) groupRadioButtons.getSelectedToggle()).getText();
+            String nomTheme = textSelectedRadioButton.equals(controller.gestionnaireLangage.getText("text_jour")) ? "Jour" : "Nuit";
             controller.validerParametres(nomLangue, activerAide, nomTheme);
             setVisible(false);
         });
-        
+
         stackAnnuler.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
         {
             setVisible(false);
-        }); 
+        });
     }
 
     private Pane placerObjetsGraphiques()
@@ -197,19 +203,19 @@ public class Preferences extends Parent
         BackgroundImage bgIm = new BackgroundImage(imageFond.getImage(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bgSize);
         Background bg = new Background(bgIm);
         gridPane.setBackground(bg);
-        
+
         gridPane.add(labelPreferences, 0, 0, 3, 1);
-        
+
         gridPane.add(labelLangue, 0, 1);
         gridPane.add(comboLangue, 1, 1);
 
         gridPane.add(labelAide, 0, 2);
         gridPane.add(checkBoxAide, 1, 2);
-        
+
         gridPane.add(labelTheme, 0, 3);
         gridPane.add(radioButtonJour, 1, 3);
         gridPane.add(radioButtonNuit, 2, 3);
-        
+
         gridPane.add(buttonValider, 0, 4);
         gridPane.add(stackAnnuler, 1, 4);
 
