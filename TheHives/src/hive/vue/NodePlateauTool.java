@@ -7,7 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.model.game.Game;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import hive.thehives.TheHives;
 import java.io.IOException;
 import javafx.geometry.Pos;
