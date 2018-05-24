@@ -87,9 +87,9 @@ public class AdamEtEve {
         }
     }
     
-    public ArrayList<Integer> dlBoss() throws FileNotFoundException, IOException, ClassNotFoundException{
+    public ArrayList<Integer> dlBoss(String nom) throws FileNotFoundException, IOException, ClassNotFoundException{
         ArrayList<Integer> salut ;
-        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\BossbossTest0.txt");
+        File file = new File("src\\hive\\model\\players\\decisions\\cerveau\\Boss\\"+nom);
         try (FileInputStream fos = new FileInputStream(file)){
             ObjectInputStream oos= new ObjectInputStream(fos);
             salut = (ArrayList<Integer>) oos.readObject();
