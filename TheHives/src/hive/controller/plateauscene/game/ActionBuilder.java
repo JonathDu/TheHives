@@ -94,7 +94,7 @@ public class ActionBuilder
                 break;
         }
         state = State.BEGIN;
-        assert action == null;
+        assert action != null;
         return action;
     }
     

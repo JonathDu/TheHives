@@ -34,6 +34,17 @@ public class HiveRules implements Rules, Serializable
         this.move_rules = new HiveMoveRules();
     }
     
+    public void setPossibleActions(GameState state, ArrayList<Action> actions)
+    {
+        actions.clear();
+        
+        setPossiblePlacements(state, actions);
+        setPossibleDestinations(state, actions);
+        
+        if(actions.isEmpty())
+            actions.add(new NoAction());
+    }
+    
     public void setPossiblePlacements(GameState state, ArrayList<Action> actions)
     {
         Player current = state.turn.getCurrent();

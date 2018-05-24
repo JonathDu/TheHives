@@ -7,6 +7,7 @@ package hive.model.players;
 
 import hive.model.players.decisions.Decision;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -25,5 +26,42 @@ public class Player implements Serializable
         this.color = color;
         this.decision = decision;
         this.collection = collection;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 73 * hash + Objects.hashCode(this.color);
+        hash = 73 * hash + Objects.hashCode(this.decision);
+        hash = 73 * hash + Objects.hashCode(this.collection);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (this.color != other.color)
+        {
+            return false;
+        }
+        if (!Objects.equals(this.decision, other.decision))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.collection, other.collection))
+        {
+            return false;
+        }
+        return true;
     }
 }

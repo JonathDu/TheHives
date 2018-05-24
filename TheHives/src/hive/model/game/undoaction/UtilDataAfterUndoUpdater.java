@@ -5,16 +5,11 @@
  */
 package hive.model.game.undoaction;
 
-import hive.model.board.Honeycomb;
-import hive.model.board.Tile;
-import hive.model.board.TilesStack;
-import hive.model.game.utildata.TilesInfluence;
 import hive.model.game.utildata.UtilData;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
-import util.hexagons.iterators.NeighborsIterator;
 
 /**
  *

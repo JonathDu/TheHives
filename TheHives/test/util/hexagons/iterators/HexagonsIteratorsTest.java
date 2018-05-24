@@ -43,16 +43,32 @@ public class HexagonsIteratorsTest
     {
     }
     
+    private Integer[] setConsecutives(Integer[] tab, int start)
+    {
+        for(int i = 0; i < tab.length; ++i)
+        {
+            tab[i] = new Integer(start++);
+        }
+        return tab;
+    }
+    
+    private Integer[][] getConsecutives2D(int start, int sizeX, int sizeY)
+    {
+        Integer[][] tab = new Integer[sizeY][sizeX];
+        
+        int start_inc = start;
+        for(Integer[] line : tab)
+        {
+            setConsecutives(line, start_inc);
+            start_inc += line.length;
+        }
+        return tab;
+    }
+    
     @Before
     public void setUp()
     {
-        Integer[][] tab = 
-        {
-            {1,2,3,4},
-            {5,6,7,8},
-            {9,10,11,12},
-            {13,14,15,16}
-        };
+        Integer[][] tab = getConsecutives2D(1, 10, 10);
         HiveNeighborsShifter getter = new HiveNeighborsShifter();
         
         m = new Matrix<>(tab);
@@ -74,7 +90,6 @@ public class HexagonsIteratorsTest
             chaineObtenue += lineIterator.next().value().toString() + " ";
         }
         assert chaineObtenue.equals(chaineAttendu);
-        System.out.println("ok");
     }
 
     /**
