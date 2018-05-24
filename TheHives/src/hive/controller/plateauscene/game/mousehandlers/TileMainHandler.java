@@ -5,6 +5,7 @@
  */
 package hive.controller.plateauscene.game.mousehandlers;
 
+import hive.controller.plateauscene.game.PlateauHandlerData;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
@@ -12,6 +13,7 @@ import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import hive.vue.NodePlateauMain;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -19,15 +21,15 @@ import javafx.scene.input.MouseEvent;
  *
  * @author jonathan
  */
-public class TileMainHandler extends HandlerPlateau
+public class TileMainHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
 {
     TeamColor color;
     NodePlateauMain uiMain;
     Tile tileClicked;
 
-    public TileMainHandler(GameController controller, InterfacePlateau uiPlateau, TeamColor color, InsectType insectType)
+    public TileMainHandler(GameController controller, TeamColor color, InsectType insectType)
     {
-        super(controller, uiPlateau);
+        super(controller);
         tileClicked = new Tile(insectType, color);
         this.color = color;
     }
@@ -46,7 +48,7 @@ public class TileMainHandler extends HandlerPlateau
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            if (!(controller.progress.game.state.turn.getCurrent().decision instanceof HumanDecision))
+            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
             {
                 return;
             }

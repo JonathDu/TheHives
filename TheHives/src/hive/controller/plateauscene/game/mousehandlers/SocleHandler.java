@@ -1,12 +1,15 @@
 package hive.controller.plateauscene.game.mousehandlers;
 
+import hive.controller.plateauscene.game.PlateauHandlerData;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
+import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
+import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -16,14 +19,13 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class SocleHandler extends HandlerPlateau
+public class SocleHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
 {
-
     Honeycomb combClicked;
 
-    public SocleHandler(GameController controller, InterfacePlateau uiPlateau, Vector2i pos)
+    public SocleHandler(GameController controller, Vector2i pos)
     {
-        super(controller, uiPlateau);
+        super(controller);
         combClicked = game.state.board.getHexagon(pos);
     }
 
@@ -38,7 +40,7 @@ public class SocleHandler extends HandlerPlateau
             {
                 return;
             }
-
+            
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
@@ -92,7 +94,7 @@ public class SocleHandler extends HandlerPlateau
 
         controller.builder.setPlacement(placement);
         playProducedAction();
-        uiPlateau.majTileMain(controller.builder.tile, controller.progress.game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
+        uiPlateau.majTileMain(controller.builder.tile, game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
         uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
     }
 
@@ -101,6 +103,6 @@ public class SocleHandler extends HandlerPlateau
         assert game.state.turn.getCurrent().decision instanceof HumanDecision;
         Action action = controller.builder.produce();
         ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
-        controller.progress.doAction();
+        progress.doAction();
     }
 }

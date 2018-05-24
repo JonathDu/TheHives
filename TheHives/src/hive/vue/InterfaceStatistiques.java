@@ -115,7 +115,6 @@ public class InterfaceStatistiques extends Interface {
         AnchorPane.setBottomAnchor(liste, (double) tailleDeCase);
         pane.getChildren().add(liste);
 
-        this.getChildren().add(panePrincipale);
         this.panePrincipale.getChildren().add(pane);
     }
 
