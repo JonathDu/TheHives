@@ -7,6 +7,7 @@ package hive.controller;
 
 import hive.controller.plateauscene.game.GameController;
 import hive.model.game.Game;
+import hive.model.game.GameLoader;
 import hive.model.game.PrecalculatedGame;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
@@ -150,7 +151,7 @@ public final class Controller
 
     public Game chargerGame(String fileName)
     {
-        LoaderXML<Game> loader = new LoaderXML<>();
+        LoaderXML<Game> loader = new GameLoader();
         Game game = null;
         try
         {
@@ -164,7 +165,7 @@ public final class Controller
 
     public void enregistrerGame(Game game, String fileName)
     {
-        LoaderXML<Game> loader = new LoaderXML<>();
+        LoaderXML<Game> loader = new GameLoader();
         try
         {
             loader.loadInFile(game, fileName);

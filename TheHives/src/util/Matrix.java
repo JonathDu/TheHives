@@ -6,6 +6,7 @@
 package util;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Matrix
@@ -147,6 +148,14 @@ public class Matrix<E> implements Serializable
             str += "\n";
         }
         return str;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 41 * hash + Arrays.deepHashCode(this.data);
+        return hash;
     }
 
 }

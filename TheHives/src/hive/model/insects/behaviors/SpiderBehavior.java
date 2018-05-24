@@ -72,4 +72,25 @@ public class SpiderBehavior implements InsectBehavior
         
         return false;
     }
+    
+    @Override
+    public int hashCode()
+    {
+        int hash = 19;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        return true;
+    }
 }

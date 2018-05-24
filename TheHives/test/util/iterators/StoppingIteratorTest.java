@@ -60,13 +60,15 @@ public class StoppingIteratorTest
         list.add(1);
         list.add(41);
 
-        StoppingIterator<Integer> f = new StoppingIterator<>(list.iterator(), p);
+        StoppingIterator<Integer> it = new StoppingIterator<>(list.iterator(), p);
 
-        while (f.hasNext())
+        while (it.hasNext())
         {
             //System.out.println(f.next());
-            assert p.test(f.next());
+            assert p.test(it.next());
         }
+        
+        assert it.getStoppingValue() == 8;
 
         assert true;
     }

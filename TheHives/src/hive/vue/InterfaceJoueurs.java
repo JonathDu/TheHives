@@ -406,6 +406,7 @@ public class InterfaceJoueurs extends Interface {
                 System.out.println("IA2 : " + versionIA2);
                 String joueur_1 = new String();
                 String joueur_2 = new String();
+
                 if (est_h_h == 1) {
                     joueur_1 = Name1.getCharacters().toString();
                 } else {
@@ -419,11 +420,10 @@ public class InterfaceJoueurs extends Interface {
                 } else if (est_ia_ia == 1) {
                     joueur_1 = versionIA1;
                     joueur_2 = versionIA2;
-                }   //controller.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
+                }
 
-                Level level1 = Level.EASY; //TODO : faire une fonction qui donne le level de l'IA1 et l'IA2
-                Level level2 = Level.EASY;
-                controller.goToPlateau(joueur_1, joueur_2, level1, level2);
+  
+                controller.goToPlateau(joueur_1, joueur_2, creerIA(versionIA2), creerIA(versionIA1));
 
                 System.out.println(joueur_1);
                 System.out.println(joueur_2);
@@ -441,6 +441,22 @@ public class InterfaceJoueurs extends Interface {
         this.panePrincipale.getChildren().add(pane);
         this.getChildren().add(panePrincipale);
 
+    }
+    
+    public Level creerIA(String joueur){
+        if(joueur == null){
+            return null;
+        }
+        switch(joueur){
+            case "facile":
+                return Level.EASY;
+            case "moyenne":
+                return Level.MEDIUM;
+            case "difficile" : 
+                return Level.HARD;
+            default:
+                return Level.EASY;
+        }
     }
 
     public void majRetourPreference() {

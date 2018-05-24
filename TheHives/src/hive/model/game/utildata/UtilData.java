@@ -9,6 +9,7 @@ import hive.model.board.Cell;
 import hive.model.game.ActionsTrace;
 import hive.model.players.actions.Action;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * All the data useful to gain some algorithmic performance over memory storage
@@ -37,5 +38,67 @@ public class UtilData
         this.influences = influences;
         this.placements = null;
         this.nbgroups = nbgroups;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.tiles);
+        hash = 43 * hash + this.nb_tiles;
+        hash = 43 * hash + this.nb_combs;
+        hash = 43 * hash + Objects.hashCode(this.last_undo);
+        hash = 43 * hash + Objects.hashCode(this.trace);
+        hash = 43 * hash + Objects.hashCode(this.influences);
+        hash = 43 * hash + Objects.hashCode(this.placements);
+        hash = 43 * hash + Objects.hashCode(this.nbgroups);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final UtilData other = (UtilData) obj;
+        if (!Objects.equals(this.tiles, other.tiles))
+        {
+            return false;
+        }
+        if (this.nb_tiles != other.nb_tiles)
+        {
+            return false;
+        }
+        if (this.nb_combs != other.nb_combs)
+        {
+            return false;
+        }
+        if (!Objects.equals(this.last_undo, other.last_undo))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.trace, other.trace))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.influences, other.influences))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.placements, other.placements))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.nbgroups, other.nbgroups))
+        {
+            return false;
+        }
+        return true;
     }
 }
