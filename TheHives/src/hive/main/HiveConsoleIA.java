@@ -16,7 +16,7 @@ import hive.model.insects.InsectType;
 import hive.model.players.Player;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import java.util.Scanner;
 
 /**

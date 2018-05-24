@@ -11,7 +11,7 @@ import hive.model.game.Game;
 import hive.model.game.GameLoader;
 import hive.model.game.rules.GameStatus;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;

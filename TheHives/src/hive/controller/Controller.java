@@ -13,7 +13,7 @@ import hive.model.game.PrecalculatedGame;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import hive.vue.CacheImage;
 import hive.vue.InterfaceCharger;
 import hive.vue.InterfaceCredits;

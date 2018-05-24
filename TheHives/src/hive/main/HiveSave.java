@@ -10,7 +10,7 @@ import hive.model.game.Game;
 import hive.model.game.GameLoader;
 import util.LoaderXML;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import java.io.IOException;
 import java.util.Scanner;
 

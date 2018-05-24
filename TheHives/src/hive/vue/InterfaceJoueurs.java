@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
