@@ -116,7 +116,6 @@ public class InterfaceCredits extends Interface {
         pane.getChildren().add(bois);
 
         this.panePrincipale.getChildren().add(pane);
-        this.getChildren().add(panePrincipale);
 
     }
 

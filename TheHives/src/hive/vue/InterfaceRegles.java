@@ -442,7 +442,6 @@ public class InterfaceRegles extends Interface {
         AnchorPane.setBottomAnchor(sp_centre, (double) height * 0.1);
         pane.getChildren().add(sp_centre);
         this.panePrincipale.getChildren().add(pane);
-        this.getChildren().add(panePrincipale);
     }
 
     public void majRetourPreference() {
