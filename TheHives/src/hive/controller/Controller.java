@@ -6,6 +6,7 @@
 package hive.controller;
 
 import hive.controller.plateauscene.game.GameController;
+import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.GameLoader;
 import hive.model.game.PrecalculatedGame;
@@ -46,8 +47,6 @@ public final class Controller
     public GestionnaireLangage gestionnaireLangage;
 
     public String typeTheme;
-    public double old_height;
-    public double old_width;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
@@ -171,4 +170,18 @@ public final class Controller
     {
         return "Papyrus";
     }
+    
+    public void undo(Game game)
+    {
+        GameProgress progress = new GameProgress(game);
+        progress.undoAction();
+    }
+    
+    public void redo(Game game)
+    {
+        GameProgress progress = new GameProgress(game);
+        progress.doAction();
+    }
+    
+ 
 }

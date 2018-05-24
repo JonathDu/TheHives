@@ -130,8 +130,8 @@ public class InterfacePlateau extends Interface {
     }
 
     public void majJoueurCourant(TeamColor color) {
-        mainDroite.setIsCourant(color == TeamColor.WHITE);
-        mainGauche.setIsCourant(color == TeamColor.BLACK);
+        mainDroite.setIsCourant(color == TeamColor.BLACK);
+        mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
     public void majRetourPreference()

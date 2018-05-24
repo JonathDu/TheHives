@@ -5,7 +5,6 @@ import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.game.Game;
-import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
@@ -21,6 +20,7 @@ import util.Vector2i;
  */
 public class SocleHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
 {
+
     Honeycomb combClicked;
 
     public SocleHandler(GameController controller, Vector2i pos)
@@ -40,7 +40,7 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
             {
                 return;
             }
-            
+
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
@@ -52,7 +52,18 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
                         System.err.println("Même source : on annule la selection");
                     } else if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
-                        System.err.println("Destination impossible");
+                        if (controller.builder.source.comb.value.peek().color == game.state.turn.current.color)
+                        {
+                            System.out.println("Changement de source");
+                            uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
+                            uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                            
+                            controller.builder.setBegin();
+                            return;
+                        } else
+                        {
+                            System.err.println("Destination impossible");
+                        }
                     } else
                     {
                         System.out.println("Destination selectionnée");
@@ -63,7 +74,7 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
                 case TILE_SELECTED:
                     if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
-                        System.err.println("Placement impossible"); 
+                        System.err.println("Placement impossible");
                         //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
                     } else
                     {
@@ -104,5 +115,6 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
         Action action = controller.builder.produce();
         ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
         progress.doAction();
+        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
     }
 }
