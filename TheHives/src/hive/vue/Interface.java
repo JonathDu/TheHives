@@ -88,4 +88,6 @@ public abstract class Interface extends Parent {
         
         this.getChildren().add(panePrincipale);
     }
+    
+    public abstract void majRetourPreference();
 }

@@ -10,6 +10,7 @@ import hive.model.game.Game;
 import hive.model.players.decisions.Level;
 import hive.thehives.TheHives;
 import java.io.IOException;
+import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Parent;
@@ -20,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 /**
@@ -35,7 +38,7 @@ public class NodePlateauTool extends Parent {
     HiveBouton boutonRecommencer;
     HiveBouton boutonConseil;
     HiveBouton boutonParam;
-    HiveBouton pleinEcran;
+    HiveBouton boutonPleinEcran;
     HiveBouton boutonRegle;
     BorderPane pane;
 
@@ -54,8 +57,8 @@ public class NodePlateauTool extends Parent {
         this.c = c;
         this.j1 = j1;
         this.j2 = j2;
-        
-        String repertoire ="Design/FenetrePlateau/";
+
+        String repertoire = "Design/FenetrePlateau/";
 
         pane = new BorderPane();
         pane.prefWidthProperty().bind(stage.widthProperty());
@@ -64,23 +67,33 @@ public class NodePlateauTool extends Parent {
         droite = new HBox();
         centre = new HBox();
 
-        boutonSave = new HiveBouton(c.getImage(repertoire+"BoutonDisquette.png"), width);
-        boutonHome = new HiveBouton(c.getImage(repertoire+"bouttonRetourMenu.png"), width);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire+"FlecheUndo.png"), width);
-        boutonConseil = new HiveBouton(c.getImage(repertoire+"Ampoule.png"), width  );
-        boutonReplay = new HiveBouton(c.getImage(repertoire+"FlecheRedo.png"), width);
-        this.pleinEcran = pleinEcran;
-        boutonRegle = new HiveBouton(c.getImage(repertoire+"Boutonlivre.png"), width);
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
+        boutonPleinEcran = pleinEcran;
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
         boutonParam = param;
-        
-        
-        
-
 
         boutonHome.setOnMouseClicked(value -> {
-            controller.goToMenu();
+            Stage primaryStage = new Stage();
+            primaryStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopup root = new  NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Sauvegarder et quitter", "Annuler");
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+            
+            root.valider.addEventHandler(EventType.ROOT, (event)->{
+                
+                
+                
+                
+            });
+
+
+            //controller.goToMenu();
         });
-        
+
         boutonSave.setOnMouseClicked(value -> {
             controller.enregistrerGame(game, "test.xml");
         });
@@ -89,15 +102,11 @@ public class NodePlateauTool extends Parent {
 
             Stage primaryStage = new Stage();
             Parent root;
-            root = new InterfaceRegles(stage, controller,c, true);
+            root = new InterfaceRegles(stage, controller, c, true);
             primaryStage.setTitle("Regles");
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
-            // Hide this current window (if this is what you want)
-            //((Node) (value.getSource())).getScene().getWindow().hide();
-
         });
-
 
         Group g = new Group();
         g.getChildren().add(centre);
@@ -109,16 +118,14 @@ public class NodePlateauTool extends Parent {
         gauche.getChildren().add(boutonSave);
         droite.getChildren().add(boutonRegle);
         droite.getChildren().add(boutonParam);
-        droite.getChildren().add(pleinEcran);
+        droite.getChildren().add(boutonPleinEcran);
         centre.getChildren().add(boutonAnnuler);
         centre.getChildren().add(boutonConseil);
         centre.getChildren().add(boutonReplay);
         this.getChildren().add(pane);
     }
 
-    
-    public void majRetourPreference()
-    {
+    public void majRetourPreference() {
     }
 
 }
