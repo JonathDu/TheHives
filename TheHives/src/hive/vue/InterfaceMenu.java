@@ -171,7 +171,6 @@ public class InterfaceMenu extends Interface {
         pane.getChildren().add(Credits);
 
         this.panePrincipale.getChildren().add(pane);
-        this.getChildren().add(panePrincipale);
 
     }
 

@@ -113,7 +113,6 @@ public class InterfacePlateau extends Interface {
 
         borderPane.setBackground(background);
         this.panePrincipale.getChildren().add(borderPane);
-        this.getChildren().add(panePrincipale);
         
     }
 
