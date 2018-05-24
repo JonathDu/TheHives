@@ -38,13 +38,12 @@ public class BattleRoyal {
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        ArrayList<Integer> boss[] = new ArrayList[9];
         AdamEtEve AE = new AdamEtEve(3);
         int victory [] = new int[9];
         for(int j = 0; j<9;j++){
             victory[j]=0;
         }
-        EvaluationLearning [] dreamTeam = new EvaluationLearning[7];
+        EvaluationLearning [] dreamTeam = new EvaluationLearning[9];
         for(int i=0 ; i <5;i++){
             try {
                 dreamTeam[i] = new EvaluationLearning(AE.dlBoss("CoralieTheBoss"+i+".txt"));
