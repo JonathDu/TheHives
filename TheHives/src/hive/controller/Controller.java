@@ -45,7 +45,6 @@ public final class Controller
     public Dimension screenSize;
     public GestionnaireLangage gestionnaireLangage;
 
-    public int pleinEcran = 0;
     public String typeTheme;
     public double old_height;
     public double old_width;
@@ -75,13 +74,13 @@ public final class Controller
 
     public void goToMenu()
     {
-        currentScene = new Scene(new InterfaceMenu(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceMenu(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToChoixJoueur()
     {
-        currentScene = new Scene(new InterfaceJoueurs(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceJoueurs(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
@@ -106,25 +105,25 @@ public final class Controller
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene = new Scene(new InterfaceCharger(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceCharger(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToRegles()
     {
-        currentScene = new Scene(new InterfaceRegles(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceRegles(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToStat()
     {
-        currentScene = new Scene(new InterfaceStatistiques(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceStatistiques(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 
     public void goToCredits()
     {
-        currentScene = new Scene(new InterfaceCredits(primaryStage, this), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene = new Scene(new InterfaceCredits(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
         changeScene();
     }
 

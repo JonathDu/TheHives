@@ -5,14 +5,12 @@
  */
 package hive.vue;
 
-import com.sun.javafx.sg.prism.NGNode;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
 import static java.lang.Math.sqrt;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Polygon;
@@ -21,13 +19,13 @@ import javafx.scene.shape.Polygon;
  *
  * @author jonathan
  */
-public class InterfacePion extends Parent {
+public class NodePion extends Parent {
 
     public static int LONGUEUR = 40;
     public static int LARGEUR = (int) (LONGUEUR / 1.4);
     public Polygon hexagon;
 
-    public InterfacePion(TeamColor couleur, InsectType typePions, CacheImage c) {
+    public NodePion(TeamColor couleur, InsectType typePions, CacheImage c) {
 
         Group g = new Group();
         hexagon = createHexagon(LONGUEUR);
@@ -43,7 +41,7 @@ public class InterfacePion extends Parent {
         this.getChildren().add(g);
     }
 
-    public InterfacePion(TeamColor couleur, InsectType typePions, CacheImage c, int longueur) {
+    public NodePion(TeamColor couleur, InsectType typePions, CacheImage c, int longueur) {
         Group g = new Group();
         hexagon = createHexagon(longueur);
 

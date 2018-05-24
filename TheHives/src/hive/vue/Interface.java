@@ -6,18 +6,16 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import java.awt.Dimension;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -27,6 +25,7 @@ import javafx.stage.Stage;
 public abstract class Interface extends Parent {
 
     Controller controller;
+    Stage primaryStage;
     Pane panePrincipale;
     Background background;
     int height;
@@ -34,47 +33,53 @@ public abstract class Interface extends Parent {
     String police;
     CacheImage c;
 
+    double max_screen_height;
+    double max_screen_width;
+    int tailleDeCase;
+    int maxJoueur;
+    int minJoueur;
+
     HiveBouton boutonPreference;
     HiveBouton boutonPleinEcran;
     HiveBouton boutonRetourMenu;
 
     public Interface(Stage primaryStage, Controller controller, CacheImage cacheImage) {
-        
+
         /* INITIALISATION DES OBJETS */
         this.controller = controller;
+        this.primaryStage = primaryStage;
         panePrincipale = new Pane();
         c = cacheImage;
+
+        height = (int) primaryStage.getHeight();
+        width = (int) primaryStage.getWidth();
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        max_screen_height = dimension.getHeight();
+        max_screen_width = dimension.getWidth();
+        tailleDeCase = (width / 8 > height / 6) ? height / 6 : width / 8;
+        maxJoueur = (int) ((int) width / 2.5);
+        minJoueur = maxJoueur / 2;
 
         Image fond = controller.typeTheme.equals("Jour") ? c.getImage("Design/Fond/fondMontagne.png") : c.getImage("Design/Fond/fondNuit.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         background = new Background(backgroundFond);
 
-        height = (int) primaryStage.getHeight();
-        width = (int) primaryStage.getWidth();
         police = controller.getPolice();
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width );
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width);
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width);
-        
-        if (controller.pleinEcran == 1) {
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        }
 
         panePrincipale.setBackground(background);
-        
-        
+
         /* HANDLERS */
         boutonPreference.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             panePrincipale.getChildren().add(controller.getPreferences());
         });
 
         boutonPleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.pleinEcran = 1;
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
+            primaryStage.setMaximized(!primaryStage.isMaximized());
         });
 
         boutonRetourMenu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
@@ -83,7 +88,4 @@ public abstract class Interface extends Parent {
         
         this.getChildren().add(panePrincipale);
     }
-
 }
-
-

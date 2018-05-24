@@ -13,15 +13,10 @@ import java.awt.Dimension;
 import java.io.IOException;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.layout.AnchorPane;
@@ -34,126 +29,58 @@ import javafx.scene.layout.StackPane;
 public class InterfaceCharger extends Interface {
 
 
-    public InterfaceCharger(Stage primaryStage, Controller controller) throws IOException {
-        super(primaryStage, controller, new CacheImage());
-        int height = (int) primaryStage.getHeight();
-        int width = (int) primaryStage.getWidth();
-        DropShadow shadow = new DropShadow();
-        int tailleDeCase;
-        if(width/8>height/6){
-            tailleDeCase = height/6;
-        }
-        else{
-            tailleDeCase = width/8;
-        }
-        int maxJoueur = (int) ((int) width/2.5);
-        int minJoueur = maxJoueur/2;
-
-        /*if(controller.pleinEcran==1){
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-
-        }*/
-
-        
-        String police = controller.getPolice();
+    public InterfaceCharger(Stage primaryStage, Controller controller, CacheImage c) throws IOException {
+        super(primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        CacheImage c = new CacheImage();
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 15);
+        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+        pane.getChildren().add(boutonPreference);
 
-        this.boutonPreference.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            Preferences p = new Preferences(primaryStage, controller, new CacheImage());
-            pane.getChildren().add(p);
-        });
-        AnchorPane.setRightAnchor(this.boutonPreference, (double) tailleDeCase/2*1.07 + 15);
-        AnchorPane.setTopAnchor(this.boutonPreference, (double) 5);
-        pane.getChildren().add(this.boutonPreference);
-        
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        double max_height = dimension.getHeight();
-        double max_width = dimension.getWidth();
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 10);
+        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
+        pane.getChildren().add(boutonPleinEcran);
 
-        this.boutonPleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-           if(controller.pleinEcran==0){
-                primaryStage.setWidth(max_width);
-                primaryStage.setHeight(max_height);
-                controller.old_height=height;
-                controller.old_width=width;
-               try {
-                   controller.goToChargerPartie();
-               } catch (IOException ex) {
-                   Logger.getLogger(InterfaceCharger.class.getName()).log(Level.SEVERE, null, ex);
-               }
-                controller.pleinEcran=1;
-            }
-            else{
-                primaryStage.setWidth(controller.old_width);
-                primaryStage.setHeight(controller.old_height);
-               try {
-                   controller.goToChargerPartie();
-               } catch (IOException ex) {
-                   Logger.getLogger(InterfaceCharger.class.getName()).log(Level.SEVERE, null, ex);
-               }
-                controller.pleinEcran=0;
-            }
-            //primaryStage.setFullScreen(true);
-            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
-        });
-        AnchorPane.setRightAnchor(this.boutonPleinEcran, (double) 10);
-        AnchorPane.setTopAnchor(this.boutonPleinEcran, (double) 5);
-        pane.getChildren().add(this.boutonPleinEcran);
+        AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
+        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
+        pane.getChildren().add(boutonRetourMenu);
 
-        StackPane Menu = new StackPane();
-        Image menu = c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png");
-        ImageView menuIm = new ImageView(menu);
-        menuIm.setFitHeight(tailleDeCase/2);
-        menuIm.setFitWidth(tailleDeCase/2*1.07);
-        Menu.getChildren().add(menuIm);
-        Menu.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.goToMenu();
-        });
-        AnchorPane.setLeftAnchor(Menu, (double) 5);
-        AnchorPane.setTopAnchor(Menu, (double) 5);
-        pane.getChildren().add(Menu);
 
-        BorderPane choisir = new BorderPane();
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
         Button valider = new Button();
 
         valider.setText(controller.gestionnaireLangage.getText("text_valider"));
         choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
 
-        
-        choix.setFont(new Font(police, width/35));
+        choix.setFont(new Font(police, width / 35));
         choix.setAlignment(Pos.CENTER);
-        choix.setMinSize(width/60, 30);
-        choix.setMaxSize(width/2, 70);
+        choix.setMinSize(width / 60, 30);
+        choix.setMaxSize(width / 2, 70);
 
         final ComboBox parties = new ComboBox();
-        for(int j=0; j< 10; j++){
+        for (int j = 0; j < 10; j++) {
             parties.getItems().add(j);
         }
 
-        parties.setMaxSize(tailleDeCase*3, tailleDeCase/2);
-        parties.setMinSize(tailleDeCase*3, tailleDeCase/2);
-        AnchorPane.setTopAnchor(choix, (double) height/10);
-        AnchorPane.setLeftAnchor(choix, (double) tailleDeCase*2);
-        AnchorPane.setRightAnchor(choix, (double) tailleDeCase*2);
+        parties.setMaxSize(tailleDeCase * 3, tailleDeCase / 2);
+        parties.setMinSize(tailleDeCase * 3, tailleDeCase / 2);
+        AnchorPane.setTopAnchor(choix, (double) height / 10);
+        AnchorPane.setLeftAnchor(choix, (double) tailleDeCase * 2);
+        AnchorPane.setRightAnchor(choix, (double) tailleDeCase * 2);
         //AnchorPane.setBottomAnchor(choix, (double) height/1.1);
         pane.getChildren().add(choix);
 
-        AnchorPane.setTopAnchor(parties, (double) height/4);
-        AnchorPane.setLeftAnchor(parties, (double) tailleDeCase*2);
-        AnchorPane.setRightAnchor(parties, (double) tailleDeCase*2);
+        AnchorPane.setTopAnchor(parties, (double) height / 4);
+        AnchorPane.setLeftAnchor(parties, (double) tailleDeCase * 2);
+        AnchorPane.setRightAnchor(parties, (double) tailleDeCase * 2);
         //AnchorPane.setBottomAnchor(parties, (double) height/1.3);
         pane.getChildren().add(parties);
 
-
         StackPane valider_sp = new StackPane();
-        valider.setFont(new Font(police, tailleDeCase*0.23));
+        valider.setFont(new Font(police, tailleDeCase * 0.23));
         valider_sp.getChildren().add(valider);
         valider_sp.setMaxSize(tailleDeCase, 40);
         valider_sp.setMinSize(tailleDeCase, 40);
@@ -165,23 +92,21 @@ public class InterfaceCharger extends Interface {
                 controller.goToPlateau(game);
             }
         });
-        if(height==max_height){
-            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase*1.5);
-        }else{
+        if (height == max_screen_height) {
+            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase * 1.5);
+        } else {
             AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase);
         }
         //AnchorPane.setTopAnchor(valider, (double) height - 50);
-        AnchorPane.setLeftAnchor(valider_sp, (double) width/2 -tailleDeCase);
-        AnchorPane.setRightAnchor(valider_sp, (double) width/2 -tailleDeCase);
+        AnchorPane.setLeftAnchor(valider_sp, (double) width / 2 - tailleDeCase);
+        AnchorPane.setRightAnchor(valider_sp, (double) width / 2 - tailleDeCase);
         pane.getChildren().add(valider_sp);
-        
         this.panePrincipale.getChildren().add(pane);
+        this.getChildren().add(panePrincipale);
+
     }
 
-
-    public void majRetourPreference()
-    {
+    public void majRetourPreference() {
     }
-
 
 }
