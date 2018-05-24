@@ -23,7 +23,7 @@ public interface InterfaceIA
     public boolean winCurrent(Game game);
     public boolean winOpponent(Game game);
     public boolean winBoth(Game game);
-    public int queenFreeNeighbour(Player p, Game game);
+    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game);
     public ArrayList<Tile> queenNeighbours(Player p, Game game);
     public void currentPlayerPossibilities(Game game,ArrayList<Action> actions);
     public ArrayList<Action> currentPlayerPossibilities2(Game game);
@@ -32,4 +32,6 @@ public interface InterfaceIA
     public Action undoAction(Game game);
     public ArrayList<Decision> startSimulation(Game game);
     public void endSimulation(Game game, ArrayList<Decision> decisions);
+    public int nbPossibilitiesQueen(Game game, Player p);
+    public boolean queenIsCurshed(Player p, Game game);
 }

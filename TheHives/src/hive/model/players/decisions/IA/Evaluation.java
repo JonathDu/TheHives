@@ -56,7 +56,7 @@ public class Evaluation {
             values-=200;
         }
         if(hia.queenIsCurshed(opponent, state)){
-            values+=100;
+            values+=175;
         }
         switch (queenOpponentPossibilities) {
             case 0:
@@ -166,6 +166,7 @@ public class Evaluation {
                 case QUEEN_BEE:
                     return 0;
                 default:
+                    //if(hia.)
                     return 93;
 
             }

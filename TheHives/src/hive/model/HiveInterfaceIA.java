@@ -6,6 +6,7 @@
 package hive.model;
 
 import hive.model.board.Cell;
+import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.Game;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.ListIterator;
+import util.hexagons.HexagonSide;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -64,24 +66,26 @@ public class HiveInterfaceIA implements InterfaceIA
     }
 
     @Override
-    public int queenFreeNeighbour(Player p, Game game)
+    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game)
     {
+        ArrayList<Tile> freeNeighbours = new ArrayList<>();
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
         if (queen_positions.isEmpty())
         {
-            return 0;
+            return freeNeighbours;
         }
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
         {
-            if (neighIter.next().hexagon.value().isEmpty())
+            /*if (game.rules.isFree(state, cell)
             {
                 nbNeighbor++;
-            }
+            }*/
         }
-        return nbNeighbor;
+        return null;
     }
+    
     @Override
     public ArrayList<Tile> queenNeighbours(Player p, Game game)
     {
@@ -174,6 +178,7 @@ public class HiveInterfaceIA implements InterfaceIA
         return free_tiles;
     }
     
+    @Override
     public int nbPossibilitiesQueen(Game game, Player p){
         Tile tile = new Tile(InsectType.QUEEN_BEE, p.color);
         
@@ -183,12 +188,17 @@ public class HiveInterfaceIA implements InterfaceIA
         return nbPossibilities;
     }
     
+    @Override
     public boolean queenIsCurshed(Player p, Game game)
     {
         HashSet<Cell> queens = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
         Iterator<Cell> ite = queens.iterator();
-        Cell cell = ite.next();
-        return HiveUtil.isCrushed(cell);
+        if(ite.hasNext())
+        {
+            Cell cell = ite.next();
+            return HiveUtil.isCrushed(cell);          
+        }
+        return false;
     }
 
     public ArrayList<Tile> blockedTiles(Player p, Game game)
