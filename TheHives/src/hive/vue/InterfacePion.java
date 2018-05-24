@@ -132,4 +132,8 @@ public class InterfacePion extends Parent {
         }
         return v;
     }
+    
+    public void majRetourPreference()
+    {
+    }
 }

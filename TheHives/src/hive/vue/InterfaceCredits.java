@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import java.awt.Dimension;
 import hive.thehives.TheHives;
 import hive.vue.CacheImage;
 import hive.vue.Preferences;
@@ -35,8 +36,14 @@ public class InterfaceCredits extends Parent {
         int height = (int) primaryStage.getHeight();
         int width = (int) primaryStage.getWidth();
         DropShadow shadow = new DropShadow();
-        int tailleDeCase = width/8;
-        int maxJoueur = (int) ((int) width/2.5);
+        int tailleDeCase;
+        if(width/8>height/6){
+            tailleDeCase = height/6;
+        }
+        else{
+            tailleDeCase = width/8;
+        }
+        int maxJoueur = (int) ((int) tailleDeCase*3.2);
         int minJoueur = maxJoueur/2;
        
         if(controller.pleinEcran==1){
@@ -76,22 +83,38 @@ public class InterfaceCredits extends Parent {
             Preferences p = new Preferences(primaryStage, controller, new CacheImage());
             pane.getChildren().add(p);
         });
-        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 15);
+        AnchorPane.setRightAnchor(Preferences, (double) tailleDeCase/2*1.07 + 25);
         AnchorPane.setTopAnchor(Preferences, (double) 5);
         pane.getChildren().add(Preferences);
         
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double max_height = dimension.getHeight();
+        double max_width = dimension.getWidth();
         StackPane Plein = new StackPane();
         Image plein = c.getImage("Design/MenuPrincipaux/pleinEcran.png");
-        ImageView pleinIm = new ImageView(plein); 
+        ImageView pleinIm = new ImageView(plein);
         pleinIm.setFitHeight(tailleDeCase/2);
         pleinIm.setFitWidth(tailleDeCase/2*1.07);
         Plein.getChildren().add(pleinIm);
         Plein.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            controller.pleinEcran=1;
-            primaryStage.setFullScreen(true);
-            primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");    
+           if(controller.pleinEcran==0){
+                primaryStage.setWidth(max_width);
+                primaryStage.setHeight(max_height);
+                controller.old_height=height;
+                controller.old_width=width;
+                controller.goToCredits();
+                controller.pleinEcran=1;
+            }
+            else{
+                primaryStage.setWidth(controller.old_width);
+                primaryStage.setHeight(controller.old_height);
+                controller.goToCredits();
+                controller.pleinEcran=0;
+            }
+            //primaryStage.setFullScreen(true);
+            //primaryStage.setFullScreenExitHint("Sortie de plein écran - esc");
         });
-        AnchorPane.setRightAnchor(Plein, (double) 10);
+        AnchorPane.setRightAnchor(Plein, (double) 20);
         AnchorPane.setTopAnchor(Plein, (double) 5);
         pane.getChildren().add(Plein);
         
@@ -113,6 +136,7 @@ public class InterfaceCredits extends Parent {
         Label ihm = new Label();
         Label design = new Label();
         Label mdj = new Label();
+
         
         credits.setText(controller.gestionnaireLangage.getText("text_credit"));
         ia.setText(controller.gestionnaireLangage.getText("text_membres_IA"));
@@ -122,9 +146,7 @@ public class InterfaceCredits extends Parent {
         
         credits.setFont(new Font(police, width/35));
         credits.setAlignment(Pos.CENTER);
-        credits.setMinSize(width/60, 30);
-        credits.setMaxSize(width/2, 70);
-        AnchorPane.setTopAnchor(credits, (double) height/10);
+        AnchorPane.setTopAnchor(credits, (double) tailleDeCase*0.6);
         AnchorPane.setLeftAnchor(credits, (double) tailleDeCase*2);
         AnchorPane.setRightAnchor(credits, (double) tailleDeCase*2);
         pane.getChildren().add(credits);
@@ -132,8 +154,8 @@ public class InterfaceCredits extends Parent {
         StackPane bois = new StackPane();
         Image plateau = c.getImage("PlateauCentral.png");
         ImageView plateauIm = new ImageView(plateau); 
-        plateauIm.setFitHeight((width*0.82)/1.6);
-        plateauIm.setFitWidth(width*0.82);
+        plateauIm.setFitHeight((tailleDeCase*6.56)/1.6);
+        plateauIm.setFitWidth(tailleDeCase*6.56);
         bois.getChildren().add(plateauIm);
         
         GridPane grille = new GridPane();
@@ -143,32 +165,32 @@ public class InterfaceCredits extends Parent {
         Outils.fixerRepartition(grille, Outils.VERTICAL, colonne);
 //        grille.prefHeightProperty().bind(primaryStage.heightProperty());
 //        grille.prefWidthProperty().bind(primaryStage.widthProperty());
-        grille.setMaxWidth(width*0.8);
-        grille.setMinWidth(width*0.8);
-        grille.setMaxHeight(height*0.7);
-        grille.setMinHeight(height*0.7);
-        double hauteurDeGrille = height*0.7;
+        grille.setMaxWidth(tailleDeCase*6.4);
+        grille.setMinWidth(tailleDeCase*6.4);
+        grille.setMaxHeight(tailleDeCase*4.2);
+        grille.setMinHeight(tailleDeCase*4.2);
+        double hauteurDeGrille = tailleDeCase*4.2;
         double hauteurDeLigne = hauteurDeGrille/6;
         
-        ia.setFont(new Font(police, width/45));
+        ia.setFont(new Font(police, tailleDeCase*0.17));
         ia.setTextFill(Color.web("#fbe5b5"));
         ia.setAlignment(Pos.CENTER);
         StackPane ia_sp = new StackPane();
         ia_sp.getChildren().add(ia);
         grille.add(ia_sp, 0, 1);
-        ihm.setFont(new Font(police, width/45));
+        ihm.setFont(new Font(police, tailleDeCase*0.17));
         ihm.setTextFill(Color.web("#fbe5b5"));
         ihm.setAlignment(Pos.CENTER);
         StackPane ihm_sp = new StackPane();
         ihm_sp.getChildren().add(ihm);
         grille.add(ihm_sp, 0, 2);
-        design.setFont(new Font(police, width/45));
+        design.setFont(new Font(police, tailleDeCase*0.17));
         design.setTextFill(Color.web("#fbe5b5"));
         design.setAlignment(Pos.CENTER);
         StackPane design_sp = new StackPane();
         design_sp.getChildren().add(design);
         grille.add(design_sp, 0, 3);
-        mdj.setFont(new Font(police, width/45));
+        mdj.setFont(new Font(police, tailleDeCase*0.17));
         mdj.setTextFill(Color.web("#fbe5b5"));
         mdj.setAlignment(Pos.CENTER);
         StackPane mdj_sp = new StackPane();
@@ -177,15 +199,19 @@ public class InterfaceCredits extends Parent {
         
         bois.getChildren().add(grille);
         
-        AnchorPane.setTopAnchor(bois, (double) height/10);
-        AnchorPane.setBottomAnchor(bois, (double) height/20);
-        AnchorPane.setLeftAnchor(bois, (double) width*0.1);
-        AnchorPane.setRightAnchor(bois, (double) width*0.1);
+        AnchorPane.setTopAnchor(bois, (double) tailleDeCase*0.6);
+        AnchorPane.setBottomAnchor(bois, (double) tailleDeCase*0.3);
+        AnchorPane.setLeftAnchor(bois, (double) tailleDeCase*0.8);
+        AnchorPane.setRightAnchor(bois, (double) tailleDeCase*0.8);
         pane.getChildren().add(bois);
         
         
         
         this.getChildren().add(pane);
+    }
+    
+    public void majRetourPreference()
+    {
     }
     
 }

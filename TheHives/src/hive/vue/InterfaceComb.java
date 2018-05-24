@@ -102,4 +102,8 @@ public class InterfaceComb extends Parent {
         }
     }
      */
+    
+    public void majRetourPreference()
+    {
+    }
 }

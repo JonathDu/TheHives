@@ -26,8 +26,6 @@ import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -49,6 +47,8 @@ public final class Controller
 
     public int pleinEcran = 0;
     public String typeTheme;
+    public double old_height;
+    public double old_width;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
@@ -56,7 +56,8 @@ public final class Controller
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        gestionnaireLangage = new GestionnaireLangage(Locale.FRANCE);
+        gestionnaireLangage = new GestionnaireLangage(Locale.FRENCH);
+        typeTheme = "Jour";
         goToMenu();
     }
 
@@ -67,6 +68,9 @@ public final class Controller
         currentScene.setCursor(sourisIm);
 
         primaryStage.setScene(currentScene);
+        if(primaryStage.getWidth() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getWidth() && primaryStage.getHeight() >= java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight()){
+            primaryStage.centerOnScreen();
+        }
     }
 
     public void goToMenu()
@@ -141,7 +145,7 @@ public final class Controller
         typeTheme = nomTheme;
         if (currentScene.getRoot() instanceof InterfaceMenu)
         {
-            ((InterfaceMenu) currentScene.getRoot()).maj();
+            ((InterfaceMenu) currentScene.getRoot()).majRetourPreference();
         }
         //TODO !!!
     }
@@ -174,6 +178,6 @@ public final class Controller
 
     public String getPolice()
     {
-        return "Papyrus"; //TODO : prendre en compte le russe ?
+        return "Papyrus";
     }
 }

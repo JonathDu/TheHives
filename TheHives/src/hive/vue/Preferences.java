@@ -36,6 +36,7 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
+
 public class Preferences extends Parent
 {
 
@@ -97,7 +98,6 @@ public class Preferences extends Parent
 
         this.getChildren().add(panePrincipale);
     }
-
     private void setObjetsGraphiques()
     {
         imageFond.setImage(cacheImage.getImage("PlateauCentral.png"));
@@ -139,10 +139,13 @@ public class Preferences extends Parent
 
         radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
         radioButtonJour.setToggleGroup(groupRadioButtons);
-        radioButtonJour.setSelected(true);
         radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
         radioButtonNuit.setToggleGroup(groupRadioButtons);
-
+        if(controller.typeTheme.equals("Jour"))
+            radioButtonJour.setSelected(true);
+        else
+            radioButtonNuit.setSelected(true);
+        
         buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
         buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
