@@ -11,6 +11,7 @@ import hive.model.board.Cell;
 import hive.model.game.PrecalculatedGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.rules.HiveUtil;
 import hive.model.game.utildata.PositionsPerInsectPerTeam;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
@@ -43,30 +44,9 @@ public class HiveConsoleIA {
         GameStatus status;
         while ((status = game.rules.getStatus(game.state)) == GameStatus.CONTINUES)
         {
-            Player player = game.state.turn.getCurrent();
-            if (player == game.state.players.get(0))
-                System.out.println("Joueur 1");
-            else
-                System.out.println("Joueur 2");
-
             progress.doAction();
-
-            PositionsPerInsectPerTeam tiles = game.state.data.tiles;
-            for(TeamColor color : TeamColor.values())
-            {
-                for(InsectType type : InsectType.values())
-                {
-                    for(Cell cell : tiles.get(color).get(type))
-                    {
-                        if(cell.comb.value().isEmpty())
-                        {
-                            System.out.println(tiles);
-                            System.out.println(game.state.board);
-                            Thread.sleep(10000);
-                        }
-                    }
-                }
-            }
+            
+            System.out.println(game.state.board);
         }
 
         switch(status)

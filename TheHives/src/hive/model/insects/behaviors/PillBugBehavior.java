@@ -8,8 +8,6 @@ package hive.model.insects.behaviors;
 import hive.model.board.Cell;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
-import hive.model.players.actions.Action;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**

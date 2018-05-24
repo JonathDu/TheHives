@@ -28,6 +28,7 @@ public class RandomDecision implements Decision
         HiveUtil.setActions(game, actions);
         if(actions.isEmpty())
             actions.add(new NoAction());
+        System.out.println(actions);
         return actions.get(rand.nextInt(actions.size()));
     }
 }

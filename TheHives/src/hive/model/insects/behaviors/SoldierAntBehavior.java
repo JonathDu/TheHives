@@ -12,7 +12,6 @@ import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 import util.hexagons.iterators.BreadthNeighborsIterator;
 

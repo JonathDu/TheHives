@@ -82,27 +82,27 @@ public class UtilDataBeforeUndoUpdater implements ActionVisitor
         
         // influences
         if(action.destination.comb.value().size() == 1)
-            data.influences.get(tile.color).addInfluence(action.destination.comb);
+            data.influences.get(tile.color).removeInfluence(action.destination.comb);
         else
         {
             assert action.destination.level == action.destination.stack().size() - 1; // must not be below an other tile
             Tile below = new Cell(action.destination).down().getTile();
             if(tile.color != below.color)
             {
-                data.influences.get(below.color).removeInfluence(action.destination.comb);
-                data.influences.get(tile.color).addInfluence(action.destination.comb);
+                data.influences.get(tile.color).removeInfluence(action.destination.comb);
+                data.influences.get(below.color).addInfluence(action.destination.comb);
             }
         }
         if(action.source.stack().size() == 0)
-            data.influences.get(tile.color).removeInfluence(action.source.comb);
+            data.influences.get(tile.color).addInfluence(action.source.comb);
         else
         {
             assert action.source.level == action.source.stack().size(); // must not be below an other tile
             Tile below = new Cell(action.source).down().getTile();
             if(tile.color != below.color)
             {
-                data.influences.get(tile.color).removeInfluence(action.source.comb);
-                data.influences.get(below.color).addInfluence(action.source.comb);
+                data.influences.get(below.color).removeInfluence(action.source.comb);
+                data.influences.get(tile.color).addInfluence(action.source.comb);
             }
         }
         

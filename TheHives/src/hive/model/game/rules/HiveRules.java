@@ -7,11 +7,9 @@ package hive.model.game.rules;
 
 import hive.model.board.Cell;
 import hive.model.board.Tile;
-import hive.model.game.Game;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -34,10 +32,16 @@ public class HiveRules implements Rules, Serializable
         if(queenMustBePut(state))
         {
             if(type == InsectType.QUEEN_BEE)
-                consumePlacementsConstantTime(state, consumer);
+            {
+                if (state.turn.getCurrent().collection.get(type) > 0)
+                    consumePlacementsConstantTime(state, consumer);
+            }
         }
         else
-            consumePlacementsConstantTime(state, consumer);
+        {
+            if (state.turn.getCurrent().collection.get(type) > 0)
+                consumePlacementsConstantTime(state, consumer);
+        }
     }
     
     @Override
@@ -91,12 +95,8 @@ public class HiveRules implements Rules, Serializable
             state.data.placements.clear();
             put_rules.consumePlacements(state, cell -> state.data.placements.add(cell));
         }
-        else
-        {
-            // otherwise placements are already calculated
-            for(Cell cell : state.data.placements)
-                consumer.accept(cell);
-        }
+        for(Cell cell : state.data.placements)
+            consumer.accept(cell);
     }
     
     public boolean queenMustBePut(GameState state)

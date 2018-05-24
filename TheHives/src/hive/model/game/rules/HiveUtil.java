@@ -236,9 +236,8 @@ public class HiveUtil
         Player current = game.state.turn.getCurrent();
         for (InsectType type : InsectType.implemented_insects)
         {
-            if (current.collection.get(type) > 0)
-                game.rules.consumePlacements(game.state, type,
-                        placement -> actions.add(new PutAction(placement, new Tile(type, current.color))));
+            game.rules.consumePlacements(game.state, type,
+                    placement -> actions.add(new PutAction(placement, new Tile(type, current.color))));
         }
     }
     
