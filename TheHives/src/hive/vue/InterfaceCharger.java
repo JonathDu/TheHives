@@ -6,7 +6,10 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import hive.model.game.Game;
+import java.awt.Dimension;
 import java.io.IOException;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -24,6 +27,7 @@ import javafx.scene.layout.StackPane;
  * @author Adeline
  */
 public class InterfaceCharger extends Interface {
+
 
     public InterfaceCharger(Stage primaryStage, Controller controller, CacheImage c) throws IOException {
         super(primaryStage, controller, c);
@@ -43,6 +47,7 @@ public class InterfaceCharger extends Interface {
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         pane.getChildren().add(boutonRetourMenu);
+
 
         Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
         Button valider = new Button();
@@ -98,6 +103,7 @@ public class InterfaceCharger extends Interface {
         pane.getChildren().add(valider_sp);
         this.panePrincipale.getChildren().add(pane);
         this.getChildren().add(panePrincipale);
+
     }
 
     public void majRetourPreference() {
