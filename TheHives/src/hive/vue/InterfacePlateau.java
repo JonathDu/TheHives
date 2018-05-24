@@ -36,7 +36,8 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Interface {
+public class InterfacePlateau extends Interface
+{
 
     BorderPane borderPane;
     public NodePlateauMain mainGauche;
@@ -64,7 +65,8 @@ public class InterfacePlateau extends Interface {
     String j1;
     String j2;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2)
+    {
 
         super(stage, controller, c);
 
@@ -127,7 +129,7 @@ public class InterfacePlateau extends Interface {
         BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
-        
+
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
         borderPane.setCenter(scrollPane);
@@ -141,7 +143,8 @@ public class InterfacePlateau extends Interface {
 
     }
 
-    private BorderPane setTool() {
+    private BorderPane setTool()
+    {
         width = (int) primaryStage.getWidth();
 
         String repertoire = "Design/FenetrePlateau/";
@@ -197,7 +200,8 @@ public class InterfacePlateau extends Interface {
             primaryStage.show();
         });
 
-        boutonRegle.setOnMouseClicked(value -> {
+        boutonRegle.setOnMouseClicked(value ->
+        {
 
             Stage primaryStage = new Stage();
             Parent root;
@@ -205,6 +209,21 @@ public class InterfacePlateau extends Interface {
             primaryStage.setTitle("Regles");
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
+        });
+
+        boutonAnnuler.setOnMouseClicked(value ->
+        {
+            controller.undo(game);
+        });
+
+        boutonReplay.setOnMouseClicked(value ->
+        {
+            controller.redo(game);
+        });
+
+        boutonConseil.setOnMouseClicked(value ->
+        {
+            //TODO
         });
 
         Group g = new Group();
@@ -225,23 +244,29 @@ public class InterfacePlateau extends Interface {
 
     }
 
-    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color)
+    {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
-    public void majTileMain(Tile tile, int nbTiles) {
-        if (tile.color == TeamColor.BLACK) {
+    public void majTileMain(Tile tile, int nbTiles)
+    {
+        if (tile.color == TeamColor.BLACK)
+        {
             mainDroite.maj(tile, nbTiles);
-        } else {
+        } else
+        {
             mainGauche.maj(tile, nbTiles);
         }
     }
 
-    public void majJoueurCourant(TeamColor color) {
+    public void majJoueurCourant(TeamColor color)
+    {
         mainDroite.setIsCourant(color == TeamColor.BLACK);
         mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
-    public void majRetourPreference() {
+    public void majRetourPreference()
+    {
     }
 }
