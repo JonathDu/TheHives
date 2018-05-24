@@ -60,7 +60,7 @@ public abstract class Interface extends Parent {
         maxJoueur = (int) ((int) width / 2.5);
         minJoueur = maxJoueur / 2;
 
-        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("Design/Fond/fondMontagne.png") : c.getImage("Design/Fond/fondNuit.png");
+        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
         background = new Background(backgroundFond);
