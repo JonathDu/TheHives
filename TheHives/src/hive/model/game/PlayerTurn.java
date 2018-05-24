@@ -10,6 +10,7 @@ import hive.model.players.Player;
 import hive.model.players.Players;
 import java.io.Serializable;
 import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  *
@@ -102,6 +103,38 @@ public class PlayerTurn implements ListIterator<Player>, Serializable
     public void add(Player e)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 13 * hash + Objects.hashCode(this.current);
+        hash = 13 * hash + Objects.hashCode(this.opponent);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final PlayerTurn other = (PlayerTurn) obj;
+        if (!Objects.equals(this.current, other.current))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.opponent, other.opponent))
+        {
+            return false;
+        }
+        return true;
     }
 }
 

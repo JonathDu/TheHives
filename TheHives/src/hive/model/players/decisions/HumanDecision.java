@@ -8,6 +8,7 @@ package hive.model.players.decisions;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 public class HumanDecision implements Decision, Serializable
 {
-    Action action;
+    public Action action;
     
     public HumanDecision() {} // for serialization
     
@@ -28,5 +29,26 @@ public class HumanDecision implements Decision, Serializable
     public void setAction(Action action)
     {
         this.action = action;
+    }
+    
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        return true;
     }
 }

@@ -9,6 +9,7 @@ import hive.model.game.Game;
 import hive.model.game.GameState;
 import hive.model.game.undoaction.ActionDisapplier;
 import hive.model.game.doaction.ActionApplier;
+import hive.model.game.rules.GameStatus;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;
 import java.util.ArrayList;
@@ -43,5 +44,15 @@ public class GameProgress
     {
         Action action = game.state.data.trace.peek();
         action.accept(disapplier);
+    }
+    
+    public GameStatus getStatus()
+    {
+        return game.rules.getStatus(game.state);
+    }
+    
+    public boolean continues()
+    {
+        return getStatus() == GameStatus.CONTINUES;
     }
 }

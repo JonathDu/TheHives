@@ -7,6 +7,7 @@ package hive.model.game;
 
 import hive.model.game.rules.Rules;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -23,5 +24,37 @@ public class Game implements Serializable
     {
         this.state = state;
         this.rules = rules;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.state);
+        hash = 59 * hash + Objects.hashCode(this.rules);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final Game other = (Game) obj;
+        if (!Objects.equals(this.state, other.state))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.rules, other.rules))
+        {
+            return false;
+        }
+        return true;
     }
 }

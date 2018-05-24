@@ -10,6 +10,7 @@ import hive.model.board.Board;
 import hive.model.players.Player;
 import hive.model.players.Players;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  *
@@ -32,5 +33,47 @@ public class GameState implements Serializable
         this.turn = turn;
         
         this.data = data;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.board);
+        hash = 67 * hash + Objects.hashCode(this.players);
+        hash = 67 * hash + Objects.hashCode(this.turn);
+        hash = 67 * hash + Objects.hashCode(this.data);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final GameState other = (GameState) obj;
+        if (!Objects.equals(this.board, other.board))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.players, other.players))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.turn, other.turn))
+        {
+            return false;
+        }
+        if (!Objects.equals(this.data, other.data))
+        {
+            return false;
+        }
+        return true;
     }
 }

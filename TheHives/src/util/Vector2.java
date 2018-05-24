@@ -6,6 +6,7 @@
 package util;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Vector (x, y) (2 dimensions)
@@ -25,13 +26,17 @@ public abstract class Vector2<T> implements Serializable
         this.y = y;
     }
     
-    abstract public Vector2<T> add(Vector2<T> v);
-    abstract public Vector2<T> opposite();
-    abstract public Vector2<T> multiply(int coef);
+    public abstract Vector2<T> opposite();
+    public abstract Vector2<T> add(Vector2<T> v);
+    public abstract Vector2<T> substract(Vector2<T> v);
+    public abstract Vector2<T> multiply(Vector2<T> v);
+    public abstract Vector2<T> multiply(int coef);
     
-    public Vector2<T> substract(Vector2<T> v)
+    
+    @Override
+    public String toString()
     {
-        return add(v.opposite());
+        return "(" + x + ", " + y + ")";
     }
     
     @Override
@@ -45,5 +50,14 @@ public abstract class Vector2<T> implements Serializable
             return false;
         Vector2 otherMyClass =(Vector2)other;
         return otherMyClass.x.equals(x) && otherMyClass.y.equals(y);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.x);
+        hash = 89 * hash + Objects.hashCode(this.y);
+        return hash;
     }
 }

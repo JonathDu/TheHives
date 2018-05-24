@@ -32,6 +32,14 @@ public class Vector2i extends Vector2<Integer>
     }
     
     @Override
+    public Vector2i opposite()
+    {
+        x = -x;
+        y = -y;
+        return this;
+    }
+    
+    @Override
     public Vector2i add(Vector2<Integer> v)
     {
         x += v.x;
@@ -40,12 +48,20 @@ public class Vector2i extends Vector2<Integer>
     }
     
     @Override
-    public Vector2i opposite()
+    public Vector2<Integer> substract(Vector2<Integer> v)
     {
-        x = -x;
-        y = -y;
+        x -= v.x;
+        y -= v.y;
         return this;
-    }    
+    }
+    
+    @Override
+    public Vector2i multiply(Vector2<Integer> v)
+    {
+        this.x *= v.x;
+        this.y *= v.y;
+        return this;
+    }
     
     @Override
     public Vector2i multiply(int coef)
@@ -54,17 +70,6 @@ public class Vector2i extends Vector2<Integer>
         this.y *= coef;
         return this;
     }
+
     
-    public Vector2i multiply(Vector2<Integer> coefs)
-    {
-        this.x *= coefs.x;
-        this.y *= coefs.y;
-        return this;
-    }
-    
-    @Override
-    public String toString()
-    {
-        return "(" + x + ", " + y + ")";
-    }
 }
