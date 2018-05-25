@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.controller.GestionnaireSauvegarde;
 import hive.model.game.Game;
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -94,7 +95,7 @@ public class InterfaceCharger extends Interface {
         text_sp.getChildren().add(fleche_Im);
         text_sp.getChildren().add(text);
         
-        for (String fileName : controller.getSavedFileNames()) {
+        for (String fileName : GestionnaireSauvegarde.getSavedFileNames()) {
             ImageView flecheIm = new ImageView(fleche);
             flecheIm.setFitHeight(flecheHauteur*0.5);
             flecheIm.setFitWidth(flecheLargeur);
@@ -133,7 +134,7 @@ public class InterfaceCharger extends Interface {
             @Override
             public void handle(MouseEvent event) {
                 String selectedFileName = ((Label)parties.getSelectionModel().getSelectedItem().getChildren().get(1)).getText();
-                Game game = controller.chargerGame(selectedFileName);
+                Game game = GestionnaireSauvegarde.chargerGame(selectedFileName);
                 controller.goToPlateau(game);
             }
         });

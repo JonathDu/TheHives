@@ -19,6 +19,12 @@ public class Cell implements Serializable
     
     public Cell() {} // for serialization
     
+    public Cell(Cell other)
+    {
+        this.comb = other.comb;
+        this.level = other.level;
+    }
+    
     public Cell(Honeycomb comb)
     {
         this.comb = comb;
@@ -34,6 +40,23 @@ public class Cell implements Serializable
     public Tile getTile()
     {
         return comb.value().get(level);
+    }
+    
+    public boolean isAtTop()
+    {
+        return level == comb.value().size() - 1;
+    }
+    
+    public Cell down()
+    {
+        level -= 1;
+        return this;
+    }
+    
+    public Cell up()
+    {
+        level += 1;
+        return this;
     }
     
     @Override

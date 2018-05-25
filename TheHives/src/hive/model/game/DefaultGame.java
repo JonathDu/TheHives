@@ -18,6 +18,8 @@ import hive.model.players.Player;
 import hive.model.players.PlayerCollection;
 import hive.model.players.Players;
 import hive.model.players.TeamColor;
+import hive.model.players.actions.Action;
+import java.util.Stack;
 import util.Matrix;
 
 /**
@@ -40,7 +42,7 @@ public class DefaultGame
         Players players = getPlayers(d1, d2);
         PlayerTurn turn = new PlayerTurn(players);
 
-        UtilData data = new UtilData(new PositionsPerInsectPerTeam(), 0, 0, new ActionsTrace(), new TilesInfluencePerTeam(), new NbGroupsPerComb());
+        UtilData data = new UtilData(new PositionsPerInsectPerTeam(), 0, 0, new Stack<>(), new Stack<>(), new TilesInfluencePerTeam(), new NbGroupsPerComb());
 
         return new GameState(board, players, turn, data);
     }

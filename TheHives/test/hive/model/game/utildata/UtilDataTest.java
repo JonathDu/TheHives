@@ -5,6 +5,9 @@
  */
 package hive.model.game.utildata;
 
+import hive.model.game.Game;
+import hive.model.game.GameUtil;
+import hive.model.game.rules.GameStatus;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -43,9 +46,9 @@ public class UtilDataTest
     {
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    @Test
+    public void test()
+    {
+        
+    }
 }

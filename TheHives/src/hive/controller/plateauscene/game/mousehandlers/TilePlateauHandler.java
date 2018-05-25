@@ -8,6 +8,7 @@ package hive.controller.plateauscene.game.mousehandlers;
 import hive.controller.plateauscene.game.PlateauHandlerData;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Cell;
+import hive.model.game.rules.HiveUtil;
 import hive.model.players.decisions.HumanDecision;
 import hive.vue.InterfacePlateau;
 import javafx.event.EventHandler;
@@ -50,7 +51,7 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
                     System.out.println("Source selectionnée");
 
                     controller.builder.setSource(cellClicked);
-                    controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
+                    controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
 
                     uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
@@ -74,7 +75,7 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
                         controller.builder.setBegin();
 
                         controller.builder.setSource(cellClicked);
-                        controller.builder.setPossibleDestinations(game.rules.getPossibleDestinations(game.state, cellClicked));
+                        controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
 
                         uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
                         uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);

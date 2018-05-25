@@ -9,11 +9,20 @@ import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.board.Tile;
 import hive.model.board.TilesStack;
+import hive.model.game.Game;
 import hive.model.game.GameState;
+import hive.model.insects.InsectType;
+import hive.model.players.Player;
 import hive.model.players.TeamColor;
-import java.util.function.Predicate;
+import hive.model.players.actions.Action;
+import hive.model.players.actions.MoveAction;
+import hive.model.players.actions.NoAction;
+import hive.model.players.actions.PutAction;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.function.Consumer;
 import util.Iterators;
-import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
 import util.hexagons.HexagonUtil;
 import util.hexagons.iterators.BreadthIterator;
@@ -162,6 +171,130 @@ public class HiveUtil
     public static int nbGroups(Honeycomb comb)
     {
         return HexagonUtil.nbGroups(comb, stack -> !stack.isEmpty());
+    }
+    
+    public static boolean queenIsSurrounded(GameState state, Player player)
+    {
+        HashSet<Cell> queen_cells = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
+        
+        // Queen already put
+        if(!queen_cells.isEmpty())
+        {
+            assert queen_cells.size() == 1;
+            return HiveUtil.isSurrounded(queen_cells.iterator().next());
+        }
+        else
+            return false;
+    }
+
+    public static boolean nobodyCanPlay(GameState state)
+    {
+        if(HiveUtil.nbTurns(state) == 1)
+            return false;
+        return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
+    }
+    
+    
+    public static void consumePlacements(Game game, Consumer<Cell> consumer)
+    {
+        for (InsectType type : InsectType.implemented_insects)
+            game.rules.consumePlacements(game.state, type, consumer);
+    }
+    
+    public static void consumeDestinations(Game game, Cell source, Consumer<Cell> consumer)
+    {
+        game.rules.consumeDestinations(game.state, source, consumer);
+    }
+    
+    public static void consumeDestinations(Game game, Consumer<Cell> consumer)
+    {
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(game.state.turn.getCurrent().color).get(type);
+            for(Cell source : sources)
+                game.rules.consumeDestinations(game.state, source, consumer);
+        }
+    }
+    
+    public static ArrayList<Cell> getPlacements(Game game)
+    {
+        return getListFromSetter(cells -> consumePlacements(game, cell -> cells.add(cell)));
+    }
+    
+    public static ArrayList<Cell> getDestinations(Game game, Cell source)
+    {
+        return getListFromSetter(cells -> consumeDestinations(game, source, cell -> cells.add(cell)));
+    }
+    
+    public static ArrayList<Cell> getDestinations(Game game)
+    {
+        return getListFromSetter(cells -> consumeDestinations(game, cell -> cells.add(cell)));
+    }
+    
+    public static void setPutActions(Game game, ArrayList<Action> actions)
+    {
+        Player current = game.state.turn.getCurrent();
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            game.rules.consumePlacements(game.state, type,
+                    placement -> actions.add(new PutAction(placement, new Tile(type, current.color))));
+        }
+    }
+    
+    public static void setMoveActions(Game game, Cell source, ArrayList<Action> actions)
+    {
+        game.rules.consumeDestinations(game.state, source,
+                        dest -> actions.add(new MoveAction(source, dest)));
+    }
+    
+    public static void setMoveActions(Game game, ArrayList<Action> actions)
+    {
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(game.state.turn.getCurrent().color).get(type);
+            for(Cell source : sources)
+            {
+                setMoveActions(game, source, actions);
+            }
+        }
+    }
+    
+    // does not treat NoAction case
+    public static void setActions(Game game, ArrayList<Action> actions)
+    {
+        setPutActions(game, actions);
+        setMoveActions(game, actions);
+    }
+    
+    // deprecated
+    public static ArrayList<Action> getPutActions(Game game)
+    {
+        return getListFromSetter(actions -> setPutActions(game, actions));
+    }
+    
+    // deprecated
+    public static ArrayList<Action> getMoveActions(Game game, Cell source)
+    {
+        return getListFromSetter(actions -> setMoveActions(game, source, actions));
+    }
+    
+    // deprecated
+    public static ArrayList<Action> getMoveActions(Game game)
+    {
+        return getListFromSetter(actions -> setMoveActions(game, actions));
+    }
+    
+    // deprecated
+    public static ArrayList<Action> getActions(Game game)
+    {
+        return getListFromSetter(actions -> setActions(game, actions));
+    }
+    
+    private static <T> ArrayList<T> getListFromSetter(Consumer<ArrayList<T>> setter)
+    {
+        ArrayList<T> list = new ArrayList<>();
+        setter.accept(list);
+        return list;
     }
 }
 

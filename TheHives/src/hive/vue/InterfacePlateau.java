@@ -143,6 +143,12 @@ public class InterfacePlateau extends Interface
 
     }
 
+    public void update()
+    {
+        ruche.updateTab(); //TODO !!!
+        // TODO : main.update()
+    }
+
     private BorderPane setTool()
     {
         width = (int) primaryStage.getWidth();
@@ -162,6 +168,7 @@ public class InterfacePlateau extends Interface
         boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width, height);
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -211,19 +218,25 @@ public class InterfacePlateau extends Interface
             primaryStage.show();
         });
 
+
+        boutonRecommencer.setOnMouseClicked(value ->
+        {
+            gameController.restart();
+        });
+
         boutonAnnuler.setOnMouseClicked(value ->
         {
-            controller.undo(game);
+            gameController.undo();
         });
 
         boutonReplay.setOnMouseClicked(value ->
         {
-            controller.redo(game);
+            gameController.redo();
         });
 
         boutonConseil.setOnMouseClicked(value ->
         {
-            //TODO
+            gameController.help();
         });
 
         Group g = new Group();
@@ -234,12 +247,15 @@ public class InterfacePlateau extends Interface
 
         gauche.getChildren().add(boutonHome);
         gauche.getChildren().add(boutonSave);
+        gauche.getChildren().add(boutonRecommencer);
         droite.getChildren().add(boutonRegle);
         droite.getChildren().add(boutonPreference);
         droite.getChildren().add(boutonPleinEcran);
         centre.getChildren().add(boutonAnnuler);
         centre.getChildren().add(boutonConseil);
         centre.getChildren().add(boutonReplay);
+
+        pane.setPadding(new Insets(5));
         return pane;
 
     }

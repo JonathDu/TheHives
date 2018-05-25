@@ -15,19 +15,21 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class ActionDisapplier implements ActionVisitor
+public class UndoUpdater implements ActionVisitor
 {
     PlayerUndoUpdater player_undo;
     UtilDataBeforeUndoUpdater data_before_undo;
     BoardUndoUpdater board_undo;
     UtilDataAfterUndoUpdater data_after_undo;
+    TracesUndoUpdater traces_undo;
     
-    public ActionDisapplier(GameState state)
+    public UndoUpdater(GameState state)
     {
         this.player_undo = new PlayerUndoUpdater(state.turn);
         this.data_before_undo = new UtilDataBeforeUndoUpdater(state.data);
         this.board_undo = new BoardUndoUpdater(state.board);
         this.data_after_undo = new UtilDataAfterUndoUpdater(state.data);
+        this.traces_undo = new TracesUndoUpdater(state.data);
     }
 
     @Override
@@ -37,6 +39,7 @@ public class ActionDisapplier implements ActionVisitor
         action.accept(data_before_undo);
         action.accept(board_undo);
         action.accept(data_after_undo);
+        action.accept(traces_undo);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class ActionDisapplier implements ActionVisitor
         action.accept(data_before_undo);
         action.accept(board_undo);
         action.accept(data_after_undo);
+        action.accept(traces_undo);
     }
 
     @Override
@@ -55,5 +59,6 @@ public class ActionDisapplier implements ActionVisitor
         action.accept(data_before_undo);
         action.accept(board_undo);
         action.accept(data_after_undo);
+        action.accept(traces_undo);
     }
 }

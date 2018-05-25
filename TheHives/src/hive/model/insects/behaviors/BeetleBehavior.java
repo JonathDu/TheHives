@@ -11,7 +11,7 @@ import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
-import java.util.ArrayList;
+import java.util.function.Consumer;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -21,14 +21,11 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class BeetleBehavior implements InsectBehavior
 {
-
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
-        ArrayList<Cell> list = new ArrayList<>();
-        
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
-            return list;
+            return;
         
         NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
         
@@ -40,7 +37,7 @@ public class BeetleBehavior implements InsectBehavior
             if (cell.comb.value().size() <= neighbor.hexagon.value().size()) 
             {
                 // the beetle can climb over it
-                list.add(new Cell((Honeycomb)neighbor.hexagon));
+                consumer.accept(new Cell((Honeycomb)neighbor.hexagon));
             }
            // otherwise the beetle is above
             else
@@ -53,16 +50,15 @@ public class BeetleBehavior implements InsectBehavior
                     {
                         // if the beetle can slides next to a wall
                         if(HiveUtil.hasWallNextToAtSide(cell, neighbor.from) && HiveUtil.isFreeAtSide(cell, neighbor.from))
-                            list.add(new Cell((Honeycomb)neighbor.hexagon));
+                            consumer.accept(new Cell((Honeycomb)neighbor.hexagon));
                     }
                     // otherwise it will stay connex anyway
                     else
-                        list.add(new Cell((Honeycomb)neighbor.hexagon));
+                        consumer.accept(new Cell((Honeycomb)neighbor.hexagon));
                 }
                 // otherwise the beetle can't move
             }
         }
-        return list;
     }
 
     @Override

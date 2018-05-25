@@ -65,7 +65,7 @@ public class ActionBuilder
         state = State.SOURCE_SELECTED;
     }
     
-    public void setPossibleDestinations(ArrayList<Cell> destinations)
+    public void setDestinations(ArrayList<Cell> destinations)
     {
         possibleDestinations = destinations;
     }

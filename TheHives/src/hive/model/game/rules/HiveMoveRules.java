@@ -10,7 +10,7 @@ import hive.model.game.GameState;
 import hive.model.insects.InsectType;
 import hive.model.insects.InsectsBehaviors;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -31,9 +31,9 @@ public class HiveMoveRules implements MoveRules, Serializable
     }
     
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
-        return behaviors.get(cell.getTile().type).getPossibleDestinations(state, cell);
+        behaviors.get(cell.getTile().type).consumeDestinations(state, cell, consumer);
     }
     
     @Override

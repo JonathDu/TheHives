@@ -9,15 +9,8 @@ import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.game.GameState;
 import hive.model.insects.InsectType;
-import hive.model.players.Player;
-import hive.model.players.actions.Action;
-import hive.model.players.actions.MoveAction;
-import hive.model.players.actions.NoAction;
-import hive.model.players.actions.PutAction;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.function.Consumer;
 
 /**
  *
@@ -34,90 +27,41 @@ public class HiveRules implements Rules, Serializable
         this.move_rules = new HiveMoveRules();
     }
     
-    public void setPossibleActions(GameState state, ArrayList<Action> actions)
-    {
-        actions.clear();
-        
-        setPossiblePlacements(state, actions);
-        setPossibleDestinations(state, actions);
-        
-        if(actions.isEmpty())
-            actions.add(new NoAction());
-    }
-    
-    public void setPossiblePlacements(GameState state, ArrayList<Action> actions)
-    {
-        Player current = state.turn.getCurrent();
-        // PutAction
-        for (InsectType type : InsectType.implemented_insects)
-        {
-            ArrayList<Cell> placements = getPossiblePlacements(state, type);
-            if (current.collection.get(type) > 0)
-            {
-                Iterator<Cell> place = placements.iterator();
-                while (place.hasNext())
-                {
-                    actions.add(new PutAction(place.next(), new Tile(type, current.color)));
-                }
-            }
-        }
-    }
-    
-    public void setPossibleDestinations(GameState state, ArrayList<Action> actions)
-    {
-        for (InsectType type : InsectType.implemented_insects)
-        {
-            HashSet<Cell> sources = state.data.tiles.get(state.turn.getCurrent().color).get(type);
-            Iterator<Cell> source_iterator = sources.iterator();
-            while (source_iterator.hasNext())
-            {
-                Cell source = source_iterator.next();
-                ArrayList<Cell> destinations = getPossibleDestinations(state, source);
-                Iterator<Cell> dest_iterator = destinations.iterator();
-                while (dest_iterator.hasNext())
-                {
-                    actions.add(new MoveAction(source, dest_iterator.next()));
-                }
-            }
-        }
-    }
-
-    
-    public ArrayList<Cell> getPossiblePlacements(GameState state, InsectType type)
+    public void consumePlacements(GameState state, InsectType type, Consumer<Cell> consumer)
     {
         if(queenMustBePut(state))
         {
             if(type == InsectType.QUEEN_BEE)
-                return getPossiblePlacementsConstantTime(state);
-            else
-                return new ArrayList<>();
+            {
+                if (state.turn.getCurrent().collection.get(type) > 0)
+                    consumePlacementsConstantTime(state, consumer);
+            }
         }
         else
-            return getPossiblePlacementsConstantTime(state);
+        {
+            if (state.turn.getCurrent().collection.get(type) > 0)
+                consumePlacementsConstantTime(state, consumer);
+        }
     }
     
-    
-
     @Override
-    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
+    public void consumePlacements(GameState state, Tile tile, Consumer<Cell> consumer)
     {
-        return getPossiblePlacements(state, tile.type);
+        consumePlacements(state, tile.type, consumer);
     }
-
+    
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
         if(!queenIsPut(state))
-            return new ArrayList<>();
+            return;
         if(queenMustBePut(state))
         {
             if(cell.getTile().type == InsectType.QUEEN_BEE)
-                return move_rules.getPossibleDestinations(state, cell);
-            else
-                return new ArrayList<>();
+                move_rules.consumeDestinations(state, cell, consumer);
         }
         else
-            return move_rules.getPossibleDestinations(state, cell);
+            move_rules.consumeDestinations(state, cell, consumer);
     }
     
     @Override
@@ -129,10 +73,10 @@ public class HiveRules implements Rules, Serializable
     @Override
     public GameStatus getStatus(GameState state)
     {
-        boolean current_wins = queenIsSurrounded(state, state.turn.getOpponent());
-        boolean opponent_wins = queenIsSurrounded(state, state.turn.getCurrent());
+        boolean current_wins = HiveUtil.queenIsSurrounded(state, state.turn.getOpponent());
+        boolean opponent_wins = HiveUtil.queenIsSurrounded(state, state.turn.getCurrent());
         
-        if((current_wins && opponent_wins) || nobodyCanPlay(state))
+        if((current_wins && opponent_wins) || HiveUtil.nobodyCanPlay(state))
             return GameStatus.DRAW;
         else if(current_wins)
             return GameStatus.CURRENT_WINS;
@@ -142,48 +86,31 @@ public class HiveRules implements Rules, Serializable
             return GameStatus.CONTINUES;
     }
     
-    private ArrayList<Cell> getPossiblePlacementsConstantTime(GameState state)
+    private void consumePlacementsConstantTime(GameState state, Consumer<Cell> consumer)
     {
-        if(state.data.placements == null)
-            state.data.placements = put_rules.getPossiblePlacements(state, null);
-        return state.data.placements;
-    }
-    
-    private boolean queenIsSurrounded(GameState state, Player player)
-    {
-        HashSet<Cell> queen_cells = state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
-        
-        // Queen already put
-        if(!queen_cells.isEmpty())
+        if(!state.data.placements_initialized)
         {
-            assert queen_cells.size() == 1;
-            return HiveUtil.isSurrounded(queen_cells.iterator().next());
+            // placements are not initialized
+            state.data.placements_initialized = true;
+            state.data.placements.clear();
+            put_rules.consumePlacements(state, cell -> state.data.placements.add(cell));
         }
-        else
-            return false;
+        for(Cell cell : state.data.placements)
+            consumer.accept(cell);
     }
     
-    private int getMaxQueenTurn()
-    {
-        return 4;
-    }
-    
-    private boolean queenMustBePut(GameState state)
+    public boolean queenMustBePut(GameState state)
     {
         return HiveUtil.nbTurns(state) == getMaxQueenTurn() && !queenIsPut(state);
     }
     
-    private boolean queenIsPut(GameState state)
+    public boolean queenIsPut(GameState state)
     {
         return !state.data.tiles.get(state.turn.getCurrent().color).get(InsectType.QUEEN_BEE).isEmpty();
     }
-
-    private boolean nobodyCanPlay(GameState state)
+    
+    public int getMaxQueenTurn()
     {
-        if(HiveUtil.nbTurns(state) == 1)
-            return false;
-        return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
+        return 4;
     }
-
-
 }
