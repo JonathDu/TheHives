@@ -10,6 +10,9 @@ import hive.model.board.Cell;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
+import hive.model.game.rules.HiveRules;
+import hive.model.game.rules.HiveUtil;
+import hive.model.game.rules.Rules;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
@@ -67,6 +70,12 @@ public class GameController
         timerFrame.play();
     }
     
+    public void stop()
+    {
+        timerFrame.stop();
+        timerJouerIA.stop();
+    }
+    
     public void restart()
     {
         timerFrame.stop();
@@ -84,26 +93,51 @@ public class GameController
         GameProgress progress = new GameProgress(game);
         progress.doAction();
         
+        
+
+        if(!currentPlayerCanPlay())
+        {
+            NoAction noAction = new NoAction();
+            ((HumanDecision) game.state.turn.getCurrent().decision).setAction(noAction);
+            progress.doAction();
+            //TODO!!!
+        }
+        //TODO : afficher le nombre de tour restant avant de poser la reine ?
+        
+        
         if(game.rules.queenMustBePut(game.state))
         {
+            System.out.println("Vous devez poser la reine");
             //TODO : popup il faut poser la reine
         }
         
         switch(game.rules.getStatus(game.state))
         {
             case CONTINUES:
+                System.out.println("Tour suivant");
                 uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
                 break;
             case CURRENT_WINS:
+                System.out.println("Le joueur courrant a gagné");
+                stop();
                 //TODO : popup le joueur courrant a gagné
                 break;
             case OPPONENT_WINS:
+                System.out.println("Le joueur opposé a gagné");
+                stop();
                 //TODO : popup le joueur courrant a gagné
                 break;
             case DRAW:
+                System.out.println("Math nul");
+                stop();
                 //TODO : popup match nul
                 break;
         }
+    }
+    
+    private boolean currentPlayerCanPlay()
+    {
+        return !game.state.data.placements.isEmpty() || !HiveUtil.getDestinations(game).isEmpty();
     }
 
     public void undo()
