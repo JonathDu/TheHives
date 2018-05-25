@@ -19,8 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -34,13 +32,15 @@ import javafx.stage.Stage;
 public class NodePlateauMain extends Parent {
 
     public VBox pions;
-    private Label labelNomJoueur;
+    private final Label labelNomJoueur;
     public boolean isCourant;
     private final TeamColor couleur;
     public EnumMap<InsectType, NodePions> pilesPions;
     public ImageView afficheTour;
     private final ImageView panneau;
-    private StackPane affichageJoueur;
+    private final StackPane affichageJoueur;
+    private final PlayerCollection col;
+    private final GameController plateauController;
 
     CacheImage c;
 
@@ -48,17 +48,19 @@ public class NodePlateauMain extends Parent {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
+        this.col = col;
+        this.plateauController = plateauController;
         affichageJoueur = new StackPane();
 
         labelNomJoueur = new Label(nomJoueur);
 
-        pilesPions = new EnumMap<InsectType, NodePions>(InsectType.class);
+        pilesPions = new EnumMap<>(InsectType.class);
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new NodePions(color, col.get(type), type, c));
             pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, color, type));
             pions.getChildren().add(pilesPions.get(type));
         }
-        
+
         pions.setPadding(new Insets(50, 20, 20, 10));
         pions.setAlignment(Pos.TOP_CENTER);
 
@@ -114,5 +116,16 @@ public class NodePlateauMain extends Parent {
             panneau.setEffect(new DropShadow(10, Color.TRANSPARENT));
         }
 
+    }
+
+    public void update(PlayerCollection collection) {
+        pions.getChildren().clear();
+        pilesPions.clear();
+        for (InsectType type : InsectType.implemented_insects) {
+            pilesPions.put(type, new NodePions(couleur, collection.get(type), type, c));
+            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
+            pions.getChildren().add(pilesPions.get(type));
+        }
+        pions.getChildren().add(affichageJoueur);
     }
 }

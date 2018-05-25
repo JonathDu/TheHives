@@ -36,8 +36,7 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Interface
-{
+public class InterfacePlateau extends Interface {
 
     BorderPane borderPane;
     public NodePlateauMain mainGauche;
@@ -65,8 +64,7 @@ public class InterfacePlateau extends Interface
     String j1;
     String j2;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2)
-    {
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
 
         super(stage, controller, c);
 
@@ -142,15 +140,15 @@ public class InterfacePlateau extends Interface
         gameController.start();
 
     }
-    
-    public void update()
-    {
+
+    public void update() {
         ruche.updateTab(); //TODO !!!
-        // TODO : main.update()
+        majJoueurCourant(TeamColor.WHITE);
+        mainGauche.update(game.state.players.get(0).collection);
+        mainDroite.update(game.state.players.get(1).collection);
     }
 
-    private BorderPane setTool()
-    {
+    private BorderPane setTool() {
         width = (int) primaryStage.getWidth();
 
         String repertoire = "Design/FenetrePlateau/";
@@ -162,13 +160,15 @@ public class InterfacePlateau extends Interface
         droite = new HBox();
         centre = new HBox();
 
-        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width);
-        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width);
-        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
-        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width);
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width, height);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width, height);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width, height);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width, height);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
+        
+        
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -207,8 +207,8 @@ public class InterfacePlateau extends Interface
             primaryStage.show();
         });
 
-        boutonRegle.setOnMouseClicked(value ->
-        {
+        boutonRegle.setOnMouseClicked(value
+                -> {
 
             Stage primaryStage = new Stage();
             Parent root;
@@ -217,25 +217,24 @@ public class InterfacePlateau extends Interface
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         });
-        
-        
-        boutonRecommencer.setOnMouseClicked(value ->
-        {
+
+        boutonRecommencer.setOnMouseClicked(value
+                -> {
             gameController.restart();
         });
-        
-        boutonAnnuler.setOnMouseClicked(value ->
-        {
+
+        boutonAnnuler.setOnMouseClicked(value
+                -> {
             gameController.undo();
         });
 
-        boutonReplay.setOnMouseClicked(value ->
-        {
+        boutonReplay.setOnMouseClicked(value
+                -> {
             gameController.redo();
         });
 
-        boutonConseil.setOnMouseClicked(value ->
-        {
+        boutonConseil.setOnMouseClicked(value
+                -> {
             gameController.help();
         });
 
@@ -254,35 +253,31 @@ public class InterfacePlateau extends Interface
         centre.getChildren().add(boutonAnnuler);
         centre.getChildren().add(boutonConseil);
         centre.getChildren().add(boutonReplay);
+
+        pane.setPadding(new Insets(5));
         return pane;
 
     }
 
-    public NodePlateauMain getInterfacePlateauMain(TeamColor color)
-    {
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
-    public void majTileMain(Tile tile, int nbTiles)
-    {
-        if (tile.color == TeamColor.BLACK)
-        {
+    public void majTileMain(Tile tile, int nbTiles) {
+        if (tile.color == TeamColor.BLACK) {
             mainDroite.maj(tile, nbTiles);
-        } else
-        {
+        } else {
             mainGauche.maj(tile, nbTiles);
         }
     }
 
-    public void majJoueurCourant(TeamColor color)
-    {
+    public void majJoueurCourant(TeamColor color) {
         mainDroite.setIsCourant(color == TeamColor.BLACK);
         mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         //pas de texte dans cette interface => rien a mettre a jour
     }
 }

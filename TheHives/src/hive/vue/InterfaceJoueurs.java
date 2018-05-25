@@ -55,11 +55,11 @@ public class InterfaceJoueurs extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 15);
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
         AnchorPane.setTopAnchor(boutonPreference, (double) 5);
         pane.getChildren().add(boutonPreference);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 10);
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
         AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
         pane.getChildren().add(boutonPleinEcran);
 
@@ -896,11 +896,9 @@ public class InterfaceJoueurs extends Interface {
     {
         joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
         joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
-        Name1.setText(controller.gestionnaireLangage.getText("text_nom"));
-        Name2.setText(controller.gestionnaireLangage.getText("text_nom"));
-        valider.setText(controller.gestionnaireLangage.getText("text_valider"));    
         Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
         Name2.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
+        valider.setText(controller.gestionnaireLangage.getText("text_valider")); 
     }
 
 }
