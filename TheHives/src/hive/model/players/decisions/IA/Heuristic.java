@@ -22,23 +22,23 @@ import hive.model.insects.InsectType;
 
 public class Heuristic {
     public static final int[] NB_QUEEN_OP_POSSIBILITY = {170, 152, -166, -166, -166};
-    public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_FREE_OP_OP = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {0, 0,0, 0, 0};
+    public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 65, 84, 200, 110};
+    public static final int[] QUEEN_NEIGH_FREE_OP_OP = {0, 0, 0, 0, 0};
+    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {16, 65, 84, 200, 110};
+    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {16, 65, 84, 200, 110};
     public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -191, -132};
     public static final int[] INSECT_BLOCK_VALUE_OP = {64, 122, 121, 144, 140};
-    public static final int[] IN_HAND_OP = {0 , 0, 0, 0, 0 };
+    public static final int[] IN_HAND_OP = {-20 , -20, -20, -20, -20 };
     
     
     public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-184, -170, 150, 150, 150};
-    public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {0, 0,0, 0, 0};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {0, 0,0, 0, 0};
+    public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-136, -180, -200, -180, -180};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-10, -10, -10, -10, -10};
+    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-136, -180, -200, -180, -180};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-136, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 191, 132};
     public static final int[] INSECT_BLOCK_VALUE_CUR = {-64, -122, -121, -144, -140};
-    public static final int[] IN_HAND_CUR = {0 , 0, 0, 0, 0 };
+    public static final int[] IN_HAND_CUR = {0 , -100, 20, 30, 20 };
 
     
     public static final int[] QUEEN_CRUSHED_CUR = {-200, 0};
