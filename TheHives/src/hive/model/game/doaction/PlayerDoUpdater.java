@@ -20,7 +20,7 @@ public class PlayerDoUpdater implements ActionVisitor
 {
     PlayerTurn turn;
     
-    PlayerDoUpdater(PlayerTurn turn)
+    public PlayerDoUpdater(PlayerTurn turn)
     {
         this.turn = turn;
     }

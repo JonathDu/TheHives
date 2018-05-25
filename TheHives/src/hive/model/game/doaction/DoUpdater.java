@@ -15,19 +15,21 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class ActionApplier implements ActionVisitor
+public class DoUpdater implements ActionVisitor
 {
     PlayerDoUpdater player_do;
     UtilDataBeforeDoUpdater data_before_do;
     BoardDoUpdater board_do;
     UtilDataAfterDoUpdater data_after_do;
+    TracesDoUpdater traces_do;
 
-    public ActionApplier(GameState state)
+    public DoUpdater(GameState state)
     {
         this.player_do = new PlayerDoUpdater(state.turn);
         this.data_before_do = new UtilDataBeforeDoUpdater(state.data);
         this.board_do = new BoardDoUpdater(state.board);
         this.data_after_do = new UtilDataAfterDoUpdater(state.data);
+        this.traces_do = new TracesDoUpdater(state.data);
     }
     
     @Override
@@ -37,6 +39,7 @@ public class ActionApplier implements ActionVisitor
         action.accept(data_before_do);
         action.accept(board_do);
         action.accept(data_after_do);
+        action.accept(traces_do);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class ActionApplier implements ActionVisitor
         action.accept(data_before_do);
         action.accept(board_do);
         action.accept(data_after_do);
+        action.accept(traces_do);
     }
 
     @Override
@@ -55,5 +59,6 @@ public class ActionApplier implements ActionVisitor
         action.accept(data_before_do);
         action.accept(board_do);
         action.accept(data_after_do);
+        action.accept(traces_do);
     }
 }

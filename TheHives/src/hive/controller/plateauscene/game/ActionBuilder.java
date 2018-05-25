@@ -46,7 +46,7 @@ public class ActionBuilder
 
     public void setTile(Tile tile)
     {
-        assert state == State.BEGIN || state == State.TILE_SELECTED; 
+        assert state == State.BEGIN || state == State.TILE_SELECTED || state == State.SOURCE_SELECTED; 
         this.tile = tile;
         state = State.TILE_SELECTED;
     }
@@ -65,7 +65,7 @@ public class ActionBuilder
         state = State.SOURCE_SELECTED;
     }
     
-    public void setPossibleDestinations(ArrayList<Cell> destinations)
+    public void setDestinations(ArrayList<Cell> destinations)
     {
         possibleDestinations = destinations;
     }

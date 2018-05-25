@@ -19,7 +19,7 @@ public class UtilDataAfterUndoUpdater implements ActionVisitor
 {
     UtilData data;
     
-    UtilDataAfterUndoUpdater(UtilData data)
+    public UtilDataAfterUndoUpdater(UtilData data)
     {
         this.data = data;
     }
@@ -37,7 +37,7 @@ public class UtilDataAfterUndoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         
@@ -58,7 +58,7 @@ public class UtilDataAfterUndoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         
@@ -82,7 +82,7 @@ public class UtilDataAfterUndoUpdater implements ActionVisitor
         
         // trace
         
-        // occurences
+        // influences
         
         // placements
         

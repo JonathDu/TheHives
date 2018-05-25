@@ -22,6 +22,8 @@ import javafx.stage.Stage;
  */
 public class InterfaceStatistiques extends Interface {
 
+    private final Label stat;
+    
     public InterfaceStatistiques(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
 
@@ -41,9 +43,9 @@ public class InterfaceStatistiques extends Interface {
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         pane.getChildren().add(boutonRetourMenu);
 
-        Label stat = new Label();
+        stat = new Label();
 
-        stat.setText(controller.gestionnaireLangage.getText("text_statistiques"));
+        setTextWithCurrentLanguage();
 
         stat.setFont(new Font(police, width / 35));
         stat.setAlignment(Pos.CENTER);
@@ -118,6 +120,9 @@ public class InterfaceStatistiques extends Interface {
         this.panePrincipale.getChildren().add(pane);
     }
 
-    public void majRetourPreference() {
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        stat.setText(controller.gestionnaireLangage.getText("text_statistiques"));
     }
 }

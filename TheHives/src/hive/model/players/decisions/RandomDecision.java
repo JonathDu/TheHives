@@ -5,9 +5,8 @@
  */
 package hive.model.players.decisions;
 
-import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
-import hive.model.game.rules.HiveRules;
+import hive.model.game.rules.HiveUtil;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
 import java.util.ArrayList;
@@ -25,7 +24,10 @@ public class RandomDecision implements Decision
     @Override
     public Action getAction(Game game)
     {
-        ((HiveRules)game.rules).setPossibleActions(game.state, actions);
+        actions.clear();
+        HiveUtil.setActions(game, actions);
+        if(actions.isEmpty())
+            actions.add(new NoAction());
         return actions.get(rand.nextInt(actions.size()));
     }
 }

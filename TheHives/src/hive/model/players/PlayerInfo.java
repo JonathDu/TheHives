@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game;
-
-import hive.model.players.actions.Action;
-import java.util.Stack;
+package hive.model.players;
 
 /**
  *
  * @author Thomas
  */
-public class ActionsTrace extends Stack<Action>
+public class PlayerInfo
 {
-    public ActionsTrace()
-    {
-        super();
-    }
+    String name;
+    
 }

@@ -5,7 +5,7 @@
  */
 package hive.model.game;
 
-import hive.model.game.rules.Rules;
+import hive.model.game.rules.HiveRules;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -16,11 +16,11 @@ import java.util.Objects;
 public class Game implements Serializable
 {
     public GameState state;
-    public Rules rules;
+    public HiveRules rules;
     
     public Game() {} // for serialization
     
-    public Game(GameState state, Rules rules)
+    public Game(GameState state, HiveRules rules)
     {
         this.state = state;
         this.rules = rules;

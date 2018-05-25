@@ -130,8 +130,4 @@ public class NodePion extends Parent {
         }
         return v;
     }
-    
-    public void majRetourPreference()
-    {
-    }
 }

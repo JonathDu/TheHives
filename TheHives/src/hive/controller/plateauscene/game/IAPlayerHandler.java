@@ -5,9 +5,7 @@
  */
 package hive.controller.plateauscene.game;
 
-import hive.model.GameProgress;
 import hive.model.game.Game;
-import hive.model.game.GameState;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
@@ -21,27 +19,23 @@ import javafx.event.EventHandler;
  *
  * @author lucas
  */
-public class IAPlayerHandler implements EventHandler<ActionEvent>
+public class IAPlayerHandler extends PlateauHandlerData implements EventHandler<ActionEvent>
 {
-
-    private GameProgress gameProgress;
-    private InterfacePlateau uiPlateau;
-
-    public IAPlayerHandler(GameProgress gameProgress, InterfacePlateau uiPlateau)
+    public IAPlayerHandler(GameController controller)
     {
-        this.gameProgress = gameProgress;
-        this.uiPlateau = uiPlateau;
+        super(controller);
     }
 
     @Override
     public void handle(ActionEvent event)
     {
-        if (gameProgress.game.state.turn.getCurrent().decision instanceof IADecision)
+        if (progress.game.state.turn.getCurrent().decision instanceof IADecision)
         {
             System.out.println("IA FAIT ACTION");
-            gameProgress.doAction();
-            ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, gameProgress.game);
-            gameProgress.game.state.data.trace.peek().accept(gUpdater);
+            progress.doAction();
+            ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
+            progress.game.state.data.trace.peek().accept(gUpdater);
+            uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
         } else
         {
             throw new RuntimeException("IADecision attendu");
@@ -80,3 +74,4 @@ class ActionGraphicUpdater implements ActionVisitor
     {
     }
 }
+

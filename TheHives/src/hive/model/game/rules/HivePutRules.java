@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
@@ -23,25 +24,21 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class HivePutRules implements PutRules, Serializable
 {
-
-    @Override
-    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile)
+    public void consumePlacements(GameState state, Consumer<Cell> consumer)
     {
-        ArrayList<Cell> list = new ArrayList<>();
-        
         if(state.data.nb_tiles == 0)
         {
             // return center
-            list.add(new Cell(state.board.getCenter()));
-            return list;
+            consumer.accept(new Cell(state.board.getCenter()));
+            return;
         }
         else if(state.data.nb_tiles == 1)
         {
             // return center neighbors
             NeighborsIterator neighbors = new NeighborsIterator(state.board.getCenter());
             while(neighbors.hasNext())
-                list.add(new Cell((Honeycomb)neighbors.next().hexagon));
-            return list;
+                consumer.accept(new Cell((Honeycomb)neighbors.next().hexagon));
+            return;
         }
         
         TilesInfluence current_occurences = state.data.influences.get(state.turn.getCurrent().color);
@@ -66,9 +63,13 @@ public class HivePutRules implements PutRules, Serializable
                 continue;
             
             // we can add the cell at level 0
-            list.add(new Cell(pair.getKey()));
+            consumer.accept(new Cell(pair.getKey()));
         }
-        
-        return list;
+    }
+    
+    @Override
+    public void consumePlacements(GameState state, Tile tile, Consumer<Cell> consumer)
+    {
+        consumePlacements(state, consumer);
     }
 }

@@ -20,7 +20,7 @@ public class PlayerUndoUpdater implements ActionVisitor
 {
     PlayerTurn turn;
     
-    PlayerUndoUpdater(PlayerTurn turn)
+    public PlayerUndoUpdater(PlayerTurn turn)
     {
         this.turn = turn;
     }

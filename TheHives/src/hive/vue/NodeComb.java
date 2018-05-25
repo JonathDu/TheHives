@@ -55,7 +55,7 @@ public class NodeComb extends Parent {
         this.getChildren().add(socle);
         for (int i = 0; i < comb.value().size(); i++) {
             pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, plateau, new Cell(comb, i)));
+            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i)));
             this.getChildren().add(pions.get(i));
         }
 
@@ -102,8 +102,5 @@ public class NodeComb extends Parent {
         }
     }
      */
-    
-    public void majRetourPreference()
-    {
-    }
+   
 }

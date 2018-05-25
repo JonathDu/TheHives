@@ -8,7 +8,6 @@ package hive.model.game.utildata;
 import hive.model.board.Honeycomb;
 import hive.model.board.TilesStack;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import util.hexagons.iterators.NeighborsIterator;
 
 /**
@@ -24,7 +23,7 @@ public class TilesInfluence extends HashMap<Honeycomb, Integer>
         
         Integer n = get(comb);
         if(n == null)
-            put(comb, new Integer(delta));
+            put(comb, delta);
         else
         {
             put(comb, n + delta);

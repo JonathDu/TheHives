@@ -50,6 +50,8 @@ public abstract class Interface extends Parent {
         this.primaryStage = primaryStage;
         panePrincipale = new Pane();
         c = cacheImage;
+        panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
+        panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();
@@ -60,22 +62,23 @@ public abstract class Interface extends Parent {
         maxJoueur = (int) ((int) width / 2.5);
         minJoueur = maxJoueur / 2;
 
-        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("Design/Fond/fondMontagne.png") : c.getImage("Design/Fond/fondNuit.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
-        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-        background = new Background(backgroundFond);
-
-        police = controller.getPolice();
+        police = "Papyrus";
 
         boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width);
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width);
 
-        panePrincipale.setBackground(background);
+        setBackground();
+        
+        Preferences pref = controller.getPreferences();
+        pref.setVisible(false);
+        panePrincipale.getChildren().add(pref);
+
 
         /* HANDLERS */
         boutonPreference.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
-            panePrincipale.getChildren().add(controller.getPreferences());
+            pref.toFront();
+            pref.setVisible(true);
         });
 
         boutonPleinEcran.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
@@ -87,5 +90,22 @@ public abstract class Interface extends Parent {
         });
         
         this.getChildren().add(panePrincipale);
+    }
+    
+    private void setBackground()
+    {
+        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        background = new Background(backgroundFond);
+        panePrincipale.setBackground(background);    
+    }
+    
+    public abstract void setTextWithCurrentLanguage();
+    
+    public void majRetourPreference()
+    {
+        setBackground();
+        setTextWithCurrentLanguage();
     }
 }

@@ -5,7 +5,6 @@
  */
 package hive.model.game;
 
-import hive.model.players.Player;
 import hive.model.players.Players;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
