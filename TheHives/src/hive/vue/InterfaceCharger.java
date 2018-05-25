@@ -39,11 +39,11 @@ public class InterfaceCharger extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 15);
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
         AnchorPane.setTopAnchor(boutonPreference, (double) 5);
         pane.getChildren().add(boutonPreference);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 10);
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
         AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
         pane.getChildren().add(boutonPleinEcran);
 
@@ -68,9 +68,9 @@ public class InterfaceCharger extends Interface {
         pancarteIm.setFitWidth(tailleDeCase * 0.8 * 5.09);
         sp.getChildren().add(pancarteIm);
         sp.getChildren().add(choix);
-        AnchorPane.setTopAnchor(sp, (double) height / 40);
-        AnchorPane.setLeftAnchor(sp, (double) tailleDeCase * 2);
-        AnchorPane.setRightAnchor(sp, (double) tailleDeCase * 2);
+        AnchorPane.setTopAnchor(sp, (double) tailleDeCase*0.15);
+        AnchorPane.setLeftAnchor(sp, (double) tailleDeCase);
+        AnchorPane.setRightAnchor(sp, (double) tailleDeCase);
         pane.getChildren().add(sp);
         
         double flecheLargeur = tailleDeCase * 4 - 30;
@@ -85,7 +85,7 @@ public class InterfaceCharger extends Interface {
         final ComboBox<StackPane> parties = new ComboBox();
         StackPane text_sp = new StackPane();
         Label text = new Label();
-        text.setText("Choissisez la partie à charger");
+        text.setText("Cliquez pour choisir");
         text.setTextFill(Color.web("#fbe5b5"));
         text.setFont(new Font(police, tailleDeCase * 0.23));
             ImageView fleche_Im = new ImageView(fleche);
@@ -93,7 +93,6 @@ public class InterfaceCharger extends Interface {
             fleche_Im.setFitWidth(flecheLargeur);
         text_sp.getChildren().add(fleche_Im);
         text_sp.getChildren().add(text);
-        //parties.getItems().add(text_sp);
         
         for (String fileName : controller.getSavedFileNames()) {
             ImageView flecheIm = new ImageView(fleche);
@@ -105,20 +104,13 @@ public class InterfaceCharger extends Interface {
             StackPane x = new StackPane();
             x.getChildren().add(flecheIm);
             x.getChildren().add(label);
-            //x.setMaxSize(flecheLargeur, flecheHauteur);
-            //x.setMinSize(flecheLargeur, flecheHauteur);
             parties.getItems().add( x );
         }
         parties.setValue(text_sp);
         parties.setBackground(Background.EMPTY);
-                
-        
-        //parties.setMaxSize(flecheLargeur, flecheHauteur);
-        //parties.setMinSize(flecheLargeur, flecheHauteur);
-        
         parties_sp.getChildren().add(parties);
 
-        AnchorPane.setTopAnchor(parties_sp, (double) height/40 + tailleDeCase*0.9);
+        AnchorPane.setTopAnchor(parties_sp, (double) tailleDeCase*0.15 + tailleDeCase*0.9);
         AnchorPane.setLeftAnchor(parties_sp, (double) tailleDeCase * 2);
         AnchorPane.setRightAnchor(parties_sp, (double) tailleDeCase * 2);
         //AnchorPane.setBottomAnchor(parties, (double) height/1.3);
