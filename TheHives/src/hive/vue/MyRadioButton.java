@@ -77,7 +77,7 @@ class MyRadioBouton extends ToggleButton{
         
         CacheImage c = new CacheImage();
 
-        String police = controller.getPolice();
+        String police = "Papyrus";
 
         ToggleButton bouton = new ToggleButton("");
 
@@ -104,25 +104,44 @@ class MyRadioBouton extends ToggleButton{
             ia_iaIm.setFitHeight(hauteurDeLigne);
             ia_iaIm.setFitWidth(hauteurDeLigne);
             bouton.setGraphic(ia_iaIm);
-        }else if(type=="facile1" || type=="facile2"){
+        }else if(type=="facile"){
             bouton.setUserData("facile");
-
-            bouton.setText(controller.gestionnaireLangage.getText("text_facile"));
+            
+            /*bouton.setText(controller.gestionnaireLangage.getText("text_facile"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
-        }else if(type=="moyenne1" || type=="moyenne2"){
+            bouton.setMaxHeight(hauteurDeLigne*0.5);*/
+            
+            Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_facile"));
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
+            
+        }else if(type=="moyenne"){
             bouton.setUserData("moyenne");
-            bouton.setText(controller.gestionnaireLangage.getText("text_moyen"));
+            /*bouton.setText(controller.gestionnaireLangage.getText("text_moyen"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
-        }else if(type=="difficile1" || type=="difficile2"){
+            bouton.setMaxHeight(hauteurDeLigne*0.5);*/
+            
+            Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_moyenne"));
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
+        }else if(type=="difficile"){
             bouton.setUserData("difficile");
-            bouton.setText(controller.gestionnaireLangage.getText("text_difficile"));
+            /*bouton.setText(controller.gestionnaireLangage.getText("text_difficile"));
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
-            bouton.setMaxHeight(hauteurDeLigne*0.5);
+            bouton.setMaxHeight(hauteurDeLigne*0.5);*/
+            
+            Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
+            ImageView b_IAIm = new ImageView(b_IA);
+            b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
+            b_IAIm.setFitWidth(largeurBouton);
+            bouton.setGraphic(b_IAIm);
         }else if(type=="jour"){
             bouton.setUserData("jour");
             bouton.setText(controller.gestionnaireLangage.getText("text_jour"));

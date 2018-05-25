@@ -5,22 +5,24 @@
  */
 package hive.model.players.decisions;
 
+import hive.model.players.decisions.IA.EasyIA;
+import hive.model.players.decisions.IA.MediumIA;
+import hive.model.players.decisions.IA.IA;
+import hive.model.players.decisions.IA.HardIA;
+import hive.model.players.decisions.IA.Level;
+import hive.model.players.decisions.IA.HardIA;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  *
  * @author Thomas
  */
-public class IADecision implements Decision, Serializable
+public class IADecision implements Decision
 {
-    public Level qI;
-    
-    public IADecision() {} // for serialization
+    Level qI;
 
     public IADecision(Level qI) {
         this.qI = qI;
@@ -39,6 +41,9 @@ public class IADecision implements Decision, Serializable
         decisions = hia.startSimulation(state);
         switch (qI) 
         {
+            case EHARD :
+                ia = new HardIA();
+                break;
             case HARD :
                 ia = new HardIA();
                 break;
@@ -54,33 +59,6 @@ public class IADecision implements Decision, Serializable
         hia.endSimulation(state, decisions);
         return a;
         
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int hash = 5;
-        hash = 97 * hash + Objects.hashCode(this.qI);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj == null)
-        {
-            return false;
-        }
-        if (getClass() != obj.getClass())
-        {
-            return false;
-        }
-        final IADecision other = (IADecision) obj;
-        if (this.qI != other.qI)
-        {
-            return false;
-        }
-        return true;
     }
     
 }

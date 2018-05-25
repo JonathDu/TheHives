@@ -115,8 +115,4 @@ public class NodePlateauMain extends Parent {
         }
 
     }
-    
-    public void majRetourPreference()
-    {
-    }
 }

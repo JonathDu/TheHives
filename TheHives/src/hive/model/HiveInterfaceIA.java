@@ -36,23 +36,24 @@ public class HiveInterfaceIA implements InterfaceIA
 {
     // deprecated
     @Override
-    public int queenFreeNeighbour(Player p, Game game)
+    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game)
     {
+        ArrayList<Tile> freeNeighbours = new ArrayList<>();
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
         if (queen_positions.isEmpty())
         {
-            return 0;
+            return freeNeighbours;
         }
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
         {
-            if (neighIter.next().hexagon.value().isEmpty())
+            /*if (game.rules.isFree(state, cell)
             {
                 nbNeighbor++;
-            }
+            }*/
         }
-        return nbNeighbor;
+        return null;
     }
     
     // deprecated

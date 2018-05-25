@@ -29,52 +29,54 @@ public class NodeRuche extends Parent {
     private final int longueurPion = 40;
     int width, height;
 
+    private final CacheImage c;
     private final GameController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
     
     public NodeRuche(CacheImage c, GameController plateauController) {
-        double center = ((sqrt(3) / 2) * longueurPion);
-        double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
-
+        this.c = c;
         this.board = plateauController.game.state.board;
         this.plateauController = plateauController;
         hauteur = plateauController.game.state.board.getData().sizeY();
         largeur = plateauController.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
+        initTab();
+    }
+    
+    public void initTab()
+    {
+        double center = ((sqrt(3) / 2) * longueurPion);
+        double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
                 NodeComb cell = new NodeComb(c, longueurPion);
-                cell.setLayoutX(x * (longueurPion + h) + 100);
+                if(board.getHexagon(pos).value != null){
+                    cell.majComb(board.getHexagon(pos), plateau, plateauController);
+                }
+                cell.setLayoutX(x * (longueurPion + h) + 10);
 
                 if (x % 2 != 0) {
-                    cell.setLayoutY((y * 2 * center) + center  + 100);
+                    cell.setLayoutY((y * 2 * center) + center  + 10);
                 } else {
-                    cell.setLayoutY(y * 2 * center  + 100);
+                    cell.setLayoutY(y * 2 * center  + 10);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
             }
-        }
-        
-        
-        
-//        this.setOnScroll((event) -> {
-//
-//            if (event.getDeltaY() < 0 && longueurPion > 10) {
-//                longueurPion = longueurPion - 3;
-//                largeurPion = (int) (longueurPion / 1.4);
-//                majTaille();
-//            }
-//            else if (event.getDeltaY() > 0 && longueurPion < 80) {
-//                longueurPion = longueurPion + 3;
-//                largeurPion = (int) (longueurPion / 1.4);
-//                majTaille();
-//            }
-//        });
+        }     
+    }
+    
+    public void updateTab()
+    {
+        for (int y = 0; y < hauteur; y++) {
+            for (int x = 0; x < largeur; x++) {
+                //TODO
+            }
+        }    
     }
 
     public void setHandler(InterfacePlateau plateau) {
@@ -84,7 +86,7 @@ public class NodeRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 SocleHandler handler = new SocleHandler(plateauController, pos);
-                tab.getAt(pos).addEventHandler(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
                 
             }
         }
@@ -148,8 +150,4 @@ public class NodeRuche extends Parent {
 //            }
 //        }
 //    }
-    
-    public void majRetourPreference()
-    {
-    }
 }

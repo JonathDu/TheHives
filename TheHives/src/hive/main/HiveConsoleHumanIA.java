@@ -21,7 +21,7 @@ import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
 import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
-import hive.model.players.decisions.Level;
+import hive.model.players.decisions.IA.Level;
 import java.util.ArrayList;
 import java.util.Scanner;
 import util.Vector2i;

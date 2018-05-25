@@ -7,16 +7,17 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -25,15 +26,18 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Interface {
+public class InterfacePlateau extends Interface
+{
 
     BorderPane borderPane;
     public NodePlateauMain mainGauche;
@@ -44,16 +48,38 @@ public class InterfacePlateau extends Interface {
     ScrollPane scrollPane;
     BorderPane centerMainG;
     BorderPane centerMainD;
+    Game game;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
+    HiveBouton boutonHome;
+    HiveBouton boutonSave;
+    HiveBouton boutonReplay;
+    HiveBouton boutonAnnuler;
+    HiveBouton boutonRecommencer;
+    HiveBouton boutonConseil;
+    HiveBouton boutonRegle;
+
+    BorderPane pane;
+    HBox gauche;
+    HBox centre;
+    HBox droite;
+    String j1;
+    String j2;
+
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2)
+    {
+
         super(stage, controller, c);
-        
+
+        this.game = game;
         this.controller = controller;
         borderPane = new BorderPane();
         centerPane = new StackPane();
         scrollPane = new ScrollPane();
         centerMainG = new BorderPane();
         centerMainD = new BorderPane();
+
+        borderPane.prefWidthProperty().bind(stage.widthProperty());
+        borderPane.prefHeightProperty().bind(stage.heightProperty());
 
         gameController = new GameController(game, this);
 
@@ -87,8 +113,6 @@ public class InterfacePlateau extends Interface {
 
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
         scrollPane.setBackground(backgroundPlateau);
-        borderPane.prefWidthProperty().bind(stage.widthProperty());
-        borderPane.prefHeightProperty().bind(stage.heightProperty());
 
         ruche = new NodeRuche(c, gameController);
         ruche.setHandler(this);
@@ -106,35 +130,159 @@ public class InterfacePlateau extends Interface {
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
 
-        borderPane.setCenter(scrollPane);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setTop(new NodePlateauTool(c, stage, controller, joueur1, joueur2, gameController.game, this.boutonPleinEcran, this.boutonPreference));
+        borderPane.setCenter(scrollPane);
+        borderPane.setTop(setTool());
 
-        borderPane.setBackground(background);
         this.panePrincipale.getChildren().add(borderPane);
-        
+
+        majJoueurCourant(TeamColor.WHITE);
+
         gameController.start();
+
+    }
+    
+    public void update()
+    {
+        ruche.updateTab(); //TODO !!!
+        // TODO : main.update()
     }
 
-    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
+    private BorderPane setTool()
+    {
+        width = (int) primaryStage.getWidth();
+
+        String repertoire = "Design/FenetrePlateau/";
+
+        pane = new BorderPane();
+        pane.prefWidthProperty().bind(primaryStage.widthProperty());
+
+        gauche = new HBox();
+        droite = new HBox();
+        centre = new HBox();
+
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width);
+
+        boutonHome.setOnMouseClicked(value -> {
+            Stage quitStage = new Stage();
+            quitStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopup root = new NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Annuler", "Sauvegarder et quitter");
+            quitStage.setScene(new Scene(root));
+            quitStage.show();
+
+            root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+                quitStage.close();
+                controller.goToMenu();
+
+            });
+
+            root.quitter.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                quitStage.close();
+            });
+
+            root.validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+                Stage saveStage = new Stage();
+                saveStage.initModality(Modality.APPLICATION_MODAL);
+                NodePopupSave rootSave = new NodePopupSave(controller, saveStage, game);
+                saveStage.setScene(new Scene(rootSave));
+                saveStage.show();
+
+            });
+
+        });
+
+        boutonSave.setOnMouseClicked(value -> {
+            Stage primaryStage = new Stage();
+            primaryStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopupSave root = new NodePopupSave(controller, primaryStage, game);
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+        });
+
+        boutonRegle.setOnMouseClicked(value ->
+        {
+
+            Stage primaryStage = new Stage();
+            Parent root;
+            root = new InterfaceRegles(primaryStage, controller, c, true);
+            primaryStage.setTitle("Regles");
+            primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.show();
+        });
+        
+        
+        boutonRecommencer.setOnMouseClicked(value ->
+        {
+            gameController.restart();
+        });
+        
+        boutonAnnuler.setOnMouseClicked(value ->
+        {
+            gameController.undo();
+        });
+
+        boutonReplay.setOnMouseClicked(value ->
+        {
+            gameController.redo();
+        });
+
+        boutonConseil.setOnMouseClicked(value ->
+        {
+            gameController.help();
+        });
+
+        Group g = new Group();
+        g.getChildren().add(centre);
+        pane.setLeft(gauche);
+        pane.setRight(droite);
+        pane.setCenter(g);
+
+        gauche.getChildren().add(boutonHome);
+        gauche.getChildren().add(boutonSave);
+        gauche.getChildren().add(boutonRecommencer);
+        droite.getChildren().add(boutonRegle);
+        droite.getChildren().add(boutonPreference);
+        droite.getChildren().add(boutonPleinEcran);
+        centre.getChildren().add(boutonAnnuler);
+        centre.getChildren().add(boutonConseil);
+        centre.getChildren().add(boutonReplay);
+        return pane;
+
+    }
+
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color)
+    {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
-    public void majTileMain(Tile tile, int nbTiles) {
-        if (tile.color == TeamColor.BLACK) {
+    public void majTileMain(Tile tile, int nbTiles)
+    {
+        if (tile.color == TeamColor.BLACK)
+        {
             mainDroite.maj(tile, nbTiles);
-        } else {
+        } else
+        {
             mainGauche.maj(tile, nbTiles);
         }
     }
 
-    public void majJoueurCourant(TeamColor color) {
-        mainDroite.setIsCourant(color == TeamColor.WHITE);
-        mainGauche.setIsCourant(color == TeamColor.BLACK);
+    public void majJoueurCourant(TeamColor color)
+    {
+        mainDroite.setIsCourant(color == TeamColor.BLACK);
+        mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
-    public void majRetourPreference()
+    @Override
+    public void setTextWithCurrentLanguage()
     {
+        //pas de texte dans cette interface => rien a mettre a jour
     }
 }
