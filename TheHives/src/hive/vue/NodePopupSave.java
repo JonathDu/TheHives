@@ -65,7 +65,7 @@ public class NodePopupSave extends Parent {
         });
 
         validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            controller.enregistrerGame(game, field.getText());
+            controller.enregistrerGame(game, field.getText() + ".xml");
             stage.close();
             controller.goToMenu();
         });

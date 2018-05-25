@@ -862,6 +862,9 @@ public class InterfaceJoueurs extends Interface {
         //AnchorPane.setTopAnchor(valider, (double) height - 50);
         AnchorPane.setLeftAnchor(valider_sp, (double) width / 2 - tailleDeCase);
         AnchorPane.setRightAnchor(valider_sp, (double) width / 2 - tailleDeCase);
+        this.boutonPleinEcran.toFront();
+        this.boutonPreference.toFront();
+        this.boutonRetourMenu.toFront();
         pane.getChildren().add(valider_sp);
         this.panePrincipale.getChildren().add(pane);
 
