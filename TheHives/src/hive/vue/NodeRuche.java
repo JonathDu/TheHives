@@ -100,7 +100,7 @@ public class NodeRuche extends Parent {
         tab.getAt(pos).setNotSelected();
     }
 
-    public void majSource(Cell source) {
+     public void majSource(Cell source) {
         tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
     }
     

@@ -17,9 +17,9 @@ import util.LoaderXML;
  *
  * @author lucas
  */
-public class GestionnaireSauvegarde
+public class SavesGesture
 {
-    public static Game chargerGame(String fileName)
+    public static Game loadGame(String fileName)
     {
         LoaderXML<Game> loader = new GameLoader();
         Game game = null;
@@ -33,7 +33,7 @@ public class GestionnaireSauvegarde
         return game;
     }
 
-    public static void enregistrerGame(Game game, String fileName)
+    public static void saveGame(Game game, String fileName)
     {
         LoaderXML<Game> loader = new GameLoader();
         try

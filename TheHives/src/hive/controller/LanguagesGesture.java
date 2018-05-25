@@ -14,33 +14,35 @@ import java.util.ResourceBundle;
  *
  * @author lucas
  */
-public final class GestionnaireLangage
+public final class LanguagesGesture
 {
-    Locale langue;
-    ResourceBundle bundle;
-    public HashMap<String, Locale> langues;
+    private final String languagePropertiesPath;
+    private Locale language;
+    private ResourceBundle bundle;
+    public HashMap<String, Locale> languages;
 
-    public GestionnaireLangage(Locale _langue)
+    public LanguagesGesture(Locale _langue)
     {
-        langue = _langue;
-        bundle = ResourceBundle.getBundle("properties/text", langue);
-        langues = new HashMap<>();
+        languagePropertiesPath = "properties/languages/text";
+        language = _langue;
+        bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
+        languages = new HashMap<>();
         getImplementedLanguages().forEach((currentlangue) ->
         {
-            langues.put(currentlangue.getDisplayName(), currentlangue);
+            languages.put(currentlangue.getDisplayName(), currentlangue);
         });
     }
 
-    public Locale getCurrentLanguage()
+    public Locale getLanguage()
     {
-        return langue;
+        return language;
     }
 
-    public void changerLangue(Locale _langue)
+    public void setLanguage(Locale _langue)
     {
         assert getImplementedLanguages().contains(_langue);
-        langue = _langue;
-        bundle = ResourceBundle.getBundle("properties/text", langue);
+        language = _langue;
+        bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
     }
 
     public ArrayList<Locale> getImplementedLanguages()

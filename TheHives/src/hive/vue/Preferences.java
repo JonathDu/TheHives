@@ -158,7 +158,7 @@ public class Preferences extends Parent
     {
         labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
         labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
-        comboLangue.setValue(controller.gestionnaireLangage.getCurrentLanguage().getDisplayName());
+        comboLangue.setValue(controller.gestionnaireLangage.getLanguage().getDisplayName());
         labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
         labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
         radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
