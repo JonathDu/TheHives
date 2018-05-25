@@ -59,9 +59,4 @@ public class NodePions extends Parent {
         }
         this.getChildren().add(g);
     }
-    
-    public void majRetourPreference()
-    {
-    }
-
 }

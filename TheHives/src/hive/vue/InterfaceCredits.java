@@ -22,6 +22,12 @@ import javafx.stage.Stage;
  * @author Adeline
  */
 public class InterfaceCredits extends Interface {
+    
+    private final Label credits;
+    private final Label ia;
+    private final Label ihm; 
+    private final Label design;
+    private final Label mdj;
 
     public InterfaceCredits(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
@@ -42,17 +48,13 @@ public class InterfaceCredits extends Interface {
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         pane.getChildren().add(boutonRetourMenu);
 
-        Label credits = new Label();
-        Label ia = new Label();
-        Label ihm = new Label();
-        Label design = new Label();
-        Label mdj = new Label();
+        credits = new Label();
+        ia = new Label();
+        ihm = new Label();
+        design = new Label();
+        mdj = new Label();
 
-        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
-        ia.setText(controller.gestionnaireLangage.getText("text_membres_IA"));
-        ihm.setText(controller.gestionnaireLangage.getText("text_membres_IHM"));
-        design.setText(controller.gestionnaireLangage.getText("text_membres_design"));
-        mdj.setText(controller.gestionnaireLangage.getText("text_membres_moteur"));
+        setTextWithCurrentLanguage();
 
         credits.setFont(new Font(police, width / 35));
         credits.setAlignment(Pos.CENTER);
@@ -118,8 +120,14 @@ public class InterfaceCredits extends Interface {
         this.panePrincipale.getChildren().add(pane);
 
     }
-
-    public void majRetourPreference() {
+    
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
+        ia.setText(controller.gestionnaireLangage.getText("text_membres_IA"));
+        ihm.setText(controller.gestionnaireLangage.getText("text_membres_IHM"));
+        design.setText(controller.gestionnaireLangage.getText("text_membres_design"));
+        mdj.setText(controller.gestionnaireLangage.getText("text_membres_moteur"));
     }
-
 }

@@ -22,14 +22,30 @@ import javafx.stage.Stage;
  *
  * @author Adeline
  */
-public class InterfaceRegles extends Interface {
+public class InterfaceRegles extends Interface
+{
 
     private AnchorPane pane;
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c) {
+    private Label but;
+    private Label debut;
+    private Label deplacement;
+    private Label tour;
+    private Label araignee;
+    private Label fourmi;
+    private Label reine;
+    private Label sauterelle;
+    private Label scarabee;
+    private Label exception;
+    private Label jeu;
+    private Label insecte;
+    private String rep;
+
+    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c)
+    {
         super(primaryStage, controller, c);
 
-        String rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
+        rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -51,10 +67,11 @@ public class InterfaceRegles extends Interface {
 
     }
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
+    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre)
+    {
         super(primaryStage, controller, c);
 
-        String rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
+        rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
@@ -63,34 +80,24 @@ public class InterfaceRegles extends Interface {
         regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
     }
 
-    private void regles(String police, int width, int height, int tailleDeCase, int maxJoueur, int minJoueur, String rep) {
+    private void regles(String police, int width, int height, int tailleDeCase, int maxJoueur, int minJoueur, String rep)
+    {
         //BorderPane choisir = new BorderPane();
         //Label regles = new Label();
-        Label but = new Label();
-        Label debut = new Label();
-        Label deplacement = new Label();
-        Label tour = new Label();
-        Label araignee = new Label();
-        Label fourmi = new Label();
-        Label reine = new Label();
-        Label sauterelle = new Label();
-        Label scarabee = new Label();
-        Label exception = new Label();
-        Label jeu = new Label();
-        Label insecte = new Label();
+        but = new Label();
+        debut = new Label();
+        deplacement = new Label();
+        tour = new Label();
+        araignee = new Label();
+        fourmi = new Label();
+        reine = new Label();
+        sauterelle = new Label();
+        scarabee = new Label();
+        exception = new Label();
+        jeu = new Label();
+        insecte = new Label();
 
-        but.setText(controller.gestionnaireLangage.getText("text_regle_but"));
-        debut.setText(controller.gestionnaireLangage.getText("text_regle_debut"));
-        deplacement.setText(controller.gestionnaireLangage.getText("text_regle_deplacement"));
-        tour.setText(controller.gestionnaireLangage.getText("text_regle_deroulement"));
-        araignee.setText(controller.gestionnaireLangage.getText("text_regle_araignee"));
-        fourmi.setText(controller.gestionnaireLangage.getText("text_regle_fourmi"));
-        reine.setText(controller.gestionnaireLangage.getText("text_regle_reine"));
-        sauterelle.setText(controller.gestionnaireLangage.getText("text_regle_sauterelle"));
-        scarabee.setText(controller.gestionnaireLangage.getText("text_regle_scrarabee"));
-        exception.setText(controller.gestionnaireLangage.getText("text_regle_exception"));
-        jeu.setText(controller.gestionnaireLangage.getText("text_regle_jeu"));
-        insecte.setText(controller.gestionnaireLangage.getText("text_regle_insect"));
+        setTextWithCurrentLanguage();
 
         StackPane spR = new StackPane();
         Image regles = c.getImage("Regles/" + rep + "/LesRegles.png");
@@ -153,7 +160,8 @@ public class InterfaceRegles extends Interface {
         but.setTextFill(Color.web("#fbe5b5"));
         StackPane b = new StackPane();
         b.getChildren().add(but);
-        b.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        b.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/butDuJeu.png");
@@ -176,7 +184,8 @@ public class InterfaceRegles extends Interface {
         debut.setMaxSize(maxJoueur, 70);
         StackPane d = new StackPane();
         d.getChildren().add(debut);
-        d.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        d.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Début de partie.png");
@@ -199,7 +208,8 @@ public class InterfaceRegles extends Interface {
         deplacement.setMaxSize(maxJoueur, 70);
         StackPane de = new StackPane();
         de.getChildren().add(deplacement);
-        de.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        de.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Déplacement.png");
@@ -207,11 +217,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         placement.add(de, 0, 3);
@@ -222,7 +227,8 @@ public class InterfaceRegles extends Interface {
         tour.setMaxSize(maxJoueur, 70);
         StackPane t = new StackPane();
         t.getChildren().add(tour);
-        t.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        t.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/deroulementTour.png");
@@ -230,29 +236,16 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         placement.add(t, 0, 4);
         regles1.getChildren().add(placement);
         centre.add(regles1, 0, 0);
 
-        /*AnchorPane.setTopAnchor(placement, (double) tailleDeCase*1.5);
-        AnchorPane.setLeftAnchor(placement, (double) 10);
-        //AnchorPane.setRightAnchor(placement, (double) tailleDeCase*2);
-        AnchorPane.setBottomAnchor(placement, (double) tailleDeCase*2);
-        pane.getChildren().add(placement);*/
         StackPane regles2 = new StackPane();
         ImageView reglesIm2 = new ImageView(regle);
         reglesIm2.setFitHeight(width * 0.99 * 0.25 * 2);
         reglesIm2.setFitWidth(width * 0.99 * 0.25);
-        //AnchorPane.setTopAnchor(reglesIm2, (double) tailleDeCase*1.5);
-        //AnchorPane.setLeftAnchor(reglesIm2, (double) 10);
-        //pane.getChildren().add(reglesIm1);
         regles2.getChildren().add(reglesIm2);
 
         GridPane insectes = new GridPane();
@@ -281,7 +274,8 @@ public class InterfaceRegles extends Interface {
         araignee.setMaxSize(maxJoueur, 70);
         StackPane a = new StackPane();
         a.getChildren().add(araignee);
-        a.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        a.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Araignée.png");
@@ -289,11 +283,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(a, 0, 1);
@@ -304,7 +293,8 @@ public class InterfaceRegles extends Interface {
         fourmi.setMaxSize(maxJoueur, 70);
         StackPane f = new StackPane();
         f.getChildren().add(fourmi);
-        f.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        f.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Fourmis.png");
@@ -312,11 +302,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(f, 0, 2);
@@ -327,7 +312,8 @@ public class InterfaceRegles extends Interface {
         reine.setMaxSize(maxJoueur, 70);
         StackPane r = new StackPane();
         r.getChildren().add(reine);
-        r.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        r.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Reine.png");
@@ -335,11 +321,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(r, 0, 3);
@@ -350,7 +331,8 @@ public class InterfaceRegles extends Interface {
         sauterelle.setMaxSize(maxJoueur, 70);
         StackPane s = new StackPane();
         s.getChildren().add(sauterelle);
-        s.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        s.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Sauterelle.png");
@@ -358,11 +340,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(s, 0, 4);
@@ -373,7 +350,8 @@ public class InterfaceRegles extends Interface {
         scarabee.setMaxSize(maxJoueur, 70);
         StackPane sc = new StackPane();
         sc.getChildren().add(scarabee);
-        sc.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        sc.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Scarabee.png");
@@ -381,11 +359,6 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(sc, 0, 5);
@@ -396,7 +369,8 @@ public class InterfaceRegles extends Interface {
         exception.setMaxSize(maxJoueur, 70);
         StackPane e = new StackPane();
         e.getChildren().add(exception);
-        e.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        e.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             centre.getChildren().remove(centre.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Exception.png");
@@ -404,34 +378,19 @@ public class InterfaceRegles extends Interface {
             Im.setFitHeight(width - (width / 4) * 2);
             Im.setFitWidth(width - (width / 4) * 2);
             sp.getChildren().add(Im);
-            /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-            //pane.getChildren().add(sp);
             centre.add(sp, 1, 0);
         });
         insectes.add(e, 0, 6);
 
-        //AnchorPane.setTopAnchor(insectes, (double) tailleDeCase*1.5);
-        //AnchorPane.setRightAnchor(insectes, (double) width/6);
-        //AnchorPane.setRightAnchor(insectes, (double) tailleDeCase*2);
-        //AnchorPane.setBottomAnchor(insectes, (double) tailleDeCase*2);
         regles2.getChildren().add(insectes);
         centre.add(regles2, 2, 0);
 
-        //pane.getChildren().add(insectes);
         StackPane sp = new StackPane();
         Image image = c.getImage("Regles/" + rep + "/butDuJeu.png");
         ImageView Im = new ImageView(image);
         Im.setFitHeight(width - (width / 4) * 2);
         Im.setFitWidth(width - (width / 4) * 2);
         sp.getChildren().add(Im);
-        /*AnchorPane.setTopAnchor(sp, (double) tailleDeCase*1.3);
-            AnchorPane.setLeftAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setRightAnchor(sp, (double) tailleDeCase*2);
-            AnchorPane.setBottomAnchor(sp, (double) tailleDeCase*1.7);*/
-        //pane.getChildren().add(sp);
         centre.add(sp, 1, 0);
 
         sp_centre.getChildren().add(centre);
@@ -442,7 +401,27 @@ public class InterfaceRegles extends Interface {
         this.panePrincipale.getChildren().add(pane);
     }
 
-    public void majRetourPreference() {
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        but.setText(controller.gestionnaireLangage.getText("text_regle_but"));
+        debut.setText(controller.gestionnaireLangage.getText("text_regle_debut"));
+        deplacement.setText(controller.gestionnaireLangage.getText("text_regle_deplacement"));
+        tour.setText(controller.gestionnaireLangage.getText("text_regle_deroulement"));
+        araignee.setText(controller.gestionnaireLangage.getText("text_regle_araignee"));
+        fourmi.setText(controller.gestionnaireLangage.getText("text_regle_fourmi"));
+        reine.setText(controller.gestionnaireLangage.getText("text_regle_reine"));
+        sauterelle.setText(controller.gestionnaireLangage.getText("text_regle_sauterelle"));
+        scarabee.setText(controller.gestionnaireLangage.getText("text_regle_scrarabee"));
+        exception.setText(controller.gestionnaireLangage.getText("text_regle_exception"));
+        jeu.setText(controller.gestionnaireLangage.getText("text_regle_jeu"));
+        insecte.setText(controller.gestionnaireLangage.getText("text_regle_insect"));
     }
 
+    @Override
+    public void majRetourPreference()
+    {
+        super.majRetourPreference();
+        rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
+    }
 }

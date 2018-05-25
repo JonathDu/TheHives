@@ -6,8 +6,6 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -67,7 +65,8 @@ public class Preferences extends Parent
     private final Button buttonValider;
     private final StackPane stackAnnuler;
 
-    public Preferences(Stage _primaryStage, Controller _controller, CacheImage _cacheImage) {
+    public Preferences(Stage _primaryStage, Controller _controller, CacheImage _cacheImage)
+    {
         primaryStage = _primaryStage;
         controller = _controller;
 
@@ -93,6 +92,7 @@ public class Preferences extends Parent
         buttonValider = new Button();
         stackAnnuler = new StackPane();
 
+        setTextWithCurrentLanguage();
         setObjetsGraphiques();
         setHandlers();
         Pane panePrincipale = placerObjetsGraphiques();
@@ -106,14 +106,12 @@ public class Preferences extends Parent
         imageFond.setFitHeight((width - 30) / 1.35);
         imageFond.setFitWidth(width - 30);
 
-        labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
         labelPreferences.setFont(new Font(police, maxJoueur / 10));
         labelPreferences.setTextFill(Color.web("#ffff66"));
         labelPreferences.setAlignment(Pos.CENTER);
         labelPreferences.setMinSize(minJoueur, 30);
         labelPreferences.setMaxSize(maxJoueur, 70);
 
-        labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
         labelLangue.setFont(new Font(police, maxJoueur / 14));
         labelLangue.setTextFill(Color.web("#ffff66"));
         labelLangue.setAlignment(Pos.CENTER);
@@ -121,9 +119,7 @@ public class Preferences extends Parent
         labelLangue.setMaxSize(maxJoueur, 70);
 
         comboLangue.getItems().addAll(controller.gestionnaireLangage.getImplementedLanguagesString());
-        comboLangue.setValue(controller.gestionnaireLangage.getCurrentLanguage().getDisplayName());
 
-        labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
         labelAide.setFont(new Font(police, maxJoueur / 14));
         labelAide.setTextFill(Color.web("#ffff66"));
         labelAide.setAlignment(Pos.CENTER);
@@ -132,16 +128,13 @@ public class Preferences extends Parent
 
         checkBoxAide.setSelected(true);
 
-        labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
         labelTheme.setFont(new Font(police, maxJoueur / 14));
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
         labelTheme.setMinSize(minJoueur, 30);
         labelTheme.setMaxSize(maxJoueur, 70);
 
-        radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
         radioButtonJour.setToggleGroup(groupRadioButtons);
-        radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
         radioButtonNuit.setToggleGroup(groupRadioButtons);
         if (controller.typeTheme.equals("Jour"))
         {
@@ -151,7 +144,6 @@ public class Preferences extends Parent
             radioButtonNuit.setSelected(true);
         }
 
-        buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
         buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
 
@@ -162,23 +154,36 @@ public class Preferences extends Parent
         stackAnnuler.getChildren().add(ImQ);
     }
 
+    private void setTextWithCurrentLanguage()
+    {
+        labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
+        labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
+        comboLangue.setValue(controller.gestionnaireLangage.getCurrentLanguage().getDisplayName());
+        labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
+        labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
+        radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
+        radioButtonNuit.setText(controller.gestionnaireLangage.getText("text_nuit"));
+        buttonValider.setText(controller.gestionnaireLangage.getText("text_valider"));
+    }
+
     private void setHandlers()
     {
         buttonValider.addEventHandler(MouseEvent.MOUSE_ENTERED, (MouseEvent event) ->
         {
             buttonValider.setEffect(new DropShadow());
         });
-        buttonValider.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event)
-                -> {
+        buttonValider.addEventHandler(MouseEvent.MOUSE_EXITED, (MouseEvent event) ->
+        {
             buttonValider.setEffect(null);
         });
-        buttonValider.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event)
-                -> {
+        buttonValider.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) ->
+        {
             String nomLangue = comboLangue.getSelectionModel().getSelectedItem();
             boolean activerAide = checkBoxAide.isSelected();
             String textSelectedRadioButton = ((RadioButton) groupRadioButtons.getSelectedToggle()).getText();
             String nomTheme = textSelectedRadioButton.equals(controller.gestionnaireLangage.getText("text_jour")) ? "Jour" : "Nuit";
             controller.validerParametres(nomLangue, activerAide, nomTheme);
+            setTextWithCurrentLanguage();
             setVisible(false);
         });
 
@@ -188,7 +193,8 @@ public class Preferences extends Parent
         });
     }
 
-    private Pane placerObjetsGraphiques() {
+    private Pane placerObjetsGraphiques()
+    {
         Pane panePrincipale = new Pane();
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
@@ -198,7 +204,6 @@ public class Preferences extends Parent
         p.prefHeightProperty().bind(panePrincipale.heightProperty());
         AnchorPane.setTopAnchor(stackAnnuler, 10.0);
         AnchorPane.setRightAnchor(stackAnnuler, 10.0);
-
 
         GridPane gridPane = new GridPane();
         gridPane.prefWidthProperty().bind(p.widthProperty());
@@ -229,7 +234,6 @@ public class Preferences extends Parent
 
         GridPane.setHalignment(buttonValider, HPos.CENTER);
         gridPane.add(buttonValider, 0, 4, 3, 1);
-
 
         AnchorPane.setTopAnchor(gridPane, 0.0);
         AnchorPane.setRightAnchor(gridPane, 0.0);
