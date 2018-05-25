@@ -106,7 +106,7 @@ class ActionGraphicAide implements ActionVisitor
         cells.add(action.where);
 
         gameController.builder.setTile(action.tile);
-        gameController.builder.setPossibleDestinations(cells);
+        gameController.builder.setDestinations(cells);
 
         gameController.uiPlateau.getInterfacePlateauMain(gameController.game.state.turn.current.color).surlignerTile(action.tile);
         gameController.uiPlateau.ruche.surlignerDestinationsPossibles(cells);
@@ -119,7 +119,7 @@ class ActionGraphicAide implements ActionVisitor
         cells.add(action.destination);
 
         gameController.builder.setSource(action.source);
-        gameController.builder.setPossibleDestinations(cells);
+        gameController.builder.setDestinations(cells);
 
         gameController.uiPlateau.ruche.selectCell(action.source.comb.pos);
         gameController.uiPlateau.ruche.surlignerDestinationsPossibles(cells);
