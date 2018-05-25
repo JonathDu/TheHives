@@ -50,7 +50,9 @@ public final class GestionnaireLangage
         retLangues.add(Locale.ENGLISH);
         retLangues.add(Locale.GERMAN);
         retLangues.add(Locale.ITALIAN);
+        retLangues.add(new Locale("pt"));
         retLangues.add(new Locale("ru"));
+        retLangues.add(new Locale("ar"));
         return retLangues;
     }
 
