@@ -6,10 +6,10 @@
 package hive.model.game.utildata;
 
 import hive.model.board.Cell;
-import hive.model.game.ActionsTrace;
 import hive.model.players.actions.Action;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * All the data useful to gain some algorithmic performance over memory storage
@@ -20,23 +20,25 @@ public class UtilData
     public PositionsPerInsectPerTeam tiles; // to get cells of a specific tile (team color + insect type) in constant time
     public int nb_tiles; // to register easily how many tiles there are on the board
     public int nb_combs; // to register easily how many combs (hexagons) there are on the board
-    public Action last_undo; // to register the action that has just been undone
-    public ActionsTrace trace; // to register all the actions done before
+    public Stack<Action> trace; // to register all the actions done before
+    public Stack<Action> undos; // to register actions that have been undone
     public TilesInfluencePerTeam influences; // to register for each team where you can put (indirectly)
     public ArrayList<Cell> placements; // to register possible placements (for put action) only once, as it does not depend of the tile
-    public NbGroupsPerComb nbgroups;
+    public boolean placements_initialized;
+    public NbGroupsPerComb nbgroups; // to register how many consecutive non empty neighbors a comb have (useful to check connexity but the use is not implemented yet)
     
     public UtilData() {} // for serialization
     
-    public UtilData(PositionsPerInsectPerTeam tiles, int nb_tiles, int nb_combs, ActionsTrace trace, TilesInfluencePerTeam influences, NbGroupsPerComb nbgroups)
+    public UtilData(PositionsPerInsectPerTeam tiles, int nb_tiles, int nb_combs, Stack<Action> trace, Stack<Action> undos, TilesInfluencePerTeam influences, NbGroupsPerComb nbgroups)
     {
         this.tiles = tiles;
         this.nb_tiles = nb_tiles;
         this.nb_combs = nb_combs;
-        this.last_undo = null;
         this.trace = trace;
+        this.undos = undos;
         this.influences = influences;
-        this.placements = null;
+        this.placements = new ArrayList<>(100);
+        this.placements_initialized = false;
         this.nbgroups = nbgroups;
     }
 
@@ -47,7 +49,7 @@ public class UtilData
         hash = 43 * hash + Objects.hashCode(this.tiles);
         hash = 43 * hash + this.nb_tiles;
         hash = 43 * hash + this.nb_combs;
-        hash = 43 * hash + Objects.hashCode(this.last_undo);
+        hash = 43 * hash + Objects.hashCode(this.undos);
         hash = 43 * hash + Objects.hashCode(this.trace);
         hash = 43 * hash + Objects.hashCode(this.influences);
         hash = 43 * hash + Objects.hashCode(this.placements);
@@ -79,11 +81,11 @@ public class UtilData
         {
             return false;
         }
-        if (!Objects.equals(this.last_undo, other.last_undo))
+        if (!Objects.equals(this.trace, other.trace))
         {
             return false;
         }
-        if (!Objects.equals(this.trace, other.trace))
+        if (!Objects.equals(this.undos, other.undos))
         {
             return false;
         }

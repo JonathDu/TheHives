@@ -29,20 +29,26 @@ public class NodeRuche extends Parent {
     private final int longueurPion = 40;
     int width, height;
 
+    private final CacheImage c;
     private final GameController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
     
     public NodeRuche(CacheImage c, GameController plateauController) {
-        double center = ((sqrt(3) / 2) * longueurPion);
-        double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
-
+        this.c = c;
         this.board = plateauController.game.state.board;
         this.plateauController = plateauController;
         hauteur = plateauController.game.state.board.getData().sizeY();
         largeur = plateauController.game.state.board.getData().sizeX();
         tab = new Matrix<>(hauteur, largeur);
+        initTab();
+    }
+    
+    public void initTab()
+    {
+        double center = ((sqrt(3) / 2) * longueurPion);
+        double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
@@ -61,9 +67,16 @@ public class NodeRuche extends Parent {
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
             }
-        }
-        
-
+        }     
+    }
+    
+    public void updateTab()
+    {
+        for (int y = 0; y < hauteur; y++) {
+            for (int x = 0; x < largeur; x++) {
+                //TODO
+            }
+        }    
     }
 
     public void setHandler(InterfacePlateau plateau) {

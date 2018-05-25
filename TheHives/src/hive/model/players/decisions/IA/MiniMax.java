@@ -6,6 +6,7 @@
 package hive.model.players.decisions.IA;
 
 import hive.model.HiveInterfaceIA;
+import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
@@ -19,6 +20,9 @@ import static hive.model.players.decisions.IA.Evaluation.evaluation;
  * @author Coralie
  */
 public class MiniMax{
+    static ArrayList<Tile> neighboursBlock = new ArrayList(22);
+    static ArrayList<Tile> neighboursFree = new ArrayList(22) ;
+    
     static public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){

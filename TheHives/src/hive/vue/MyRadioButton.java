@@ -77,7 +77,7 @@ class MyRadioBouton extends ToggleButton{
         
         CacheImage c = new CacheImage();
 
-        String police = controller.getPolice();
+        String police = "Papyrus";
 
         ToggleButton bouton = new ToggleButton("");
 

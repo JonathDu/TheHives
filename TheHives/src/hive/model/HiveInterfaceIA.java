@@ -15,6 +15,7 @@ import hive.model.game.rules.HiveRules;
 import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.Player;
+import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.PutAction;
@@ -23,8 +24,7 @@ import hive.model.players.decisions.SimulatedDecision;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.ListIterator;
-import util.hexagons.HexagonSide;
+import java.util.concurrent.atomic.AtomicInteger;
 import util.hexagons.iterators.Neighbor;
 import util.hexagons.iterators.NeighborsIterator;
 
@@ -34,7 +34,137 @@ import util.hexagons.iterators.NeighborsIterator;
  */
 public class HiveInterfaceIA implements InterfaceIA
 {
+    // deprecated
+    @Override
+    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game)
+    {
+        ArrayList<Tile> freeNeighbours = new ArrayList<>();
+        HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        if (queen_positions.isEmpty())
+        {
+            return freeNeighbours;
+        }
+        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
+        int nbNeighbor = 0;
+        while (neighIter.hasNext())
+        {
+            /*if (game.rules.isFree(state, cell)
+            {
+                nbNeighbor++;
+            }*/
+        }
+        return null;
+    }
+    
+    // deprecated
+    @Override
+    public ArrayList<Tile> queenNeighbours(Player p, Game game)
+    {
+        HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        ArrayList<Tile> neighbours = new ArrayList<>();
+        Neighbor<TilesStack> hex;
+        if(queen_positions.isEmpty()){
+            return neighbours;
+        }
+        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
+        while (neighIter.hasNext()){
+            hex = neighIter.next();
+            if (!hex.hexagon.value().isEmpty()){
+                neighbours.add(hex.hexagon.value().peek());
 
+            }
+        }
+        return neighbours;
+    }
+    
+    // deprecated
+    @Override
+    public ArrayList<Action> currentPlayerPossibilities2(Game game)
+    {
+        return HiveUtil.getActions(game);
+
+    }
+    
+    // deprecated
+    @Override
+    public ArrayList<Tile> freeTiles(Game game, Player p)
+    {
+        ArrayList<Tile> free_tiles = new ArrayList<>();
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
+            for(Cell source : sources)
+            {
+                if (game.rules.isFree(game.state, source))
+                {
+                    free_tiles.add(source.getTile());
+                }
+            }
+        }
+        return free_tiles;
+    }
+
+    // deprecated
+    @Override
+    public ArrayList<Tile> blockedTiles(Player p, Game game)
+    {
+        ArrayList<Tile> blocked_tiles = new ArrayList<>();
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
+            for(Cell source : sources)
+            {
+                if (!game.rules.isFree(game.state, source))
+                {
+                    blocked_tiles.add(source.getTile());
+                }
+            }
+        }
+        return blocked_tiles;
+    }
+
+    @Override
+    public ArrayList<Decision> startSimulation(Game game)
+    {
+        ArrayList<Decision> decisions = new ArrayList<>();
+        Iterator<Player> player_iterator = game.state.players.iterator();
+        while (player_iterator.hasNext())
+        {
+            Player player = player_iterator.next();
+            decisions.add(player.decision);
+            player.decision = new SimulatedDecision();
+        }
+        return decisions;
+    }
+
+    @Override
+    public void endSimulation(Game game, ArrayList<Decision> decisions)
+    {
+        Iterator<Player> player_iterator = game.state.players.iterator();
+        Iterator<Decision> decision_iterator = decisions.iterator();
+        while (player_iterator.hasNext())
+        {
+            Player player = player_iterator.next();
+            player.decision = decision_iterator.next();
+        }
+    }
+    
+    @Override
+    public void doAction(Game game, Action action)
+    {
+        ((SimulatedDecision) game.state.turn.getCurrent().decision).setAction(action);
+        GameProgress gameprogress = new GameProgress(game);
+        gameprogress.doAction();
+    }
+
+    @Override
+    public Action undoAction(Game game)
+    {
+        GameProgress gameprogress = new GameProgress(game);
+        gameprogress.undoAction();
+        return game.state.data.undos.peek();
+    }
+    
     @Override
     public Player currentPlayer(Game game)
     {
@@ -64,130 +194,78 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         return game.rules.getStatus(game.state) == GameStatus.DRAW;
     }
-
-    @Override
-    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game)
-    {
-        ArrayList<Tile> freeNeighbours = new ArrayList<>();
-        HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        if (queen_positions.isEmpty())
-        {
-            return freeNeighbours;
-        }
-        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
-        int nbNeighbor = 0;
-        while (neighIter.hasNext())
-        {
-            /*if (game.rules.isFree(state, cell)
-            {
-                nbNeighbor++;
-            }*/
-        }
-        return null;
-    }
     
-    @Override
-    public ArrayList<Tile> queenNeighbours(Player p, Game game)
-    {
-        HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
-        ArrayList<Tile> neighbours = new ArrayList<>();
-        Neighbor<TilesStack> hex;
-        if(queen_positions.isEmpty()){
-            return neighbours;
-        }
-        NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
-        while (neighIter.hasNext()){
-            hex = neighIter.next();
-            if (!hex.hexagon.value().isEmpty()){
-                neighbours.add(hex.hexagon.value().peek());
-
-            }
-        }
-        return neighbours;
-    }
-    @Override
-    public ArrayList<Action> currentPlayerPossibilities2(Game game){
-        Player current = game.state.turn.getCurrent();
-        ArrayList<Action> actions = new ArrayList<>();
-        // PutAction
-        for(InsectType type : InsectType.implemented_insects)
-        {
-            Tile tile = new Tile(type, current.color);
-            /*for(int i = 0; i < current.collection.get(type); ++i)
-            {
-                Iterator<Cell> dest = destinations.iterator();
-                while(dest.hasNext())
-                    actions.add(new PutAction(dest.next(), tile));
-            }*/
-            ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
-            if(current.collection.get(type) > 0)
-            {
-                Iterator<Cell> place = placements.iterator();
-                while(place.hasNext())
-                    actions.add(new PutAction(place.next(), tile));
-            }
-        }
-
-
-        // MoveAction
-        for(InsectType type : InsectType.implemented_insects)
-        {
-            HashSet<Cell> sources = game.state.data.tiles.get(current.color).get(type);
-            Iterator<Cell> source_iterator = sources.iterator();
-            while(source_iterator.hasNext())
-            {
-                Cell source = source_iterator.next();
-                ArrayList<Cell> destinations = game.rules.getPossibleDestinations(game.state, source);
-                Iterator<Cell> dest_iterator = destinations.iterator();
-                while(dest_iterator.hasNext())
-                    actions.add(new MoveAction(source, dest_iterator.next()));
-            }
-        }
-        return actions;
-
-    }
-    // it does NOT copy equals tiles and equals cells
+    // does not treat NoAction case
     @Override
     public void currentPlayerPossibilities(Game game, ArrayList<Action> actions)
     {
-        assert actions.isEmpty();
         actions.clear();
-        
-        ((HiveRules)game.rules).setPossiblePlacements(game.state, actions);
-        ((HiveRules)game.rules).setPossibleDestinations(game.state, actions);
+        HiveUtil.setPutActions(game, actions);
+        HiveUtil.setMoveActions(game, actions);
     }
-
+    
     @Override
-    public ArrayList<Tile> freeTiles(Game game, Player p)
+    public int nbPossibilitiesQueen(Game game, Player player)
     {
-        ArrayList<Tile> free_tiles = new ArrayList<>();
-        for (InsectType type : InsectType.implemented_insects)
+        AtomicInteger nb = new AtomicInteger(0);
+        
+        HashSet<Cell> sources = game.state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
+        for(Cell source : sources)
         {
-            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
-            Iterator<Cell> it = sources.iterator();
+            game.rules.consumeDestinations(game.state, source, cell -> nb.incrementAndGet());
+        }
+        return nb.get();
+    }
+    
+    
+    @Override
+    public void setQueenNeighbors(Game game, Player player, ArrayList<Tile> free, ArrayList<Tile> blocked)
+    {
+        free.clear();
+        blocked.clear();
+        
+        HashSet<Cell> queen_positions = game.state.data.tiles.get(player.color).get(InsectType.QUEEN_BEE);
+        if(queen_positions.isEmpty())
+            return;
+        
+        NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(queen_positions.iterator().next().comb);
+        while (neighbors.hasNext())
+        {
+            Neighbor<TilesStack> neighbor = neighbors.next();
             
-            while (it.hasNext())
+            Cell cell = new Cell((Honeycomb)neighbor.hexagon, 0);
+            while(cell.level < cell.comb.value().size())
             {
-                Cell cell = it.next();
                 if (game.rules.isFree(game.state, cell))
+                    free.add(cell.getTile());
+                else
+                    blocked.add(cell.getTile());
+                cell.up();
+            }
+        }
+    }
+    
+    @Override
+    public void setTiles(Game game, ArrayList<Tile> free, ArrayList<Tile> blocked)
+    {
+        free.clear();
+        blocked.clear();
+        
+        for(TeamColor color : TeamColor.values())
+        {
+            for (InsectType type : InsectType.implemented_insects)
+            {
+                HashSet<Cell> sources = game.state.data.tiles.get(color).get(type);
+                for(Cell source : sources)
                 {
-                    free_tiles.add(cell.getTile());
+                    if (game.rules.isFree(game.state, source))
+                        free.add(source.getTile());
+                    else
+                        blocked.add(source.getTile());
                 }
             }
         }
-        return free_tiles;
     }
-    
-    @Override
-    public int nbPossibilitiesQueen(Game game, Player p){
-        Tile tile = new Tile(InsectType.QUEEN_BEE, p.color);
-        
-        ArrayList<Cell> placements = game.rules.getPossiblePlacements(game.state, tile);
-        int nbPossibilities = placements.size();
-        
-        return nbPossibilities;
-    }
-    
     @Override
     public boolean queenIsCurshed(Player p, Game game)
     {
@@ -199,67 +277,11 @@ public class HiveInterfaceIA implements InterfaceIA
             return HiveUtil.isCrushed(cell);          
         }
         return false;
-    }
-
-    public ArrayList<Tile> blockedTiles(Player p, Game game)
-    {
-        ArrayList<Tile> blocked_tiles = new ArrayList<>();
-        for (InsectType type : InsectType.implemented_insects)
-        {
-            HashSet<Cell> sources = game.state.data.tiles.get(p.color).get(type);
-            Iterator<Cell> it = sources.iterator();
-            while (it.hasNext())
-            {
-                Cell cell = it.next();
-                if (!game.rules.isFree(game.state, cell))
-                {
-                    blocked_tiles.add(cell.getTile());
-                }
-            }
-        }
-        return blocked_tiles;
-    }
-
-    @Override
-    public void doAction(Game game, Action action)
-    {
-        ((SimulatedDecision) game.state.turn.getCurrent().decision).setAction(action);
-        GameProgress gameprogress = new GameProgress(game);
-        gameprogress.doAction();
-    }
-
-    @Override
-    public Action undoAction(Game game)
-    {
-        GameProgress gameprogress = new GameProgress(game);
-        gameprogress.undoAction();
-        return game.state.data.last_undo;
-    }
-
-    @Override
-    public ArrayList<Decision> startSimulation(Game game)
-    {
-        ArrayList<Decision> decisions = new ArrayList<>();
-        Iterator<Player> player_iterator = game.state.players.iterator();
-        while (player_iterator.hasNext())
-        {
-            Player player = player_iterator.next();
-            decisions.add(player.decision);
-            player.decision = new SimulatedDecision();
-        }
-        return decisions;
-    }
-
-    @Override
-    public void endSimulation(Game game, ArrayList<Decision> decisions)
-    {
-        Iterator<Player> player_iterator = game.state.players.iterator();
-        Iterator<Decision> decision_iterator = decisions.iterator();
-        while (player_iterator.hasNext())
-        {
-            Player player = player_iterator.next();
-            player.decision = decision_iterator.next();
-        }
-    }
-
 }
+    @Override
+    public Integer nbInsectsPlayerHand(Game game, Player player, InsectType type)
+    {
+        return player.collection.get(type);
+    }
+}
+

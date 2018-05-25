@@ -62,7 +62,7 @@ public abstract class Interface extends Parent {
         maxJoueur = (int) ((int) width / 2.5);
         minJoueur = maxJoueur / 2;
 
-        police = controller.getPolice();
+        police = "Papyrus";
 
         boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width, height);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width, height);

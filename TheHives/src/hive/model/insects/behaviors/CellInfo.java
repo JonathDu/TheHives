@@ -3,19 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game;
+package hive.model.insects.behaviors;
 
-import hive.model.players.actions.Action;
-import java.util.Stack;
+import hive.model.board.Cell;
 
 /**
  *
  * @author Thomas
+ * @param <I>
  */
-public class ActionsTrace extends Stack<Action>
+public class CellInfo<I>
 {
-    public ActionsTrace()
+    Cell cell;
+    I info;
+    
+    public CellInfo(Cell cell, I info)
     {
-        super();
+        this.cell = cell;
+        this.info = info;
     }
 }

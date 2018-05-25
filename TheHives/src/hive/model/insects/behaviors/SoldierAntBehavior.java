@@ -12,25 +12,23 @@ import hive.model.board.Tile;
 import hive.model.board.TilesStack;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
-import java.util.ArrayList;
+import java.util.function.Consumer;
 import util.hexagons.iterators.BreadthNeighborsIterator;
 
 /**
  *
  * @author Thomas
- */
+ */ 
 public class SoldierAntBehavior implements InsectBehavior
 {
 
     @Override
-    public ArrayList<Cell> getPossibleDestinations(GameState state, Cell cell)
+    public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
     {
         assert cell.level == 0;
         
-        ArrayList<Cell> list = new ArrayList<>();
-        
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
-            return list;
+            return;
         
         Tile tmp = cell.comb.value().pop();
         
@@ -41,11 +39,9 @@ public class SoldierAntBehavior implements InsectBehavior
                 neighbor -> HiveUtil.hasWallNextToAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from) && HiveUtil.isFreeAtSide(new Cell((Honeycomb)neighbor.origin, 0), neighbor.from));
         
         while(iterator.hasNext())
-            list.add(new Cell((Honeycomb)iterator.next()));
+            consumer.accept(new Cell((Honeycomb)iterator.next()));
         
         cell.comb.value().push(tmp);
-        
-        return list;
     } 
 
     @Override

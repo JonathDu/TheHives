@@ -8,7 +8,7 @@ package hive.model.game.rules;
 import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.game.GameState;
-import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -16,5 +16,5 @@ import java.util.ArrayList;
  */
 public interface PutRules
 {
-    public ArrayList<Cell> getPossiblePlacements(GameState state, Tile tile);
+    public void consumePlacements(GameState state, Tile tile, Consumer<Cell> consumer);
 }

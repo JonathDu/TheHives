@@ -8,6 +8,7 @@ package hive.controller.plateauscene.game.mousehandlers;
 import hive.controller.plateauscene.game.PlateauHandlerData;
 import hive.controller.plateauscene.game.GameController;
 import hive.model.board.Tile;
+import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
@@ -59,7 +60,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                     System.out.println("Tile selectionnée");
 
                     controller.builder.setTile(tileClicked);
-                    controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
+                    controller.builder.setDestinations(HiveUtil.getPlacements(game));
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
@@ -72,7 +73,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                     uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
                     controller.builder.setTile(tileClicked);
-                    controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
+                    controller.builder.setDestinations(HiveUtil.getPlacements(game));
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
@@ -86,7 +87,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                         uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
-                        controller.builder.setPossibleDestinations(game.rules.getPossiblePlacements(game.state, tileClicked));
+                        controller.builder.setDestinations(HiveUtil.getPlacements(game));
                         uiMain.surlignerTile(controller.builder.tile);
                         uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     } else

@@ -5,9 +5,7 @@
  */
 package hive.controller.plateauscene.game;
 
-import hive.model.GameProgress;
 import hive.model.game.Game;
-import hive.model.game.GameState;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
@@ -37,6 +35,7 @@ public class IAPlayerHandler extends PlateauHandlerData implements EventHandler<
             progress.doAction();
             ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
             progress.game.state.data.trace.peek().accept(gUpdater);
+            uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
         } else
         {
             throw new RuntimeException("IADecision attendu");
@@ -75,3 +74,4 @@ class ActionGraphicUpdater implements ActionVisitor
     {
     }
 }
+
