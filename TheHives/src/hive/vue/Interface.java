@@ -62,18 +62,14 @@ public abstract class Interface extends Parent {
         maxJoueur = (int) ((int) width / 2.5);
         minJoueur = maxJoueur / 2;
 
-        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
-        background = new Background(backgroundFond);
-
         police = controller.getPolice();
 
         boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width);
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width);
 
-        panePrincipale.setBackground(background);
+        setBackground();
+        
         Preferences pref = controller.getPreferences();
         pref.setVisible(false);
         panePrincipale.getChildren().add(pref);
@@ -96,5 +92,20 @@ public abstract class Interface extends Parent {
         this.getChildren().add(panePrincipale);
     }
     
-    public abstract void majRetourPreference();
+    private void setBackground()
+    {
+        Image fond = controller.typeTheme.equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        background = new Background(backgroundFond);
+        panePrincipale.setBackground(background);    
+    }
+    
+    public abstract void setTextWithCurrentLanguage();
+    
+    public void majRetourPreference()
+    {
+        setBackground();
+        setTextWithCurrentLanguage();
+    }
 }

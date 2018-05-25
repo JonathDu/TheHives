@@ -137,8 +137,4 @@ public class NodeRuche extends Parent {
 //            }
 //        }
 //    }
-    
-    public void majRetourPreference()
-    {
-    }
 }

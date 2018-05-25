@@ -41,6 +41,12 @@ public class InterfaceJoueurs extends Interface {
     TextField Name2 = new TextField();
     Level level1 = null;
     Level level2 = null;
+    
+    
+    private final Label joueur1;
+    private final Label joueur2;
+    private final Button valider;
+    
 
     public InterfaceJoueurs(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
@@ -86,16 +92,11 @@ public class InterfaceJoueurs extends Interface {
         }
         hauteurBouton = largeurBouton / 7.2375;
 
-        Label joueur1 = new Label();
-        Label joueur2 = new Label();
+        joueur1 = new Label();
+        joueur2 = new Label();
+        valider = new Button();
 
-        Button valider = new Button();
 
-        joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
-        joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
-        Name1.setText(controller.gestionnaireLangage.getText("text_nom"));
-        Name2.setText(controller.gestionnaireLangage.getText("text_nom"));
-        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
 
         Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
         ImageView hexagoneIm = new ImageView(hexagone);
@@ -111,8 +112,9 @@ public class InterfaceJoueurs extends Interface {
 
         Name1.setText(null);
         Name2.setText(null);
-        Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
-        Name2.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
+        
+        setTextWithCurrentLanguage();
+
         final ToggleGroup ia1 = new ToggleGroup();
         final ToggleGroup ia2 = new ToggleGroup();
 
@@ -883,7 +885,16 @@ public class InterfaceJoueurs extends Interface {
         }
     }
 
-    public void majRetourPreference() {
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
+        joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
+        Name1.setText(controller.gestionnaireLangage.getText("text_nom"));
+        Name2.setText(controller.gestionnaireLangage.getText("text_nom"));
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));    
+        Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
+        Name2.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
     }
 
 }
