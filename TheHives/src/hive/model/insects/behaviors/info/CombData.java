@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.insects.behaviors;
+package hive.model.insects.behaviors.info;
 
 import hive.model.board.Cell;
+import hive.model.board.Honeycomb;
 
 /**
  *
  * @author Thomas
- * @param <I>
  */
-public class CellInfo<I>
+public class CombData
 {
-    Cell cell;
-    I info;
+    public Honeycomb comb;
+    public CombInfo info;
     
-    public CellInfo(Cell cell, I info)
+    public CombData(Honeycomb comb, CombInfo info)
     {
-        this.cell = cell;
+        this.comb = comb;
         this.info = info;
     }
 }

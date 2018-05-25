@@ -194,6 +194,10 @@ public class HiveUtil
         return state.data.trace.get(state.data.trace.size() - 2) instanceof NoAction && state.data.trace.get(state.data.trace.size() - 1) instanceof NoAction;
     }
     
+    public static void consumePlacements(Game game, InsectType type, Consumer<Cell> consumer)
+    {
+        game.rules.consumePlacements(game.state, type, consumer);
+    }
     
     public static void consumePlacements(Game game, Consumer<Cell> consumer)
     {
@@ -214,6 +218,11 @@ public class HiveUtil
             for(Cell source : sources)
                 game.rules.consumeDestinations(game.state, source, consumer);
         }
+    }
+    
+    public static ArrayList<Cell> getPlacements(Game game, InsectType type)
+    {
+        return getListFromSetter(cells -> consumePlacements(game, type, cell -> cells.add(cell)));
     }
     
     public static ArrayList<Cell> getPlacements(Game game)
