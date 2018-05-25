@@ -17,8 +17,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 /**
@@ -53,8 +57,8 @@ public class InterfaceMenu extends Interface {
         hex.prefWidthProperty().bind(primaryStage.widthProperty());
         Image hexagone = c.getImage("Design/MenuPrincipaux/Hexagone.png");
         ImageView hexagoneIm = new ImageView(hexagone);
-        hexagoneIm.setFitHeight(tailleDeCase * 4);
-        hexagoneIm.setFitWidth(tailleDeCase * 4);
+        hexagoneIm.setPreserveRatio(true);
+        hexagoneIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(3));
         hex.getChildren().add(hexagoneIm);
 
         newGame = new Label();
@@ -70,21 +74,20 @@ public class InterfaceMenu extends Interface {
         double flecheLargeur_en_bas = (tailleDeCase * 8) / 3;
         double flecheHauteur_en_bas = flecheLargeur_en_bas / 5.4;
 
-        GridPane menu_hex = new GridPane();
+        VBox menu_hex = new VBox(15);
         int ligne = 100 / 5;
         int colonne = 100 / 1;
-        Outils.fixerRepartition(menu_hex, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne);
-        Outils.fixerRepartition(menu_hex, Outils.VERTICAL, colonne);
-        menu_hex.setMaxWidth(tailleDeCase * 4);
-        menu_hex.setMinWidth(tailleDeCase * 4);
-        menu_hex.setMaxHeight(tailleDeCase * 4);
-        menu_hex.setMinHeight(tailleDeCase * 4);
+        menu_hex.prefWidthProperty().bind(primaryStage.widthProperty());
+        menu_hex.prefHeightProperty().bind(primaryStage.heightProperty());
+        menu_hex.setAlignment(Pos.CENTER);
         StackPane NewGame = new StackPane();
+
         Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView flecheImNG = new ImageView(fleche);
-        flecheImNG.setFitHeight(flecheHauteur);
-        flecheImNG.setFitWidth(flecheLargeur);
-        newGame.setFont(new Font(police, flecheHauteur - 10));
+        flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImNG.setPreserveRatio(true);
+
+        newGame.setFont(new Font(police, 20));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
@@ -92,12 +95,13 @@ public class InterfaceMenu extends Interface {
         NewGame.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             controller.goToChoixJoueur();
         });
-        menu_hex.add(NewGame, 0, 1);
+        menu_hex.getChildren().add(NewGame);
         StackPane ChargerPartie = new StackPane();
         ImageView flecheImCP = new ImageView(fleche);
-        flecheImCP.setFitHeight(flecheHauteur);
-        flecheImCP.setFitWidth(flecheLargeur);
-        chargerPartie.setFont(new Font(police, flecheHauteur - 10));
+        flecheImCP.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImCP.setPreserveRatio(true);
+
+        chargerPartie.setFont(new Font(police, 20));
         chargerPartie.setTextFill(Color.web("#fbe5b5"));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(flecheImCP);
@@ -109,12 +113,14 @@ public class InterfaceMenu extends Interface {
                 Logger.getLogger(InterfaceMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        menu_hex.add(ChargerPartie, 0, 2);
+        menu_hex.getChildren().add(ChargerPartie);
         StackPane Regles = new StackPane();
         ImageView flecheImR = new ImageView(fleche);
-        flecheImR.setFitHeight(flecheHauteur);
-        flecheImR.setFitWidth(flecheLargeur);
-        regles.setFont(new Font(police, flecheHauteur - 10));
+
+        flecheImR.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImR.setPreserveRatio(true);
+
+        regles.setFont(new Font(police, 20));
         regles.setTextFill(Color.web("#fbe5b5"));
         regles.setAlignment(CENTER);
         Regles.getChildren().add(flecheImR);
@@ -122,17 +128,21 @@ public class InterfaceMenu extends Interface {
         Regles.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
             controller.goToRegles();
         });
-        menu_hex.add(Regles, 0, 3);
+        menu_hex.getChildren().add(Regles);
+        hex.setAlignment(CENTER);
+        StackPane.setAlignment(menu_hex, CENTER);
         hex.getChildren().add(menu_hex);
         pane.getChildren().add(hex);
-
 
         StackPane Statistiques = new StackPane();
         Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
         ImageView gaucheIm = new ImageView(gauche);
-        gaucheIm.setFitHeight(flecheHauteur_en_bas);
-        gaucheIm.setFitWidth(flecheLargeur_en_bas);
-        statistiques.setFont(new Font(police, flecheHauteur - 10));
+        
+
+        gaucheIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        gaucheIm.setPreserveRatio(true);
+        
+        statistiques.setFont(new Font(police,20));
         statistiques.setTextFill(Color.web("#fbe5b5"));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(gaucheIm);
@@ -147,11 +157,13 @@ public class InterfaceMenu extends Interface {
         StackPane Credits = new StackPane();
         Image droite = c.getImage("Design/MenuPrincipaux/FlecheEnBasDroite.png");
         ImageView droiteIm = new ImageView(droite);
-        droiteIm.setFitHeight(flecheHauteur_en_bas);
-        droiteIm.setFitWidth(flecheLargeur_en_bas);
-        credits.setFont(new Font(police, flecheHauteur_en_bas - 10));
+        droiteIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        droiteIm.setPreserveRatio(true);
+
+        credits.setFont(new Font(police, 20));
         credits.setTextFill(Color.web("#fbe5b5"));
         credits.setAlignment(CENTER);
+        
         Credits.getChildren().add(droiteIm);
         Credits.getChildren().add(credits);
         Credits.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
@@ -161,7 +173,6 @@ public class InterfaceMenu extends Interface {
         AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
         pane.getChildren().add(Credits);
 
-                
         AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
         AnchorPane.setTopAnchor(boutonPreference, (double) 5);
         pane.getChildren().add(boutonPreference);
@@ -169,15 +180,13 @@ public class InterfaceMenu extends Interface {
         AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
         AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
         pane.getChildren().add(boutonPleinEcran);
-       
-        
+
         this.panePrincipale.getChildren().add(pane);
 
     }
-    
+
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         newGame.setText(controller.gestionnaireLangage.getText("text_nouvelle_partie"));
         chargerPartie.setText(controller.gestionnaireLangage.getText("text_reprendre_partie"));
         statistiques.setText(controller.gestionnaireLangage.getText("text_statistiques"));
