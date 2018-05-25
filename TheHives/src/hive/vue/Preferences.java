@@ -77,7 +77,7 @@ public class Preferences extends Parent
         minJoueur = maxJoueur / 2;
 
         cacheImage = _cacheImage;
-        police = controller.getPolice();
+        police = "Papyrus";
 
         imageFond = new ImageView();
         labelPreferences = new Label();

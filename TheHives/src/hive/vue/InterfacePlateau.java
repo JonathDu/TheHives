@@ -142,6 +142,12 @@ public class InterfacePlateau extends Interface
         gameController.start();
 
     }
+    
+    public void update()
+    {
+        ruche.updateTab(); //TODO !!!
+        // TODO : main.update()
+    }
 
     private BorderPane setTool()
     {
@@ -162,6 +168,7 @@ public class InterfacePlateau extends Interface
         boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width);
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -210,20 +217,26 @@ public class InterfacePlateau extends Interface
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.show();
         });
-
+        
+        
+        boutonRecommencer.setOnMouseClicked(value ->
+        {
+            gameController.restart();
+        });
+        
         boutonAnnuler.setOnMouseClicked(value ->
         {
-            controller.undo(game);
+            gameController.undo();
         });
 
         boutonReplay.setOnMouseClicked(value ->
         {
-            controller.redo(game);
+            gameController.redo();
         });
 
         boutonConseil.setOnMouseClicked(value ->
         {
-            //TODO
+            gameController.help();
         });
 
         Group g = new Group();
@@ -234,6 +247,7 @@ public class InterfacePlateau extends Interface
 
         gauche.getChildren().add(boutonHome);
         gauche.getChildren().add(boutonSave);
+        gauche.getChildren().add(boutonRecommencer);
         droite.getChildren().add(boutonRegle);
         droite.getChildren().add(boutonPreference);
         droite.getChildren().add(boutonPleinEcran);

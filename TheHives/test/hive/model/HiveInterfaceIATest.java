@@ -130,7 +130,7 @@ public class HiveInterfaceIATest
 
         assert inter.winOpponent(game);
     }
-
+/*
     @Test
     public void testQueenFreeNeighbour()
     {
@@ -168,7 +168,7 @@ public class HiveInterfaceIATest
         progress.doAction();
 
         assert inter.queenFreeNeighbour(game.state.turn.getOpponent(), game) == 0;
-    }
+    }*/
 
     @Test
     public void testCurrentPlayerPossibilities()
