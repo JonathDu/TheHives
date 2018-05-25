@@ -46,8 +46,14 @@ public class InterfaceMenu extends Interface {
 
         Image hive = c.getImage("Design/MenuPrincipaux/TheHives.png");
         ImageView hiveIm = new ImageView(hive);
-        hiveIm.setFitHeight(tailleDeCase * 1.3);
-        hiveIm.setFitWidth(tailleDeCase * 1.3 * 1.59);
+//        hiveIm.setFitHeight(tailleDeCase * 1.3);
+//        hiveIm.setFitWidth(tailleDeCase * 1.3 * 1.59);
+        
+        hiveIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(5));
+        hiveIm.setPreserveRatio(true);
+        
+        
+        
         AnchorPane.setLeftAnchor(hiveIm, (double) 5);
         AnchorPane.setTopAnchor(hiveIm, (double) 5);
         pane.getChildren().add(hiveIm);
@@ -87,7 +93,8 @@ public class InterfaceMenu extends Interface {
         flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
 
-        newGame.setFont(new Font(police, 20));
+        
+        //newGame.setFont(new Font(police, 20));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
@@ -101,7 +108,7 @@ public class InterfaceMenu extends Interface {
         flecheImCP.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImCP.setPreserveRatio(true);
 
-        chargerPartie.setFont(new Font(police, 20));
+        //chargerPartie.setFont(new Font(police, 20));
         chargerPartie.setTextFill(Color.web("#fbe5b5"));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(flecheImCP);
@@ -120,7 +127,7 @@ public class InterfaceMenu extends Interface {
         flecheImR.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImR.setPreserveRatio(true);
 
-        regles.setFont(new Font(police, 20));
+        //regles.setFont(new Font(police, 20));
         regles.setTextFill(Color.web("#fbe5b5"));
         regles.setAlignment(CENTER);
         Regles.getChildren().add(flecheImR);
@@ -142,7 +149,7 @@ public class InterfaceMenu extends Interface {
         gaucheIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
         gaucheIm.setPreserveRatio(true);
         
-        statistiques.setFont(new Font(police,20));
+        //statistiques.setFont(new Font(police,20));
         statistiques.setTextFill(Color.web("#fbe5b5"));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(gaucheIm);
@@ -160,7 +167,7 @@ public class InterfaceMenu extends Interface {
         droiteIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
         droiteIm.setPreserveRatio(true);
 
-        credits.setFont(new Font(police, 20));
+        //credits.setFont(new Font(police, 20));
         credits.setTextFill(Color.web("#fbe5b5"));
         credits.setAlignment(CENTER);
         

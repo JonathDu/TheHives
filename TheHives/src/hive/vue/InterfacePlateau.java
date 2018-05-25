@@ -167,6 +167,8 @@ public class InterfacePlateau extends Interface {
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
         boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
+        
+        
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
