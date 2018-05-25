@@ -29,6 +29,8 @@ import javafx.scene.paint.Color;
  */
 public class InterfaceCharger extends Interface {
 
+    private final Label choix;
+    private final Button valider;
 
     public InterfaceCharger(Stage primaryStage, Controller controller, CacheImage c) throws IOException {
         super(primaryStage, controller, c);
@@ -50,11 +52,10 @@ public class InterfaceCharger extends Interface {
         pane.getChildren().add(boutonRetourMenu);
 
 
-        Label choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
-        Button valider = new Button();
+        choix = new Label(); // Scegliere partita salvata, Gespeichertes Spiel wählen
+        valider = new Button();
 
-        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
-        choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
+        setTextWithCurrentLanguage();
 
         choix.setFont(new Font(police, tailleDeCase *0.3));
         choix.setAlignment(Pos.CENTER);
@@ -156,8 +157,11 @@ public class InterfaceCharger extends Interface {
         this.panePrincipale.getChildren().add(pane);
 
     }
-
-    public void majRetourPreference() {
+    
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
+        choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
     }
-
 }

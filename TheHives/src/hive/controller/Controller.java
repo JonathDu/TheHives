@@ -5,7 +5,6 @@
  */
 package hive.controller;
 
-import hive.controller.plateauscene.game.GameController;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.model.game.GameLoader;
@@ -15,6 +14,7 @@ import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
 import hive.model.players.decisions.IA.Level;
 import hive.vue.CacheImage;
+import hive.vue.Interface;
 import hive.vue.InterfaceCharger;
 import hive.vue.InterfaceCredits;
 import hive.vue.InterfaceJoueurs;
@@ -29,9 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
-import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import util.LoaderXML;
 
@@ -47,7 +45,6 @@ public final class Controller
     CacheImage cacheImage;
     public Dimension screenSize;
     public GestionnaireLangage gestionnaireLangage;
-
     public String typeTheme;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
@@ -58,71 +55,54 @@ public final class Controller
         screenSize = _screenSize;
         gestionnaireLangage = new GestionnaireLangage(Locale.FRENCH);
         typeTheme = "Jour";
-        goToMenu();
-    }
-
-    public void changeScene()
-    {
-        Image souris = cacheImage.getImage("souris.png");
-        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
-        currentScene.setCursor(sourisIm);
-
         primaryStage.setScene(currentScene);
+        goToMenu();
     }
 
     public void goToMenu()
     {
-        
-        currentScene = new Scene(new InterfaceMenu(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceMenu(primaryStage, this, cacheImage));
     }
 
     public void goToChoixJoueur()
     {
-        currentScene = new Scene(new InterfaceJoueurs(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceJoueurs(primaryStage, this, cacheImage));
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2, Level levelJ1, Level levelJ2)
     {
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
 
-        currentScene = new Scene(new InterfacePlateau(primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene.setRoot(new InterfacePlateau(primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
-        changeScene();
     }
 
     public void goToPlateau(Game game)
     {
-        currentScene = new Scene(new InterfacePlateau(primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"), primaryStage.getWidth(), primaryStage.getHeight());
+        currentScene.setRoot(new InterfacePlateau(primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
-        changeScene();
     }
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene = new Scene(new InterfaceCharger(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceCharger(primaryStage, this, cacheImage));
     }
 
     public void goToRegles()
     {
-        currentScene = new Scene(new InterfaceRegles(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceRegles(primaryStage, this, cacheImage));
     }
 
     public void goToStat()
     {
-        currentScene = new Scene(new InterfaceStatistiques(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceStatistiques(primaryStage, this, cacheImage));
     }
 
     public void goToCredits()
     {
-        currentScene = new Scene(new InterfaceCredits(primaryStage, this, cacheImage), primaryStage.getWidth(), primaryStage.getHeight());
-        changeScene();
+        currentScene.setRoot(new InterfaceCredits(primaryStage, this, cacheImage));
     }
 
     private Decision getDecision(Level level)
@@ -140,7 +120,7 @@ public final class Controller
         Locale newLangue = gestionnaireLangage.langues.get(nomLangue);
         gestionnaireLangage.changerLangue(newLangue);
         typeTheme = nomTheme;
-        //(Interface) currentScene.getRoot().majRetourPreference();
+        ((Interface) currentScene.getRoot()).majRetourPreference();
     }
 
     public Game chargerGame(String fileName)
@@ -162,7 +142,7 @@ public final class Controller
         LoaderXML<Game> loader = new GameLoader();
         try
         {
-            loader.loadInFile(game, fileName);
+            loader.loadInFile(game, "savefiles/" + fileName);
         } catch (IOException ex)
         {
             System.err.println("PAS DE FICHIER TROUVE");

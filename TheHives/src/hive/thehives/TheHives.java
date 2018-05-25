@@ -11,7 +11,9 @@ import java.awt.Dimension;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
+import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -36,7 +38,10 @@ public class TheHives extends Application
     {
         cache = new CacheImage();
         root = new Group();
-        scene = new Scene(root, WIDTH, HEIGHT, Color.LIGHTBLUE);
+        scene = new Scene(root, WIDTH, HEIGHT);
+        Image souris = cache.getImage("souris.png");
+        ImageCursor sourisIm = new ImageCursor(souris, souris.getWidth() / 2, souris.getHeight() / 2);
+        scene.setCursor(sourisIm);
         screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         this.primaryStage = primaryStage;
 

@@ -102,8 +102,5 @@ public class NodeComb extends Parent {
         }
     }
      */
-    
-    public void majRetourPreference()
-    {
-    }
+   
 }

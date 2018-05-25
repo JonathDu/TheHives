@@ -266,7 +266,9 @@ public class InterfacePlateau extends Interface
         mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
-    public void majRetourPreference()
+    @Override
+    public void setTextWithCurrentLanguage()
     {
+        //pas de texte dans cette interface => rien a mettre a jour
     }
 }

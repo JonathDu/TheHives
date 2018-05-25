@@ -6,9 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import java.awt.Dimension;
 import static javafx.geometry.Pos.CENTER;
-import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,7 +27,11 @@ import javafx.scene.text.Font;
  */
 public class InterfaceMenu extends Interface {
 
-    Stage stage;
+    private final Label newGame;
+    private final Label chargerPartie;
+    private final Label statistiques;
+    private final Label credits;
+    private final Label regles;
 
     public InterfaceMenu(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
@@ -55,17 +57,13 @@ public class InterfaceMenu extends Interface {
         hexagoneIm.setFitWidth(tailleDeCase * 4);
         hex.getChildren().add(hexagoneIm);
 
-        Label newGame = new Label();
-        Label chargerPartie = new Label();
-        Label statistiques = new Label();
-        Label credits = new Label();
-        Label regles = new Label();
+        newGame = new Label();
+        chargerPartie = new Label();
+        statistiques = new Label();
+        credits = new Label();
+        regles = new Label();
 
-        newGame.setText(controller.gestionnaireLangage.getText("text_nouvelle_partie"));
-        chargerPartie.setText(controller.gestionnaireLangage.getText("text_reprendre_partie"));
-        statistiques.setText(controller.gestionnaireLangage.getText("text_statistiques"));
-        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
-        regles.setText(controller.gestionnaireLangage.getText("text_regles"));
+        setTextWithCurrentLanguage();
 
         double flecheLargeur = tailleDeCase * 4 - 30;
         double flecheHauteur = flecheLargeur / 7.24;
@@ -128,13 +126,6 @@ public class InterfaceMenu extends Interface {
         hex.getChildren().add(menu_hex);
         pane.getChildren().add(hex);
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        pane.getChildren().add(boutonPreference);
-
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        pane.getChildren().add(boutonPleinEcran);
 
         StackPane Statistiques = new StackPane();
         Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
@@ -170,12 +161,27 @@ public class InterfaceMenu extends Interface {
         AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
         pane.getChildren().add(Credits);
 
+                
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
+        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+        pane.getChildren().add(boutonPreference);
+
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
+        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
+        pane.getChildren().add(boutonPleinEcran);
+       
+        
         this.panePrincipale.getChildren().add(pane);
 
     }
-
-    public void majRetourPreference() {
-        System.out.println("TODO : set le BG");
-        System.out.println("TODO : MAJ langue");
+    
+    @Override
+    public void setTextWithCurrentLanguage()
+    {
+        newGame.setText(controller.gestionnaireLangage.getText("text_nouvelle_partie"));
+        chargerPartie.setText(controller.gestionnaireLangage.getText("text_reprendre_partie"));
+        statistiques.setText(controller.gestionnaireLangage.getText("text_statistiques"));
+        credits.setText(controller.gestionnaireLangage.getText("text_credit"));
+        regles.setText(controller.gestionnaireLangage.getText("text_regles"));
     }
 }
