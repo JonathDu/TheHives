@@ -46,7 +46,7 @@ public class GameTest
     @Test
     public void test()
     {
-        int K = 1000, n = 100;
+        int K = 10000, n = 100;
         for(int k = 0; k < K; ++k)
         {
             Game game = GameUtil.getRandomGame(n);

@@ -131,7 +131,7 @@ public class HiveInterfaceIATest
         assert inter.winOpponent(game);
     }
 
-    @Test
+    /*@Test
     public void testQueenFreeNeighbour()
     {
         ((HumanDecision) game.state.turn.getCurrent().decision).setAction(createPutActionCurrentPlayer(game, InsectType.QUEEN_BEE, new Vector2i(1, 1))); // Abeille W
@@ -169,7 +169,7 @@ public class HiveInterfaceIATest
 
         assert inter.queenFreeNeighbour(game.state.turn.getOpponent(), game) == 0;
     }
-
+*/
     @Test
     public void testCurrentPlayerPossibilities()
     {

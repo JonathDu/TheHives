@@ -8,8 +8,12 @@ package hive.model.players.decisions.IA;
 import hive.model.HiveInterfaceIA;
 import hive.model.board.Tile;
 import hive.model.game.Game;
-import hive.model.game.rules.HiveUtil;
+import hive.model.insects.InsectType;
 import hive.model.players.Player;
+import static hive.model.players.decisions.IA.Heuristic.QUEEN_CRUSHED_CUR;
+import static hive.model.players.decisions.IA.Heuristic.QUEEN_CRUSHED_OP;
+import static hive.model.players.decisions.IA.MiniMax.neighboursBlock;
+import static hive.model.players.decisions.IA.MiniMax.neighboursFree;
 import java.util.ArrayList;
 
 /**
@@ -18,11 +22,14 @@ import java.util.ArrayList;
  */
 public class Evaluation {
     //ajout atribut
+    static int heuristicVal [][][];
     static int evaluation(Game state){
+        
+        heuristicVal = Heuristic.getHeuristic();
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
         Player opponent = hia.opponentPlayer(state);
-        int value;
+        int value=0;
         if(hia.winOpponent(state)){
             return -10000;
         }
@@ -30,20 +37,28 @@ public class Evaluation {
             return 10000;
         }
         else{
-            ArrayList<Tile> currentFreeTile = hia.freeTiles(state, current);
-            value = insectsValue(currentFreeTile);
-            ArrayList<Tile> opponentFreeTile = hia.freeTiles(state, opponent);
-            value -= insectsValue(opponentFreeTile);
-            ArrayList<Tile> currentBlocTile = hia.blockedTiles(current, state);
-            value -= insectsValueBloc(currentBlocTile);
-            ArrayList<Tile> opponentBlocTile = hia.blockedTiles(opponent, state);
-            value += insectsValueBloc(opponentBlocTile);
+            hia.setTiles(state,current, neighboursFree, neighboursBlock);
+            value += tileValues(current, state);
+            hia.setTiles(state,opponent, neighboursFree, neighboursBlock);
+            value += tileValues(opponent, state);
             value += evalQueen(state);
             value += valueNeighboursQueen(state);
+            value += hand(state, current);
+            value += hand(state, opponent);
         }
         return value;
     }
    
+    static int tileValues(Player p, Game state){
+        HiveInterfaceIA hia = new HiveInterfaceIA();
+        int value = 0;
+        for(Tile tuile : neighboursFree)
+                value += heuristicVal[(p == hia.currentPlayer(state) ? 1 : 0)][5][Heuristic.trans(tuile.type)];
+                    
+        for(Tile tuile : neighboursBlock)
+                value += heuristicVal[(p == hia.currentPlayer(state) ? 1 : 0)][6][Heuristic.trans(tuile.type)];
+        return value;
+    }
     
     static int evalQueen( Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
@@ -52,36 +67,11 @@ public class Evaluation {
         Player current = hia.currentPlayer(state);
         int queenOpponentPossibilities = hia.nbPossibilitiesQueen(state, opponent);
         int queenCurrentPossibilities = hia.nbPossibilitiesQueen(state, current);
-        if(hia.queenIsCurshed(current, state)){
-            values-=200;
-        }
-        if(hia.queenIsCurshed(opponent, state)){
-            values+=175;
-        }
-        switch (queenOpponentPossibilities) {
-            case 0:
-                values+= 170;
-                break;
-            case 1:
-                values+= 152;
-                break;
-            default:
-                values-= 166;
-                break;
-        }
-        switch (queenCurrentPossibilities) {
-            case 0:
-                values-= 184;
-                break;
-            case 1:
-                values-= 170;
-                break;
-            default:
-                values+= 150;
-                break;
-        }
         
-        
+        values+=QUEEN_CRUSHED_CUR[(hia.queenIsCurshed(current, state) ? 1 : 0)];
+        values+=QUEEN_CRUSHED_OP[(hia.queenIsCurshed(opponent, state) ? 1 : 0)];
+        values+= heuristicVal[0][0][queenOpponentPossibilities];
+        values+= heuristicVal[1][0][queenCurrentPossibilities];
         return values;
     }
     
@@ -90,119 +80,34 @@ public class Evaluation {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
-        ArrayList<Tile> neighboursOpponent = hia.queenNeighbours(opponent, state);
-        ArrayList<Tile> neighboursCurrent = hia.queenNeighbours(current, state);
+        setQueenNeighbors(state, opponent, neighboursFree, neighboursBlock);
+        for(Tile tuile : neighboursFree){
+            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 4 : 2)][Heuristic.trans(tuile.type)];
+        }
+        for(Tile tuile : neighboursBlock){
+            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 3 : 1)][Heuristic.trans(tuile.type)];
+        }
+        setQueenNeighbors(state, current, neighboursFree, neighboursBlock);
+
+        for(Tile tuile : neighboursFree){
+            value += heuristicVal[1][((tuile.color == hia.currentPlayer(state).color) ? 2 : 4)][Heuristic.trans(tuile.type)];
+        }
+        for(Tile tuile : neighboursBlock){
+            value += heuristicVal[1][((tuile.color == hia.currentPlayer(state).color) ? 1 : 3)][Heuristic.trans(tuile.type)];
+        }
         
-        for(Tile tuile : neighboursOpponent){
-            value += insectsValueNeighboursQueenOpponent(tuile, state);
-
-        }
-        for(Tile tuile : neighboursCurrent){
-            value -= insectsValueNeighboursQueenCurrent(tuile, state);
-
-        }
         return value;
     }
     
-    static int insectsValue(ArrayList<Tile> freeTile){
-        
-        int value = 0;
-            
-            for(Tile currentTile : freeTile){
-                switch (currentTile.type) 
-                {
-                    case  QUEEN_BEE:
-                        value += 50;
-                        break;
-                    case  GRASSHOPPER:
-                        value += 191;
-                        break;
-                    case  SOLDIER_ANT:
-                        value += 132;
-                        break;
-                    case  SPIDER:
-                        value += 56;
-                        break;
-                    case  BEETLE:
-                        value += 50;
-                        break;
-                }
-                
-            }
-            return value;
-    }
-    
-    static int insectsValueBloc(ArrayList<Tile> blocTile){
-       
-        int value = 0;
-            for(Tile currentTile : blocTile){
-                switch (currentTile.type) 
-                {
-                    case  QUEEN_BEE:
-                        value += 64;
-                        break;
-                    case  GRASSHOPPER:
-                        value += 144;
-                        break;
-                    case  SOLDIER_ANT:
-                        value += 140;
-                        break;
-                    case  SPIDER:
-                        value += 122;
-                        break;
-                    case  BEETLE:
-                        value += 121;
-                        break;
-                }
-                
-            }
-            return value;
-    }
-    
-    static int insectsValueNeighboursQueenCurrent(Tile tile, Game state){
+    static int hand(Game state, Player p){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        if (tile.color == hia.currentPlayer(state).color) {
-            switch (tile.type) {
-                case QUEEN_BEE:
-                    return 0;
-                default:
-                    //if(hia.)
-                    return 93;
-
-            }
-        }else{
-            switch (tile.type) {
-                case QUEEN_BEE:
-                    return 136;
-                case BEETLE:
-                    return 200;
-                default:
-                    return 181;
-
-            }
-        }
-    }
-    static int insectsValueNeighboursQueenOpponent(Tile freeTile, Game state){
-            HiveInterfaceIA hia = new HiveInterfaceIA();
-            if (freeTile.color == hia.currentPlayer(state).color) {
-                switch (freeTile.type) {
-                    case QUEEN_BEE:
-                        return 16;
-                    case GRASSHOPPER:
-                        return 200;
-                    case SOLDIER_ANT:
-                        return 115;
-                    case SPIDER:
-                        return 65;
-                    case BEETLE:
-                        return 84;
-                    default:
-                        return 100;
-
-                }
-            }else{
-                return 0;
-            }
+        int value=0;
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][0]*nbInsectsPlayerHand(state, p , InsectType.QUEEN_BEE);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][1]*nbInsectsPlayerHand(state, p , InsectType.SPIDER);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][2]*nbInsectsPlayerHand(state, p , InsectType.BEETLE);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][3]*nbInsectsPlayerHand(state, p , InsectType.GRASSHOPPER);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][4]*nbInsectsPlayerHand(state, p , InsectType.SOLDIER_ANT);
+        return value;
 
     }
     
