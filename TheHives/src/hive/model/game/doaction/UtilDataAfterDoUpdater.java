@@ -23,7 +23,7 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
 {
     UtilData data;
     
-    UtilDataAfterDoUpdater(UtilData data)
+    public UtilDataAfterDoUpdater(UtilData data)
     {
         this.data = data;
     }
@@ -58,10 +58,6 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
         
         // nb_combs (according to hive put rules (tiles put at level 0))
         
-        // last
-        
-        // trace
-        
         // influences
         
         // placements
@@ -81,10 +77,6 @@ public class UtilDataAfterDoUpdater implements ActionVisitor
         // nb_tiles
         
         // nb_combs (according to hive put rules (tiles put at level 0))
-        
-        // last
-        
-        // trace
         
         // influences
         

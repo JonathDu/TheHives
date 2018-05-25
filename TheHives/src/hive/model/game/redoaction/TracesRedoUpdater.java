@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game.doaction;
+package hive.model.game.redoaction;
 
-import hive.model.game.PlayerTurn;
-import hive.model.players.Player;
+import hive.model.game.utildata.UtilData;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
@@ -16,33 +15,42 @@ import hive.model.players.actions.PutAction;
  *
  * @author Thomas
  */
-public class PlayerDoUpdater implements ActionVisitor
+class TracesRedoUpdater implements ActionVisitor
 {
-    PlayerTurn turn;
+    UtilData data;
     
-    public PlayerDoUpdater(PlayerTurn turn)
+    public TracesRedoUpdater(UtilData data)
     {
-        this.turn = turn;
+        this.data = data;
     }
     
     @Override
     public void visit(PutAction action)
     {
-        Player current = turn.getCurrent();
-        int n = current.collection.get(action.tile.type);
-        current.collection.put(action.tile.type, n - 1);
-        turn.next();
+       // trace
+        data.trace.push(action);
+        
+        // undos
+        data.undos.pop();
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        turn.next();
+        // trace
+        data.trace.push(action);
+        
+        // undos
+        data.undos.pop();
     }
 
     @Override
     public void visit(NoAction action)
     {
-        turn.next();
+        // trace
+        data.trace.push(action);
+        
+        // undos
+        data.undos.pop();
     }
 }

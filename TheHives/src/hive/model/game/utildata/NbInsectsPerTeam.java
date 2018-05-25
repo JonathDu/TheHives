@@ -3,19 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.game;
+package hive.model.game.utildata;
 
-import hive.model.players.actions.Action;
-import java.util.Stack;
+import hive.model.players.TeamColor;
+import java.util.EnumMap;
 
 /**
  *
  * @author Thomas
  */
-public class ActionsTrace extends Stack<Action>
+public class NbInsectsPerTeam extends EnumMap<TeamColor, Integer>
 {
-    public ActionsTrace()
+
+    public NbInsectsPerTeam()
     {
-        super();
+        super(TeamColor.class);
     }
+    
 }

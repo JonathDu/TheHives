@@ -25,7 +25,7 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
 {
     UtilData data;
     
-    UtilDataBeforeDoUpdater(UtilData data)
+    public UtilDataBeforeDoUpdater(UtilData data)
     {
         this.data = data;
     }
@@ -41,12 +41,6 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         
         // nb_combs (according to hive put rules (tiles put at level 0))
         data.nb_combs += 1;
-        
-        // last
-        data.last_undo = null;
-        
-        // trace
-        data.trace.push(action);
         
         // influences (according to hive put rules (tiles put at level 0))
         data.influences.get(action.tile.color).addInfluence(action.where.comb);
@@ -77,12 +71,6 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         // if the tile shares a comb but will occupy an empty comb
         else if(action.source.comb.value().size() >= 2 && action.destination.comb.value().size() == 0)
             data.nb_combs += 1;
-        
-        // last
-        data.last_undo = null;
-        
-        // trace
-        data.trace.push(action);
         
         // influences
         if(action.source.stack().size() == 1)
@@ -125,12 +113,6 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
         // nb_tiles
         
         // nb_combs
-        
-        // last
-        data.last_undo = null;
-        
-        // trace
-        data.trace.push(action);
         
         // influences
         

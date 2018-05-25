@@ -176,7 +176,7 @@ public class HiveInterfaceIA implements InterfaceIA
     {
         GameProgress gameprogress = new GameProgress(game);
         gameprogress.undoAction();
-        return game.state.data.last_undo;
+        return game.state.data.undos.peek();
     }
 
     @Override
@@ -204,5 +204,5 @@ public class HiveInterfaceIA implements InterfaceIA
             player.decision = decision_iterator.next();
         }
     }
-
 }
+
