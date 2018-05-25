@@ -93,7 +93,7 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
         controller.builder.setDestination(destination);
-        playProducedAction();
+        controller.doProducedAction();
 
         uiPlateau.ruche.majSource(controller.builder.source);
         uiPlateau.ruche.majDestination(controller.builder.placement_or_destination);
@@ -104,17 +104,11 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
         controller.builder.setPlacement(placement);
-        playProducedAction();
+        controller.doProducedAction();
+        
         uiPlateau.majTileMain(controller.builder.tile, game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
         uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
     }
 
-    private void playProducedAction()
-    {
-        assert game.state.turn.getCurrent().decision instanceof HumanDecision;
-        Action action = controller.builder.produce();
-        ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
-        progress.doAction();
-        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
-    }
+
 }

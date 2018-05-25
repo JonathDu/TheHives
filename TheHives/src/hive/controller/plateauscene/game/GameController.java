@@ -9,6 +9,7 @@ import hive.model.GameProgress;
 import hive.model.board.Cell;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
+import hive.model.game.rules.GameStatus;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
@@ -74,24 +75,59 @@ public class GameController
         uiPlateau.update();
         timerFrame.play();
     }
+    
+    public void doProducedAction()
+    {
+        assert game.state.turn.getCurrent().decision instanceof HumanDecision;
+        Action action = builder.produce();
+        ((HumanDecision) game.state.turn.getCurrent().decision).setAction(action);
+        GameProgress progress = new GameProgress(game);
+        progress.doAction();
+        
+        if(game.rules.queenMustBePut(game.state))
+        {
+            //TODO : popup il faut poser la reine
+        }
+        
+        switch(game.rules.getStatus(game.state))
+        {
+            case CONTINUES:
+                uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
+                break;
+            case CURRENT_WINS:
+                //TODO : popup le joueur courrant a gagné
+                break;
+            case OPPONENT_WINS:
+                //TODO : popup le joueur courrant a gagné
+                break;
+            case DRAW:
+                //TODO : popup match nul
+                break;
+        }
+    }
 
     public void undo()
     {
+        if(game.state.data.trace.isEmpty())
+            return;
         resetBuilder();
         GameProgress progress = new GameProgress(game);
         progress.undoAction();
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
-        game.state.data.trace.peek().accept(gUpdater);
+        game.state.data.undos.peek().accept(gUpdater);
+        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
     }
 
     public void redo()
-    {       
+    {   
+        if(game.state.data.undos.isEmpty())
+            return;
         resetBuilder();
         GameProgress progress = new GameProgress(game);
         progress.redoAction();
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
-        game.state.data.undos.peek().accept(gUpdater);
-
+        game.state.data.trace.peek().accept(gUpdater);
+        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
     }
 
     public void help()
