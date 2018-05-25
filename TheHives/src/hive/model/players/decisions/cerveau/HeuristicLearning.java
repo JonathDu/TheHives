@@ -3,25 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.model.players.decisions.IA;
+package hive.model.players.decisions.cerveau;
 
 import hive.model.insects.InsectType;
+import java.util.ArrayList;
 
 /**
  *
  * @author Coralie
  */
-
-/*
-    QUEEN -> 0
-    SPIDER -> 1
-    BEETLE -> 2
-    GRASSHOPPER -> 3
-    SOLDIER_ANT -> 4
-*/
-
-public class Heuristic {
-    public static final int[] NB_QUEEN_OP_POSSIBILITY = {170, 152, -166, -166, -166};
+public class HeuristicLearning {
+    
+    ArrayList<Integer> evalValues;
+    
+   /* public static final int[] NB_QUEEN_OP_POSSIBILITY = {170, 152, -166, -166, -166};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 65, 84, 200, 110};
     public static final int[] QUEEN_NEIGH_FREE_OP_OP = {0, 0, 0, 0, 0};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {16, 65, 84, 200, 110};
@@ -40,7 +35,7 @@ public class Heuristic {
     public static final int[] INSECT_BLOCK_VALUE_CUR = {-64, -122, -121, -144, -140};
     public static final int[] IN_HAND_CUR = {0 , -100, 20, 30, 20 };
 
-    
+    */
     public static final int[] QUEEN_CRUSHED_CUR = {-200, 0};
     public static final int[] QUEEN_CRUSHED_OP = {175, 0};
     
@@ -62,8 +57,8 @@ public class Heuristic {
     }
     
     public static final int[][][] getHeuristic(){
-        int [][][] heuristicValues = new int [2][8][5];
-        
+        int [][][] heuristicValues = new int [2][8][5];        
+        /*
         heuristicValues[0][0] = NB_QUEEN_OP_POSSIBILITY;
         heuristicValues[0][1] = QUEEN_NEIGH_BLOCK_OP_OP;
         heuristicValues[0][2] = QUEEN_NEIGH_FREE_OP_OP;
@@ -80,13 +75,19 @@ public class Heuristic {
         heuristicValues[1][4] = QUEEN_NEIGH_FREE_CUR_OP;
         heuristicValues[1][5] = INSECT_VALUE_CUR;
         heuristicValues[1][6] = INSECT_BLOCK_VALUE_CUR;
-        heuristicValues[1][7] = IN_HAND_CUR;
+        heuristicValues[1][7] = IN_HAND_CUR;*/
+        int n = 0;
+        for(int i =0;i<2;i++){
+            for(int j =0 ; j<8;j++){
+                for(int k = 0; k<5;k++){
+                    assert(n<EvaluationLearning.evalValues.size());
+                    heuristicValues[i][j][k]=EvaluationLearning.evalValues.get(n);
+                    n++;
+                }
+            }
+        }
         
         return heuristicValues;
     }
-    
-    
-    
-    
     
 }

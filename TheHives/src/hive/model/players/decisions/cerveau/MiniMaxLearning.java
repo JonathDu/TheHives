@@ -6,6 +6,7 @@
 package hive.model.players.decisions.cerveau;
 
 import hive.model.HiveInterfaceIA;
+import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 public class MiniMaxLearning{
     EvaluationLearning eval;
 
+    static ArrayList<Tile> neighboursBlock = new ArrayList(22);
+    static ArrayList<Tile> neighboursFree = new ArrayList(22) ;
     public MiniMaxLearning(EvaluationLearning eval) {
         this.eval = eval;
     }
