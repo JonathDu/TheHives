@@ -35,19 +35,15 @@ public class InterfaceJoueurs extends Interface {
 
     String versionIA1;
     String versionIA2;
-
     int est_ia_ia = 0, est_h_ai = 0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
     Level level1 = null;
     Level level2 = null;
-    
-    
     private final Label joueur1;
     private final Label joueur2;
     private final Button valider;
     
-
     public InterfaceJoueurs(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
 

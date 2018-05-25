@@ -94,7 +94,7 @@ public class InterfaceMenu extends Interface {
         flecheImNG.setPreserveRatio(true);
 
         
-        //newGame.setFont(new Font(police, 20));
+        //newGame.setFont(new Font(police));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
