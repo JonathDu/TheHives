@@ -38,7 +38,7 @@ public final class Controller
     Stage primaryStage;
     CacheImage cacheImage;
     public Dimension screenSize;
-    public GestionnaireLangage gestionnaireLangage;
+    public LanguagesGesture gestionnaireLangage;
     public String typeTheme;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
@@ -47,7 +47,7 @@ public final class Controller
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        gestionnaireLangage = new GestionnaireLangage(Locale.FRENCH);
+        gestionnaireLangage = new LanguagesGesture(Locale.FRENCH);
         typeTheme = "Jour";
         primaryStage.setScene(currentScene);
         goToMenu();
@@ -111,8 +111,8 @@ public final class Controller
 
     public void validerParametres(String nomLangue, boolean activerAide, String nomTheme)
     {
-        Locale newLangue = gestionnaireLangage.langues.get(nomLangue);
-        gestionnaireLangage.changerLangue(newLangue);
+        Locale newLangue = gestionnaireLangage.languages.get(nomLangue);
+        gestionnaireLangage.setLanguage(newLangue);
         typeTheme = nomTheme;
         ((Interface) currentScene.getRoot()).majRetourPreference();
     }

@@ -48,15 +48,18 @@ public class NodeComb extends Parent {
 //        this.pions.add(tile.level, pion);
 //        this.getChildren().add(this.pions.get(this.pions.size() - 1));
 //    }
-
     public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController plateauController) {
         pions.clear();
         this.getChildren().clear();
         this.getChildren().add(socle);
-        for (int i = 0; i < comb.value().size(); i++) {
-            pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c));
-            pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i)));
-            this.getChildren().add(pions.get(i));
+        if (comb != null) {
+            for (int i = 0; i < comb.value().size(); i++) {
+                pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c));
+                pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i)));
+                pions.get(i).setLayoutX(4 * i);
+                pions.get(i).setLayoutY(4 * i);
+                this.getChildren().add(pions.get(i));
+            }
         }
 
     }
@@ -102,5 +105,5 @@ public class NodeComb extends Parent {
         }
     }
      */
-   
+
 }

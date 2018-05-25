@@ -5,6 +5,7 @@
  */
 package hive.controller.plateauscene.game;
 
+import hive.model.GameProgress;
 import hive.model.board.Cell;
 import hive.model.game.DefaultGame;
 import hive.model.game.Game;
@@ -13,6 +14,7 @@ import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
+import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IA.Level;
 import hive.model.players.decisions.IADecision;
 import hive.vue.InterfacePlateau;
@@ -47,6 +49,17 @@ public class GameController
         timerFrame = new Timeline(new KeyFrame(Duration.millis(500), new FrameHandler(this)));
         timerFrame.setCycleCount(Timeline.INDEFINITE);
     }
+    
+    private void resetBuilder()
+    {
+        if(builder.tile != null)
+            uiPlateau.getInterfacePlateauMain(game.state.turn.current.color).desurlignerTile(builder.tile);
+        if(builder.source != null)
+            uiPlateau.ruche.deselectCell(builder.source.comb.pos);
+        if(builder.possibleDestinations != null)
+            uiPlateau.ruche.desurlignerDestinationsPossibles(builder.possibleDestinations);
+        builder.setBegin();
+    }
 
     public void start()
     {
@@ -57,18 +70,27 @@ public class GameController
     {
         timerFrame.stop();
         builder.setBegin();
-        game = DefaultGame.get(game.state.players.get(0).decision, game.state.players.get(1).decision);
+        game = DefaultGame.get(new HumanDecision(), new HumanDecision());
         uiPlateau.update();
         timerFrame.play();
     }
 
     public void undo()
     {
-
+        resetBuilder();
+        GameProgress progress = new GameProgress(game);
+        progress.undoAction();
+        ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
+        game.state.data.trace.peek().accept(gUpdater);
     }
 
     public void redo()
-    {
+    {       
+        resetBuilder();
+        GameProgress progress = new GameProgress(game);
+        progress.redoAction();
+        ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
+        game.state.data.undos.peek().accept(gUpdater);
 
     }
 
@@ -77,12 +99,7 @@ public class GameController
         IADecision ia = new IADecision(Level.HARD);
         Action action = ia.getAction(game);
         
-        if(builder.tile != null)
-            uiPlateau.getInterfacePlateauMain(game.state.turn.current.color).desurlignerTile(builder.tile);
-        if(builder.source != null)
-            uiPlateau.ruche.deselectCell(builder.source.comb.pos);
-        if(builder.possibleDestinations != null)
-            uiPlateau.ruche.desurlignerDestinationsPossibles(builder.possibleDestinations);
+        resetBuilder();
         
         ActionGraphicAide gUpdater = new ActionGraphicAide(this);
         action.accept(gUpdater);
