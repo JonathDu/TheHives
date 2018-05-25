@@ -34,7 +34,6 @@ public class NodeRuche extends Parent {
     private final Board board;
     private InterfacePlateau plateau;
 
-    
     public NodeRuche(CacheImage c, GameController plateauController) {
         this.c = c;
         this.board = plateauController.game.state.board;
@@ -44,9 +43,8 @@ public class NodeRuche extends Parent {
         tab = new Matrix<>(hauteur, largeur);
         initTab();
     }
-    
-    public void initTab()
-    {
+
+    public void initTab() {
         double center = ((sqrt(3) / 2) * longueurPion);
         double h = sqrt(-Math.pow(center, 2) + Math.pow(longueurPion, 2));
         for (int y = 0; y < hauteur; y++) {
@@ -54,29 +52,31 @@ public class NodeRuche extends Parent {
                 Vector2i pos = new Vector2i(x, y);
 
                 NodeComb cell = new NodeComb(c, longueurPion);
-                if(board.getHexagon(pos).value != null){
+                if (board.getHexagon(pos).value != null) {
                     cell.majComb(board.getHexagon(pos), plateau, plateauController);
                 }
-                cell.setLayoutX(x * (longueurPion + h) + 10);
+                cell.setLayoutX(x * (longueurPion + h) + x  * 5);
 
                 if (x % 2 != 0) {
-                    cell.setLayoutY((y * 2 * center) + center  + 10);
+                    cell.setLayoutY((y * 2 * center) + center + y  * 5);
                 } else {
-                    cell.setLayoutY(y * 2 * center  + 10);
+                    cell.setLayoutY(y * 2 * center + y  * 5);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
             }
-        }     
+        }
     }
-    
-    public void updateTab()
-    {
+
+    public void updateTab() {
+        this.getChildren().clear();
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
-                //TODO
+                Vector2i pos = new Vector2i(x, y);
+                tab.getAt(pos).majComb(null, plateau, plateauController);
+                this.getChildren().add(tab.getAt(pos));
             }
-        }    
+        }
     }
 
     public void setHandler(InterfacePlateau plateau) {
@@ -87,7 +87,7 @@ public class NodeRuche extends Parent {
 
                 SocleHandler handler = new SocleHandler(plateauController, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
-                
+
             }
         }
     }
@@ -103,25 +103,25 @@ public class NodeRuche extends Parent {
     public void majSource(Cell source) {
         tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
     }
-    
+
     public void majDestination(Cell destination) {
         tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController);
     }
-    
+
     public void majDestinations(ArrayList<Cell> destinations) {
-        destinations.forEach((destination) ->
-        {
+        destinations.forEach((destination)
+                -> {
             majDestination(destination);
         });
     }
-    
+
     public void majPlacement(Cell placement) {
         tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, plateauController);
     }
 
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
-            tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb( 4,246,118));
+            tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb(4, 246, 118));
         }
     }
 

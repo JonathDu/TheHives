@@ -36,8 +36,7 @@ import javafx.stage.Stage;
  *
  * @author jonathan
  */
-public class InterfacePlateau extends Interface
-{
+public class InterfacePlateau extends Interface {
 
     BorderPane borderPane;
     public NodePlateauMain mainGauche;
@@ -65,8 +64,7 @@ public class InterfacePlateau extends Interface
     String j1;
     String j2;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2)
-    {
+    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
 
         super(stage, controller, c);
 
@@ -143,14 +141,14 @@ public class InterfacePlateau extends Interface
 
     }
 
-    public void update()
-    {
+    public void update() {
         ruche.updateTab(); //TODO !!!
-        // TODO : main.update()
+        majJoueurCourant(TeamColor.WHITE);
+        mainGauche.update(game.state.players.get(0).collection);
+        mainDroite.update(game.state.players.get(1).collection);
     }
 
-    private BorderPane setTool()
-    {
+    private BorderPane setTool() {
         width = (int) primaryStage.getWidth();
 
         String repertoire = "Design/FenetrePlateau/";
@@ -207,8 +205,8 @@ public class InterfacePlateau extends Interface
             primaryStage.show();
         });
 
-        boutonRegle.setOnMouseClicked(value ->
-        {
+        boutonRegle.setOnMouseClicked(value
+                -> {
 
             Stage primaryStage = new Stage();
             Parent root;
@@ -218,24 +216,23 @@ public class InterfacePlateau extends Interface
             primaryStage.show();
         });
 
-
-        boutonRecommencer.setOnMouseClicked(value ->
-        {
+        boutonRecommencer.setOnMouseClicked(value
+                -> {
             gameController.restart();
         });
 
-        boutonAnnuler.setOnMouseClicked(value ->
-        {
+        boutonAnnuler.setOnMouseClicked(value
+                -> {
             gameController.undo();
         });
 
-        boutonReplay.setOnMouseClicked(value ->
-        {
+        boutonReplay.setOnMouseClicked(value
+                -> {
             gameController.redo();
         });
 
-        boutonConseil.setOnMouseClicked(value ->
-        {
+        boutonConseil.setOnMouseClicked(value
+                -> {
             gameController.help();
         });
 
@@ -260,31 +257,25 @@ public class InterfacePlateau extends Interface
 
     }
 
-    public NodePlateauMain getInterfacePlateauMain(TeamColor color)
-    {
+    public NodePlateauMain getInterfacePlateauMain(TeamColor color) {
         return color == TeamColor.BLACK ? mainDroite : mainGauche;
     }
 
-    public void majTileMain(Tile tile, int nbTiles)
-    {
-        if (tile.color == TeamColor.BLACK)
-        {
+    public void majTileMain(Tile tile, int nbTiles) {
+        if (tile.color == TeamColor.BLACK) {
             mainDroite.maj(tile, nbTiles);
-        } else
-        {
+        } else {
             mainGauche.maj(tile, nbTiles);
         }
     }
 
-    public void majJoueurCourant(TeamColor color)
-    {
+    public void majJoueurCourant(TeamColor color) {
         mainDroite.setIsCourant(color == TeamColor.BLACK);
         mainGauche.setIsCourant(color == TeamColor.WHITE);
     }
 
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         //pas de texte dans cette interface => rien a mettre a jour
     }
 }

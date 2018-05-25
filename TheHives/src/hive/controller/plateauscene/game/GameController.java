@@ -13,6 +13,7 @@ import hive.model.players.actions.ActionVisitor;
 import hive.model.players.actions.MoveAction;
 import hive.model.players.actions.NoAction;
 import hive.model.players.actions.PutAction;
+import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IA.Level;
 import hive.model.players.decisions.IADecision;
 import hive.vue.InterfacePlateau;
@@ -57,7 +58,7 @@ public class GameController
     {
         timerFrame.stop();
         builder.setBegin();
-        game = DefaultGame.get(game.state.players.get(0).decision, game.state.players.get(1).decision);
+        game = DefaultGame.get(new HumanDecision(), new HumanDecision());
         uiPlateau.update();
         timerFrame.play();
     }
