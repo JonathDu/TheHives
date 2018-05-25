@@ -60,7 +60,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                     System.out.println("Tile selectionnée");
 
                     controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game));
+                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
@@ -73,7 +73,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                     uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
 
                     controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game));
+                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
 
                     uiMain.surlignerTile(controller.builder.tile);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
@@ -87,7 +87,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                         uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
-                        controller.builder.setDestinations(HiveUtil.getPlacements(game));
+                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
                         uiMain.surlignerTile(controller.builder.tile);
                         uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     } else
