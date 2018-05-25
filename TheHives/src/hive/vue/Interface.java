@@ -64,9 +64,9 @@ public abstract class Interface extends Parent {
 
         police = controller.getPolice();
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width);
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width, height);
+        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width, height);
+        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width, height);
 
         setBackground();
         
@@ -96,7 +96,7 @@ public abstract class Interface extends Parent {
     {
         Image fond = controller.typeTheme.equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
-        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, backgroundSize);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundFond);
         panePrincipale.setBackground(background);    
     }
