@@ -92,7 +92,8 @@ public class InterfaceMenu extends Interface {
         ImageView flecheImNG = new ImageView(fleche);
         flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
-
+        
+        
         
         //newGame.setFont(new Font(police));
         newGame.setTextFill(Color.web("#fbe5b5"));

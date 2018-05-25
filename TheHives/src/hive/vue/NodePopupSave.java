@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.controller.GestionnaireSauvegarde;
+import hive.controller.SavesGesture;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import javafx.event.EventType;
@@ -61,12 +61,12 @@ public class NodePopupSave extends Parent {
         });
 
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            GestionnaireSauvegarde.enregistrerGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(game, field.getText() + ".xml");
             stage.close();
         });
 
         validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            GestionnaireSauvegarde.enregistrerGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(game, field.getText() + ".xml");
             stage.close();
             controller.goToMenu();
         });
