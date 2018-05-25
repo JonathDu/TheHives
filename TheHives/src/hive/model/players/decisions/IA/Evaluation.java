@@ -37,10 +37,8 @@ public class Evaluation {
             return 10000;
         }
         else{
-            hia.setTiles(state,current, neighboursFree, neighboursBlock);
-            value += tileValues(current, state);
-            hia.setTiles(state,opponent, neighboursFree, neighboursBlock);
-            value += tileValues(opponent, state);
+            hia.setTiles(state, neighboursFree, neighboursBlock);
+            value += tileValues(state);
             value += evalQueen(state);
             value += valueNeighboursQueen(state);
             value += hand(state, current);
@@ -49,14 +47,14 @@ public class Evaluation {
         return value;
     }
    
-    static int tileValues(Player p, Game state){
+    static int tileValues(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int value = 0;
         for(Tile tuile : neighboursFree)
-                value += heuristicVal[(p == hia.currentPlayer(state) ? 1 : 0)][5][Heuristic.trans(tuile.type)];
+                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][5][Heuristic.trans(tuile.type)];
                     
         for(Tile tuile : neighboursBlock)
-                value += heuristicVal[(p == hia.currentPlayer(state) ? 1 : 0)][6][Heuristic.trans(tuile.type)];
+                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][6][Heuristic.trans(tuile.type)];
         return value;
     }
     
@@ -80,14 +78,14 @@ public class Evaluation {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
-        setQueenNeighbors(state, opponent, neighboursFree, neighboursBlock);
+        hia.setQueenNeighbors(state, opponent, neighboursFree, neighboursBlock);
         for(Tile tuile : neighboursFree){
             value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 4 : 2)][Heuristic.trans(tuile.type)];
         }
         for(Tile tuile : neighboursBlock){
             value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 3 : 1)][Heuristic.trans(tuile.type)];
         }
-        setQueenNeighbors(state, current, neighboursFree, neighboursBlock);
+        hia.setQueenNeighbors(state, current, neighboursFree, neighboursBlock);
 
         for(Tile tuile : neighboursFree){
             value += heuristicVal[1][((tuile.color == hia.currentPlayer(state).color) ? 2 : 4)][Heuristic.trans(tuile.type)];
@@ -102,11 +100,11 @@ public class Evaluation {
     static int hand(Game state, Player p){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int value=0;
-        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][0]*nbInsectsPlayerHand(state, p , InsectType.QUEEN_BEE);
-        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][1]*nbInsectsPlayerHand(state, p , InsectType.SPIDER);
-        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][2]*nbInsectsPlayerHand(state, p , InsectType.BEETLE);
-        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][3]*nbInsectsPlayerHand(state, p , InsectType.GRASSHOPPER);
-        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][4]*nbInsectsPlayerHand(state, p , InsectType.SOLDIER_ANT);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][0]*hia.nbInsectsPlayerHand(state, p , InsectType.QUEEN_BEE);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][1]*hia.nbInsectsPlayerHand(state, p , InsectType.SPIDER);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][2]*hia.nbInsectsPlayerHand(state, p , InsectType.BEETLE);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][3]*hia.nbInsectsPlayerHand(state, p , InsectType.GRASSHOPPER);
+        value+=heuristicVal[(p==hia.currentPlayer(state) ? 1 : 0)][7][4]*hia.nbInsectsPlayerHand(state, p , InsectType.SOLDIER_ANT);
         return value;
 
     }

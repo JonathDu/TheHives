@@ -44,5 +44,6 @@ public interface InterfaceIA
     public int nbPossibilitiesQueen(Game game, Player player);
     public void setQueenNeighbors(Game game, Player player, ArrayList<Tile> free, ArrayList<Tile> blocked);
     public void setTiles(Game game, ArrayList<Tile> free, ArrayList<Tile> blocked);
+    public boolean queenIsCurshed(Player p, Game game);
     public Integer nbInsectsPlayerHand(Game game, Player player, InsectType type);
 }

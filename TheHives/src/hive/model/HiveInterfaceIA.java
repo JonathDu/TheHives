@@ -266,7 +266,18 @@ public class HiveInterfaceIA implements InterfaceIA
             }
         }
     }
-    
+    @Override
+    public boolean queenIsCurshed(Player p, Game game)
+    {
+        HashSet<Cell> queens = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
+        Iterator<Cell> ite = queens.iterator();
+        if(ite.hasNext())
+        {
+            Cell cell = ite.next();
+            return HiveUtil.isCrushed(cell);          
+        }
+        return false;
+}
     @Override
     public Integer nbInsectsPlayerHand(Game game, Player player, InsectType type)
     {
