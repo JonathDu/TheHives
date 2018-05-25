@@ -162,13 +162,13 @@ public class InterfacePlateau extends Interface
         droite = new HBox();
         centre = new HBox();
 
-        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width);
-        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width);
-        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width);
-        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width);
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width, height);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width, height);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width, height);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width, height);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
