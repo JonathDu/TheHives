@@ -73,11 +73,11 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
             data.nb_combs += 1;
         
         // influences
-        if(action.source.stack().size() == 1)
+        if(action.source.comb.value().size() == 1)
             data.influences.get(tile.color).removeInfluence(action.source.comb);
         else
         {
-            assert action.source.level == action.source.stack().size() - 1; // must not be below an other tile
+            assert action.source.level == action.source.comb.value().size() - 1; // must not be below an other tile
             Tile below = new Cell(action.source).down().getTile();
             if(tile.color != below.color)
             {
@@ -89,7 +89,7 @@ public class UtilDataBeforeDoUpdater implements ActionVisitor
             data.influences.get(tile.color).addInfluence(action.destination.comb);
         else
         {
-            assert action.destination.level == action.destination.stack().size(); // must not be below an other tile
+            assert action.destination.level == action.destination.comb.value().size(); // must not be below an other tile
             Tile below = new Cell(action.destination).down().getTile();
             if(tile.color != below.color)
             {

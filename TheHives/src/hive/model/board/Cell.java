@@ -42,11 +42,6 @@ public class Cell implements Serializable
         return comb.value().get(level);
     }
     
-    public TilesStack stack()
-    {
-        return comb.value();
-    }
-    
     public boolean isAtTop()
     {
         return level == comb.value().size() - 1;
