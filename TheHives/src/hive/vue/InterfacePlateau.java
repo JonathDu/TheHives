@@ -240,6 +240,8 @@ public class InterfacePlateau extends Interface
         centre.getChildren().add(boutonAnnuler);
         centre.getChildren().add(boutonConseil);
         centre.getChildren().add(boutonReplay);
+        
+        pane.setPadding(new Insets(5));
         return pane;
 
     }
