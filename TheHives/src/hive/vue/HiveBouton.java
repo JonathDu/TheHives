@@ -8,6 +8,7 @@ package hive.vue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 /**
  *
@@ -15,14 +16,19 @@ import javafx.scene.layout.StackPane;
  */
 class HiveBouton extends StackPane {
 
-    public HiveBouton(Image image, int width, int height) {
+    public HiveBouton(Image image, Stage stage) {
         super();
         ImageView menuIm = new ImageView(image);
         menuIm.setSmooth(true);
         menuIm.setCache(true);
-        int tailleDeCase = (width / 8 > height / 6) ? height / 6 : width / 8;
-        menuIm.setFitHeight(tailleDeCase/2);
-        menuIm.setFitWidth(tailleDeCase/2 * 1.07);
+        
+        menuIm.fitWidthProperty().bind(stage.widthProperty().divide(15));
+        menuIm.setPreserveRatio(true);
+        
+        
+//        int tailleDeCase = (width / 8 > height / 6) ? height / 6 : width / 8;
+//        menuIm.setFitHeight(tailleDeCase/2);
+//        menuIm.setFitWidth(tailleDeCase/2 * 1.07);
         getChildren().add(menuIm);
     }
 }
