@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateauscene.game;
+package hive.controller.plateau;
 
 import hive.model.players.decisions.IADecision;
 import javafx.animation.Animation;

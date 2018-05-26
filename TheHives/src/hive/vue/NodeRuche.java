@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateauscene.game.mousehandlers.SocleHandler;
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.mousehandlers.SocleHandler;
+import hive.controller.plateau.GameController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
 import javafx.scene.Parent;

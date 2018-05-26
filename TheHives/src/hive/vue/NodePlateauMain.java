@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.mousehandlers.TileMainHandler;
+import hive.controller.plateau.GameController;
+import hive.controller.plateau.mousehandlers.TileMainHandler;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;

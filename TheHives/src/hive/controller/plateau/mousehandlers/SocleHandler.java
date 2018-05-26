@@ -1,7 +1,7 @@
-package hive.controller.plateauscene.game.mousehandlers;
+package hive.controller.plateau.mousehandlers;
 
-import hive.controller.plateauscene.game.PlateauHandlerData;
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.PlateauHandlerData;
+import hive.controller.plateau.GameController;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import hive.model.game.Game;

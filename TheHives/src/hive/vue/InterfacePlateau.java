@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.GameController;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;

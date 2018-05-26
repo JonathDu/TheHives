@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateauscene.game;
+package hive.controller.plateau;
 
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.GameController;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.vue.InterfacePlateau;

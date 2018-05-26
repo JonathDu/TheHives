@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.mousehandlers.TilePlateauHandler;
+import hive.controller.plateau.GameController;
+import hive.controller.plateau.mousehandlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import java.util.ArrayList;
