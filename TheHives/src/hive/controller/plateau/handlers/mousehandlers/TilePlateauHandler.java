@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateauscene.game.mousehandlers;
+package hive.controller.plateau.handlers.mousehandlers;
 
-import hive.controller.plateauscene.game.PlateauHandlerData;
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.handlers.PlateauHandlerData;
+import hive.controller.plateau.PlateauController;
 import hive.model.board.Cell;
 import hive.model.game.rules.HiveUtil;
 import hive.model.players.decisions.HumanDecision;
-import hive.vue.InterfacePlateau;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -24,7 +23,7 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
 
     Cell cellClicked;
 
-    public TilePlateauHandler(GameController controller, Cell cellClicked)
+    public TilePlateauHandler(PlateauController controller, Cell cellClicked)
     {
         super(controller);
         this.cellClicked = cellClicked;
@@ -33,14 +32,14 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
     @Override
     public void handle(MouseEvent event)
     {
+        if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
+        {
+            return;
+        }
+
         System.out.println("--- TILE PLATEAU ---");
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
-            {
-                return;
-            }
-
             switch (controller.builder.getState())
             {
                 case BEGIN:
@@ -53,7 +52,7 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
                     controller.builder.setSource(cellClicked);
                     controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
 
-                    uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
+                    uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
@@ -77,7 +76,7 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
                         controller.builder.setSource(cellClicked);
                         controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
 
-                        uiPlateau.ruche.selectCell(controller.builder.source.comb.pos);
+                        uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
                         uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         System.out.println("Changement : on ne place pas, on selectionne une source");
                     }

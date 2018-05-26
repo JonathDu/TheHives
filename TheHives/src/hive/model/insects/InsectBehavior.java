@@ -7,6 +7,8 @@ package hive.model.insects;
 
 import hive.model.board.Cell;
 import hive.model.game.GameState;
+import hive.model.insects.behaviors.info.CombData;
+import hive.model.insects.behaviors.info.Info;
 import java.util.function.Consumer;
 
 /**
@@ -15,7 +17,7 @@ import java.util.function.Consumer;
  */
 public interface InsectBehavior
 {
-    //public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> valid, Consumer<CellInfo<?>> invalid);
     public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer);
+    public Info consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer, Consumer<CombData> info_giver);
     public boolean isFree(GameState state, Cell cell);
 }

@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.mousehandlers.TilePlateauHandler;
+import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.handlers.mousehandlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import java.util.ArrayList;
@@ -48,8 +48,9 @@ public class NodeComb extends Parent {
 //        this.pions.add(tile.level, pion);
 //        this.getChildren().add(this.pions.get(this.pions.size() - 1));
 //    }
-    public void majComb(Honeycomb comb, InterfacePlateau plateau, GameController plateauController) {
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, PlateauController plateauController) {
         pions.clear();
+        setSelected(Color.TRANSPARENT);
         this.getChildren().clear();
         this.getChildren().add(socle);
         if (comb != null) {
