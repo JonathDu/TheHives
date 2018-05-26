@@ -244,4 +244,9 @@ public class PlateauController
         ActionGraphicUpdaterHelp gUpdater = new ActionGraphicUpdaterHelp(this);
         action.accept(gUpdater);
     }
+    
+    public boolean isIAvsIA()
+    {
+        return (game.state.players.get(0).decision instanceof IADecision) && (game.state.players.get(1).decision instanceof IADecision);
+    }
 }
