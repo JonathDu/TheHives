@@ -105,6 +105,7 @@ public class PlateauController
         while(!game.state.data.trace.isEmpty())
         {
             undo();
+            System.out.println("fdsdf");
         }
         game.state.data.undos.clear();
         timerFrame.play();
@@ -139,6 +140,7 @@ public class PlateauController
                     GameProgress progress = new GameProgress(game);
                     progress.doAction();
                     startOfTurnInfos();
+                    uiPlateau.message("Attention", "Vous ne pouvez pas jouer, vous devez attendre le tour suivant");
                     //TODO : popup "vous ne pouvez pas jouer : passage au tour suivant"
                 }
                 if (game.rules.queenMustBePut(game.state))
@@ -149,24 +151,26 @@ public class PlateauController
                     builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
                     uiPlateau.getInterfacePlateauMain(builder.tile.color).surlignerTile(builder.tile);
                     uiPlateau.ruche.surlignerDestinationsPossibles(builder.possibleDestinations);
+                    uiPlateau.message("Attention", "Vous devez posez votre reine");
+
                     //TODO : popup "il faut poser la reine"
                 }
             }
             break;
             case CURRENT_WINS:
                 System.out.println("Le joueur courrant a gagné");
+                uiPlateau.finPartie(game.state.turn.current.toString());
                 stop();
-                //TODO : popup "le joueur courrant a gagné"
                 break;
             case OPPONENT_WINS:
                 System.out.println("Le joueur opposé a gagné");
+                uiPlateau.finPartie(game.state.turn.opponent.toString());
                 stop();
-                //TODO : popup "le joueur courrant a gagné"
                 break;
             case DRAW:
                 System.out.println("Plus personne ne peut joueur : match nul");
+                uiPlateau.finPartie(null);
                 stop();
-                //TODO : popup "plus personne ne peut joueur : match nul"
                 break;
         }
     }

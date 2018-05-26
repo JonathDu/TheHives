@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Parent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -73,10 +74,17 @@ public abstract class Interface extends Parent {
                 fontSize.bind(primaryStage.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                                                    "-fx-font-family: ", police, ";" ));
-
+        
+        Tooltip t = new Tooltip("Retour au menu");
+        Tooltip t1 = new Tooltip("Plein écran");
+        Tooltip t2 = new Tooltip("Réglages");
+       
         boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
+        Tooltip.install(boutonRetourMenu, t);
+        Tooltip.install(boutonPleinEcran, t1);
+        Tooltip.install(boutonPreference, t2);
 
         setBackground();
 
