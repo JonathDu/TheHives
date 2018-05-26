@@ -6,6 +6,8 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.controller.SavesGesture;
+import hive.model.game.Game;
 import hive.model.players.decisions.IA.Level;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
@@ -25,8 +27,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -51,31 +59,7 @@ public class InterfaceJoueurs extends Interface {
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
-
-        HBox boxDroite = new HBox(5);
-        boxDroite.getChildren().add(boutonPreference);
-
-        boxDroite.getChildren().add(boutonPleinEcran);
-
-        AnchorPane.setRightAnchor(boxDroite, (double) 5);
-        AnchorPane.setTopAnchor(boxDroite, (double) 5);
-        pane.getChildren().add(boxDroite);
-
-        AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
-        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
-        pane.getChildren().add(boutonRetourMenu);
-
-        GridPane grille = new GridPane();
-        int ligne = 100 / 4;
-        int colonne = 100 / 3;
-        Outils.fixerRepartition(grille, Outils.HORIZONTAL, ligne, ligne, ligne, ligne);
-        Outils.fixerRepartition(grille, Outils.VERTICAL, colonne, colonne, colonne);
-//        grille.prefHeightProperty().bind(primaryStage.heightProperty());
-//        grille.prefWidthProperty().bind(primaryStage.widthProperty());
-        grille.setMaxWidth(width - 50);
-        grille.setMinWidth(width - 50);
-        grille.setMaxHeight(tailleDeCase * 4.2);
-        grille.setMinHeight(tailleDeCase * 4.2);
+        
         double hauteurDeGrille = tailleDeCase * 4.2;
         double hauteurDeLigne = hauteurDeGrille / 4;
         double largeurDeGrille = width - 50;
@@ -89,81 +73,196 @@ public class InterfaceJoueurs extends Interface {
             largeurBouton = largeurDeColonne;
         }
         hauteurBouton = largeurBouton / 7.2375;
+        
+        double flecheLargeur = tailleDeCase * 4 - 30;
+        double flecheHauteur = flecheLargeur / 7.24;
 
         joueur1 = new Label();
         joueur2 = new Label();
         valider = new Button();
 
         Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
-        ImageView hexagoneIm = new ImageView(hexagone);
-        hexagoneIm.setFitHeight(hauteurDeLigne + 20);
-        hexagoneIm.setFitWidth(hauteurDeLigne + 20);
         Image rectangle = c.getImage("niveau/RectangleCoupé.png");
-        ImageView rectangleIm1 = new ImageView(rectangle);
-        rectangleIm1.setFitHeight(hauteurBouton + 20);
-        rectangleIm1.setFitWidth(largeurBouton + 20);
-        ImageView rectangleIm2 = new ImageView(rectangle);
-        rectangleIm2.setFitHeight(hauteurBouton + 20);
-        rectangleIm2.setFitWidth(largeurBouton + 20);
 
         Name1.setFont(new Font(15));
         Name2.setFont(new Font(15));
         Name1.setText(null);
         Name2.setText(null);
-
         setTextWithCurrentLanguage();
 
+        
+        BorderPane bp = new BorderPane();
+        bp.prefHeightProperty().bind(pane.heightProperty());
+        bp.prefWidthProperty().bind(pane.widthProperty());
+        
+        AnchorPane top = new AnchorPane();
+        top.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
+        top.prefWidthProperty().bind(bp.widthProperty());
+       
+        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
+        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+        top.getChildren().add(boutonPreference);
+
+        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
+        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
+        top.getChildren().add(boutonPleinEcran);
+
+        AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
+        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
+        top.getChildren().add(boutonRetourMenu);
+         
+        bp.setTop(top);
+        
+        AnchorPane grille_p = new AnchorPane();
+        grille_p.prefHeightProperty().bind(pane.heightProperty().multiply(0.6));
+        grille_p.prefWidthProperty().bind(pane.widthProperty().multiply(0.98));
+        StackPane grille_sp = new StackPane();
+        grille_sp.prefHeightProperty().bind(grille_p.heightProperty());
+        grille_sp.prefWidthProperty().bind(grille_p.widthProperty());
+        GridPane grille = new GridPane();
+        int ligne = 100 / 4;
+        int colonne = 100 / 3;
+        Outils.fixerRepartition(grille, Outils.HORIZONTAL, ligne, ligne, ligne, ligne);
+        Outils.fixerRepartition(grille, Outils.VERTICAL, colonne, colonne, colonne);
+        /*grille.setMaxWidth(width - 50);
+        grille.setMinWidth(width - 50);
+        grille.setMaxHeight(tailleDeCase * 4.2);
+        grille.setMinHeight(tailleDeCase * 4.2);*/
+        grille.prefHeightProperty().bind(grille_sp.heightProperty());
+        grille.prefWidthProperty().bind(grille_sp.widthProperty());
+        
         final ToggleGroup ia1 = new ToggleGroup();
         final ToggleGroup ia2 = new ToggleGroup();
 
         final ToggleGroup j = new ToggleGroup();
         MyRadioBouton bouton = new MyRadioBouton(primaryStage, controller);
         ToggleButton humains;
-        humains = bouton.creer("humains");
-        humains.setBackground(Background.EMPTY);
-        humains.setToggleGroup(j);
+       
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage backgroundFond = new BackgroundImage(hexagone, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        BackgroundSize backgroundSize2 = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage backgroundFond2 = new BackgroundImage(rectangle, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize2);
+        Image facile_im = c.getImage(controller.gestionnaireLangage.getText("image_facile"));
+        BackgroundSize facile_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage facile_imFond = new BackgroundImage(facile_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, facile_imSize);
+        Image moyenne_im = c.getImage(controller.gestionnaireLangage.getText("image_moyenne"));
+        BackgroundSize moyenne_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage moyenne_imFond = new BackgroundImage(moyenne_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, moyenne_imSize);
+        Image difficile_im = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
+        BackgroundSize difficile_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage difficile_imFond = new BackgroundImage(difficile_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, difficile_imSize);
+        
+        
         StackPane hh = new StackPane();
+        hh.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        hh.prefWidthProperty().bind(grille.widthProperty().divide(5)); 
+        humains = bouton.creer("humains");
+        humains.prefHeightProperty().bind(hh.heightProperty().multiply(0.8));
+        humains.prefWidthProperty().bind(hh.widthProperty().multiply(0.8));
+        Image h_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
+        BackgroundSize h_h_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage h_h_imFond = new BackgroundImage(h_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_h_imSize);
+        background = new Background(h_h_imFond);
+        humains.setBackground(background);
+        //humains.setBackground(Background.EMPTY);
+        humains.setToggleGroup(j);
         hh.getChildren().add(humains);
         grille.add(hh, 0, 1);
 
+        
+        StackPane h_ia = new StackPane();
+        h_ia.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        h_ia.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        //Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
+        background = new Background(backgroundFond);
+        h_ia.setBackground(background);
         ToggleButton hIA;
         hIA = bouton.creer("h_IA");
-        hIA.setBackground(Background.EMPTY);
+        hIA.prefHeightProperty().bind(h_ia.heightProperty().multiply(0.8));
+        hIA.prefWidthProperty().bind(h_ia.widthProperty().multiply(0.8));
+        Image h_ia_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
+        BackgroundSize h_ia_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage h_ia_imFond = new BackgroundImage(h_ia_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_ia_imSize);
+        background = new Background(h_ia_imFond);
+        hIA.setBackground(background);
         hIA.setToggleGroup(j);
         hIA.setSelected(true);
         est_h_ai = 1;
-        StackPane h_ia = new StackPane();
-        h_ia.getChildren().add(hexagoneIm);
+        //h_ia.getChildren().add(hexagoneIm);
         h_ia.getChildren().add(hIA);
         grille.add(h_ia, 1, 1);
-        Name1.setMinSize(tailleDeCase * 0.8, 30);
-        Name1.setMaxHeight(40);
-        Name1.setAlignment(Pos.CENTER);
+        
+        StackPane ia_ia = new StackPane();
+        ia_ia.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        ia_ia.prefWidthProperty().bind(grille.widthProperty().divide(5)); 
+        ToggleButton IAs;
+        IAs = bouton.creer("IAs");
+        IAs.prefHeightProperty().bind(ia_ia.heightProperty().multiply(0.8));
+        IAs.prefWidthProperty().bind(ia_ia.widthProperty().multiply(0.8));
+        Image ia_ia_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");
+        BackgroundSize ia_ia_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage ia_ia_imFond = new BackgroundImage(ia_ia_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, ia_ia_imSize);
+        background = new Background(ia_ia_imFond);
+        IAs.setBackground(background);
+        //IAs.setBackground(Background.EMPTY);
+        IAs.setToggleGroup(j);
+        ia_ia.getChildren().add(IAs);
+        grille.add(ia_ia, 2, 1);
+        
         StackPane n1 = new StackPane();
+        n1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        n1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        Name1.prefHeightProperty().bind(n1.heightProperty().multiply(0.5));
+        Name1.prefWidthProperty().bind(n1.widthProperty().multiply(0.8));
+        //Name1.setMinSize(tailleDeCase * 0.8, 30);
+        //Name1.setMaxHeight(40);
+        Name1.setAlignment(Pos.CENTER);
         n1.getChildren().add(Name1);
         grille.add(n1, 1, 2);
+        
+        StackPane f2 = new StackPane();
+        f2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        f2.prefWidthProperty().bind(grille.widthProperty().divide(5));
         ToggleButton facile;
         facile = bouton.creer("facile"); //Facile, Einfach
-        facile.setBackground(Background.EMPTY);
+        facile.prefHeightProperty().bind(f2.heightProperty().multiply(0.8));
+        facile.prefWidthProperty().bind(f2.widthProperty().multiply(0.8));
+        background = new Background(facile_imFond);
+        facile.setBackground(background);
+        //facile.setBackground(Background.EMPTY);
         facile.setToggleGroup(ia2);
-        StackPane f2 = new StackPane();
         f2.getChildren().add(facile);
         grille.add(f2, 0, 3);
+        StackPane m2 = new StackPane();
+        m2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        m2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        //Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
+        background = new Background(backgroundFond2);
+        m2.setBackground(background);
+        //m2.getChildren().add(rectangleIm2);
         ToggleButton moyenne;
         moyenne = bouton.creer("moyenne"); //Media, Mittel/Normal
-        moyenne.setBackground(Background.EMPTY);
+        moyenne.prefHeightProperty().bind(m2.heightProperty().multiply(0.8));
+        moyenne.prefWidthProperty().bind(m2.widthProperty().multiply(0.8));
+        background = new Background(moyenne_imFond);
+        moyenne.setBackground(background);
+        //moyenne.setBackground(Background.EMPTY);
         moyenne.setToggleGroup(ia2);
         est_m2 = 1;
         moyenne.setSelected(true);
-        StackPane m2 = new StackPane();
-        m2.getChildren().add(rectangleIm2);
         m2.getChildren().add(moyenne);
         grille.add(m2, 1, 3);
+        StackPane d2 = new StackPane();
+        d2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        d2.prefWidthProperty().bind(grille.widthProperty().divide(5));
         ToggleButton difficile;
         difficile = bouton.creer("difficile"); //Difficile, Schwer
-        difficile.setBackground(Background.EMPTY);
+        difficile.prefHeightProperty().bind(d2.heightProperty().multiply(0.8));
+        difficile.prefWidthProperty().bind(d2.widthProperty().multiply(0.8));
+        background = new Background(difficile_imFond);
+        difficile.setBackground(background);
+        //difficile.setBackground(Background.EMPTY);
         difficile.setToggleGroup(ia2);
-        StackPane d2 = new StackPane();
         d2.getChildren().add(difficile);
         grille.add(d2, 2, 3);
         versionIA2 = "moyenne";
@@ -173,86 +272,47 @@ public class InterfaceJoueurs extends Interface {
                 if (ia2.getSelectedToggle() != null) {
                     if (facile.isSelected()) {
                         if (est_m2 == 1) {
-                            grille.getChildren().remove(f2);
+                            /*grille.getChildren().remove(f2);
                             grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            m2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
+                            grille.getChildren().remove(d2);*/
+                            m2.setBackground(Background.EMPTY);
+                            /*grille.add(f2, 0, 3);
                             grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            grille.add(d2, 2, 3);*/
                             est_m2 = 0;
                         } else if (est_d2 == 1) {
-                            grille.getChildren().remove(f2);
-                            grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            d2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
-                            grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            d2.setBackground(Background.EMPTY);
                             est_d2 = 0;
                         }
                         if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                            grille.getChildren().remove(f2);
-                            f2.getChildren().remove(facile);
-                            f2.getChildren().add(rectangleIm2);
-                            f2.getChildren().add(facile);
-                            grille.add(f2, 0, 3);
+                            background = new Background(backgroundFond2);
+                            f2.setBackground(background);
                             est_f2 = 1;
                         }
                     } else if (moyenne.isSelected()) {
                         if (est_f2 == 1) {
-                            grille.getChildren().remove(f2);
-                            grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            f2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
-                            grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            f2.setBackground(Background.EMPTY);
                             est_f2 = 0;
                         } else if (est_d2 == 1) {
-                            grille.getChildren().remove(f2);
-                            grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            d2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
-                            grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            d2.setBackground(Background.EMPTY);
                             est_d2 = 0;
                         }
                         if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                            grille.getChildren().remove(m2);
-                            m2.getChildren().remove(moyenne);
-                            m2.getChildren().add(rectangleIm2);
-                            m2.getChildren().add(moyenne);
-                            grille.add(m2, 1, 3);
+                            background = new Background(backgroundFond2);
+                            m2.setBackground(background);
                             est_m2 = 1;
                         }
                     } else if (difficile.isSelected()) {
                         if (est_f2 == 1) {
-                            grille.getChildren().remove(f2);
-                            grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            f2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
-                            grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            f2.setBackground(Background.EMPTY);
                             est_f2 = 0;
                         } else if (est_m2 == 1) {
-                            grille.getChildren().remove(f2);
-                            grille.getChildren().remove(m2);
-                            grille.getChildren().remove(d2);
-                            m2.getChildren().remove(rectangleIm2);
-                            grille.add(f2, 0, 3);
-                            grille.add(m2, 1, 3);
-                            grille.add(d2, 2, 3);
+                            m2.setBackground(Background.EMPTY);
                             est_m2 = 0;
                         }
                         if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                            grille.getChildren().remove(d2);
-                            d2.getChildren().remove(difficile);
-                            d2.getChildren().add(rectangleIm2);
-                            d2.getChildren().add(difficile);
-                            grille.add(d2, 2, 3);
+                            background = new Background(backgroundFond2);
+                            d2.setBackground(background);
                             est_d2 = 1;
                         }
                     }
@@ -263,13 +323,7 @@ public class InterfaceJoueurs extends Interface {
             }
         });
 
-        ToggleButton IAs;
-        IAs = bouton.creer("IAs");
-        IAs.setBackground(Background.EMPTY);
-        IAs.setToggleGroup(j);
-        StackPane ia_ia = new StackPane();
-        ia_ia.getChildren().add(IAs);
-        grille.add(ia_ia, 2, 1);
+        
 
         StackPane f1 = new StackPane();
         StackPane m1 = new StackPane();
@@ -288,53 +342,39 @@ public class InterfaceJoueurs extends Interface {
                             est_m2 = 0;
                             est_d1 = 0;
                             est_d2 = 0;
-
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
                             grille.getChildren().remove(grille.getChildren().size() - 6, grille.getChildren().size());
-                            ia_ia.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            ia_ia.setBackground(Background.EMPTY);
                             est_ia_ia = 0;
                             versionIA1 = null;
                             versionIA2 = null;
                         } else if (est_h_ai == 1) {
+                            grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
+                            est_f2 = 0;
                             est_m2 = 0;
-                            est_d1 = 0;
                             est_d2 = 0;
-
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
-                            grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
-                            h_ia.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            h_ia.setBackground(Background.EMPTY);
                             est_h_ai = 0;
                             versionIA2 = null;
-
                             Name1.setText(null);
                         }
                         if (est_h_h == 0 && est_h_ai == 0 && est_ia_ia == 0) {
-                            grille.getChildren().remove(hh);
-                            hh.getChildren().remove(humains);
-                            hh.getChildren().add(hexagoneIm);
-                            hh.getChildren().add(humains);
-                            grille.add(hh, 0, 1);
+                            background = new Background(backgroundFond);
+                            hh.setBackground(background);
                             est_h_h = 1;
-                            Name1.setMinSize(tailleDeCase * 0.8, 30);
-                            Name1.setMaxHeight(40);
-                            Name1.setAlignment(Pos.CENTER);
                             StackPane n1 = new StackPane();
+                            n1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            n1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            Name1.prefHeightProperty().bind(n1.heightProperty().multiply(0.5));
+                            Name1.prefWidthProperty().bind(n1.widthProperty().multiply(0.8));
+                            Name1.setAlignment(Pos.CENTER);
                             n1.getChildren().add(Name1);
                             grille.add(n1, 1, 2);
-                            Name2.setMinSize(tailleDeCase * 0.8, 30);
-                            Name2.setMaxHeight(40);
-                            Name2.setAlignment(Pos.CENTER);
                             StackPane n2 = new StackPane();
+                            n2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            n2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            Name2.prefHeightProperty().bind(n2.heightProperty().multiply(0.5));
+                            Name2.prefWidthProperty().bind(n2.widthProperty().multiply(0.8));
+                            Name2.setAlignment(Pos.CENTER);
                             n2.getChildren().add(Name2);
                             grille.add(n2, 1, 3);
                         }
@@ -346,151 +386,107 @@ public class InterfaceJoueurs extends Interface {
                             est_m2 = 0;
                             est_d1 = 0;
                             est_d2 = 0;
-
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
                             grille.getChildren().remove(grille.getChildren().size() - 6, grille.getChildren().size());
-                            ia_ia.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            ia_ia.setBackground(Background.EMPTY);
                             est_ia_ia = 0;
                             versionIA1 = null;
                             versionIA2 = null;
                         } else if (est_h_h == 1) {
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
-                            grille.getChildren().remove(grille.getChildren().size() - 2, grille.getChildren().size());
-                            hh.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
+                            hh.setBackground(Background.EMPTY);
                             est_h_h = 0;
                             Name1.setText(null);
                             Name2.setText(null);
                         }
                         if (est_h_h == 0 && est_h_ai == 0 && est_ia_ia == 0) {
-                            grille.getChildren().remove(h_ia);
-                            h_ia.getChildren().remove(hIA);
-                            h_ia.getChildren().add(hexagoneIm);
-                            h_ia.getChildren().add(hIA);
-                            grille.add(h_ia, 1, 1);
+                            background = new Background(backgroundFond);
+                            h_ia.setBackground(background);
                             est_h_ai = 1;
-                            Name1.setMinSize(tailleDeCase * 0.8, 30);
-                            Name1.setMaxHeight(40);
-                            Name1.setAlignment(Pos.CENTER);
                             StackPane n1 = new StackPane();
+                            n1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            n1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            Name1.prefHeightProperty().bind(n1.heightProperty().multiply(0.5));
+                            Name1.prefWidthProperty().bind(n1.widthProperty().multiply(0.8));
+                            Name1.setAlignment(Pos.CENTER);
                             n1.getChildren().add(Name1);
                             grille.add(n1, 1, 2);
-                            ToggleButton facile2;
-                            facile2 = bouton.creer("facile"); //Facile, Einfach
-                            facile2.setBackground(Background.EMPTY);
-                            facile2.setToggleGroup(ia2);
                             StackPane f2 = new StackPane();
-                            f2.getChildren().add(facile2);
+                            f2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            f2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton facile;
+                            facile = bouton.creer("facile");
+                            facile.prefHeightProperty().bind(f2.heightProperty().multiply(0.8));
+                            facile.prefWidthProperty().bind(f2.widthProperty().multiply(0.8));
+                            background = new Background(facile_imFond);
+                            facile.setBackground(background);
+                            facile.setToggleGroup(ia2);
+                            f2.getChildren().add(facile);
                             grille.add(f2, 0, 3);
-                            ToggleButton moyenne2;
-                            moyenne2 = bouton.creer("moyenne"); //Media, Mittel/Normal
-                            moyenne2.setBackground(Background.EMPTY);
-                            moyenne2.setToggleGroup(ia2);
                             StackPane m2 = new StackPane();
-                            m2.getChildren().add(moyenne2);
+                            m2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            m2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton moyenne;
+                            moyenne = bouton.creer("moyenne");
+                            moyenne.prefHeightProperty().bind(m2.heightProperty().multiply(0.8));
+                            moyenne.prefWidthProperty().bind(m2.widthProperty().multiply(0.8));
+                            background = new Background(moyenne_imFond);
+                            moyenne.setBackground(background);
+                            moyenne.setToggleGroup(ia2);
+                            m2.getChildren().add(moyenne);
                             grille.add(m2, 1, 3);
-                            ToggleButton difficile2;
-                            difficile2 = bouton.creer("difficile"); //Difficile, Schwer
-                            difficile2.setBackground(Background.EMPTY);
-                            difficile2.setToggleGroup(ia2);
                             StackPane d2 = new StackPane();
-                            d2.getChildren().add(difficile2);
+                            d2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            d2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton difficile;
+                            difficile = bouton.creer("difficile");
+                            difficile.prefHeightProperty().bind(d2.heightProperty().multiply(0.8));
+                            difficile.prefWidthProperty().bind(d2.widthProperty().multiply(0.8));
+                            background = new Background(difficile_imFond);
+                            difficile.setBackground(background);
+                            difficile.setToggleGroup(ia2);
+                            d2.getChildren().add(difficile);
                             grille.add(d2, 2, 3);
                             ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
                                 public void changed(ObservableValue<? extends Toggle> ov,
                                         Toggle old_toggle, Toggle new_toggle) {
                                     if (ia2.getSelectedToggle() != null) {
-                                        if (facile2.isSelected()) {
+                                        if (facile.isSelected()) {
                                             if (est_m2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                m2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                m2.setBackground(Background.EMPTY);
                                                 est_m2 = 0;
                                             } else if (est_d2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                d2.setBackground(Background.EMPTY);
                                                 est_d2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(f2);
-                                                f2.getChildren().remove(facile2);
-                                                f2.getChildren().add(rectangleIm2);
-                                                f2.getChildren().add(facile2);
-                                                grille.add(f2, 0, 3);
+                                                background = new Background(backgroundFond2);
+                                                f2.setBackground(background);
                                                 est_f2 = 1;
                                             }
-                                        } else if (moyenne2.isSelected()) {
+                                        } else if (moyenne.isSelected()) {
                                             if (est_f2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                f2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                f2.setBackground(Background.EMPTY);
                                                 est_f2 = 0;
                                             } else if (est_d2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                d2.setBackground(Background.EMPTY);
                                                 est_d2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(m2);
-                                                m2.getChildren().remove(moyenne2);
-                                                m2.getChildren().add(rectangleIm2);
-                                                m2.getChildren().add(moyenne2);
-                                                grille.add(m2, 1, 3);
+                                                background = new Background(backgroundFond2);
+                                                m2.setBackground(background);
                                                 est_m2 = 1;
                                             }
-                                        } else if (difficile2.isSelected()) {
+                                        } else if (difficile.isSelected()) {
                                             if (est_f2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                f2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                f2.setBackground(Background.EMPTY);
                                                 est_f2 = 0;
                                             } else if (est_m2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                m2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                m2.setBackground(Background.EMPTY);
                                                 est_m2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(difficile2);
-                                                d2.getChildren().add(rectangleIm2);
-                                                d2.getChildren().add(difficile2);
-                                                grille.add(d2, 2, 3);
+                                                background = new Background(backgroundFond2);
+                                                d2.setBackground(background);
                                                 est_d2 = 1;
                                             }
                                         }
@@ -504,60 +500,59 @@ public class InterfaceJoueurs extends Interface {
                         }
                     } else if (IAs.isSelected()) {
                         if (est_h_ai == 1) {
+                            grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
                             est_f2 = 0;
                             est_m2 = 0;
                             est_d2 = 0;
-
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
-                            grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
-                            h_ia.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            h_ia.setBackground(Background.EMPTY);
                             est_h_ai = 0;
-                            versionIA1 = null;
+                            versionIA2 = null;
                             Name1.setText(null);
                         } else if (est_h_h == 1) {
-                            grille.getChildren().remove(h_ia);
-                            grille.getChildren().remove(ia_ia);
-                            grille.getChildren().remove(hh);
                             grille.getChildren().remove(grille.getChildren().size() - 2, grille.getChildren().size());
-                            hh.getChildren().remove(hexagoneIm);
-                            grille.add(hh, 0, 1);
-                            grille.add(h_ia, 1, 1);
-                            grille.add(ia_ia, 2, 1);
+                            hh.setBackground(Background.EMPTY);
                             est_h_h = 0;
                             Name1.setText(null);
                             Name2.setText(null);
                         }
                         if (est_h_h == 0 && est_h_ai == 0 && est_ia_ia == 0) {
-                            grille.getChildren().remove(ia_ia);
-                            ia_ia.getChildren().remove(IAs);
-                            ia_ia.getChildren().add(hexagoneIm);
-                            ia_ia.getChildren().add(IAs);
-                            grille.add(ia_ia, 2, 1);
+                            background = new Background(backgroundFond);
+                            ia_ia.setBackground(background);
                             est_ia_ia = 1;
-                            ToggleButton facile1;
-                            facile1 = bouton.creer("facile"); //Facile, Einfach
-                            facile1.setBackground(Background.EMPTY);
-                            facile1.setToggleGroup(ia1);
                             StackPane f1 = new StackPane();
+                            f1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            f1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton facile1;
+                            facile1 = bouton.creer("facile");
+                            facile1.prefHeightProperty().bind(f1.heightProperty().multiply(0.8));
+                            facile1.prefWidthProperty().bind(f1.widthProperty().multiply(0.8));
+                            background = new Background(facile_imFond);
+                            facile1.setBackground(background);
+                            facile1.setToggleGroup(ia1);
                             f1.getChildren().add(facile1);
                             grille.add(f1, 0, 2);
-                            ToggleButton moyenne1;
-                            moyenne1 = bouton.creer("moyenne"); //Media, Mittel/Normal
-                            moyenne1.setBackground(Background.EMPTY);
-                            moyenne1.setToggleGroup(ia1);
                             StackPane m1 = new StackPane();
+                            m1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            m1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton moyenne1;
+                            moyenne1 = bouton.creer("moyenne");
+                            moyenne1.prefHeightProperty().bind(m1.heightProperty().multiply(0.8));
+                            moyenne1.prefWidthProperty().bind(m1.widthProperty().multiply(0.8));
+                            background = new Background(moyenne_imFond);
+                            moyenne1.setBackground(background);
+                            moyenne1.setToggleGroup(ia1);
                             m1.getChildren().add(moyenne1);
                             grille.add(m1, 1, 2);
-                            ToggleButton difficile1;
-                            difficile1 = bouton.creer("difficile"); //Difficile, Schwer
-                            difficile1.setBackground(Background.EMPTY);
-                            difficile1.setToggleGroup(ia1);
                             StackPane d1 = new StackPane();
+                            d1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            d1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton difficile1;
+                            difficile1 = bouton.creer("difficile");
+                            difficile1.prefHeightProperty().bind(d1.heightProperty().multiply(0.8));
+                            difficile1.prefWidthProperty().bind(d1.widthProperty().multiply(0.8));
+                            background = new Background(difficile_imFond);
+                            difficile1.setBackground(background);
+                            difficile1.setToggleGroup(ia1);
                             d1.getChildren().add(difficile1);
                             grille.add(d1, 2, 2);
                             ia1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -566,86 +561,41 @@ public class InterfaceJoueurs extends Interface {
                                     if (ia1.getSelectedToggle() != null) {
                                         if (facile1.isSelected()) {
                                             if (est_m1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                m1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                m1.setBackground(Background.EMPTY);
                                                 est_m1 = 0;
                                             } else if (est_d1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                d1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                d1.setBackground(Background.EMPTY);
                                                 est_d1 = 0;
                                             }
                                             if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
-                                                grille.getChildren().remove(f1);
-                                                f1.getChildren().remove(facile1);
-                                                f1.getChildren().add(rectangleIm1);
-                                                f1.getChildren().add(facile1);
-                                                grille.add(f1, 0, 2);
+                                                background = new Background(backgroundFond2);
+                                                f1.setBackground(background);
                                                 est_f1 = 1;
                                             }
                                         } else if (moyenne1.isSelected()) {
                                             if (est_f1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                f1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                f1.setBackground(Background.EMPTY);
                                                 est_f1 = 0;
                                             } else if (est_d1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                d1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                d1.setBackground(Background.EMPTY);
                                                 est_d1 = 0;
                                             }
                                             if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
-                                                grille.getChildren().remove(m1);
-                                                m1.getChildren().remove(moyenne1);
-                                                m1.getChildren().add(rectangleIm1);
-                                                m1.getChildren().add(moyenne1);
-                                                grille.add(m1, 1, 2);
+                                                background = new Background(backgroundFond2);
+                                                m1.setBackground(background);
                                                 est_m1 = 1;
                                             }
                                         } else if (difficile1.isSelected()) {
                                             if (est_f1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                f1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                f1.setBackground(Background.EMPTY);
                                                 est_f1 = 0;
                                             } else if (est_m1 == 1) {
-                                                grille.getChildren().remove(f1);
-                                                grille.getChildren().remove(m1);
-                                                grille.getChildren().remove(d1);
-                                                m1.getChildren().remove(rectangleIm1);
-                                                grille.add(f1, 0, 2);
-                                                grille.add(m1, 1, 2);
-                                                grille.add(d1, 2, 2);
+                                                m1.setBackground(Background.EMPTY);
                                                 est_m1 = 0;
                                             }
                                             if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
-                                                grille.getChildren().remove(d1);
-                                                d1.getChildren().remove(difficile1);
-                                                d1.getChildren().add(rectangleIm1);
-                                                d1.getChildren().add(difficile1);
-                                                grille.add(d1, 2, 2);
+                                                background = new Background(backgroundFond2);
+                                                d1.setBackground(background);
                                                 est_d1 = 1;
                                             }
                                         }
@@ -657,113 +607,83 @@ public class InterfaceJoueurs extends Interface {
                                 }
                             });
 
-                            ToggleButton facile2;
-                            facile2 = bouton.creer("facile"); //Facile, Einfach
-                            facile2.setBackground(Background.EMPTY);
-                            facile2.setToggleGroup(ia2);
                             StackPane f2 = new StackPane();
-                            f2.getChildren().add(facile2);
+                            f2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            f2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton facile;
+                            facile = bouton.creer("facile");
+                            facile.prefHeightProperty().bind(f2.heightProperty().multiply(0.8));
+                            facile.prefWidthProperty().bind(f2.widthProperty().multiply(0.8));
+                            background = new Background(facile_imFond);
+                            facile.setBackground(background);
+                            facile.setToggleGroup(ia2);
+                            f2.getChildren().add(facile);
                             grille.add(f2, 0, 3);
-                            ToggleButton moyenne2;
-                            moyenne2 = bouton.creer("moyenne"); //Media, Mittel/Normal
-                            moyenne2.setBackground(Background.EMPTY);
-                            moyenne2.setToggleGroup(ia2);
                             StackPane m2 = new StackPane();
-                            m2.getChildren().add(moyenne2);
+                            m2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            m2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton moyenne;
+                            moyenne = bouton.creer("moyenne");
+                            moyenne.prefHeightProperty().bind(m2.heightProperty().multiply(0.8));
+                            moyenne.prefWidthProperty().bind(m2.widthProperty().multiply(0.8));
+                            background = new Background(moyenne_imFond);
+                            moyenne.setBackground(background);
+                            moyenne.setToggleGroup(ia2);
+                            m2.getChildren().add(moyenne);
                             grille.add(m2, 1, 3);
-                            ToggleButton difficile2;
-                            difficile2 = bouton.creer("difficile"); //Difficile, Schwer
-                            difficile2.setBackground(Background.EMPTY);
-                            difficile2.setToggleGroup(ia2);
                             StackPane d2 = new StackPane();
-                            d2.getChildren().add(difficile2);
+                            d2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+                            d2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+                            ToggleButton difficile;
+                            difficile = bouton.creer("difficile");
+                            difficile.prefHeightProperty().bind(d2.heightProperty().multiply(0.8));
+                            difficile.prefWidthProperty().bind(d2.widthProperty().multiply(0.8));
+                            background = new Background(difficile_imFond);
+                            difficile.setBackground(background);
+                            difficile.setToggleGroup(ia2);
+                            d2.getChildren().add(difficile);
                             grille.add(d2, 2, 3);
                             ia2.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
                                 public void changed(ObservableValue<? extends Toggle> ov,
                                         Toggle old_toggle, Toggle new_toggle) {
                                     if (ia2.getSelectedToggle() != null) {
-                                        if (facile2.isSelected()) {
+                                        if (facile.isSelected()) {
                                             if (est_m2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                m2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                m2.setBackground(Background.EMPTY);
                                                 est_m2 = 0;
                                             } else if (est_d2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                d2.setBackground(Background.EMPTY);
                                                 est_d2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(f2);
-                                                f2.getChildren().remove(facile2);
-                                                f2.getChildren().add(rectangleIm2);
-                                                f2.getChildren().add(facile2);
-                                                grille.add(f2, 0, 3);
+                                                background = new Background(backgroundFond2);
+                                                f2.setBackground(background);
                                                 est_f2 = 1;
                                             }
-                                        } else if (moyenne2.isSelected()) {
+                                        } else if (moyenne.isSelected()) {
                                             if (est_f2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                f2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                f2.setBackground(Background.EMPTY);
                                                 est_f2 = 0;
                                             } else if (est_d2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                d2.setBackground(Background.EMPTY);
                                                 est_d2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(m2);
-                                                m2.getChildren().remove(moyenne2);
-                                                m2.getChildren().add(rectangleIm2);
-                                                m2.getChildren().add(moyenne2);
-                                                grille.add(m2, 1, 3);
+                                                background = new Background(backgroundFond2);
+                                                m2.setBackground(background);
                                                 est_m2 = 1;
                                             }
-                                        } else if (difficile2.isSelected()) {
+                                        } else if (difficile.isSelected()) {
                                             if (est_f2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                f2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                f2.setBackground(Background.EMPTY);
                                                 est_f2 = 0;
                                             } else if (est_m2 == 1) {
-                                                grille.getChildren().remove(f2);
-                                                grille.getChildren().remove(m2);
-                                                grille.getChildren().remove(d2);
-                                                m2.getChildren().remove(rectangleIm2);
-                                                grille.add(f2, 0, 3);
-                                                grille.add(m2, 1, 3);
-                                                grille.add(d2, 2, 3);
+                                                m2.setBackground(Background.EMPTY);
                                                 est_m2 = 0;
                                             }
                                             if (est_f2 == 0 && est_m2 == 0 && est_d2 == 0) {
-                                                grille.getChildren().remove(d2);
-                                                d2.getChildren().remove(difficile2);
-                                                d2.getChildren().add(rectangleIm2);
-                                                d2.getChildren().add(difficile2);
-                                                grille.add(d2, 2, 3);
+                                                background = new Background(backgroundFond2);
+                                                d2.setBackground(background);
                                                 est_d2 = 1;
                                             }
                                         }
@@ -771,31 +691,38 @@ public class InterfaceJoueurs extends Interface {
                                         versionIA2 = ia2.getSelectedToggle().getUserData().toString();
                                         System.out.println("IA2 : " + versionIA2);
                                     }
-
                                 }
-
                             });
                         }
                     }
                 }
             }
         });
-
-        AnchorPane.setLeftAnchor(grille, (double) 0);
-        AnchorPane.setRightAnchor(grille, (double) 0);
-        AnchorPane.setTopAnchor(grille, (double) 30);
-        AnchorPane.setBottomAnchor(grille, (double) tailleDeCase * 2);
-        pane.getChildren().add(grille);
-
+        grille_sp.getChildren().add(grille);
+        AnchorPane.setRightAnchor(grille_sp, (double) 0);
+        AnchorPane.setTopAnchor(grille_sp, (double) 0);
+        AnchorPane.setLeftAnchor(grille_sp, (double) 0);
+        AnchorPane.setBottomAnchor(grille_sp, (double) 0);
+        grille_p.getChildren().add(grille_sp);
+        
+        bp.setCenter(grille_p);
+        
+        
         StackPane valider_sp = new StackPane();
-        valider.setFont(new Font(police, tailleDeCase * 0.23));
+        valider_sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.3));
+        valider_sp.prefWidthProperty().bind(bp.widthProperty());
+        Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        ImageView valIm = new ImageView(val);
+        valIm.setFitHeight(flecheHauteur);
+        valIm.setFitWidth(flecheLargeur*0.6);
+        valider_sp.getChildren().add(valIm);
+        valider.setTextFill(Color.web("#fbe5b5"));
+        valider.setBackground(Background.EMPTY);
         valider_sp.getChildren().add(valider);
-        valider_sp.setMaxSize(tailleDeCase, 40);
-        valider_sp.setMinSize(tailleDeCase, 40);
         valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
+            //System.out.println(est_h_h + " " + est_h_ai + " " + est_ia_ia + " " + est_f1 + " " + est_m1 + " " + est_d1 + " " + est_f2 + " " + est_m2 + " " + est_d2);
                 String joueur_1 = new String();
                 String joueur_2 = new String();
                 if (est_h_h == 1) {
@@ -854,22 +781,18 @@ public class InterfaceJoueurs extends Interface {
                 //controller.goToPlateau(joueur_1, joueur_2, level1, level2);
             }
         });
-        if (height == max_screen_height) {
-            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase * 1.5);
-        } else {
-            AnchorPane.setBottomAnchor(valider_sp, (double) tailleDeCase);
-        }
-        //AnchorPane.setTopAnchor(valider, (double) height - 50);
-        AnchorPane.setLeftAnchor(valider_sp, (double) width / 2 - tailleDeCase);
-        AnchorPane.setRightAnchor(valider_sp, (double) width / 2 - tailleDeCase);
-        pane.getChildren().add(valider_sp);
-        boutonPleinEcran.toFront();
-        boutonPreference.toFront();
-        boutonRetourMenu.toFront();
+        bp.setBottom(valider_sp);
+        
+        AnchorPane.setTopAnchor(bp, (double) 0);
+        AnchorPane.setBottomAnchor(bp, (double) 0);
+        AnchorPane.setLeftAnchor(bp, (double) 0);
+        AnchorPane.setRightAnchor(bp, (double) 0);
+        pane.getChildren().add(bp);
+        
         this.panePrincipale.getChildren().add(pane);
+        
 
     }
-
     public Level creerIA(String joueur) {
         if (joueur == null) {
             return null;

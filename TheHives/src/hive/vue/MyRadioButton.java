@@ -83,27 +83,27 @@ class MyRadioBouton extends ToggleButton{
 
         if(type=="humains"){
             bouton.setUserData("Humains");
-            Image humains = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
+            /*Image humains = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
             ImageView humainsIm = new ImageView(humains);
             humainsIm.setFitHeight(hauteurDeLigne);
             humainsIm.setFitWidth(hauteurDeLigne);
-            bouton.setGraphic(humainsIm);
+            bouton.setGraphic(humainsIm);*/
         }
         else if(type=="h_IA"){
             bouton.setUserData("Humain_IA");
-            Image h_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
+            /*Image h_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
             ImageView h_iaIm = new ImageView(h_ia);
             h_iaIm.setFitHeight(hauteurDeLigne);
             h_iaIm.setFitWidth(hauteurDeLigne);
-            bouton.setGraphic(h_iaIm);
+            bouton.setGraphic(h_iaIm);*/
         }
         else if(type=="IAs"){
             bouton.setUserData("IAs");
-            Image ia_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");
+            /*Image ia_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");
             ImageView ia_iaIm = new ImageView(ia_ia);
             ia_iaIm.setFitHeight(hauteurDeLigne);
             ia_iaIm.setFitWidth(hauteurDeLigne);
-            bouton.setGraphic(ia_iaIm);
+            bouton.setGraphic(ia_iaIm);*/
         }else if(type=="facile"){
             bouton.setUserData("facile");
             
@@ -111,12 +111,12 @@ class MyRadioBouton extends ToggleButton{
             bouton.setFont(new Font(police, tailleDeCase/7));
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);*/
-            
+            /*
             Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_facile"));
             ImageView b_IAIm = new ImageView(b_IA);
             b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
             b_IAIm.setFitWidth(largeurBouton);
-            bouton.setGraphic(b_IAIm);
+            bouton.setGraphic(b_IAIm);*/
             
         }else if(type=="moyenne"){
             bouton.setUserData("moyenne");
@@ -125,11 +125,11 @@ class MyRadioBouton extends ToggleButton{
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);*/
             
-            Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_moyenne"));
+            /*Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_moyenne"));
             ImageView b_IAIm = new ImageView(b_IA);
             b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
             b_IAIm.setFitWidth(largeurBouton);
-            bouton.setGraphic(b_IAIm);
+            bouton.setGraphic(b_IAIm);*/
         }else if(type=="difficile"){
             bouton.setUserData("difficile");
             /*bouton.setText(controller.gestionnaireLangage.getText("text_difficile"));
@@ -137,11 +137,11 @@ class MyRadioBouton extends ToggleButton{
             bouton.setMinSize(width/10, 30);
             bouton.setMaxHeight(hauteurDeLigne*0.5);*/
             
-            Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
+            /*Image b_IA = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
             ImageView b_IAIm = new ImageView(b_IA);
             b_IAIm.setFitHeight(hauteurBouton);//largeurBouton/7.2375);
             b_IAIm.setFitWidth(largeurBouton);
-            bouton.setGraphic(b_IAIm);
+            bouton.setGraphic(b_IAIm);*/
         }else if(type=="jour"){
             bouton.setUserData("jour");
             bouton.setText(controller.gestionnaireLangage.getText("text_jour"));
