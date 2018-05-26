@@ -27,8 +27,7 @@ public class NodeRuche extends Parent {
     private final int largeur;
     private final int hauteur;
     private final int longueurPion = 40;
-    int width, height;
-
+    
     private final CacheImage c;
     private final GameController plateauController;
     private final Board board;

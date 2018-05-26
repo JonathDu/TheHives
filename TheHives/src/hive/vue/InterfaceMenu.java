@@ -48,12 +48,10 @@ public class InterfaceMenu extends Interface {
         ImageView hiveIm = new ImageView(hive);
 //        hiveIm.setFitHeight(tailleDeCase * 1.3);
 //        hiveIm.setFitWidth(tailleDeCase * 1.3 * 1.59);
-        
+
         hiveIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(5));
         hiveIm.setPreserveRatio(true);
-        
-        
-        
+
         AnchorPane.setLeftAnchor(hiveIm, (double) 5);
         AnchorPane.setTopAnchor(hiveIm, (double) 5);
         pane.getChildren().add(hiveIm);
@@ -92,9 +90,9 @@ public class InterfaceMenu extends Interface {
         ImageView flecheImNG = new ImageView(fleche);
         flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
-        
-        
-        
+
+
+
         //newGame.setFont(new Font(police));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
@@ -145,11 +143,10 @@ public class InterfaceMenu extends Interface {
         StackPane Statistiques = new StackPane();
         Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
         ImageView gaucheIm = new ImageView(gauche);
-        
 
         gaucheIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
         gaucheIm.setPreserveRatio(true);
-        
+
         //statistiques.setFont(new Font(police,20));
         statistiques.setTextFill(Color.web("#fbe5b5"));
         statistiques.setAlignment(CENTER);
@@ -171,7 +168,7 @@ public class InterfaceMenu extends Interface {
         //credits.setFont(new Font(police, 20));
         credits.setTextFill(Color.web("#fbe5b5"));
         credits.setAlignment(CENTER);
-        
+
         Credits.getChildren().add(droiteIm);
         Credits.getChildren().add(credits);
         Credits.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
@@ -181,13 +178,16 @@ public class InterfaceMenu extends Interface {
         AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
         pane.getChildren().add(Credits);
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        pane.getChildren().add(boutonPreference);
+        HBox boxDroite = new HBox(5);
+        boxDroite.getChildren().add(boutonPleinEcran);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        pane.getChildren().add(boutonPleinEcran);
+        boxDroite.getChildren().add(boutonPreference);
+
+//        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
+//        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
+//        pane.getChildren().add(boutonPreference);
+        AnchorPane.setRightAnchor(boxDroite, (double) 5);
+        pane.getChildren().add(boxDroite);
 
         this.panePrincipale.getChildren().add(pane);
 

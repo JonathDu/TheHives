@@ -26,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 /**
  *
@@ -43,7 +44,7 @@ public class InterfaceJoueurs extends Interface {
     private final Label joueur1;
     private final Label joueur2;
     private final Button valider;
-    
+
     public InterfaceJoueurs(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
 
@@ -51,13 +52,13 @@ public class InterfaceJoueurs extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        pane.getChildren().add(boutonPreference);
+        HBox boxDroite = new HBox(5);
+        boxDroite.getChildren().add(boutonPreference);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        pane.getChildren().add(boutonPleinEcran);
+        boxDroite.getChildren().add(boutonPleinEcran);
+
+        AnchorPane.setRightAnchor(boxDroite, (double) 5);
+        pane.getChildren().add(boxDroite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
@@ -92,8 +93,6 @@ public class InterfaceJoueurs extends Interface {
         joueur2 = new Label();
         valider = new Button();
 
-
-
         Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
         ImageView hexagoneIm = new ImageView(hexagone);
         hexagoneIm.setFitHeight(hauteurDeLigne + 20);
@@ -108,7 +107,7 @@ public class InterfaceJoueurs extends Interface {
 
         Name1.setText(null);
         Name2.setText(null);
-        
+
         setTextWithCurrentLanguage();
 
         final ToggleGroup ia1 = new ToggleGroup();
@@ -860,9 +859,6 @@ public class InterfaceJoueurs extends Interface {
         //AnchorPane.setTopAnchor(valider, (double) height - 50);
         AnchorPane.setLeftAnchor(valider_sp, (double) width / 2 - tailleDeCase);
         AnchorPane.setRightAnchor(valider_sp, (double) width / 2 - tailleDeCase);
-        this.boutonPleinEcran.toFront();
-        this.boutonPreference.toFront();
-        this.boutonRetourMenu.toFront();
         pane.getChildren().add(valider_sp);
         boutonPleinEcran.toFront();
         boutonPreference.toFront();
@@ -888,13 +884,12 @@ public class InterfaceJoueurs extends Interface {
     }
 
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         joueur1.setText(controller.gestionnaireLangage.getText("text_joueur1"));
         joueur2.setText(controller.gestionnaireLangage.getText("text_joueur2"));
         Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
         Name2.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
-        valider.setText(controller.gestionnaireLangage.getText("text_valider")); 
+        valider.setText(controller.gestionnaireLangage.getText("text_valider"));
     }
 
 }

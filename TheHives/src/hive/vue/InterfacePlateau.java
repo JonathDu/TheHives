@@ -28,6 +28,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -45,8 +46,8 @@ public class InterfacePlateau extends Interface {
     GameController gameController;
     private StackPane centerPane;
     ScrollPane scrollPane;
-    BorderPane centerMainG;
-    BorderPane centerMainD;
+    VBox centerMainG;
+    VBox centerMainD;
     Game game;
 
     HiveBouton boutonHome;
@@ -73,8 +74,8 @@ public class InterfacePlateau extends Interface {
         borderPane = new BorderPane();
         centerPane = new StackPane();
         scrollPane = new ScrollPane();
-        centerMainG = new BorderPane();
-        centerMainD = new BorderPane();
+        centerMainG = new VBox();
+        centerMainD = new VBox();
 
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
@@ -98,15 +99,18 @@ public class InterfacePlateau extends Interface {
 
         mainDroite.pions.setBackground(backgroundMainDroite);
 
-        centerMainD.prefHeightProperty().bind(stage.heightProperty());
-        centerMainG.prefHeightProperty().bind(stage.heightProperty());
 
-        centerMainD.setCenter(mainDroite);
-        centerMainG.setCenter(mainGauche);
+        
+        centerMainD.setAlignment(Pos.TOP_CENTER);
+        centerMainG.setAlignment(Pos.TOP_CENTER);
+        
+        
+        centerMainD.getChildren().add(mainDroite);
+        centerMainG.getChildren().add(mainGauche);
 
         Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
         BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, false, true);
-        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
+        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition. CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
 
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -124,18 +128,21 @@ public class InterfacePlateau extends Interface {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-        BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
-        BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
-        BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
-
-        borderPane.setLeft(centerMainG);
-        borderPane.setRight(centerMainD);
+//        BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
+//        BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
+//        BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
+        
         borderPane.setCenter(scrollPane);
         borderPane.setTop(setTool());
+        borderPane.setLeft(centerMainG);
+        borderPane.setRight(centerMainD);
+
 
         this.panePrincipale.getChildren().add(borderPane);
 
         majJoueurCourant(TeamColor.WHITE);
+        
+        
 
         gameController.start();
 
@@ -156,19 +163,17 @@ public class InterfacePlateau extends Interface {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
 
-        gauche = new HBox();
-        droite = new HBox();
-        centre = new HBox();
+        gauche = new HBox(5);
+        droite = new HBox(5);
+        centre = new HBox(5);
 
-        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width, height);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width, height);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width, height);
-        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width, height);
-        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
-        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
-        
-        
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), primaryStage);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), primaryStage);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), primaryStage);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), primaryStage);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), primaryStage);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), primaryStage);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), primaryStage);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -248,13 +253,12 @@ public class InterfacePlateau extends Interface {
         gauche.getChildren().add(boutonSave);
         gauche.getChildren().add(boutonRecommencer);
         droite.getChildren().add(boutonRegle);
-        droite.getChildren().add(boutonPreference);
         droite.getChildren().add(boutonPleinEcran);
+        droite.getChildren().add(boutonPreference);
         centre.getChildren().add(boutonAnnuler);
         centre.getChildren().add(boutonConseil);
         centre.getChildren().add(boutonReplay);
 
-        pane.setPadding(new Insets(5));
         return pane;
 
     }
