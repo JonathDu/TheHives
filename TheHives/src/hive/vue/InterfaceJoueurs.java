@@ -58,6 +58,7 @@ public class InterfaceJoueurs extends Interface {
         boxDroite.getChildren().add(boutonPleinEcran);
 
         AnchorPane.setRightAnchor(boxDroite, (double) 5);
+        AnchorPane.setTopAnchor(boxDroite, (double) 5);
         pane.getChildren().add(boxDroite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
@@ -105,6 +106,8 @@ public class InterfaceJoueurs extends Interface {
         rectangleIm2.setFitHeight(hauteurBouton + 20);
         rectangleIm2.setFitWidth(largeurBouton + 20);
 
+        Name1.setFont(new Font(15));
+        Name2.setFont(new Font(15));
         Name1.setText(null);
         Name2.setText(null);
 

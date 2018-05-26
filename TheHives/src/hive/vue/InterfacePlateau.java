@@ -13,6 +13,7 @@ import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -77,6 +78,8 @@ public class InterfacePlateau extends Interface {
         centerMainG = new VBox();
         centerMainD = new VBox();
 
+        BorderPane tool = setTool();
+
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
 
@@ -86,31 +89,25 @@ public class InterfacePlateau extends Interface {
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
         mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetonb.png");
+        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
         mainDroite.pions.setBackground(backgroundMainDroite);
 
-
-        
-        centerMainD.setAlignment(Pos.TOP_CENTER);
-        centerMainG.setAlignment(Pos.TOP_CENTER);
-        
-        
         centerMainD.getChildren().add(mainDroite);
         centerMainG.getChildren().add(mainGauche);
 
-        Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
+        Image bimPlateau = c.getImage("Design/MenuPrincipaux/panneauTheHive.png");
         BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, false, true);
-        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition. CENTER, bsiPlateau);
+        BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
 
         centerPane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -128,21 +125,18 @@ public class InterfacePlateau extends Interface {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-//        BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
-//        BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
-//        BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
-        
+        BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
+        BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
+        BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
+
         borderPane.setCenter(scrollPane);
-        borderPane.setTop(setTool());
+        borderPane.setTop(tool);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-
 
         this.panePrincipale.getChildren().add(borderPane);
 
         majJoueurCourant(TeamColor.WHITE);
-        
-        
 
         gameController.start();
 
@@ -225,7 +219,8 @@ public class InterfacePlateau extends Interface {
 
         boutonRecommencer.setOnMouseClicked(value
                 -> {
-            gameController.restart();
+//            gameController.restart();
+            this.finPartie("vbfidqodifg");
         });
 
         boutonAnnuler.setOnMouseClicked(value
@@ -242,6 +237,8 @@ public class InterfacePlateau extends Interface {
                 -> {
             gameController.help();
         });
+
+        pane.setPadding(new Insets(5, 5, 0, 5));
 
         Group g = new Group();
         g.getChildren().add(centre);
@@ -284,4 +281,9 @@ public class InterfacePlateau extends Interface {
     public void setTextWithCurrentLanguage() {
         //pas de texte dans cette interface => rien a mettre a jour
     }
+
+    public void finPartie(String gagnant) {
+        this.panePrincipale.getChildren().add(new FinPartie(primaryStage, controller, c, gameController, this, gagnant));
+    }
+
 }

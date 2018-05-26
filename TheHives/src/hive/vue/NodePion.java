@@ -51,6 +51,7 @@ public class NodePion extends Parent {
         } else {
             hexagon.setFill(Color.TRANSPARENT);
         }
+
         g.getChildren().add(hexagon);
 
         this.getChildren().add(g);
@@ -69,6 +70,8 @@ public class NodePion extends Parent {
             side * 2, center,
             side + hauteur, 0.0,
             hauteur, 0.0,});
+        hexagon.setStroke(Color.TRANSPARENT);
+
         return hexagon;
     }
 

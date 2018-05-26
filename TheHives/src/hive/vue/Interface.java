@@ -58,9 +58,6 @@ public abstract class Interface extends Parent {
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
 
-        fontSize.bind(primaryStage.heightProperty().divide(30));
-        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
-
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();
@@ -73,7 +70,7 @@ public abstract class Interface extends Parent {
 
         police = "Papyrus";
 
-                fontSize.bind(primaryStage.widthProperty().add(primaryStage.heightProperty()).divide(60));
+                fontSize.bind(primaryStage.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                                                    "-fx-font-family: ", police, ";" ));
 
