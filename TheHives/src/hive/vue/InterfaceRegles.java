@@ -103,18 +103,15 @@ public class InterfaceRegles extends Interface
        
         AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
         AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
         AnchorPane.setBottomAnchor(boutonPreference, (double) 5);
         top.getChildren().add(boutonPreference);
 
         AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
         AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
         AnchorPane.setBottomAnchor(boutonPleinEcran, (double) 5);
         top.getChildren().add(boutonPleinEcran);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
-        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setBottomAnchor(boutonRetourMenu, (double) 5);
         top.getChildren().add(boutonRetourMenu);
