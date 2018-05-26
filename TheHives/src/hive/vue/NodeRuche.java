@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateau.mousehandlers.SocleHandler;
-import hive.controller.plateau.GameController;
+import hive.controller.plateau.handlers.mousehandlers.SocleHandler;
+import hive.controller.plateau.PlateauController;
 import hive.model.board.Board;
 import hive.model.board.Cell;
 import javafx.scene.Parent;
@@ -30,11 +30,11 @@ public class NodeRuche extends Parent {
     int width, height;
 
     private final CacheImage c;
-    private final GameController plateauController;
+    private final PlateauController plateauController;
     private final Board board;
     private InterfacePlateau plateau;
 
-    public NodeRuche(CacheImage c, GameController plateauController) {
+    public NodeRuche(CacheImage c, PlateauController plateauController) {
         this.c = c;
         this.board = plateauController.game.state.board;
         this.plateauController = plateauController;
@@ -92,15 +92,20 @@ public class NodeRuche extends Parent {
         }
     }
 
-    public void selectCell(Vector2i pos) { // pour la source
+    public void selectPlayerCell(Vector2i pos) { // pour la source
         tab.getAt(pos).setSelected(Color.rgb(246, 6, 189));
+    }
+    
+    public void selectIACell(Vector2i pos) {
+        tab.getAt(pos).setSelected(Color.rgb(255, 0, 0));
     }
 
     public void deselectCell(Vector2i pos) {
         tab.getAt(pos).setNotSelected();
     }
+    
 
-     public void majSource(Cell source) {
+    public void majSource(Cell source) {
         tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
     }
 

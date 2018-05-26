@@ -26,6 +26,7 @@ public class ActionBuilder
         PLACEMENT_SELECTED, // end put
         SOURCE_SELECTED,
         DESTINATION_SELECTED, // end move
+        END
     }
 
     public Tile tile;
@@ -46,7 +47,7 @@ public class ActionBuilder
 
     public void setTile(Tile tile)
     {
-        assert state == State.BEGIN || state == State.TILE_SELECTED || state == State.SOURCE_SELECTED; 
+        assert state == State.BEGIN || state == State.TILE_SELECTED || state == State.SOURCE_SELECTED;
         this.tile = tile;
         state = State.TILE_SELECTED;
     }
@@ -64,7 +65,7 @@ public class ActionBuilder
         this.source = cell;
         state = State.SOURCE_SELECTED;
     }
-    
+
     public void setDestinations(ArrayList<Cell> destinations)
     {
         possibleDestinations = destinations;
@@ -97,9 +98,14 @@ public class ActionBuilder
         assert action != null;
         return action;
     }
-    
+
     public void setBegin()
     {
         state = State.BEGIN;
+    }
+    
+    public void setEnd()
+    {
+        state = State.END;
     }
 }

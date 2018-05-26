@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateau;
+package hive.controller.plateau.handlers;
 
+import hive.controller.plateau.PlateauController;
 import hive.model.players.decisions.IADecision;
 import javafx.animation.Animation;
 import javafx.event.ActionEvent;
@@ -16,7 +17,7 @@ import javafx.event.EventHandler;
  */
 public final class FrameHandler extends PlateauHandlerData implements EventHandler<ActionEvent>
 {
-    public FrameHandler(GameController controller)
+    public FrameHandler(PlateauController controller)
     {
         super(controller);
     }

@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateau.mousehandlers;
+package hive.controller.plateau.handlers.mousehandlers;
 
-import hive.controller.plateau.PlateauHandlerData;
-import hive.controller.plateau.GameController;
+import hive.controller.plateau.handlers.PlateauHandlerData;
+import hive.controller.plateau.PlateauController;
 import hive.model.board.Tile;
 import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
 import hive.model.players.decisions.HumanDecision;
-import hive.vue.InterfacePlateau;
 import hive.vue.NodePlateauMain;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -24,11 +23,12 @@ import javafx.scene.input.MouseEvent;
  */
 public class TileMainHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
 {
+
     TeamColor color;
     NodePlateauMain uiMain;
     Tile tileClicked;
 
-    public TileMainHandler(GameController controller, TeamColor color, InsectType insectType)
+    public TileMainHandler(PlateauController controller, TeamColor color, InsectType insectType)
     {
         super(controller);
         tileClicked = new Tile(insectType, color);
@@ -38,7 +38,12 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
     @Override
     public void handle(MouseEvent event)
     {
-        if(tileClicked.color != game.state.turn.getCurrent().color)
+        if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
+        {
+            return;
+        }
+        
+        if (tileClicked.color != game.state.turn.getCurrent().color)
         {
             System.err.println("Vous n'avez pas selectionné un pion de votre couleur");
             return;
@@ -49,11 +54,6 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
 
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
-            if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
-            {
-                return;
-            }
-
             switch (controller.builder.getState())
             {
                 case BEGIN:
@@ -87,7 +87,7 @@ public class TileMainHandler extends PlateauHandlerData implements EventHandler<
                         uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
+                        controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
                         uiMain.surlignerTile(controller.builder.tile);
                         uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     } else

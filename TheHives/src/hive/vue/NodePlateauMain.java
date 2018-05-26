@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateau.GameController;
-import hive.controller.plateau.mousehandlers.TileMainHandler;
+import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.handlers.mousehandlers.TileMainHandler;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;
@@ -40,11 +40,11 @@ public class NodePlateauMain extends Parent {
     private final ImageView panneau;
     private final StackPane affichageJoueur;
     private final PlayerCollection col;
-    private final GameController plateauController;
+    private final PlateauController plateauController;
 
     CacheImage c;
 
-    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController plateauController, InterfacePlateau plateau, TeamColor color) {
+    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, PlateauController plateauController, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         this.c = c;
         this.couleur = color;

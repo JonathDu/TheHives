@@ -6,7 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.controller.plateau.GameController;
+import hive.controller.plateau.PlateauController;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
@@ -42,7 +42,7 @@ public class InterfacePlateau extends Interface {
     public NodePlateauMain mainGauche;
     public NodePlateauMain mainDroite;
     public NodeRuche ruche;
-    GameController gameController;
+    PlateauController gameController;
     private StackPane centerPane;
     ScrollPane scrollPane;
     BorderPane centerMainG;
@@ -79,7 +79,7 @@ public class InterfacePlateau extends Interface {
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
 
-        gameController = new GameController(game, this);
+        gameController = new PlateauController(game, this);
 
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, joueur1, c, gameController, this, TeamColor.WHITE);
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
@@ -180,6 +180,7 @@ public class InterfacePlateau extends Interface {
             root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
 
                 quitStage.close();
+                gameController.stop();
                 controller.goToMenu();
 
             });

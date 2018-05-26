@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateau;
+package hive.controller.plateau.graphicaction;
 
 import hive.model.game.Game;
 import hive.model.players.actions.ActionVisitor;
@@ -31,8 +31,8 @@ public class ActionGraphicUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
+        uiPlateau.majTileMain(action.tile, game.state.turn.getCurrent().collection.get(action.tile.type));
         uiPlateau.ruche.majPlacement(action.where);
-        uiPlateau.majTileMain(action.tile, game.state.turn.getOpponent().collection.get(action.tile.type));
     }
 
     @Override
@@ -47,3 +47,4 @@ public class ActionGraphicUpdater implements ActionVisitor
     {
     }
 }
+
