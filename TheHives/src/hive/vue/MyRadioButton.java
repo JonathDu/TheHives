@@ -97,6 +97,14 @@ class MyRadioBouton extends ToggleButton{
             h_iaIm.setFitWidth(hauteurDeLigne);
             bouton.setGraphic(h_iaIm);*/
         }
+        else if(type=="IA_h"){
+            bouton.setUserData("IA_Humain");
+            /*Image h_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
+            ImageView h_iaIm = new ImageView(h_ia);
+            h_iaIm.setFitHeight(hauteurDeLigne);
+            h_iaIm.setFitWidth(hauteurDeLigne);
+            bouton.setGraphic(h_iaIm);*/
+        }
         else if(type=="IAs"){
             bouton.setUserData("IAs");
             /*Image ia_ia = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");

@@ -44,7 +44,7 @@ public class InterfaceJoueurs extends Interface {
 
     String versionIA1;
     String versionIA2;
-    int est_ia_ia = 0, est_h_ai = 0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
+    int est_ia_ia = 0, est_h_ai = 0, est_ai_h=0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
     TextField Name1 = new TextField();
     TextField Name2 = new TextField();
     Level level1 = null;
@@ -151,6 +151,9 @@ public class InterfaceJoueurs extends Interface {
         Image difficile_im = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
         BackgroundSize difficile_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage difficile_imFond = new BackgroundImage(difficile_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, difficile_imSize);
+        Image change_im = c.getImage("exchange1.png");
+        BackgroundSize change_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage change_imFond = new BackgroundImage(change_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, change_imSize);
         
         
         StackPane hh = new StackPane();
@@ -169,15 +172,17 @@ public class InterfaceJoueurs extends Interface {
         hh.getChildren().add(humains);
         grille.add(hh, 0, 1);
 
-        
         StackPane h_ia = new StackPane();
+        StackPane ia_h = new StackPane();
+        ToggleButton IAh;
+        IAh = bouton.creer("IA_h");
+        ToggleButton hIA;
+        hIA = bouton.creer("h_IA");
         h_ia.prefHeightProperty().bind(grille.heightProperty().divide(6));
         h_ia.prefWidthProperty().bind(grille.widthProperty().divide(5));
         //Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
         background = new Background(backgroundFond);
         h_ia.setBackground(background);
-        ToggleButton hIA;
-        hIA = bouton.creer("h_IA");
         hIA.prefHeightProperty().bind(h_ia.heightProperty().multiply(0.8));
         hIA.prefWidthProperty().bind(h_ia.widthProperty().multiply(0.8));
         Image h_ia_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
@@ -191,6 +196,27 @@ public class InterfaceJoueurs extends Interface {
         //h_ia.getChildren().add(hexagoneIm);
         h_ia.getChildren().add(hIA);
         grille.add(h_ia, 1, 1);
+        
+        ia_h.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        ia_h.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        //Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
+        background = new Background(backgroundFond);
+        ia_h.setBackground(background);
+        IAh.prefHeightProperty().bind(ia_h.heightProperty().multiply(0.8));
+        IAh.prefWidthProperty().bind(ia_h.widthProperty().multiply(0.8));
+        Image ia_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonInverse.png");
+        BackgroundSize ia_h_imSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage ia_h_imFond = new BackgroundImage(ia_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, ia_h_imSize);
+        background = new Background(ia_h_imFond);
+        IAh.setBackground(background);
+        IAh.setToggleGroup(j);
+        IAh.setSelected(true);
+        //h_ia.getChildren().add(hexagoneIm);
+        ia_h.getChildren().add(IAh);
+        
+        
+        
+        
         
         StackPane ia_ia = new StackPane();
         ia_ia.prefHeightProperty().bind(grille.heightProperty().divide(6));
@@ -210,6 +236,100 @@ public class InterfaceJoueurs extends Interface {
         grille.add(ia_ia, 2, 1);
         
         StackPane n1 = new StackPane();
+        StackPane n2 = new StackPane();
+        StackPane f1 = new StackPane();
+        StackPane m1 = new StackPane();
+        StackPane d1 = new StackPane();
+        StackPane f2 = new StackPane();
+        StackPane m2 = new StackPane();
+        StackPane d2 = new StackPane();
+        ToggleButton moyenne;
+        moyenne = bouton.creer("moyenne"); //Media, Mittel/Normal
+        ToggleButton moyenne1;
+        moyenne1 = bouton.creer("moyenne"); //Media, Mittel/Normal
+        
+        StackPane change_sp = new StackPane();
+        change_sp.prefHeightProperty().bind(grille.heightProperty().multiply(0.1));
+        change_sp.prefWidthProperty().bind(grille.widthProperty().multiply(0.1));
+        background = new Background(change_imFond);
+        change_sp.setBackground(background);
+        change_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                
+                if(est_h_ai==1){
+                    grille.getChildren().remove(h_ia);
+                    grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
+                }
+                else if(est_ai_h==1){
+                    grille.getChildren().remove(ia_h);
+                    grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
+                }
+                
+                
+            
+                
+                if(est_h_ai==1 ){
+                    if(est_f2==1){
+                        est_f2=0;
+                        f2.setBackground(Background.EMPTY);
+                    }
+                    else if(est_m2==1){
+                        est_m2=0;
+                        m2.setBackground(Background.EMPTY);
+                    }
+                    else if(est_d2==1){
+                        est_d2=0;
+                        d2.setBackground(Background.EMPTY);
+                    }
+                    est_m1 = 1;
+                    moyenne1.setSelected(true);
+                    background = new Background(backgroundFond2);
+                    m1.setBackground(background);
+                    
+                    est_h_ai=0;
+                    est_ai_h=1;
+                    grille.add(ia_h, 1, 1);
+                    grille.add(n2, 1, 3);
+                    grille.add(f1, 0, 2);
+                    grille.add(m1, 1, 2);
+                    grille.add(d1, 2, 2);
+                    versionIA1=null;
+                    Name2.setText(null);
+                }
+                else{
+                    if(est_f1==1){
+                        est_f1=0;
+                        f1.setBackground(Background.EMPTY);
+                    }
+                    else if(est_m1==1){
+                        est_m1=0;
+                        m1.setBackground(Background.EMPTY);
+                    }
+                    else if(est_d1==1){
+                        est_d1=0;
+                        d1.setBackground(Background.EMPTY);
+                    }
+                    est_m2 = 1;
+                    moyenne.setSelected(true);
+                    background = new Background(backgroundFond2);
+                    m2.setBackground(background);
+                    est_ai_h=0;
+                    est_h_ai=1;
+                    grille.add(h_ia, 1, 1);
+                    grille.add(n1, 1, 2);
+                    grille.add(f2, 0, 3);
+                    grille.add(m2, 1, 3);
+                    grille.add(d2, 2, 3);
+                    versionIA2=null;
+                    Name1.setText(null);
+                }
+                
+                
+            }
+        });
+        grille.add(change_sp, 1, 0);
+        
         n1.prefHeightProperty().bind(grille.heightProperty().divide(6));
         n1.prefWidthProperty().bind(grille.widthProperty().divide(5));
         Name1.prefHeightProperty().bind(n1.heightProperty().multiply(0.5));
@@ -220,7 +340,15 @@ public class InterfaceJoueurs extends Interface {
         n1.getChildren().add(Name1);
         grille.add(n1, 1, 2);
         
-        StackPane f2 = new StackPane();
+        n2.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        n2.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        Name2.prefHeightProperty().bind(n2.heightProperty().multiply(0.5));
+        Name2.prefWidthProperty().bind(n2.widthProperty().multiply(0.8));
+        //Name1.setMinSize(tailleDeCase * 0.8, 30);
+        //Name1.setMaxHeight(40);
+        Name2.setAlignment(Pos.CENTER);
+        n2.getChildren().add(Name2);
+        
         f2.prefHeightProperty().bind(grille.heightProperty().divide(6));
         f2.prefWidthProperty().bind(grille.widthProperty().divide(5));
         ToggleButton facile;
@@ -233,26 +361,26 @@ public class InterfaceJoueurs extends Interface {
         facile.setToggleGroup(ia2);
         f2.getChildren().add(facile);
         grille.add(f2, 0, 3);
-        StackPane m2 = new StackPane();
         m2.prefHeightProperty().bind(grille.heightProperty().divide(6));
         m2.prefWidthProperty().bind(grille.widthProperty().divide(5));
         //Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
         background = new Background(backgroundFond2);
         m2.setBackground(background);
         //m2.getChildren().add(rectangleIm2);
-        ToggleButton moyenne;
-        moyenne = bouton.creer("moyenne"); //Media, Mittel/Normal
         moyenne.prefHeightProperty().bind(m2.heightProperty().multiply(0.8));
         moyenne.prefWidthProperty().bind(m2.widthProperty().multiply(0.8));
         background = new Background(moyenne_imFond);
         moyenne.setBackground(background);
         //moyenne.setBackground(Background.EMPTY);
+        //if(est_h_ai==1){
+            est_m2 = 1;
+            moyenne.setSelected(true);
+            background = new Background(backgroundFond2);
+            m2.setBackground(background);
+        //}
         moyenne.setToggleGroup(ia2);
-        est_m2 = 1;
-        moyenne.setSelected(true);
         m2.getChildren().add(moyenne);
         grille.add(m2, 1, 3);
-        StackPane d2 = new StackPane();
         d2.prefHeightProperty().bind(grille.heightProperty().divide(6));
         d2.prefWidthProperty().bind(grille.widthProperty().divide(5));
         ToggleButton difficile;
@@ -323,12 +451,92 @@ public class InterfaceJoueurs extends Interface {
             }
         });
 
-        
+        f1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        f1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        ToggleButton facile1;
+        facile1 = bouton.creer("facile");
+        facile1.prefHeightProperty().bind(f1.heightProperty().multiply(0.8));
+        facile1.prefWidthProperty().bind(f1.widthProperty().multiply(0.8));
+        background = new Background(facile_imFond);
+        facile1.setBackground(background);
+        facile1.setToggleGroup(ia1);
+        f1.getChildren().add(facile1);
+        m1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        m1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        moyenne1.prefHeightProperty().bind(m1.heightProperty().multiply(0.8));
+        moyenne1.prefWidthProperty().bind(m1.widthProperty().multiply(0.8));
+        background = new Background(moyenne_imFond);
+        moyenne1.setBackground(background);
+        /*if(est_ai_h==1){
+            est_m1 = 1;
+            moyenne1.setSelected(true);
+            background = new Background(backgroundFond2);
+            m1.setBackground(background);
+        }*/
+        moyenne1.setToggleGroup(ia1);
+        m1.getChildren().add(moyenne1);
+        d1.prefHeightProperty().bind(grille.heightProperty().divide(6));
+        d1.prefWidthProperty().bind(grille.widthProperty().divide(5));
+        ToggleButton difficile1;
+        difficile1 = bouton.creer("difficile");
+        difficile1.prefHeightProperty().bind(d1.heightProperty().multiply(0.8));
+        difficile1.prefWidthProperty().bind(d1.widthProperty().multiply(0.8));
+        background = new Background(difficile_imFond);
+        difficile1.setBackground(background);
+        difficile1.setToggleGroup(ia1);
+        d1.getChildren().add(difficile1);
+        ia1.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            public void changed(ObservableValue<? extends Toggle> ov,
+                    Toggle old_toggle, Toggle new_toggle) {
+                if (ia1.getSelectedToggle() != null) {
+                    if (facile1.isSelected()) {
+                        if (est_m1 == 1) {
+                            m1.setBackground(Background.EMPTY);
+                            est_m1 = 0;
+                        } else if (est_d1 == 1) {
+                            d1.setBackground(Background.EMPTY);
+                            est_d1 = 0;
+                        }
+                        if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                            background = new Background(backgroundFond2);
+                            f1.setBackground(background);
+                            est_f1 = 1;
+                        }
+                    } else if (moyenne1.isSelected()) {
+                        if (est_f1 == 1) {
+                            f1.setBackground(Background.EMPTY);
+                            est_f1 = 0;
+                        } else if (est_d1 == 1) {
+                            d1.setBackground(Background.EMPTY);
+                            est_d1 = 0;
+                        }
+                        if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                            background = new Background(backgroundFond2);
+                            m1.setBackground(background);
+                            est_m1 = 1;
+                        }
+                    } else if (difficile1.isSelected()) {
+                        if (est_f1 == 1) {
+                            f1.setBackground(Background.EMPTY);
+                            est_f1 = 0;
+                        } else if (est_m1 == 1) {
+                            m1.setBackground(Background.EMPTY);
+                            est_m1 = 0;
+                        }
+                        if (est_f1 == 0 && est_m1 == 0 && est_d1 == 0) {
+                            background = new Background(backgroundFond2);
+                            d1.setBackground(background);
+                            est_d1 = 1;
+                        }
+                    }
 
-        StackPane f1 = new StackPane();
-        StackPane m1 = new StackPane();
-        StackPane d1 = new StackPane();
-        StackPane n2 = new StackPane();
+                    versionIA1 = ia1.getSelectedToggle().getUserData().toString();
+                    System.out.println("IA1 : " + versionIA1);
+                }
+
+            }
+        });
+
 
         j.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             public void changed(ObservableValue<? extends Toggle> ov,
@@ -753,6 +961,23 @@ public class InterfaceJoueurs extends Interface {
                     }
 
                     controller.goToPlateau(joueur_1, null, null, level2);
+
+                } else if (est_ai_h == 1) {
+                    joueur_2 = Name2.getCharacters().toString();
+                    if (Name2.getText() == null) {
+                        joueur_2 = controller.gestionnaireLangage.getText("text_joueur2");
+                    }
+                    if (est_f1 == 1) {
+                        level1 = Level.EASY;
+                    } else if (est_m1 == 1) {
+                        level1 = Level.MEDIUM;
+                    } else if (est_d1 == 1) {
+                        level1 = Level.HARD;
+                    } else {
+                        level1 = Level.MEDIUM;
+                    }
+
+                    controller.goToPlateau(null, joueur_2, level1, null);
 
                 } else if (est_ia_ia == 1) {
                     if (est_f1 == 1) {
