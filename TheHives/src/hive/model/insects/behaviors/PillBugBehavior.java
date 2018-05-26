@@ -8,6 +8,8 @@ package hive.model.insects.behaviors;
 import hive.model.board.Cell;
 import hive.model.game.GameState;
 import hive.model.insects.InsectBehavior;
+import hive.model.insects.behaviors.info.CombData;
+import hive.model.insects.behaviors.info.Info;
 import java.util.function.Consumer;
 
 /**
@@ -18,6 +20,12 @@ public class PillBugBehavior implements InsectBehavior
 {
     @Override
     public void consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Info consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer, Consumer<CombData> info_giver)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -6,11 +6,17 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.PlateauController;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -24,7 +30,7 @@ public class FinPartie extends Parent {
     private final Stage primaryStage;
     private final Controller controller;
     private final CacheImage cacheImage;
-    private final GameController gameController;
+    private final PlateauController gameController;
     private final Interface i;
     private final HBox bouton;
     private final VBox principal;
@@ -35,7 +41,7 @@ public class FinPartie extends Parent {
     private final HiveBouton recommencer;
     private final HiveBouton retourMenu;
 
-    public FinPartie(Stage _primaryStage, Controller _controller, CacheImage _cacheImage, GameController _gameController, Interface _i, String joueurGagnant) {
+    public FinPartie(Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant) {
         primaryStage = _primaryStage;
         controller = _controller;
         gameController = _gameController;
@@ -57,9 +63,12 @@ public class FinPartie extends Parent {
         this.getChildren().add(principal);
     }
 
-
     private void setTextWithCurrentLanguage() {
-        message.setText(gagnant + " " + controller.gestionnaireLangage.getText("text_gagne"));
+        if (gagnant != null) {
+            message.setText(gagnant + " " + controller.gestionnaireLangage.getText("text_gagne"));
+        } else {
+            message.setText(controller.gestionnaireLangage.getText("text_egalite"));
+        }
 
     }
 
@@ -70,11 +79,16 @@ public class FinPartie extends Parent {
         });
 
         retourMenu.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            i.panePrincipale.getChildren().remove(this);
             controller.goToMenu();
         });
     }
 
     private void placerObjetsGraphiques() {
+        Image fond = cacheImage.getImage("Design/MenuPrincipaux/panneauTheHive.png");
+        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
+        principal.setBackground(new Background(backgroundFond));
 
         principal.prefWidthProperty().bind(primaryStage.widthProperty());
         principal.prefHeightProperty().bind(primaryStage.heightProperty());
