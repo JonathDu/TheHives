@@ -32,7 +32,7 @@ public abstract class Interface extends Parent {
     Pane panePrincipale;
     Background background;
     private DoubleProperty fontSize = new SimpleDoubleProperty(10);
-    
+
     int height;
     int width;
     String police;
@@ -57,9 +57,7 @@ public abstract class Interface extends Parent {
         c = cacheImage;
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
-        
 
-                                                  
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();
@@ -71,14 +69,14 @@ public abstract class Interface extends Parent {
         minJoueur = maxJoueur / 2;
 
         police = "Papyrus";
-        
-                fontSize.bind(primaryStage.widthProperty().add(primaryStage.heightProperty()).divide(60));
+
+                fontSize.bind(primaryStage.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                                                    "-fx-font-family: ", police, ";" ));
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width, height);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width, height);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width, height);
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
+        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
+        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
 
         setBackground();
 
