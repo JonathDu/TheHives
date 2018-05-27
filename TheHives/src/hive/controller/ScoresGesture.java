@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,11 +24,17 @@ public class ScoresGesture
     private final String scoresPropertiesPath;
     private final Properties properties;
 
-    public ScoresGesture() throws FileNotFoundException, IOException
+    public ScoresGesture()
     {
         scoresPropertiesPath = "properties/scores/scores.properties";
         properties = new Properties();
-        properties.load(new FileInputStream(scoresPropertiesPath));
+        try
+        {
+            properties.load(new FileInputStream(scoresPropertiesPath));
+        } catch (IOException ex)
+        {
+            Logger.getLogger(ScoresGesture.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int getScoreFor(String playerName)
