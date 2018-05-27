@@ -61,7 +61,7 @@ public class NodePlateauMain extends Parent {
             pions.getChildren().add(pilesPions.get(type));
         }
 
-        pions.setPadding(new Insets(50, 20, 20, 10));
+//        pions.setPadding(new Insets(50, 20, 20, 10));
         pions.setAlignment(Pos.TOP_CENTER);
 
         panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
@@ -89,7 +89,7 @@ public class NodePlateauMain extends Parent {
         affichageJoueur.getChildren().add(labelNomJoueur);
         affichageJoueur.getChildren().add(afficheTour);
         afficheTour.setVisible(false);
-        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+//        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
         pions.getChildren().add(affichageJoueur);
         this.getChildren().add(pions);

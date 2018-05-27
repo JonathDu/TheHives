@@ -58,7 +58,7 @@ public abstract class Interface extends Parent {
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
         
-        fontSize.bind(primaryStage.widthProperty().add(primaryStage.heightProperty()).divide(60));
+        fontSize.bind(primaryStage.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
                                                   
 
@@ -73,9 +73,9 @@ public abstract class Interface extends Parent {
 
         police = "Papyrus";
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width, height);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width, height);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width, height);
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
+        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
+        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
 
         setBackground();
 
