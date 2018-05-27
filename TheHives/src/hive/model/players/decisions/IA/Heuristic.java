@@ -24,10 +24,10 @@ public class Heuristic {
     public static final int[] NB_QUEEN_OP_POSSIBILITY = {150, 100, -166, -166, -166};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 115, 114, 200, 110};
     public static final int[] QUEEN_NEIGH_FREE_OP_OP = {0, 0, 0, 0, 0};
-    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 135, 104, 190, 100};
-    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 155, 114, 200, 110};
+    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 135, 134, 190, 110};
+    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 155, 154, 200, 120};
     public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -191, -132};
-    public static final int[] INSECT_BLOCK_VALUE_OP = {24, 80, 101, 114, 110};
+    public static final int[] INSECT_BLOCK_VALUE_OP = {24, 80, 101, 104, 105};
     public static final int[] IN_HAND_OP = {-20 , -20, -20, -20, -20 };
     
     
@@ -41,8 +41,8 @@ public class Heuristic {
     public static final int[] IN_HAND_CUR = {0 , -100, 20, 30, 20 };
 
     
-    public static final int[] QUEEN_CRUSHED_CUR = {-200, 0};
-    public static final int[] QUEEN_CRUSHED_OP = {200, 0};
+    public static final int[] QUEEN_CRUSHED_CUR = {500, 0};
+    public static final int[] QUEEN_CRUSHED_OP = {-500, 0};
     
     public static final int QUEEN_BEE = 0;
     public static final int SPIDER = 1;
