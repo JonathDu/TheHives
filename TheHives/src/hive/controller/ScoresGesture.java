@@ -26,7 +26,7 @@ public class ScoresGesture
 
     public ScoresGesture()
     {
-        scoresPropertiesPath = "properties/scores/scores.properties";
+        scoresPropertiesPath = "/properties/scores/scores.properties";
         properties = new Properties();
         try
         {
