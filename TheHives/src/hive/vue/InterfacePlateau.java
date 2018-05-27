@@ -320,6 +320,7 @@ public class InterfacePlateau extends Interface {
 
     public void finPartie(String gagnant) {
         this.panePrincipale.getChildren().add(new FinPartie(primaryStage, controller, c, gameController, this, gagnant));
+        controller.scoresGesture.setScoreFor(gagnant);
     }
 
     public void message(String titre, String message) {
