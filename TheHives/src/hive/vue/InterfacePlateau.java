@@ -151,7 +151,7 @@ public class InterfacePlateau extends Interface {
             this.ruche.majTaille(- 5);
             recentrer();
         });
-        
+
         bottom.setAlignment(Pos.CENTER);
 
         bottom.getChildren().add(boutonTailleAug);
@@ -239,11 +239,12 @@ public class InterfacePlateau extends Interface {
                 -> {
 
             Stage primaryStage = new Stage();
-            Parent root;
-            root = new InterfaceRegles(primaryStage, controller, c, true);
-            primaryStage.setTitle("Regles");
+            Parent root = new Group();
             primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.setTitle("Regles");
             primaryStage.show();
+            
+            primaryStage.setScene(new Scene(new InterfaceRegles(primaryStage, controller, c, true), 800, 600));
         });
 
         boutonRecommencer.setOnMouseClicked(value

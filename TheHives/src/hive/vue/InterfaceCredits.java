@@ -18,6 +18,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,10 +29,10 @@ import javafx.stage.Stage;
  * @author Adeline
  */
 public class InterfaceCredits extends Interface {
-    
+
     private final Label credits;
     private final Label ia;
-    private final Label ihm; 
+    private final Label ihm;
     private final Label design;
     private final Label mdj;
     private final Label traduction1;
@@ -43,7 +44,7 @@ public class InterfaceCredits extends Interface {
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
-        
+
         credits = new Label();
         ia = new Label();
         ihm = new Label();
@@ -53,27 +54,27 @@ public class InterfaceCredits extends Interface {
         traduction2 = new Label();
 
         setTextWithCurrentLanguage();
-        
+
         BorderPane bp = new BorderPane();
         bp.prefHeightProperty().bind(pane.heightProperty());
         bp.prefWidthProperty().bind(pane.widthProperty());
-        
+
         AnchorPane top = new AnchorPane();
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         top.prefWidthProperty().bind(bp.widthProperty());
-       
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        top.getChildren().add(boutonPreference);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        top.getChildren().add(boutonPleinEcran);
+        HBox droite = new HBox(5);
+
+        AnchorPane.setRightAnchor(droite, (double) 5);
+        AnchorPane.setTopAnchor(droite, (double) 5);
+        droite.getChildren().add(boutonPleinEcran);
+        droite.getChildren().add(boutonPreference);
+        top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         top.getChildren().add(boutonRetourMenu);
-        
+
         StackPane spC = new StackPane();
         spC.prefWidthProperty().bind(bp.widthProperty().multiply(0.3));
         spC.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
@@ -87,13 +88,13 @@ public class InterfaceCredits extends Interface {
         credits.prefWidthProperty().bind(spC.widthProperty().multiply(0.9));
         credits.setTextFill(Color.web("#fbe5b5"));
         spC.getChildren().add(credits);
-        AnchorPane.setLeftAnchor(spC, (double) tailleDeCase+15);
-        AnchorPane.setRightAnchor(spC, (double) tailleDeCase+15);
+        AnchorPane.setLeftAnchor(spC, (double) tailleDeCase + 15);
+        AnchorPane.setRightAnchor(spC, (double) tailleDeCase + 15);
         AnchorPane.setTopAnchor(spC, (double) 5);
         AnchorPane.setBottomAnchor(spC, (double) 5);
-        top.getChildren().add(spC); 
+        top.getChildren().add(spC);
         bp.setTop(top);
-        
+
         StackPane bois = new StackPane();
         bois.prefWidthProperty().bind(bp.widthProperty().multiply(0.9));
         bois.prefHeightProperty().bind(bp.heightProperty().multiply(0.77));
@@ -101,7 +102,7 @@ public class InterfaceCredits extends Interface {
         BackgroundImage backgroundPlateau = new BackgroundImage(plateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundPlateau);
         bois.setBackground(background);
-        
+
         GridPane grille = new GridPane();
         int ligne = 100 / 8;
         int colonne = 100 / 1;
@@ -167,29 +168,25 @@ public class InterfaceCredits extends Interface {
         grille.add(traduction2_sp, 0, 6);
 
         bois.getChildren().add(grille);
-        
-        
+
         bp.setCenter(bois);
-        
+
         StackPane bottom = new StackPane();
         bottom.prefWidthProperty().bind(bp.widthProperty().multiply(0.9));
         bottom.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
         bp.setBottom(bottom);
-        
-        
+
         AnchorPane.setTopAnchor(bp, (double) 0);
         AnchorPane.setBottomAnchor(bp, (double) 0);
         AnchorPane.setLeftAnchor(bp, (double) 0);
         AnchorPane.setRightAnchor(bp, (double) 0);
         pane.getChildren().add(bp);
         this.panePrincipale.getChildren().add(pane);
-        
 
     }
-    
+
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         credits.setText(controller.gestionnaireLangage.getText("text_credit"));
         ia.setText(controller.gestionnaireLangage.getText("text_membres_IA"));
         ihm.setText(controller.gestionnaireLangage.getText("text_membres_IHM"));
