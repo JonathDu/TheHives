@@ -24,10 +24,10 @@ public class Heuristic {
     public static final int[] NB_QUEEN_OP_POSSIBILITY = {150, 100, -166, -166, -166};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 115, 114, 200, 110};
     public static final int[] QUEEN_NEIGH_FREE_OP_OP = {0, 0, 0, 0, 0};
-    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 75, 104, 190, 100};
-    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 85, 114, 200, 110};
+    public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 135, 104, 190, 100};
+    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 155, 114, 200, 110};
     public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -191, -132};
-    public static final int[] INSECT_BLOCK_VALUE_OP = {44, 80, 101, 114, 110};
+    public static final int[] INSECT_BLOCK_VALUE_OP = {24, 80, 101, 114, 110};
     public static final int[] IN_HAND_OP = {-20 , -20, -20, -20, -20 };
     
     
