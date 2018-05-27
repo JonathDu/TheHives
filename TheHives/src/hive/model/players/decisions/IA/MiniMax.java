@@ -9,10 +9,10 @@ import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
-import static hive.model.players.decisions.IA.Evaluation.evaluation;
 import static java.lang.Integer.max;
 import static java.lang.Integer.min;
 import java.util.ArrayList;
+import static hive.model.players.decisions.IA.Evaluation.evaluation;
 
 /**
  *
@@ -33,10 +33,11 @@ public class MiniMax{
                 hia.doAction(state, new NoAction());
                 vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList),vMax);
                 hia.undoAction(state);
+                
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
                     tmp = miniMaxOpponent(state, depth-1, vMax,actionList);
@@ -65,10 +66,11 @@ public class MiniMax{
                 hia.doAction(state, new NoAction());
                 vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
                 hia.undoAction(state);
+                
             }
             else{
                 while(!actionList[depth].isEmpty()){
-                    currentAction = actionList[depth].remove(0);
+                    currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
                     tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList);

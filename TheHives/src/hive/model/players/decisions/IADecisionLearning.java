@@ -7,7 +7,7 @@ package hive.model.players.decisions;
 
 import hive.model.players.decisions.IA.IA;
 import hive.model.players.decisions.IA.Level;
-import hive.model.players.decisions.Evolved.EvolvedHardIA;
+import hive.model.players.decisions.IA.HardIA;
 import hive.model.players.decisions.*;
 import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
@@ -45,7 +45,7 @@ public class IADecisionLearning implements Decision
         ArrayList<Decision> decisions;
         decisions = hia.startSimulation(state);
         if(hardIA == true)
-            ia=new EvolvedHardIA();
+            ia=new HardIA();
         else
             ia = new HardIALearning(eval);
         Action a = ia.SearchAction(state);

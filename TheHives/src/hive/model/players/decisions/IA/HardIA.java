@@ -9,6 +9,7 @@ import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
+import hive.model.players.decisions.IA.IA;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class HardIA implements IA{
                 actionList[depth].clear();
                 return currentAction;
             }
-            else {
+            else{
                 tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){
@@ -66,6 +67,7 @@ public class HardIA implements IA{
         Random rnd = new Random();
         assert !maxActionList.isEmpty();
         currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
+        assert currentAction !=null;
         return currentAction;
     }
 }
