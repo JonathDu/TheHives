@@ -8,6 +8,7 @@ package hive.model.players.decisions.cerveau.main;
 import hive.model.players.decisions.cerveau.SelectedPhase;
 import hive.model.players.decisions.cerveau.GeneratePhase;
 import static hive.model.players.decisions.IA.Level.EHARD;
+import static hive.model.players.decisions.IA.Level.HARD;
 import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
 import hive.model.players.decisions.cerveau.FirstPhase;
@@ -33,19 +34,19 @@ public class AutomaticMain {
         EvaluationLearning boss;
         EvaluationLearning winEval;
         AdamEtEve AE = new AdamEtEve(12);
-        for(int j =0;j<5;j++){
+        for(int j =0;j<10;j++){ // nombre de boss
             do{
                 do{
                     firstP = new FirstPhase();
                 }while(firstP.isNoWinners());
                 System.out.println("Fin de la First phase");
                 winEval = new EvaluationLearning(firstP.getNewGeneration().getSon()[0]);
-                selection = new SelectedPhase(winEval,EHARD);
+                selection = new SelectedPhase(winEval,HARD);
             }while(selection.isNoWinners());
             System.out.println("Fin de la selected phase");
 
             boss = winEval;
-            for(int i =0 ; i<5; i++){
+            for(int i =0 ; i<2; i++){ // nombre de fois ou on génère des nouvelles générations et qu'on regarde s'il sont meilleur que le boss
                 generation = new GeneratePhase(boss,firstP.getNewGeneration().getSon(),firstP.getDossierSuivant());
                 winEval = new EvaluationLearning(generation.getNewGeneration().getSon()[0]);
                 if(generation.isNoWinners()){
@@ -60,7 +61,7 @@ public class AutomaticMain {
             }
             System.out.println("Fin de la derniere phase");
             try {
-                AE.saveBoss(boss.getEvalValues(), "CoralieTheBoss"+j+".txt"); // C'est ici qu'il faut changer le nom du boss (changer juste le string pas le <+j+"txt">)
+                AE.saveBoss(boss.getEvalValues(), "CoralieBoss"+j+".txt"); // C'est ici qu'il faut changer le nom du boss (changer juste le string pas le <+j+"txt">)
             } catch (IOException ex) {
                 Logger.getLogger(AutomaticMain.class.getName()).log(Level.SEVERE, null, ex);
             }
