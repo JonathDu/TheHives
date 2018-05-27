@@ -41,7 +41,7 @@ public class AdamEtEve {
                 System.out.println(file.getAbsolutePath());
                 fos = new FileOutputStream(file);
                 l.clear();
-                for(int j =0;j<27;j++){
+                for(int j =0;j<80;j++){
                     l.add(rnd.nextInt(201));
                 }
                 oos= new ObjectOutputStream(fos);

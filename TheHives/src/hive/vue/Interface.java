@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Parent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -32,7 +33,7 @@ public abstract class Interface extends Parent {
     Pane panePrincipale;
     Background background;
     private DoubleProperty fontSize = new SimpleDoubleProperty(10);
-    
+
     int height;
     int width;
     String police;
@@ -57,10 +58,7 @@ public abstract class Interface extends Parent {
         c = cacheImage;
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
-        
-        fontSize.bind(primaryStage.widthProperty().add(primaryStage.heightProperty()).divide(60));
-        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
-                                                  
+
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();
@@ -73,9 +71,20 @@ public abstract class Interface extends Parent {
 
         police = "Papyrus";
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), width, height);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), width, height);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), width, height);
+                fontSize.bind(primaryStage.heightProperty().divide(30));
+        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
+                                                   "-fx-font-family: ", police, ";" ));
+        
+        Tooltip t = new Tooltip("Retour au menu");
+        Tooltip t1 = new Tooltip("Plein écran");
+        Tooltip t2 = new Tooltip("Réglages");
+       
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
+        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
+        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
+        Tooltip.install(boutonRetourMenu, t);
+        Tooltip.install(boutonPleinEcran, t1);
+        Tooltip.install(boutonPreference, t2);
 
         setBackground();
 

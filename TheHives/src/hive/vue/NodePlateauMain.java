@@ -78,8 +78,9 @@ public class NodePlateauMain extends Parent {
         panneau.setFitWidth(150);
         panneau.setFitHeight(60);
         panneau.setSmooth(true);
+        panneau.setEffect(new DropShadow(10, Color.TRANSPARENT));
 
-        labelNomJoueur.setTextFill(Color.WHITE);
+        labelNomJoueur.setTextFill(Color.web("#fbe5b5"));
         labelNomJoueur.setAlignment(Pos.CENTER);
         labelNomJoueur.setMaxWidth(150);
         labelNomJoueur.setMaxHeight(40);
@@ -88,8 +89,9 @@ public class NodePlateauMain extends Parent {
         affichageJoueur.getChildren().add(panneau);
         affichageJoueur.getChildren().add(labelNomJoueur);
         affichageJoueur.getChildren().add(afficheTour);
+//        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+
         afficheTour.setVisible(false);
-        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
         pions.getChildren().add(affichageJoueur);
         this.getChildren().add(pions);

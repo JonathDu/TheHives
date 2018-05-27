@@ -13,9 +13,13 @@ import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -28,6 +32,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -45,8 +50,8 @@ public class InterfacePlateau extends Interface {
     PlateauController gameController;
     private StackPane centerPane;
     ScrollPane scrollPane;
-    BorderPane centerMainG;
-    BorderPane centerMainD;
+    VBox centerMainG;
+    VBox centerMainD;
     Game game;
 
     HiveBouton boutonHome;
@@ -63,6 +68,8 @@ public class InterfacePlateau extends Interface {
     HBox droite;
     String j1;
     String j2;
+    
+    boolean onDrag = false;
 
     public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
 
@@ -73,8 +80,10 @@ public class InterfacePlateau extends Interface {
         borderPane = new BorderPane();
         centerPane = new StackPane();
         scrollPane = new ScrollPane();
-        centerMainG = new BorderPane();
-        centerMainD = new BorderPane();
+        centerMainG = new VBox();
+        centerMainD = new VBox();
+
+        BorderPane tool = setTool();
 
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
@@ -85,26 +94,23 @@ public class InterfacePlateau extends Interface {
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
         mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
-        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, false);
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetonb.png");
+        BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
 
         mainDroite.pions.setBackground(backgroundMainDroite);
 
-        centerMainD.prefHeightProperty().bind(stage.heightProperty());
-        centerMainG.prefHeightProperty().bind(stage.heightProperty());
+        centerMainD.getChildren().add(mainDroite);
+        centerMainG.getChildren().add(mainGauche);
 
-        centerMainD.setCenter(mainDroite);
-        centerMainG.setCenter(mainGauche);
-
-        Image bimPlateau = c.getImage("Design/FenetrePlateau/PlateauCentral.png");
+        Image bimPlateau = c.getImage("Design/FenetrePlateau/Plateau.png");
         BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
@@ -128,10 +134,11 @@ public class InterfacePlateau extends Interface {
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
         BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
 
+        borderPane.setCenter(scrollPane);
+        borderPane.setTop(tool);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
-        borderPane.setCenter(scrollPane);
-        borderPane.setTop(setTool());
+        setRucheHandler();
 
         this.panePrincipale.getChildren().add(borderPane);
 
@@ -148,6 +155,20 @@ public class InterfacePlateau extends Interface {
         mainDroite.update(game.state.players.get(1).collection);
     }
 
+    private void setRucheHandler() {
+        ruche.setOnDragDetected((value) -> {
+            this.onDrag = true;
+        });
+        ruche.setOnDragDone((value)->{
+            this.onDrag = false;
+        });
+        ruche.setOnMouseMoved((value)->{
+            if(this.onDrag){
+                System.out.println("value");
+            }
+        });
+    }
+
     private BorderPane setTool() {
         width = (int) primaryStage.getWidth();
 
@@ -156,19 +177,17 @@ public class InterfacePlateau extends Interface {
         pane = new BorderPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
 
-        gauche = new HBox();
-        droite = new HBox();
-        centre = new HBox();
+        gauche = new HBox(5);
+        droite = new HBox(5);
+        centre = new HBox(5);
 
-        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), width, height);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), width, height);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), width, height);
-        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), width, height);
-        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), width, height);
-        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), width, height);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), width, height);
-        
-        
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), primaryStage);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), primaryStage);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), primaryStage);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), primaryStage);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), primaryStage);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), primaryStage);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), primaryStage);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -221,7 +240,8 @@ public class InterfacePlateau extends Interface {
 
         boutonRecommencer.setOnMouseClicked(value
                 -> {
-            gameController.restart();
+//            gameController.restart();
+            this.finPartie("vbfidqodifg");
         });
 
         boutonAnnuler.setOnMouseClicked(value
@@ -239,23 +259,39 @@ public class InterfacePlateau extends Interface {
             gameController.help();
         });
 
+        pane.setPadding(new Insets(5, 5, 0, 5));
+
         Group g = new Group();
         g.getChildren().add(centre);
         pane.setLeft(gauche);
         pane.setRight(droite);
         pane.setCenter(g);
 
-        gauche.getChildren().add(boutonHome);
-        gauche.getChildren().add(boutonSave);
-        gauche.getChildren().add(boutonRecommencer);
-        droite.getChildren().add(boutonRegle);
-        droite.getChildren().add(boutonPreference);
-        droite.getChildren().add(boutonPleinEcran);
-        centre.getChildren().add(boutonAnnuler);
-        centre.getChildren().add(boutonConseil);
-        centre.getChildren().add(boutonReplay);
+        Tooltip retourMenuTip = new Tooltip("Retour au menu");
+        Tooltip sauvegarderTip = new Tooltip("Sauvergarder");
+        Tooltip recommencerTip = new Tooltip("Recommencer");
+        Tooltip regleTip = new Tooltip("Règles");
+        Tooltip annulerTip = new Tooltip("Annuller un coup");
+        Tooltip conseilTip = new Tooltip("Conseil");
+        Tooltip replayTip = new Tooltip("Refaire le coup annuler");
 
-        pane.setPadding(new Insets(5));
+        gauche.getChildren().add(boutonHome);
+        Tooltip.install(boutonHome, retourMenuTip);
+        gauche.getChildren().add(boutonSave);
+        Tooltip.install(boutonSave, sauvegarderTip);
+        gauche.getChildren().add(boutonRecommencer);
+        Tooltip.install(boutonRecommencer, recommencerTip);
+        droite.getChildren().add(boutonRegle);
+        Tooltip.install(boutonRegle, regleTip);
+        droite.getChildren().add(boutonPleinEcran);
+        droite.getChildren().add(boutonPreference);
+        centre.getChildren().add(boutonAnnuler);
+        Tooltip.install(boutonAnnuler, annulerTip);
+        centre.getChildren().add(boutonConseil);
+        Tooltip.install(boutonConseil, conseilTip);
+        centre.getChildren().add(boutonReplay);
+        Tooltip.install(boutonReplay, replayTip);
+
         return pane;
 
     }
@@ -281,4 +317,17 @@ public class InterfacePlateau extends Interface {
     public void setTextWithCurrentLanguage() {
         //pas de texte dans cette interface => rien a mettre a jour
     }
+
+    public void finPartie(String gagnant) {
+        this.panePrincipale.getChildren().add(new FinPartie(primaryStage, controller, c, gameController, this, gagnant));
+    }
+
+    public void message(String titre, String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(titre);
+
+        alert.setContentText(message);
+        alert.show();
+    }
+
 }

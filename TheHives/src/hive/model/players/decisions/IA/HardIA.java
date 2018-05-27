@@ -31,7 +31,7 @@ public class HardIA implements IA{
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        int depth = 4;
+        int depth = 3;
         init(depth+1);
         hia.currentPlayerPossibilities(state,actionList[depth]);
         if(actionList[depth].isEmpty()){
