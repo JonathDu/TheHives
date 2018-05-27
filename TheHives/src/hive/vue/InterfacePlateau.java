@@ -100,7 +100,7 @@ public class InterfacePlateau extends Interface {
 
         mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetonb.png");
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
@@ -187,7 +187,7 @@ public class InterfacePlateau extends Interface {
         boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), primaryStage);
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), primaryStage);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), primaryStage);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), primaryStage);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "BoutonRestart.png"), primaryStage);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -240,8 +240,8 @@ public class InterfacePlateau extends Interface {
 
         boutonRecommencer.setOnMouseClicked(value
                 -> {
-//            gameController.restart();
-            this.finPartie("vbfidqodifg");
+            gameController.restart();
+            //this.finPartie("vbfidqodifg");
         });
 
         boutonAnnuler.setOnMouseClicked(value
@@ -325,8 +325,7 @@ public class InterfacePlateau extends Interface {
     public void message(String titre, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titre);
-
-        alert.setContentText(message);
+        alert.setHeaderText(message);
         alert.show();
     }
 

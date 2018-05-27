@@ -204,7 +204,7 @@ public class InterfaceJoueurs extends Interface {
         ia_h.setBackground(background);
         IAh.prefHeightProperty().bind(ia_h.heightProperty().multiply(0.8));
         IAh.prefWidthProperty().bind(ia_h.widthProperty().multiply(0.8));
-        Image ia_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonInverse.png");
+        Image ia_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
         BackgroundSize ia_h_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage ia_h_imFond = new BackgroundImage(ia_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, ia_h_imSize);
         background = new Background(ia_h_imFond);

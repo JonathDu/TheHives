@@ -39,6 +39,7 @@ public final class Controller
     CacheImage cacheImage;
     public Dimension screenSize;
     public LanguagesGesture gestionnaireLangage;
+    public ScoresGesture scoresGesture;
     public String typeTheme;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
@@ -48,6 +49,7 @@ public final class Controller
         cacheImage = _cacheImage;
         screenSize = _screenSize;
         gestionnaireLangage = new LanguagesGesture(Locale.FRENCH);
+        scoresGesture = new ScoresGesture();
         typeTheme = "Jour";
         primaryStage.setScene(currentScene);
         goToMenu();
