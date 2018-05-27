@@ -12,18 +12,12 @@ import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveUtil;
 import static hive.model.players.TeamColor.BLACK;
 import static hive.model.players.TeamColor.WHITE;
-import static hive.model.players.decisions.IA.Level.EHARD;
 import hive.model.players.decisions.IADecisionLearning;
 import hive.model.players.decisions.cerveau.AdamEtEve;
 import hive.model.players.decisions.cerveau.EvaluationLearning;
-import hive.model.players.decisions.cerveau.Mate;
-import hive.model.players.decisions.cerveau.RepertoryFamily;
-import static hive.model.players.decisions.cerveau.RepertoryFamily.readFile;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,9 +42,7 @@ public class BattleRoyal {
             try {
                 dreamTeam[i] = new EvaluationLearning(AE.dlBoss("CoralieTheBoss"+i+".txt"));
                 
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (FileNotFoundException | ClassNotFoundException ex) {
                 Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
             }
             
@@ -59,9 +51,7 @@ public class BattleRoyal {
             try {
                 dreamTeam[i+5] = new EvaluationLearning(AE.dlBoss("LucasTheBoss"+i+".txt"));
                 
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (FileNotFoundException | ClassNotFoundException ex) {
                 Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
@@ -69,9 +59,7 @@ public class BattleRoyal {
             try {
                 dreamTeam[i+7] = new EvaluationLearning(AE.dlBoss("AdelinaTheBoss"+i+".txt"));
                 
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (FileNotFoundException | ClassNotFoundException ex) {
                 Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
@@ -123,7 +111,7 @@ public class BattleRoyal {
             }
         }
         AE.saveBoss(dreamTeam[max].getEvalValues(), "TheBigBoss");  
-        
+        System.out.println(Arrays.toString(victory));
        
     }
     
