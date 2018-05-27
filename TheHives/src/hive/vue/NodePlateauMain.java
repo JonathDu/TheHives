@@ -89,7 +89,7 @@ public class NodePlateauMain extends Parent {
         affichageJoueur.getChildren().add(panneau);
         affichageJoueur.getChildren().add(labelNomJoueur);
         affichageJoueur.getChildren().add(afficheTour);
-//        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
 
         afficheTour.setVisible(false);
 

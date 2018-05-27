@@ -48,14 +48,15 @@ public class NodeComb extends Parent {
 //        this.pions.add(tile.level, pion);
 //        this.getChildren().add(this.pions.get(this.pions.size() - 1));
 //    }
-    public void majComb(Honeycomb comb, InterfacePlateau plateau, PlateauController plateauController) {
+    
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, PlateauController plateauController,int longueur) {
         pions.clear();
         setSelected(Color.TRANSPARENT);
         this.getChildren().clear();
         this.getChildren().add(socle);
         if (comb != null) {
             for (int i = 0; i < comb.value().size(); i++) {
-                pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c));
+                pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c, longueur));
                 pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i)));
                 pions.get(i).setLayoutX(4 * i);
                 pions.get(i).setLayoutY(4 * i);
@@ -83,28 +84,6 @@ public class NodeComb extends Parent {
             pions.get(i).hexagon.setStroke(Color.TRANSPARENT);
         }
     }
-    /*public void modifierTaille(int longueur) {
-        this.getChildren().clear();
-        Color couleur = null;
-        if (this.comb != null) {
-            if (this.comb.value().get(0).color == TeamColor.BLACK) {
-                couleur = Color.GRAY;
-            } else {
-                couleur = Color.WHITE;
-            }
-            int i = 0;
-            while (this.comb.value().get(i) != null) {
-                InterfacePion pionx = new InterfacePion(couleur, this.comb.value().get(i).type, c);
-                this.getChildren().add(pionx);
-                this.pions = pionx;
-                i++;
-            }
-        } else {
-            this.pions = new InterfacePion(Color.TRANSPARENT, null, c, longueur);
-            this.getChildren().add(pions);
-
-        }
-    }
-     */
+     
 
 }
