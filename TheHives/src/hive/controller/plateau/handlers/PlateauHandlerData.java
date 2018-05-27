@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hive.controller.plateauscene.game;
+package hive.controller.plateau.handlers;
 
-import hive.controller.plateauscene.game.GameController;
+import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.PlateauController;
 import hive.model.GameProgress;
 import hive.model.game.Game;
 import hive.vue.InterfacePlateau;
@@ -16,13 +17,13 @@ import hive.vue.InterfacePlateau;
  */
 public abstract class PlateauHandlerData
 {
-    protected GameController controller;
+    protected PlateauController controller;
     
     protected Game game;
     protected InterfacePlateau uiPlateau;
     protected GameProgress progress;
     
-    public PlateauHandlerData(GameController controller)
+    public PlateauHandlerData(PlateauController controller)
     {
         this.controller = controller;
         

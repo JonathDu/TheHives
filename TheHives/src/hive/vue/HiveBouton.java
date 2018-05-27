@@ -22,7 +22,7 @@ class HiveBouton extends StackPane {
         menuIm.setSmooth(true);
         menuIm.setCache(true);
         
-        menuIm.fitWidthProperty().bind(stage.widthProperty().divide(15));
+        menuIm.fitWidthProperty().bind(stage.widthProperty().divide(20));
         menuIm.setPreserveRatio(true);
         
         

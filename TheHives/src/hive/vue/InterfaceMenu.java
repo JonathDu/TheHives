@@ -17,13 +17,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 /**
  *
@@ -73,14 +70,8 @@ public class InterfaceMenu extends Interface {
 
         setTextWithCurrentLanguage();
 
-        double flecheLargeur = tailleDeCase * 4 - 30;
-        double flecheHauteur = flecheLargeur / 7.24;
-        double flecheLargeur_en_bas = (tailleDeCase * 8) / 3;
-        double flecheHauteur_en_bas = flecheLargeur_en_bas / 5.4;
 
         VBox menu_hex = new VBox(15);
-        int ligne = 100 / 5;
-        int colonne = 100 / 1;
         menu_hex.prefWidthProperty().bind(primaryStage.widthProperty());
         menu_hex.prefHeightProperty().bind(primaryStage.heightProperty());
         menu_hex.setAlignment(Pos.CENTER);
@@ -91,7 +82,9 @@ public class InterfaceMenu extends Interface {
         flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
 
-        //newGame.setFont(new Font(police, 20));
+
+
+        //newGame.setFont(new Font(police));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
@@ -185,6 +178,7 @@ public class InterfaceMenu extends Interface {
 //        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
 //        pane.getChildren().add(boutonPreference);
         AnchorPane.setRightAnchor(boxDroite, (double) 5);
+        AnchorPane.setTopAnchor(boxDroite, (double) 5);
         pane.getChildren().add(boxDroite);
 
         this.panePrincipale.getChildren().add(pane);

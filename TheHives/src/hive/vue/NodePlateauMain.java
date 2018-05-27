@@ -5,8 +5,8 @@
  */
 package hive.vue;
 
-import hive.controller.plateauscene.game.GameController;
-import hive.controller.plateauscene.game.mousehandlers.TileMainHandler;
+import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.handlers.mousehandlers.TileMainHandler;
 import hive.model.board.Tile;
 import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;
@@ -40,11 +40,11 @@ public class NodePlateauMain extends Parent {
     private final ImageView panneau;
     private final StackPane affichageJoueur;
     private final PlayerCollection col;
-    private final GameController plateauController;
+    private final PlateauController plateauController;
 
     CacheImage c;
 
-    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, GameController plateauController, InterfacePlateau plateau, TeamColor color) {
+    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, PlateauController plateauController, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         this.c = c;
         this.couleur = color;
@@ -61,7 +61,7 @@ public class NodePlateauMain extends Parent {
             pions.getChildren().add(pilesPions.get(type));
         }
 
-//        pions.setPadding(new Insets(50, 20, 20, 10));
+        pions.setPadding(new Insets(50, 20, 20, 10));
         pions.setAlignment(Pos.TOP_CENTER);
 
         panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
@@ -78,8 +78,9 @@ public class NodePlateauMain extends Parent {
         panneau.setFitWidth(150);
         panneau.setFitHeight(60);
         panneau.setSmooth(true);
+        panneau.setEffect(new DropShadow(10, Color.TRANSPARENT));
 
-        labelNomJoueur.setTextFill(Color.WHITE);
+        labelNomJoueur.setTextFill(Color.web("#fbe5b5"));
         labelNomJoueur.setAlignment(Pos.CENTER);
         labelNomJoueur.setMaxWidth(150);
         labelNomJoueur.setMaxHeight(40);
@@ -88,8 +89,9 @@ public class NodePlateauMain extends Parent {
         affichageJoueur.getChildren().add(panneau);
         affichageJoueur.getChildren().add(labelNomJoueur);
         affichageJoueur.getChildren().add(afficheTour);
-        afficheTour.setVisible(false);
 //        affichageJoueur.setPadding(new Insets(30, 0, 30, 0));
+
+        afficheTour.setVisible(false);
 
         pions.getChildren().add(affichageJoueur);
         this.getChildren().add(pions);
