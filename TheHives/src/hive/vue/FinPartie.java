@@ -50,7 +50,7 @@ public class FinPartie extends Parent {
         principal = new VBox(50);
         bouton = new HBox(50);
 
-        recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/replay.png"), primaryStage);
+        recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), primaryStage);
         retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
 
         gagnant = joueurGagnant;

@@ -6,6 +6,9 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -64,6 +67,7 @@ public class Preferences extends Parent
     private final RadioButton radioButtonJour;
     private final Button buttonValider;
     private final StackPane stackAnnuler;
+    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
 
     public Preferences(Stage _primaryStage, Controller _controller, CacheImage _cacheImage)
     {
@@ -78,7 +82,10 @@ public class Preferences extends Parent
 
         cacheImage = _cacheImage;
         police = "Papyrus";
-
+        
+        fontSize.bind(primaryStage.heightProperty().divide(30));
+        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
+                                                   "-fx-font-family: ", police, ";" ));
         imageFond = new ImageView();
         labelPreferences = new Label();
         labelLangue = new Label();
@@ -102,17 +109,15 @@ public class Preferences extends Parent
 
     private void setObjetsGraphiques()
     {
-        imageFond.setImage(cacheImage.getImage("PlateauCentral.png"));
+        imageFond.setImage(cacheImage.getImage("Design/FenetrePlateau/fond.jpg"));
         imageFond.setFitHeight((width - 30) / 1.35);
         imageFond.setFitWidth(width - 30);
 
-        labelPreferences.setFont(new Font(police, maxJoueur / 10));
         labelPreferences.setTextFill(Color.web("#ffff66"));
         labelPreferences.setAlignment(Pos.CENTER);
         labelPreferences.setMinSize(minJoueur, 30);
         labelPreferences.setMaxSize(maxJoueur, 70);
 
-        labelLangue.setFont(new Font(police, maxJoueur / 14));
         labelLangue.setTextFill(Color.web("#ffff66"));
         labelLangue.setAlignment(Pos.CENTER);
         labelLangue.setMinSize(minJoueur, 30);
@@ -120,7 +125,6 @@ public class Preferences extends Parent
 
         comboLangue.getItems().addAll(controller.gestionnaireLangage.getImplementedLanguagesString());
 
-        labelAide.setFont(new Font(police, maxJoueur / 14));
         labelAide.setTextFill(Color.web("#ffff66"));
         labelAide.setAlignment(Pos.CENTER);
         labelAide.setMinSize(minJoueur, 30);
@@ -128,7 +132,6 @@ public class Preferences extends Parent
 
         checkBoxAide.setSelected(true);
 
-        labelTheme.setFont(new Font(police, maxJoueur / 14));
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
         labelTheme.setMinSize(minJoueur, 30);
@@ -144,7 +147,7 @@ public class Preferences extends Parent
             radioButtonNuit.setSelected(true);
         }
 
-        buttonValider.setFont(new Font(police, width / 35));
+//        buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
 
         Image imageQ = cacheImage.getImage("exit3.png");
@@ -214,7 +217,7 @@ public class Preferences extends Parent
 
         gridPane.setAlignment(Pos.CENTER);
 
-        BackgroundSize bgSize = new BackgroundSize(100, 100, true, true, true, false);
+        BackgroundSize bgSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage bgIm = new BackgroundImage(imageFond.getImage(), BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bgSize);
         Background bg = new Background(bgIm);
         gridPane.setBackground(bg);
@@ -222,12 +225,15 @@ public class Preferences extends Parent
         gridPane.add(labelPreferences, 0, 0, 3, 1);
         GridPane.setHalignment(labelPreferences, HPos.CENTER);
 
+        labelLangue.setAlignment(Pos.TOP_LEFT);
         gridPane.add(labelLangue, 0, 1);
         gridPane.add(comboLangue, 1, 1);
-
+        
+        labelAide.setAlignment(Pos.TOP_LEFT);
         gridPane.add(labelAide, 0, 2);
         gridPane.add(checkBoxAide, 1, 2);
 
+        labelTheme.setAlignment(Pos.TOP_LEFT);
         gridPane.add(labelTheme, 0, 3);
         gridPane.add(radioButtonJour, 1, 3);
         gridPane.add(radioButtonNuit, 2, 3);

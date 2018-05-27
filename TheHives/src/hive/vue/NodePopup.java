@@ -5,13 +5,20 @@
  */
 package hive.vue;
 
+import hive.controller.Controller;
+import hive.controller.plateau.PlateauController;
+import hive.model.game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  *
@@ -19,31 +26,39 @@ import javafx.scene.layout.VBox;
  */
 public class NodePopup extends Parent {
 
-    private String message;
-    private String messageValider;
-    private String messageQuitter;
-    private String messageValiderQuitter;
+    private final String message;
+    private final String messageValider;
+    private final String messageQuitter;
+    private final String messageValiderQuitter;
 
-    private HBox horizontal;
-    private VBox vertical;
+    private final Controller controller;
+    private final Stage stage;
+    private final Game game;
+    private final PlateauController plateauController;
+
+    private final HBox horizontal;
+    private final VBox vertical;
 
     public Button valider;
     public Button quitter;
     public Button validerSave;
 
-    public NodePopup(String _message, String _messageValider, String _messageQuitter, String _messageValideQuitter) {
-        message = _message;
-        messageValider = _messageValider;
-        messageQuitter = _messageQuitter;
-        messageValiderQuitter = _messageValideQuitter;
+    public NodePopup(Controller controller, Stage primaryStage, Game game, PlateauController plateauController) {
+        this.controller = controller;
+        this.stage = primaryStage;
+        this.game = game;
+        this.plateauController = plateauController;
+
+        message = "Etes vous sur de vouloir quitter la partie ?";
+        messageValider = "Quitter";
+        messageQuitter = "Annuler";
+        messageValiderQuitter = "Sauvegarder et quitter";
 
         horizontal = new HBox();
         vertical = new VBox();
-        
-        
 
         quitter = new Button(messageQuitter);
-        
+
         valider = new Button(messageValider);
         validerSave = new Button(messageValiderQuitter);
 
@@ -55,8 +70,33 @@ public class NodePopup extends Parent {
         vertical.getChildren().add(new Label(message));
         vertical.getChildren().add(horizontal);
 
+        setHandler();
+
         this.getChildren().add(vertical);
 
+    }
+
+    private void setHandler() {
+        valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+
+            stage.close();
+            plateauController.stop();
+            controller.goToMenu();
+
+        });
+
+        quitter.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            stage.close();
+        });
+
+        validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            Stage saveStage = new Stage();
+            saveStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopupSave rootSave = new NodePopupSave(controller, saveStage, game);
+            saveStage.setScene(new Scene(rootSave));
+            saveStage.show();
+
+        });
     }
 
 }

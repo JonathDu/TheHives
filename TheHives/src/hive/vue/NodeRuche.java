@@ -26,8 +26,8 @@ public class NodeRuche extends Parent {
     private final Matrix<NodeComb> tab;
     private final int largeur;
     private final int hauteur;
-    private final int longueurPion = 40;
-    
+    public int longueurPion = 40;
+
     private final CacheImage c;
     private final PlateauController plateauController;
     private final Board board;
@@ -52,14 +52,14 @@ public class NodeRuche extends Parent {
 
                 NodeComb cell = new NodeComb(c, longueurPion);
                 if (board.getHexagon(pos).value != null) {
-                    cell.majComb(board.getHexagon(pos), plateau, plateauController);
+                    cell.majComb(board.getHexagon(pos), plateau, plateauController, longueurPion);
                 }
-                cell.setLayoutX(x * (longueurPion + h) + x  * 5);
+                cell.setLayoutX(x * (longueurPion + h) + x * 5);
 
                 if (x % 2 != 0) {
-                    cell.setLayoutY((y * 2 * center) + center + y  * 5);
+                    cell.setLayoutY((y * 2 * center) + center + y * 5);
                 } else {
-                    cell.setLayoutY(y * 2 * center + y  * 5);
+                    cell.setLayoutY(y * 2 * center + y * 5);
                 }
                 tab.setAt(pos, cell);
                 this.getChildren().add(tab.getAt(pos));
@@ -72,7 +72,7 @@ public class NodeRuche extends Parent {
         for (int y = 0; y < hauteur; y++) {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
-                tab.getAt(pos).majComb(null, plateau, plateauController);
+                tab.getAt(pos).majComb(null, plateau, plateauController, longueurPion);
                 this.getChildren().add(tab.getAt(pos));
             }
         }
@@ -94,7 +94,7 @@ public class NodeRuche extends Parent {
     public void selectPlayerCell(Vector2i pos) { // pour la source
         tab.getAt(pos).setSelected(Color.rgb(246, 6, 189));
     }
-    
+
     public void selectIACell(Vector2i pos) {
         tab.getAt(pos).setSelected(Color.rgb(255, 0, 0));
     }
@@ -102,14 +102,13 @@ public class NodeRuche extends Parent {
     public void deselectCell(Vector2i pos) {
         tab.getAt(pos).setNotSelected();
     }
-    
 
     public void majSource(Cell source) {
-        tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController);
+        tab.getAt(source.comb.pos).majComb(source.comb, plateau, plateauController, longueurPion);
     }
 
     public void majDestination(Cell destination) {
-        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController);
+        tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController, longueurPion);
     }
 
     public void majDestinations(ArrayList<Cell> destinations) {
@@ -120,7 +119,7 @@ public class NodeRuche extends Parent {
     }
 
     public void majPlacement(Cell placement) {
-        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, plateauController);
+        tab.getAt(placement.comb.pos).majComb(placement.comb, plateau, plateauController, longueurPion);
     }
 
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
@@ -135,23 +134,12 @@ public class NodeRuche extends Parent {
         }
     }
 
-//    public void majTaille() {
-//
-//        this.getChildren().clear();
-//        for (int i = 0; i < largeur; i++) {
-//            for (int j = 0; j < hauteur; j++) {
-//
-//                tab.getAt(new Vector2i(j, i)).setLayoutX(i * (longueurPion + largeurPion));
-//
-//                if (i % 2 == 0) {
-//                    tab.getAt(new Vector2i(j, i)).setLayoutY(j * 2 * largeurPion);
-//                } else {
-//                    tab.getAt(new Vector2i(j, i)).setLayoutY((j * 2 * largeurPion) + largeurPion);
-//                }
-//
-//                tab.getAt(new Vector2i(j, i)).modifierTaille(longueurPion);
-//                this.getChildren().add(tab.getAt(new Vector2i(j, i)));
-//            }
-//        }
-//    }
+    public void majTaille(int longueur) {
+        if ((longueur < 0 && this.longueurPion > 10) || (longueur > 0 && this.longueurPion < 100)) {
+            this.longueurPion += longueur;
+            this.getChildren().clear();
+            initTab();
+            setHandler(plateau);
+        }
+    }
 }

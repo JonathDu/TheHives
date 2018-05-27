@@ -72,7 +72,8 @@ public class InterfaceCharger extends Interface {
         StackPane spR = new StackPane();
         spR.prefWidthProperty().bind(bp.widthProperty().multiply(0.3));
         spR.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
-        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte1.png");
+        //TODO a modifier
+        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundFond = new BackgroundImage(pancarte, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundFond);
