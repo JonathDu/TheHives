@@ -114,7 +114,8 @@ public class InterfaceCharger extends Interface {
             ImageView flecheIm = new ImageView(fleche);
             flecheIm.setFitHeight(flecheHauteur * 0.5);
             flecheIm.setFitWidth(flecheLargeur);
-            Label label = new Label(fileName);
+            String[] parts = fileName.split(".xml");
+            Label label = new Label(parts[0]);
             label.setTextFill(Color.web("#fbe5b5"));
             //label.setFont(new Font(police, tailleDeCase * 0.15));
             StackPane x = new StackPane();
@@ -151,12 +152,12 @@ public class InterfaceCharger extends Interface {
                 boolean isOk = false;
                 String selectedFileName = ((Label) parties.getSelectionModel().getSelectedItem().getChildren().get(1)).getText();
                 for (String fileName : SavesGesture.getSavedFileNames()) {
-                    if (selectedFileName.equals(fileName)) {
+                    if ((selectedFileName + ".xml").equals(fileName)) {
                         isOk = true;
                     }
                 }
                 if (isOk) {
-                    Game game = SavesGesture.loadGame(selectedFileName);
+                    Game game = SavesGesture.loadGame(selectedFileName + ".xml");
                     controller.goToPlateau(game);
                 }else{
                     Alert a = new Alert(Alert.AlertType.ERROR, "Veuillez séléctionner une partie");
