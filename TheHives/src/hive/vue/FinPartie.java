@@ -7,18 +7,26 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateau.PlateauController;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
@@ -34,6 +42,8 @@ public class FinPartie extends Parent {
     private final Interface i;
     private final HBox bouton;
     private final VBox principal;
+    private final HBox image;
+    private final GridPane ecran;
 
     private final Label message;
     private final String gagnant;
@@ -49,18 +59,39 @@ public class FinPartie extends Parent {
         cacheImage = _cacheImage;
         principal = new VBox(50);
         bouton = new HBox(50);
-
+        image = new HBox();
+        ImageView im = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
+        im.setPreserveRatio(true);
+        im.fitHeightProperty().bind(primaryStage.heightProperty().divide(3));
+        image.getChildren().add(im);
+        
+        
         recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), primaryStage);
         retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
 
         gagnant = joueurGagnant;
         message = new Label();
+        
+        Rectangle rec = new Rectangle();
+        rec.setHeight(Integer.MAX_VALUE);
+        rec.setWidth(Integer.MAX_VALUE);
+        rec.setFill(Color.BLACK);
+        rec.setOpacity(0.6);
+        rec.setSmooth(true);
+        this.getChildren().add(rec);
 
+        ecran = new GridPane();
+        ecran.prefWidthProperty().bind(primaryStage.widthProperty());
+        ecran.prefHeightProperty().bind(primaryStage.heightProperty());
+        ecran.minHeightProperty().bind(primaryStage.heightProperty());
+        ecran.setAlignment(Pos.CENTER);
         setTextWithCurrentLanguage();
         setHandlers();
         placerObjetsGraphiques();
-
-        this.getChildren().add(principal);
+        
+        ecran.getChildren().add(principal);
+        principal.setAlignment(Pos.TOP_CENTER);
+        this.getChildren().add(ecran);
     }
 
     private void setTextWithCurrentLanguage() {
@@ -70,6 +101,8 @@ public class FinPartie extends Parent {
             message.setText(controller.gestionnaireLangage.getText("text_egalite"));
         }
 
+        message.setWrapText(true);
+        message.setTextAlignment(TextAlignment.JUSTIFY);
     }
 
     private void setHandlers() {
@@ -85,25 +118,36 @@ public class FinPartie extends Parent {
     }
 
     private void placerObjetsGraphiques() {
-        Image fond = cacheImage.getImage("Design/MenuPrincipaux/panneauTheHive.png");
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
-        BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        principal.setBackground(new Background(backgroundFond));
+        principal.prefWidthProperty().bind(ecran.widthProperty());
+        principal.minHeightProperty().bind(ecran.heightProperty());
 
-        principal.prefWidthProperty().bind(primaryStage.widthProperty());
-        principal.prefHeightProperty().bind(primaryStage.heightProperty());
+        message.maxWidthProperty().bind(principal.widthProperty());
+        message.setTextFill(Color.WHITE);
+        message.setAlignment(Pos.CENTER);
+        message.setPadding(new Insets(30));
+        message.prefHeightProperty().bind(ecran.heightProperty().divide(3));
 
         principal.getChildren().add(message);
 
+        recommencer.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(15));
+        retourMenu.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(15));
+        
         bouton.getChildren().add(recommencer);
         bouton.getChildren().add(retourMenu);
+        
+        bouton.setAlignment(Pos.BOTTOM_CENTER);
+        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        bouton.setPadding(new Insets(30));
 
+        image.setAlignment(Pos.CENTER);
+        image.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        
         recommencer.setAlignment(Pos.CENTER);
         retourMenu.setAlignment(Pos.CENTER);
-
+        
+        principal.getChildren().add(image);
         principal.getChildren().add(bouton);
 
-        principal.setAlignment(Pos.CENTER);
-        bouton.setAlignment(Pos.CENTER);
+
     }
 }

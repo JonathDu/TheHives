@@ -31,8 +31,8 @@ public class ActionGraphicUpdaterWithoutSelect implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).maj(action.tile, game.state.turn.getCurrent().collection.get(action.tile.type));
-        uiPlateau.getInterfacePlateauMain(game.state.turn.getOpponent().color).maj(action.tile, game.state.turn.getOpponent().collection.get(action.tile.type));
+        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).maj();
+        uiPlateau.getInterfacePlateauMain(game.state.turn.getOpponent().color).maj();
         uiPlateau.ruche.majPlacement(action.where);
     }
 

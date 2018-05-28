@@ -13,7 +13,6 @@ import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -65,7 +64,6 @@ public class InterfacePlateau extends Interface {
     BorderPane pane;
     HBox gauche;
     HBox centre;
-    HBox droite;
     String j1;
     String j2;
 
@@ -133,19 +131,19 @@ public class InterfacePlateau extends Interface {
         HBox bottom = new HBox(5);
         BorderPane.setMargin(bottom, new Insets(0, 0, 48, 0));
 
-        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Design/FenetrePlateau/Recentrer.png"), primaryStage);
         boutonCentrer.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             recentrer();
         });
 
-        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Design/FenetrePlateau/+.png"), primaryStage);
         boutonTailleAug.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(5);
             recentrer();
         });
 
-        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Design/FenetrePlateau/-.png"), primaryStage);
         boutonTailleDim.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(- 5);
@@ -153,10 +151,10 @@ public class InterfacePlateau extends Interface {
         });
 
         bottom.setAlignment(Pos.CENTER);
-
-        bottom.getChildren().add(boutonTailleAug);
-        bottom.getChildren().add(boutonCentrer);
+        
         bottom.getChildren().add(boutonTailleDim);
+        bottom.getChildren().add(boutonCentrer);
+        bottom.getChildren().add(boutonTailleAug);
 
         BorderPane.setMargin(scrollPane, new Insets(20, 20, 10, 20));
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 10, 20));
@@ -193,7 +191,7 @@ public class InterfacePlateau extends Interface {
         });
         ruche.setOnMouseMoved((value) -> {
             if (this.onDrag) {
-                System.out.println("value");
+                //System.out.println("value");
             }
         });
     }
@@ -207,7 +205,6 @@ public class InterfacePlateau extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
 
         gauche = new HBox(5);
-        droite = new HBox(5);
         centre = new HBox(5);
 
         boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), primaryStage);
@@ -290,10 +287,8 @@ public class InterfacePlateau extends Interface {
         Tooltip.install(boutonSave, sauvegarderTip);
         gauche.getChildren().add(boutonRecommencer);
         Tooltip.install(boutonRecommencer, recommencerTip);
-        droite.getChildren().add(boutonRegle);
+        droite.getChildren().add(0,boutonRegle);
         Tooltip.install(boutonRegle, regleTip);
-        droite.getChildren().add(boutonPleinEcran);
-        droite.getChildren().add(boutonPreference);
         centre.getChildren().add(boutonAnnuler);
         Tooltip.install(boutonAnnuler, annulerTip);
         centre.getChildren().add(boutonConseil);
@@ -311,9 +306,9 @@ public class InterfacePlateau extends Interface {
 
     public void majTileMain(Tile tile, int nbTiles) {
         if (tile.color == TeamColor.BLACK) {
-            mainDroite.maj(tile, nbTiles);
+            mainDroite.maj();
         } else {
-            mainGauche.maj(tile, nbTiles);
+            mainGauche.maj();
         }
     }
 
