@@ -98,12 +98,7 @@ public class InterfaceJoueurs extends Interface {
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         top.prefWidthProperty().bind(bp.widthProperty());
 
-        HBox droite = new HBox(5);
 
-        AnchorPane.setRightAnchor(droite, (double) 5);
-        AnchorPane.setTopAnchor(droite, (double) 5);
-        droite.getChildren().add(boutonPleinEcran);
-        droite.getChildren().add(boutonPreference);
         top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);

@@ -169,17 +169,14 @@ public class InterfaceMenu extends Interface {
         AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
         pane.getChildren().add(Credits);
 
-        HBox boxDroite = new HBox(5);
-        boxDroite.getChildren().add(boutonPleinEcran);
 
-        boxDroite.getChildren().add(boutonPreference);
 
 //        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
 //        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
 //        pane.getChildren().add(boutonPreference);
-        AnchorPane.setRightAnchor(boxDroite, (double) 5);
-        AnchorPane.setTopAnchor(boxDroite, (double) 5);
-        pane.getChildren().add(boxDroite);
+        AnchorPane.setRightAnchor(this.droite, (double) 5);
+        AnchorPane.setTopAnchor(this.droite, (double) 5);
+        pane.getChildren().add(this.droite);
 
         this.panePrincipale.getChildren().add(pane);
 

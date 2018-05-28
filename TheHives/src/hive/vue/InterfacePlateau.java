@@ -65,7 +65,6 @@ public class InterfacePlateau extends Interface {
     BorderPane pane;
     HBox gauche;
     HBox centre;
-    HBox droite;
     String j1;
     String j2;
 
@@ -207,7 +206,6 @@ public class InterfacePlateau extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
 
         gauche = new HBox(5);
-        droite = new HBox(5);
         centre = new HBox(5);
 
         boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), primaryStage);
@@ -290,10 +288,8 @@ public class InterfacePlateau extends Interface {
         Tooltip.install(boutonSave, sauvegarderTip);
         gauche.getChildren().add(boutonRecommencer);
         Tooltip.install(boutonRecommencer, recommencerTip);
-        droite.getChildren().add(boutonRegle);
+        droite.getChildren().add(0,boutonRegle);
         Tooltip.install(boutonRegle, regleTip);
-        droite.getChildren().add(boutonPleinEcran);
-        droite.getChildren().add(boutonPreference);
         centre.getChildren().add(boutonAnnuler);
         Tooltip.install(boutonAnnuler, annulerTip);
         centre.getChildren().add(boutonConseil);

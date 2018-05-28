@@ -57,11 +57,7 @@ public class InterfaceRegles extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
         
-        HBox droite = new HBox(5);
-        AnchorPane.setRightAnchor(droite, (double) 5);
-        AnchorPane.setTopAnchor(droite, (double) 5);
-        droite.getChildren().add(boutonPleinEcran);
-        droite.getChildren().add(boutonPreference);
+
         top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);

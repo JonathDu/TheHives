@@ -57,13 +57,7 @@ public class InterfaceCharger extends Interface {
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         top.prefWidthProperty().bind(bp.widthProperty());
        
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        top.getChildren().add(boutonPreference);
-
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 5);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        top.getChildren().add(boutonPleinEcran);
+        top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
