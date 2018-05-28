@@ -1,0 +1,3 @@
+aide=false
+theme=Jour
+langue=portugais

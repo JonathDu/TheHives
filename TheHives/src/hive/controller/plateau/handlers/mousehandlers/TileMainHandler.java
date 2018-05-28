@@ -50,38 +50,25 @@ public class TileMainHandler extends PlateauHandler
             {
                 case BEGIN:
                     System.out.println("Tile selectionnée");
-
-                    controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-
-                    uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                    setTileAndPlacements();
+                    
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
                     System.out.println("Tile selectionnée");
-
                     uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-
-                    controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-
-                    uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                    setTileAndPlacements();
+                    
                     event.consume();
                     break;
                 case TILE_SELECTED:
                     if (tileClicked.type != controller.builder.tile.type)
                     {
                         System.out.println("Changement de tile");
-
                         uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-                        controller.builder.setTile(tileClicked);
-                        controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-                        uiMain.surlignerTile(controller.builder.tile);
-                        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        setTileAndPlacements();
                     } else
                     {
                         System.err.println("Annuler la selection de la tile");
@@ -93,5 +80,14 @@ public class TileMainHandler extends PlateauHandler
                     break;
             }
         }
+    }
+
+    private void setTileAndPlacements()
+    {
+        controller.builder.setTile(tileClicked);
+        controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
+
+        uiMain.surlignerTile(controller.builder.tile);
+        uiPlateau.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
     }
 }

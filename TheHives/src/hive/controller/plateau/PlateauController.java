@@ -140,6 +140,11 @@ public class PlateauController
                 }
                 if (!currentPlayerCanPlay())
                 {
+                    if (!progress.game.state.data.trace.isEmpty())
+                    {
+                        ActionGraphicUpdaterDeselect gUpdaterDeselect = new ActionGraphicUpdaterDeselect(uiPlateau, game);
+                        progress.game.state.data.trace.peek().accept(gUpdaterDeselect);
+                    }
                     NoAction noAction = new NoAction();
                     ((HumanDecision) game.state.turn.getCurrent().decision).setAction(noAction);
                     progress.doAction();
@@ -174,7 +179,19 @@ public class PlateauController
 
     private boolean currentPlayerCanPlay()
     {
-        return !game.state.data.placements.isEmpty() || !HiveUtil.getDestinations(game).isEmpty(); //TODO : ne marche pas
+        boolean hasPlacement = false;
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            if (game.state.turn.getCurrent().collection.get(type) > 0)
+            {
+                if (!HiveUtil.getPlacements(game, type).isEmpty())
+                {
+                    hasPlacement = true;
+                    break;
+                }
+            }
+        }
+        return hasPlacement || !HiveUtil.getDestinations(game).isEmpty();
     }
 
     public void undo()

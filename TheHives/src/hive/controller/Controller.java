@@ -38,9 +38,10 @@ public final class Controller
     Stage primaryStage;
     CacheImage cacheImage;
     public Dimension screenSize;
+
     public LanguagesGesture gestionnaireLangage;
     public ScoresGesture scoresGesture;
-    public String typeTheme;
+    public SettingsGesture settingsGesture;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
@@ -48,9 +49,9 @@ public final class Controller
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        gestionnaireLangage = new LanguagesGesture(Locale.FRENCH);
+        settingsGesture = new SettingsGesture();
+        gestionnaireLangage = new LanguagesGesture(settingsGesture.getSetting("langue"));
         scoresGesture = new ScoresGesture();
-        typeTheme = "Jour";
         primaryStage.setScene(currentScene);
         goToMenu();
     }
@@ -115,7 +116,9 @@ public final class Controller
     {
         Locale newLangue = gestionnaireLangage.languages.get(nomLangue);
         gestionnaireLangage.setLanguage(newLangue);
-        typeTheme = nomTheme;
+        settingsGesture.setSetting("langue", nomLangue);
+        settingsGesture.setSetting("aide", activerAide ? "true" : "false");
+        settingsGesture.setSetting("theme", nomTheme);
         ((Interface) currentScene.getRoot()).majRetourPreference();
     }
 }

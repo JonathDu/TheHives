@@ -7,9 +7,11 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateau.PlateauController;
+import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
+import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -339,4 +341,8 @@ public class InterfacePlateau extends Interface {
         scrollPane.setVvalue(0.5);
     }
 
+    public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
+        if(controller.settingsGesture.getSetting("aide").equals("true"))
+            ruche.surlignerDestinationsPossibles(cells);
+    }
 }
