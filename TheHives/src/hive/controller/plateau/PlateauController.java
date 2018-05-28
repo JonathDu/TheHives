@@ -151,15 +151,6 @@ public class PlateauController
                     startOfTurnInfos();
                     uiPlateau.message("Attention", "Vous ne pouvez pas jouer, passage au tour suivant");
                 }
-                if (game.rules.queenMustBePut(game.state))
-                {
-                    Tile tileClicked = new Tile(InsectType.QUEEN_BEE, game.state.turn.getCurrent().color);
-                    builder.setTile(tileClicked);
-                    builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-                    uiPlateau.getInterfacePlateauMain(builder.tile.color).surlignerTile(builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(builder.possibleDestinations);
-                    uiPlateau.message("Attention", "Vous devez posez votre reine");
-                }
             }
             break;
             case CURRENT_WINS:

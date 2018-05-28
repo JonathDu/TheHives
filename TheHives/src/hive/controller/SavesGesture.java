@@ -25,7 +25,7 @@ public class SavesGesture
         Game game = null;
         try
         {
-            game = loader.loadFromFile("savefiles/" + fileName);
+            game = loader.loadFromFile(System.getProperty("user.dir") + "/savefiles/" + fileName);
         } catch (FileNotFoundException ex)
         {
             System.err.println("PAS DE FICHIER TROUVE");

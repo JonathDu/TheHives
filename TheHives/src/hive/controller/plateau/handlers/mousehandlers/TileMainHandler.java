@@ -46,12 +46,16 @@ public class TileMainHandler extends PlateauHandler
                 System.err.println("Vous n'avez pas selectionné un pion de votre couleur");
                 return;
             }
+            if (game.rules.queenMustBePut(game.state) && tileClicked.type != InsectType.QUEEN_BEE)
+            {
+                uiPlateau.message("Attention", "Vous devez posez votre reine");
+            }
             switch (controller.builder.getState())
             {
                 case BEGIN:
                     System.out.println("Tile selectionnée");
                     setTileAndPlacements();
-                    
+
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
@@ -59,7 +63,7 @@ public class TileMainHandler extends PlateauHandler
                     uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     setTileAndPlacements();
-                    
+
                     event.consume();
                     break;
                 case TILE_SELECTED:

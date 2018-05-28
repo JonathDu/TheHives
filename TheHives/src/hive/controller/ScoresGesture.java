@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class ScoresGesture
 {
 
-    private static final String SCORES_PATH = "src/properties/scores/scores.txt";
+    private static final String SCORES_PATH = System.getProperty("user.dir") + "/conf/scores.txt";
 
     private final File file;
     private final HashMap<String, Integer> scorePerPlayer;
