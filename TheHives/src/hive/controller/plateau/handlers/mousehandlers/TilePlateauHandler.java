@@ -41,12 +41,7 @@ public class TilePlateauHandler extends PlateauHandler
                         return;
                     }
                     System.out.println("Source selectionnée");
-
-                    controller.builder.setSource(cellClicked);
-                    controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
-
-                    uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                    setSourceAndDestionations();
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
@@ -65,17 +60,23 @@ public class TilePlateauHandler extends PlateauHandler
                         uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setBegin();
+                        
+                        setSourceAndDestionations();
 
-                        controller.builder.setSource(cellClicked);
-                        controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
-
-                        uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
-                        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         System.out.println("Changement : on ne place pas, on selectionne une source");
                     }
                     event.consume();
                     break;
             }
         }
+    }
+
+    private void setSourceAndDestionations()
+    {
+        controller.builder.setSource(cellClicked);
+        controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
+
+        uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
+        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
     }
 }

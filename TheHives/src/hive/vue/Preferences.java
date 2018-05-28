@@ -82,10 +82,10 @@ public class Preferences extends Parent
 
         cacheImage = _cacheImage;
         police = "Papyrus";
-        
+
         fontSize.bind(primaryStage.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
-                                                   "-fx-font-family: ", police, ";" ));
+                "-fx-font-family: ", police, ";"));
         imageFond = new ImageView();
         labelPreferences = new Label();
         labelLangue = new Label();
@@ -130,7 +130,7 @@ public class Preferences extends Parent
         labelAide.setMinSize(minJoueur, 30);
         labelAide.setMaxSize(maxJoueur, 70);
 
-        checkBoxAide.setSelected(true);
+        checkBoxAide.setSelected(controller.settingsGesture.getSetting("aide").equals("true"));
 
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
@@ -139,7 +139,7 @@ public class Preferences extends Parent
 
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonNuit.setToggleGroup(groupRadioButtons);
-        if (controller.typeTheme.equals("Jour"))
+        if (controller.settingsGesture.getSetting("theme").equals("Jour"))
         {
             radioButtonJour.setSelected(true);
         } else
@@ -147,7 +147,6 @@ public class Preferences extends Parent
             radioButtonNuit.setSelected(true);
         }
 
-//        buttonValider.setFont(new Font(police, width / 35));
         buttonValider.setMinHeight(20);
 
         Image imageQ = cacheImage.getImage("exit3.png");
@@ -161,7 +160,7 @@ public class Preferences extends Parent
     {
         labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
         labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
-        comboLangue.setValue(controller.gestionnaireLangage.getLanguage().getDisplayName());
+        comboLangue.setValue(controller.settingsGesture.getSetting("langue"));
         labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
         labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
         radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));
@@ -228,7 +227,7 @@ public class Preferences extends Parent
         labelLangue.setAlignment(Pos.TOP_LEFT);
         gridPane.add(labelLangue, 0, 1);
         gridPane.add(comboLangue, 1, 1);
-        
+
         labelAide.setAlignment(Pos.TOP_LEFT);
         gridPane.add(labelAide, 0, 2);
         gridPane.add(checkBoxAide, 1, 2);
