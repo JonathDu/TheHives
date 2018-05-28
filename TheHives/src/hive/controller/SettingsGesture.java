@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class SettingsGesture
 {
 
-    private static final String SCORES_PATH = "src/properties/settings/setting.txt";
+    private static final String SCORES_PATH = System.getProperty("user.dir") + "/conf/setting.txt";
 
     private final File file;
     private final HashMap<String, String> settings;
