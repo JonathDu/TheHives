@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -41,6 +42,7 @@ public class FinPartie extends Parent {
     private final Interface i;
     private final HBox bouton;
     private final VBox principal;
+    private final HBox image;
     private final GridPane ecran;
 
     private final Label message;
@@ -57,13 +59,18 @@ public class FinPartie extends Parent {
         cacheImage = _cacheImage;
         principal = new VBox(50);
         bouton = new HBox(50);
-
+        image = new HBox();
+        ImageView im = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
+        im.setPreserveRatio(true);
+        im.fitHeightProperty().bind(primaryStage.heightProperty().divide(3));
+        image.getChildren().add(im);
+        
+        
         recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), primaryStage);
         retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
 
         gagnant = joueurGagnant;
         message = new Label();
-        
         
         Rectangle rec = new Rectangle();
         rec.setHeight(Integer.MAX_VALUE);
@@ -118,7 +125,7 @@ public class FinPartie extends Parent {
         message.setTextFill(Color.WHITE);
         message.setAlignment(Pos.CENTER);
         message.setPadding(new Insets(30));
-        message.prefHeightProperty().bind(ecran.heightProperty().divide(2));
+        message.prefHeightProperty().bind(ecran.heightProperty().divide(3));
 
         principal.getChildren().add(message);
 
@@ -129,12 +136,16 @@ public class FinPartie extends Parent {
         bouton.getChildren().add(retourMenu);
         
         bouton.setAlignment(Pos.BOTTOM_CENTER);
-        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(2));
+        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(3));
         bouton.setPadding(new Insets(30));
 
+        image.setAlignment(Pos.CENTER);
+        image.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        
         recommencer.setAlignment(Pos.CENTER);
         retourMenu.setAlignment(Pos.CENTER);
-
+        
+        principal.getChildren().add(image);
         principal.getChildren().add(bouton);
 
 
