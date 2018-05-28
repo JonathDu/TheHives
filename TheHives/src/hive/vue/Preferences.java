@@ -130,7 +130,7 @@ public class Preferences extends Parent
         labelAide.setMinSize(minJoueur, 30);
         labelAide.setMaxSize(maxJoueur, 70);
 
-        checkBoxAide.setSelected(controller.settingsGesture.getSetting("aide").equals("true"));
+        checkBoxAide.setSelected(controller.settingsGesture.get("aide").equals("true"));
 
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
@@ -139,7 +139,7 @@ public class Preferences extends Parent
 
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonNuit.setToggleGroup(groupRadioButtons);
-        if (controller.settingsGesture.getSetting("theme").equals("Jour"))
+        if (controller.settingsGesture.get("theme").equals("Jour"))
         {
             radioButtonJour.setSelected(true);
         } else
@@ -160,7 +160,7 @@ public class Preferences extends Parent
     {
         labelPreferences.setText(controller.gestionnaireLangage.getText("text_preference"));
         labelLangue.setText(controller.gestionnaireLangage.getText("text_langue"));
-        comboLangue.setValue(controller.settingsGesture.getSetting("langue"));
+        comboLangue.setValue(controller.settingsGesture.get("langue"));
         labelAide.setText(controller.gestionnaireLangage.getText("text_activerAide"));
         labelTheme.setText(controller.gestionnaireLangage.getText("text_theme"));
         radioButtonJour.setText(controller.gestionnaireLangage.getText("text_jour"));

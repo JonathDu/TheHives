@@ -40,7 +40,6 @@ public final class Controller
     public Dimension screenSize;
 
     public LanguagesGesture gestionnaireLangage;
-    public ScoresGesture scoresGesture;
     public SettingsGesture settingsGesture;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
@@ -50,8 +49,7 @@ public final class Controller
         cacheImage = _cacheImage;
         screenSize = _screenSize;
         settingsGesture = new SettingsGesture();
-        gestionnaireLangage = new LanguagesGesture(settingsGesture.getSetting("langue"));
-        scoresGesture = new ScoresGesture();
+        gestionnaireLangage = new LanguagesGesture(settingsGesture.get("langue"));
         primaryStage.setScene(currentScene);
         goToMenu();
     }
@@ -116,9 +114,9 @@ public final class Controller
     {
         Locale newLangue = gestionnaireLangage.languages.get(nomLangue);
         gestionnaireLangage.setLanguage(newLangue);
-        settingsGesture.setSetting("langue", nomLangue);
-        settingsGesture.setSetting("aide", activerAide ? "true" : "false");
-        settingsGesture.setSetting("theme", nomTheme);
+        settingsGesture.set("langue", nomLangue);
+        settingsGesture.set("aide", activerAide ? "true" : "false");
+        settingsGesture.set("theme", nomTheme);
         ((Interface) currentScene.getRoot()).majRetourPreference();
     }
 }
