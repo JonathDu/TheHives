@@ -88,6 +88,6 @@ public class TileMainHandler extends PlateauHandler
         controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
 
         uiMain.surlignerTile(controller.builder.tile);
-        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+        uiPlateau.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
     }
 }

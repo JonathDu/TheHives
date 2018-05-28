@@ -41,7 +41,7 @@ public class TilePlateauHandler extends PlateauHandler
                         return;
                     }
                     System.out.println("Source selectionnée");
-                    setSourceAndDestionations();
+                    setSourceAndDestinations();
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
@@ -61,7 +61,7 @@ public class TilePlateauHandler extends PlateauHandler
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
                         controller.builder.setBegin();
                         
-                        setSourceAndDestionations();
+                        setSourceAndDestinations();
 
                         System.out.println("Changement : on ne place pas, on selectionne une source");
                     }
@@ -71,12 +71,12 @@ public class TilePlateauHandler extends PlateauHandler
         }
     }
 
-    private void setSourceAndDestionations()
+    private void setSourceAndDestinations()
     {
         controller.builder.setSource(cellClicked);
         controller.builder.setDestinations(HiveUtil.getDestinations(game, cellClicked));
 
         uiPlateau.ruche.selectPlayerCell(controller.builder.source.comb.pos);
-        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+        uiPlateau.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
     }
 }
