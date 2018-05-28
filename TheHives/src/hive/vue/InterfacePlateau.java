@@ -280,7 +280,7 @@ public class InterfacePlateau extends Interface {
         Tooltip sauvegarderTip = new Tooltip("Sauvergarder");
         Tooltip recommencerTip = new Tooltip("Recommencer");
         Tooltip regleTip = new Tooltip("Règles");
-        Tooltip annulerTip = new Tooltip("Annuller un coup");
+        Tooltip annulerTip = new Tooltip("Annuler un coup");
         Tooltip conseilTip = new Tooltip("Conseil");
         Tooltip replayTip = new Tooltip("Refaire le coup annuler");
 
