@@ -1,11 +1,9 @@
 package hive.controller.plateau.handlers.mousehandlers;
 
-import hive.controller.plateau.handlers.PlateauHandlerData;
 import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.graphicaction.ActionGraphicUpdater;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
-import hive.model.players.decisions.HumanDecision;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -15,27 +13,22 @@ import util.Vector2i;
  *
  * @author Thomas
  */
-public class SocleHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
+public class SocleHandler extends PlateauHandler
 {
-
+    
     Honeycomb combClicked;
-
+    
     public SocleHandler(PlateauController controller, Vector2i pos)
     {
         super(controller);
         combClicked = game.state.board.getHexagon(pos);
     }
-
+    
     @Override
-    public void handle(MouseEvent event)
+    public void handlePlateau(MouseEvent event)
     {
-        if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
-        {
-            return;
-        }
-        
         System.out.println("--- SOCLE ---");
-
+        
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             switch (controller.builder.getState())
@@ -54,7 +47,6 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
                             System.out.println("Changement de source");
                             uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
                             uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-
                             controller.builder.setBegin();
                             return;
                         } else
@@ -72,8 +64,7 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
                 case TILE_SELECTED:
                     if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
-                        System.err.println("Placement impossible");
-                        //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
+                        System.err.println("Placement impossible"); //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
                     } else
                     {
                         System.out.println("Placement selectionné");
@@ -85,28 +76,28 @@ public class SocleHandler extends PlateauHandlerData implements EventHandler<Mou
             }
         }
     }
-
+    
     public void moveOnBoard(Cell destination)
     {
         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-
+        
         controller.builder.setDestination(destination);
         controller.doProducedAction();
-
-        uiPlateau.ruche.majSource(controller.builder.source);
-        uiPlateau.ruche.majDestination(controller.builder.placement_or_destination);
+        
+        ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
+        game.state.data.trace.peek().accept(gUpdater);
     }
-
+    
     public void putOnBoard(Cell placement)
     {
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-
+        
         controller.builder.setPlacement(placement);
         controller.doProducedAction();
-
-        uiPlateau.majTileMain(controller.builder.tile, game.state.turn.getOpponent().collection.get(controller.builder.tile.type));
-        uiPlateau.ruche.majPlacement(controller.builder.placement_or_destination);
+        
+        ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
+        game.state.data.trace.peek().accept(gUpdater);
     }
-
+    
 }
