@@ -80,11 +80,10 @@ public class InterfaceCharger extends Interface {
         choix.setTextFill(Color.web("#fbe5b5"));
         spR.getChildren().add(choix);
 
-        AnchorPane.setRightAnchor(spR, 0.0);
-        AnchorPane.setLeftAnchor(spR, 0.0);
-        AnchorPane.setTopAnchor(spR, 0.0);
-
-        spR.setAlignment(Pos.CENTER);
+         AnchorPane.setLeftAnchor(spR, (double) tailleDeCase + 15);
+        AnchorPane.setRightAnchor(spR, (double) tailleDeCase + 15);
+        AnchorPane.setTopAnchor(spR, (double) 5);
+        AnchorPane.setBottomAnchor(spR, (double) 5);
         top.getChildren().add(spR);
         bp.setTop(top);
 

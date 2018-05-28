@@ -80,8 +80,8 @@ public class InterfaceCredits extends Interface {
         credits.prefWidthProperty().bind(spC.widthProperty().multiply(0.9));
         credits.setTextFill(Color.web("#fbe5b5"));
         spC.getChildren().add(credits);
-        AnchorPane.setLeftAnchor(spC, (double) 100);
-        AnchorPane.setRightAnchor(spC, (double) 100);
+ AnchorPane.setLeftAnchor(spC, (double) tailleDeCase + 15);
+        AnchorPane.setRightAnchor(spC, (double) tailleDeCase + 15);
         AnchorPane.setTopAnchor(spC, (double) 5);
         AnchorPane.setBottomAnchor(spC, (double) 5);
         top.getChildren().add(spC);

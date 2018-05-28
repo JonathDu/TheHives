@@ -72,8 +72,8 @@ public class InterfaceStatistiques extends Interface {
 
         spS.getChildren().add(stat);
 
-        AnchorPane.setLeftAnchor(spS, (double) 5);
-        AnchorPane.setRightAnchor(spS, (double) 5);
+         AnchorPane.setLeftAnchor(spS, (double) tailleDeCase + 15);
+        AnchorPane.setRightAnchor(spS, (double) tailleDeCase + 15);
         AnchorPane.setTopAnchor(spS, (double) 5);
         AnchorPane.setBottomAnchor(spS, (double) 5);
         top.getChildren().add(spS);
