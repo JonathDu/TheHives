@@ -202,7 +202,7 @@ public class HiveUtil
     public static void consumePlacements(Game game, Consumer<Cell> consumer)
     {
         for (InsectType type : InsectType.implemented_insects)
-            game.rules.consumePlacements(game.state, type, consumer);
+            consumePlacements(game, type, consumer);
     }
     
     public static void consumeDestinations(Game game, Cell source, Consumer<Cell> consumer)
@@ -268,6 +268,18 @@ public class HiveUtil
         }
     }
     
+    public static void setMoveActions(Game game, ArrayList<Action> actions, ArrayList<InsectType> insects)
+    {
+        for (InsectType type : insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(game.state.turn.getCurrent().color).get(type);
+            for(Cell source : sources)
+            {
+                setMoveActions(game, source, actions);
+            }
+        }
+    }
+    
     // does not treat NoAction case
     public static void setActions(Game game, ArrayList<Action> actions)
     {
@@ -304,6 +316,44 @@ public class HiveUtil
         ArrayList<T> list = new ArrayList<>();
         setter.accept(list);
         return list;
+    }
+    
+    public static boolean sameTurns(GameState state)
+    {
+        if(nbTurns(state) >= 4)
+            return sameTurns(state, Math.min(nbTurns(state) / 2, 4), state.data.trace.size() - state.players.size());
+        else
+            return false;
+    }
+    
+    //
+    public static boolean sameTurns(GameState state, int max_depth, int idx)
+    {
+        assert max_depth >= 2;
+        for(int depth = 2; depth <= max_depth; ++depth)
+        {
+            if(sameTurn(state, depth, idx))
+                return true;
+        }
+        return false;
+    }
+    
+    
+    public static boolean sameTurn(GameState state, int depth, int idx)
+    {
+        for(int p = idx; p < idx + state.players.size(); ++p)
+        {
+            if(!sameAction(state, depth, p))
+                return false;
+        }
+        return true;
+    }
+    
+    // check if actions are the same, looking depth actions of a player before
+    // max_depth = 2 : A A' B B' A A' B B' = true
+    public static boolean sameAction(GameState state, int depth, int p)
+    {
+        return state.data.trace.get(p).equals(state.data.trace.get(p - state.players.size() * depth));
     }
 }
 
