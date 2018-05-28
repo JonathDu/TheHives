@@ -16,13 +16,13 @@ import hive.vue.InterfacePlateau;
  *
  * @author lucas
  */
-public class ActionGraphicUpdaterIASelect implements ActionVisitor
+public class ActionGraphicUpdaterDeselect implements ActionVisitor
 {
 
     InterfacePlateau uiPlateau;
     Game game;
 
-    public ActionGraphicUpdaterIASelect(InterfacePlateau uiPlateau, Game game)
+    public ActionGraphicUpdaterDeselect(InterfacePlateau uiPlateau, Game game)
     {
         this.uiPlateau = uiPlateau;
         this.game = game;
@@ -31,14 +31,14 @@ public class ActionGraphicUpdaterIASelect implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        uiPlateau.ruche.selectIACell(action.where.comb.pos);
-
+        uiPlateau.ruche.deselectCell(action.where.comb.pos);
     }
 
     @Override
     public void visit(MoveAction action)
     {
-        uiPlateau.ruche.selectIACell(action.destination.comb.pos);
+        uiPlateau.ruche.deselectCell(action.source.comb.pos);
+        uiPlateau.ruche.deselectCell(action.destination.comb.pos);
     }
 
     @Override
