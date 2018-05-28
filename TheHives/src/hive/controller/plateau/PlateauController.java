@@ -154,15 +154,15 @@ public class PlateauController
             }
             break;
             case CURRENT_WINS:
-                uiPlateau.finPartie(game.state.turn.current.toString());
+                uiPlateau.finPartie(game.state.turn.current.toString(), game.state.turn.opponent.toString());
                 stop();
                 break;
             case OPPONENT_WINS:
-                uiPlateau.finPartie(game.state.turn.opponent.toString());
+                uiPlateau.finPartie(game.state.turn.opponent.toString(), game.state.turn.current.toString());
                 stop();
                 break;
             case DRAW:
-                uiPlateau.finPartie(null);
+                uiPlateau.finPartie(null, null);
                 stop();
                 break;
         }

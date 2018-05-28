@@ -6,6 +6,8 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.controller.StatistiqueGesture;
+import java.util.HashMap;
 import java.util.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -86,11 +88,21 @@ public class InterfaceStatistiques extends Interface {
         liste.prefHeightProperty().bind(liste_sp.heightProperty().multiply(0.8));
         liste.prefWidthProperty().bind(liste_sp.widthProperty().multiply(0.9));
 
-        for (Map.Entry<String, Integer> entry : controller.scoresGesture.getScorePerPlayer().entrySet()) {
+        for (Map.Entry<String, HashMap<String,String>> entry : StatistiqueGesture.getPlayersScores().entrySet())
+        {
             String playerName = entry.getKey();
-            Integer playerScore = entry.getValue();
+            HashMap<String,String> playerScores = entry.getValue();
 
-            Label playerNameScore = new Label(playerName + "   =   " + String.valueOf(playerScore));
+            Label playerNameScore = new Label(playerName + "   =   " + playerScores);
+
+            /* !!!! TODO : voici comment parcourir tous les scores de chaque joueurs => il faut l'afficher correctement ;)
+            for(Map.Entry<String, String> entry2 : playerScores.entrySet())
+            {
+                String opponentName = entry2.getKey();
+                String score = entry2.getValue();
+            }
+            */
+
             playerNameScore.setAlignment(Pos.CENTER);
             liste.getItems().add(playerNameScore);
         }

@@ -6,6 +6,7 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.controller.StatistiqueGesture;
 import hive.controller.plateau.PlateauController;
 import hive.model.board.Cell;
 import hive.model.board.Tile;
@@ -75,7 +76,7 @@ public class InterfacePlateau extends Interface {
 
         super(scene, stage, controller, c);
 
-        
+
         this.game = game;
         this.controller = controller;
         borderPane = new BorderPane();
@@ -154,7 +155,7 @@ public class InterfacePlateau extends Interface {
         });
 
         bottom.setAlignment(Pos.CENTER);
-        
+
         bottom.getChildren().add(boutonTailleDim);
         bottom.getChildren().add(boutonCentrer);
         bottom.getChildren().add(boutonTailleAug);
@@ -243,7 +244,7 @@ public class InterfacePlateau extends Interface {
             primaryStage.setScene(new Scene(root, 800, 600));
             primaryStage.setTitle("Regles");
             primaryStage.show();
-            
+
             primaryStage.setScene(new Scene(new InterfaceRegles(scene, primaryStage, controller, c, true), 800, 600));
         });
 
@@ -324,9 +325,13 @@ public class InterfacePlateau extends Interface {
         //pas de texte dans cette interface => rien a mettre a jour
     }
 
-    public void finPartie(String gagnant) {
+    public void finPartie(String gagnant, String perdant) {
         this.panePrincipale.getChildren().add(new FinPartie(scene, primaryStage, controller, c, gameController, this, gagnant));
-        controller.scoresGesture.setScoreFor(gagnant);
+        if(gagnant != null && perdant != null) //TODO : comment gérer ?
+        {
+            StatistiqueGesture.setWinScoreFor(gagnant, perdant);
+            StatistiqueGesture.setLoseScoreFor(perdant, gagnant);
+        }
     }
 
     public void message(String titre, String message) {
@@ -342,7 +347,7 @@ public class InterfacePlateau extends Interface {
     }
 
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
-        if(controller.settingsGesture.getSetting("aide").equals("true"))
+        if(controller.settingsGesture.get("aide").equals("true"))
             ruche.surlignerDestinationsPossibles(cells);
     }
 }
