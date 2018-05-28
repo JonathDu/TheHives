@@ -131,19 +131,19 @@ public class InterfacePlateau extends Interface {
         HBox bottom = new HBox(5);
         BorderPane.setMargin(bottom, new Insets(0, 0, 48, 0));
 
-        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Design/FenetrePlateau/Recentrer.png"), primaryStage);
         boutonCentrer.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             recentrer();
         });
 
-        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Design/FenetrePlateau/+.png"), primaryStage);
         boutonTailleAug.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(5);
             recentrer();
         });
 
-        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Design/FenetrePlateau/-.png"), primaryStage);
         boutonTailleDim.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(- 5);
@@ -151,10 +151,10 @@ public class InterfacePlateau extends Interface {
         });
 
         bottom.setAlignment(Pos.CENTER);
-
-        bottom.getChildren().add(boutonTailleAug);
-        bottom.getChildren().add(boutonCentrer);
+        
         bottom.getChildren().add(boutonTailleDim);
+        bottom.getChildren().add(boutonCentrer);
+        bottom.getChildren().add(boutonTailleAug);
 
         BorderPane.setMargin(scrollPane, new Insets(20, 20, 10, 20));
         BorderPane.setMargin(centerMainG, new Insets(20, 20, 10, 20));
