@@ -76,7 +76,7 @@ public class HiveRules implements Rules, Serializable
         boolean current_wins = HiveUtil.queenIsSurrounded(state, state.turn.getOpponent());
         boolean opponent_wins = HiveUtil.queenIsSurrounded(state, state.turn.getCurrent());
         
-        if((current_wins && opponent_wins) || HiveUtil.nobodyCanPlay(state))
+        if((current_wins && opponent_wins) || HiveUtil.nobodyCanPlay(state) || HiveUtil.sameTurns(state))
             return GameStatus.DRAW;
         else if(current_wins)
             return GameStatus.CURRENT_WINS;
