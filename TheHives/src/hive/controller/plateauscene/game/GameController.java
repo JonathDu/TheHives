@@ -44,9 +44,9 @@ public class GameController
 
         this.builder = new ActionBuilder();
 
-        timerJouerIA = new Timeline(new KeyFrame(Duration.millis(200), new IAPlayerHandler(this)));
+        timerJouerIA = new Timeline(new KeyFrame(Duration.millis(10), new IAPlayerHandler(this)));
         timerJouerIA.setCycleCount(1);
-        timerFrame = new Timeline(new KeyFrame(Duration.millis(500), new FrameHandler(this)));
+        timerFrame = new Timeline(new KeyFrame(Duration.millis(60), new FrameHandler(this)));
         timerFrame.setCycleCount(Timeline.INDEFINITE);
     }
     
