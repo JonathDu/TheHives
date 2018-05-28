@@ -60,22 +60,8 @@ public class InterfaceJoueurs extends Interface {
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        double hauteurDeGrille = tailleDeCase * 4.2;
-        double hauteurDeLigne = hauteurDeGrille / 4;
-        double largeurDeGrille = width - 50;
-        double largeurDeColonne = largeurDeGrille / 3;
 
-        double largeurBouton;
-        double hauteurBouton;
-        if (width > max_screen_width * 0.75) {
-            largeurBouton = largeurDeColonne * 0.6;
-        } else {
-            largeurBouton = largeurDeColonne;
-        }
-        hauteurBouton = largeurBouton / 7.2375;
 
-        double flecheLargeur = tailleDeCase * 4 - 30;
-        double flecheHauteur = flecheLargeur / 7.24;
 
         joueur1 = new Label();
         joueur2 = new Label();
@@ -931,8 +917,8 @@ public class InterfaceJoueurs extends Interface {
         valider_sp.prefWidthProperty().bind(bp.widthProperty());
         Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView valIm = new ImageView(val);
-        valIm.setFitHeight(flecheHauteur);
-        valIm.setFitWidth(flecheLargeur * 0.6);
+        valIm.fitHeightProperty().bind(primaryStage.heightProperty().divide(20));
+        valIm.setPreserveRatio(true);
         valider_sp.getChildren().add(valIm);
         valider.setTextFill(Color.web("#fbe5b5"));
         valider.setBackground(Background.EMPTY);

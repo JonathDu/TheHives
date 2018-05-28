@@ -49,12 +49,6 @@ public class Preferences extends Parent
     private final String police;
     private final CacheImage cacheImage;
 
-    private final int height;
-    private final int width;
-    private final int tailleDeCase;
-    private final int maxJoueur;
-    private final int minJoueur;
-
     private final ComboBox<String> comboLangue;
     private final ImageView imageFond;
     private final Label labelPreferences;
@@ -74,16 +68,11 @@ public class Preferences extends Parent
         primaryStage = _primaryStage;
         controller = _controller;
 
-        height = (int) primaryStage.getHeight();
-        width = (int) primaryStage.getWidth();
-        tailleDeCase = width / 8;
-        maxJoueur = width / 2;
-        minJoueur = maxJoueur / 2;
 
         cacheImage = _cacheImage;
         police = "Papyrus";
 
-        fontSize.bind(primaryStage.heightProperty().divide(30));
+        fontSize.bind(primaryStage.heightProperty().divide(25));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                 "-fx-font-family: ", police, ";"));
         imageFond = new ImageView();
@@ -110,32 +99,23 @@ public class Preferences extends Parent
     private void setObjetsGraphiques()
     {
         imageFond.setImage(cacheImage.getImage("Design/FenetrePlateau/fond.jpg"));
-        imageFond.setFitHeight((width - 30) / 1.35);
-        imageFond.setFitWidth(width - 30);
+        
 
         labelPreferences.setTextFill(Color.web("#ffff66"));
         labelPreferences.setAlignment(Pos.CENTER);
-        labelPreferences.setMinSize(minJoueur, 30);
-        labelPreferences.setMaxSize(maxJoueur, 70);
 
         labelLangue.setTextFill(Color.web("#ffff66"));
         labelLangue.setAlignment(Pos.CENTER);
-        labelLangue.setMinSize(minJoueur, 30);
-        labelLangue.setMaxSize(maxJoueur, 70);
 
         comboLangue.getItems().addAll(controller.gestionnaireLangage.getImplementedLanguagesString());
 
         labelAide.setTextFill(Color.web("#ffff66"));
         labelAide.setAlignment(Pos.CENTER);
-        labelAide.setMinSize(minJoueur, 30);
-        labelAide.setMaxSize(maxJoueur, 70);
 
         checkBoxAide.setSelected(controller.settingsGesture.getSetting("aide").equals("true"));
 
         labelTheme.setTextFill(Color.web("#ffff66"));
         labelTheme.setAlignment(Pos.CENTER);
-        labelTheme.setMinSize(minJoueur, 30);
-        labelTheme.setMaxSize(maxJoueur, 70);
 
         radioButtonJour.setToggleGroup(groupRadioButtons);
         radioButtonNuit.setToggleGroup(groupRadioButtons);
@@ -148,11 +128,11 @@ public class Preferences extends Parent
         }
 
         buttonValider.setMinHeight(20);
-
+        
         Image imageQ = cacheImage.getImage("exit3.png");
         ImageView ImQ = new ImageView(imageQ);
-        ImQ.setFitHeight(tailleDeCase / 2.5);
-        ImQ.setFitWidth(tailleDeCase / 2.5);
+        ImQ.setFitHeight(40);
+        ImQ.setPreserveRatio(true);
         stackAnnuler.getChildren().add(ImQ);
     }
 
@@ -198,18 +178,20 @@ public class Preferences extends Parent
     private Pane placerObjetsGraphiques()
     {
         Pane panePrincipale = new Pane();
+       
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
 
         AnchorPane p = new AnchorPane();
-        p.prefWidthProperty().bind(panePrincipale.widthProperty());
-        p.prefHeightProperty().bind(panePrincipale.heightProperty());
+        p.prefWidthProperty().bind(primaryStage.widthProperty());
+        p.prefHeightProperty().bind(primaryStage.heightProperty());
         AnchorPane.setTopAnchor(stackAnnuler, 10.0);
         AnchorPane.setRightAnchor(stackAnnuler, 10.0);
+        p.setPadding(new Insets(30,30, 52, 30));
 
         GridPane gridPane = new GridPane();
-        gridPane.prefWidthProperty().bind(p.widthProperty());
-        gridPane.prefHeightProperty().bind(p.heightProperty());
+        gridPane.prefWidthProperty().bind(primaryStage.widthProperty());
+        gridPane.prefHeightProperty().bind(primaryStage.heightProperty());
         Outils.fixerRepartition(gridPane, Outils.HORIZONTAL, 20, 20, 20, 20, 20);
         Outils.fixerRepartition(gridPane, Outils.VERTICAL, 33, 33, 33);
         gridPane.setPadding(new Insets(30));
