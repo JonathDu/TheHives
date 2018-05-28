@@ -1,8 +1,4 @@
-hive.model.players.Player@66fee9b0=1
-hive.model.players.Player@63095721=1
-hive.model.players.Player@673fa418=1
-hive.model.players.Player@608ea685=1
-lucas=2
+
 hive.model.players.Player@d83b2195=1
 hive.model.players.Player@940f8b4b=1
 hive.model.players.Player@822e77f5=1
