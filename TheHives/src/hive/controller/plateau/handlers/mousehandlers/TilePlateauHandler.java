@@ -5,12 +5,9 @@
  */
 package hive.controller.plateau.handlers.mousehandlers;
 
-import hive.controller.plateau.handlers.PlateauHandlerData;
 import hive.controller.plateau.PlateauController;
 import hive.model.board.Cell;
 import hive.model.game.rules.HiveUtil;
-import hive.model.players.decisions.HumanDecision;
-import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -18,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  *
  * @author Thomas
  */
-public class TilePlateauHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
+public class TilePlateauHandler extends PlateauHandler
 {
 
     Cell cellClicked;
@@ -30,14 +27,10 @@ public class TilePlateauHandler extends PlateauHandlerData implements EventHandl
     }
 
     @Override
-    public void handle(MouseEvent event)
+    public void handlePlateau(MouseEvent event)
     {
-        if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
-        {
-            return;
-        }
-
         System.out.println("--- TILE PLATEAU ---");
+
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
             switch (controller.builder.getState())

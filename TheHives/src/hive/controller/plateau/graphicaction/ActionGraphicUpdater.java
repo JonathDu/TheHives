@@ -31,8 +31,10 @@ public class ActionGraphicUpdater implements ActionVisitor
     @Override
     public void visit(PutAction action)
     {
-        uiPlateau.majTileMain(action.tile, game.state.turn.getCurrent().collection.get(action.tile.type));
+        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).maj(action.tile, game.state.turn.getCurrent().collection.get(action.tile.type));
+        uiPlateau.getInterfacePlateauMain(game.state.turn.getOpponent().color).maj(action.tile, game.state.turn.getOpponent().collection.get(action.tile.type));
         uiPlateau.ruche.majPlacement(action.where);
+        uiPlateau.ruche.selectLastActionCell(action.where.comb.pos);
     }
 
     @Override
@@ -40,6 +42,8 @@ public class ActionGraphicUpdater implements ActionVisitor
     {
         uiPlateau.ruche.majSource(action.source);
         uiPlateau.ruche.majDestination(action.destination);
+        uiPlateau.ruche.selectLastActionCell(action.source.comb.pos);
+        uiPlateau.ruche.selectLastActionCell(action.destination.comb.pos);
     }
 
     @Override

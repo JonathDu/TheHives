@@ -6,9 +6,8 @@
 package hive.controller.plateau.handlers;
 
 import hive.controller.plateau.PlateauController;
-import hive.controller.plateau.graphicaction.ActionGraphicUpdaterIASelect;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdater;
-import hive.controller.plateau.graphicaction.ActionGraphicUpdaterIADeselect;
+import hive.controller.plateau.graphicaction.ActionGraphicUpdaterDeselect;
 import hive.model.players.decisions.IADecision;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,12 +32,10 @@ public class IAPlayerHandler extends PlateauHandlerData implements EventHandler<
             throw new RuntimeException("IADecision attendu");
         }
 
-        System.out.println("IA FAIT ACTION");
-
-        if (game.state.data.trace.size() > 2)
+        if (!progress.game.state.data.trace.isEmpty())
         {
-            ActionGraphicUpdaterIADeselect gUpdaterDeselect = new ActionGraphicUpdaterIADeselect(uiPlateau, game);
-            progress.game.state.data.trace.get(progress.game.state.data.trace.size() - 2).accept(gUpdaterDeselect);
+            ActionGraphicUpdaterDeselect gUpdaterDeselect = new ActionGraphicUpdaterDeselect(uiPlateau, game);
+            progress.game.state.data.trace.peek().accept(gUpdaterDeselect);
         }
 
         progress.doAction();
@@ -46,9 +43,6 @@ public class IAPlayerHandler extends PlateauHandlerData implements EventHandler<
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, progress.game);
         progress.game.state.data.trace.peek().accept(gUpdater);
 
-        ActionGraphicUpdaterIASelect gUpdaterSelect = new ActionGraphicUpdaterIASelect(uiPlateau, progress.game);
-        progress.game.state.data.trace.peek().accept(gUpdaterSelect);
-        
         controller.startOfTurnInfos();
     }
 }

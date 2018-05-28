@@ -95,7 +95,7 @@ public class NodeRuche extends Parent {
         tab.getAt(pos).setSelected(Color.rgb(246, 6, 189));
     }
 
-    public void selectIACell(Vector2i pos) {
+    public void selectLastActionCell(Vector2i pos) {
         tab.getAt(pos).setSelected(Color.rgb(255, 0, 0));
     }
 
