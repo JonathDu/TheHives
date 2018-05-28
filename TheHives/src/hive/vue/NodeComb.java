@@ -20,14 +20,13 @@ import javafx.scene.paint.Color;
  */
 public class NodeComb extends Parent {
 
-    private ArrayList<NodePion> pions;
+    private final ArrayList<NodePion> pions;
     public NodePion socle;
-    private CacheImage c;
+    private final CacheImage c;
 
     public NodeComb(CacheImage c) {
         this.c = c;
         this.socle = new NodePion(null, null, c);
-//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(pions.get(0));
     }
@@ -35,21 +34,11 @@ public class NodeComb extends Parent {
     public NodeComb(CacheImage c, int taille) {
         this.c = c;
         this.socle = new NodePion(null, null, c, taille);
-//        this.socle.hexagon.setStroke(Color.BLACK);
         this.pions = new ArrayList<>();
         this.getChildren().add(socle);
     }
 
-//    public void addTile(Cell tile, InterfacePlateau plateau, GameController controller) {
-//        Cell cell = new Cell(comb, level);
-//        int i = 0;
-//        InterfacePion pion = new InterfacePion(tile.getTile().color, tile.getTile().type, c);
-//        pion.addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(controller, plateau, tile.comb.pos));
-//        this.pions.add(tile.level, pion);
-//        this.getChildren().add(this.pions.get(this.pions.size() - 1));
-//    }
-    
-    public void majComb(Honeycomb comb, InterfacePlateau plateau, PlateauController plateauController,int longueur) {
+    public void majComb(Honeycomb comb, InterfacePlateau plateau, PlateauController plateauController, int longueur) {
         pions.clear();
         setSelected(Color.TRANSPARENT);
         this.getChildren().clear();
@@ -84,6 +73,5 @@ public class NodeComb extends Parent {
             pions.get(i).hexagon.setStroke(Color.TRANSPARENT);
         }
     }
-     
 
 }

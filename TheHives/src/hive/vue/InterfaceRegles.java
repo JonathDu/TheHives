@@ -7,9 +7,9 @@ package hive.vue;
 
 import hive.controller.Controller;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -19,7 +19,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class InterfaceRegles extends Interface {
 
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private Label regles;
     private Label but;
     private Label debut;
@@ -46,16 +45,16 @@ public class InterfaceRegles extends Interface {
     private Label jeu;
     private Label insecte;
     private String rep;
-    private AnchorPane top;
+    private final AnchorPane top;
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c) {
-        super(primaryStage, controller, c);
+    public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
+        super(scene, primaryStage, controller, c);
         top = new AnchorPane();
         rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
         
 
         top.getChildren().add(droite);
@@ -64,24 +63,24 @@ public class InterfaceRegles extends Interface {
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setBottomAnchor(boutonRetourMenu, (double) 5);
         top.getChildren().add(boutonRetourMenu);
-        regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
+        regles(police, tailleDeCase,rep);
 
     }
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
-        super(primaryStage, controller, c);
+    public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
+        super(scene, primaryStage, controller, c);
         top = new AnchorPane();
 
         rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
 
-        regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
+        regles(police,  tailleDeCase, rep);
     }
 
-    private void regles(String police, int width, int height, int tailleDeCase, int maxJoueur, int minJoueur, String rep) {
+    private void regles(String police, int tailleDeCase, String rep) {
         regles = new Label();
         but = new Label();
         debut = new Label();
@@ -100,8 +99,8 @@ public class InterfaceRegles extends Interface {
         setTextWithCurrentLanguage();
 
         BorderPane bp = new BorderPane();
-        bp.prefHeightProperty().bind(primaryStage.heightProperty());
-        bp.prefWidthProperty().bind(primaryStage.widthProperty());
+        bp.prefHeightProperty().bind(scene.heightProperty());
+        bp.prefWidthProperty().bind(scene.widthProperty());
 
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
         top.prefWidthProperty().bind(bp.widthProperty());
@@ -144,14 +143,10 @@ public class InterfaceRegles extends Interface {
         int colonne = 100 / 1;
         Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(placement, Outils.VERTICAL, colonne);
-        /*placement.setMaxWidth(width*0.99 * 0.2);
-        placement.setMinWidth(width*0.99 * 0.2);
-        placement.setMaxHeight(tailleDeCase * 3.6);
-        placement.setMinHeight(tailleDeCase * 3.6);*/
+
+        
         placement.prefWidthProperty().bind(regles1.widthProperty().multiply(0.8));
         placement.prefHeightProperty().bind(regles1.heightProperty().multiply(0.5));
-        double hauteurDeGrille = tailleDeCase * 2.4;
-        double hauteurDeLigne = hauteurDeGrille / 4;
 
         jeu.setFont(new Font(police, tailleLettres + 5));
         jeu.setAlignment(Pos.CENTER);
@@ -255,7 +250,6 @@ public class InterfaceRegles extends Interface {
 
         insectes.prefWidthProperty().bind(regles2.widthProperty().multiply(0.8));
         insectes.prefHeightProperty().bind(regles2.heightProperty().multiply(0.5));
-        double hauteurDeLigne2 = hauteurDeGrille / 6;
 
         insecte.setFont(new Font(police, tailleLettres + 5));
         insecte.setAlignment(Pos.CENTER);

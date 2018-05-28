@@ -7,9 +7,9 @@ package hive.vue;
 
 import hive.controller.Controller;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -18,10 +18,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
@@ -38,12 +36,12 @@ public class InterfaceCredits extends Interface {
     private final Label traduction1;
     private final Label traduction2;
 
-    public InterfaceCredits(Stage primaryStage, Controller controller, CacheImage c) {
-        super(primaryStage, controller, c);
+    public InterfaceCredits(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
+        super(scene, primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
 
         credits = new Label();
         ia = new Label();
@@ -82,8 +80,8 @@ public class InterfaceCredits extends Interface {
         credits.prefWidthProperty().bind(spC.widthProperty().multiply(0.9));
         credits.setTextFill(Color.web("#fbe5b5"));
         spC.getChildren().add(credits);
-        AnchorPane.setLeftAnchor(spC, (double) tailleDeCase + 15);
-        AnchorPane.setRightAnchor(spC, (double) tailleDeCase + 15);
+        AnchorPane.setLeftAnchor(spC, (double) 100);
+        AnchorPane.setRightAnchor(spC, (double) 100);
         AnchorPane.setTopAnchor(spC, (double) 5);
         AnchorPane.setBottomAnchor(spC, (double) 5);
         top.getChildren().add(spC);
@@ -104,8 +102,6 @@ public class InterfaceCredits extends Interface {
         Outils.fixerRepartition(grille, Outils.VERTICAL, colonne);
         grille.prefHeightProperty().bind(bois.heightProperty());
         grille.prefWidthProperty().bind(bois.widthProperty());
-        double hauteurDeGrille = tailleDeCase * 4.2;
-        double hauteurDeLigne = hauteurDeGrille / 6;
         StackPane ia_sp = new StackPane();
         ia_sp.prefHeightProperty().bind(bois.heightProperty().divide(0.6));
         ia_sp.prefWidthProperty().bind(bois.widthProperty().multiply(0.9));

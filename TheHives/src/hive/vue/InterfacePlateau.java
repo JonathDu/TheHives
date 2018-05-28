@@ -49,7 +49,7 @@ public class InterfacePlateau extends Interface {
     public NodePlateauMain mainDroite;
     public NodeRuche ruche;
     PlateauController gameController;
-    private StackPane centerPane;
+    private final StackPane centerPane;
     ScrollPane scrollPane;
     VBox centerMainG;
     VBox centerMainD;
@@ -71,10 +71,11 @@ public class InterfacePlateau extends Interface {
 
     boolean onDrag = false;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
+    public InterfacePlateau(Scene scene, Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
 
-        super(stage, controller, c);
+        super(scene, stage, controller, c);
 
+        
         this.game = game;
         this.controller = controller;
         borderPane = new BorderPane();
@@ -85,13 +86,13 @@ public class InterfacePlateau extends Interface {
 
         BorderPane tool = setTool();
 
-        borderPane.prefWidthProperty().bind(stage.widthProperty());
-        borderPane.prefHeightProperty().bind(stage.heightProperty());
+        borderPane.prefWidthProperty().bind(scene.widthProperty());
+        borderPane.prefHeightProperty().bind(scene.heightProperty());
 
         gameController = new PlateauController(game, this);
 
-        mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, joueur1, c, gameController, this, TeamColor.WHITE);
-        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
+        mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, joueur1, c, gameController, this, TeamColor.WHITE);
+        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, joueur2, c, gameController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
@@ -131,21 +132,21 @@ public class InterfacePlateau extends Interface {
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         HBox bottom = new HBox(5);
-        BorderPane.setMargin(bottom, new Insets(0, 0, 48, 0));
+        BorderPane.setMargin(bottom, new Insets(0, 0, 20, 0));
 
-        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Design/FenetrePlateau/Recentrer.png"), primaryStage);
+        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Design/FenetrePlateau/Recentrer.png"), scene);
         boutonCentrer.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             recentrer();
         });
 
-        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Design/FenetrePlateau/+.png"), primaryStage);
+        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Design/FenetrePlateau/+.png"), scene);
         boutonTailleAug.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(5);
             recentrer();
         });
 
-        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Design/FenetrePlateau/-.png"), primaryStage);
+        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Design/FenetrePlateau/-.png"), scene);
         boutonTailleDim.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(- 5);
@@ -199,23 +200,23 @@ public class InterfacePlateau extends Interface {
     }
 
     private BorderPane setTool() {
-        width = (int) primaryStage.getWidth();
+        width = (int) scene.getWidth();
 
         String repertoire = "Design/FenetrePlateau/";
 
         pane = new BorderPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
 
         gauche = new HBox(5);
         centre = new HBox(5);
 
-        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), primaryStage);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), primaryStage);
-        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), primaryStage);
-        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), primaryStage);
-        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), primaryStage);
-        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), primaryStage);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "BoutonRestart.png"), primaryStage);
+        boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), scene);
+        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), scene);
+        boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), scene);
+        boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), scene);
+        boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), scene);
+        boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), scene);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "BoutonRestart.png"), scene);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
@@ -243,13 +244,12 @@ public class InterfacePlateau extends Interface {
             primaryStage.setTitle("Regles");
             primaryStage.show();
             
-            primaryStage.setScene(new Scene(new InterfaceRegles(primaryStage, controller, c, true), 800, 600));
+            primaryStage.setScene(new Scene(new InterfaceRegles(scene, primaryStage, controller, c, true), 800, 600));
         });
 
         boutonRecommencer.setOnMouseClicked(value
                 -> {
             gameController.restart();
-            //this.finPartie("vbfidqodifg");
         });
 
         boutonAnnuler.setOnMouseClicked(value
@@ -325,7 +325,7 @@ public class InterfacePlateau extends Interface {
     }
 
     public void finPartie(String gagnant) {
-        this.panePrincipale.getChildren().add(new FinPartie(primaryStage, controller, c, gameController, this, gagnant));
+        this.panePrincipale.getChildren().add(new FinPartie(scene, primaryStage, controller, c, gameController, this, gagnant));
         controller.scoresGesture.setScoreFor(gagnant);
     }
 

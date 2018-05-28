@@ -126,9 +126,7 @@ public class NodePion extends Parent {
 
                 default:
                     break;
-
             }
-
         }
         return v;
     }
