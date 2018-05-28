@@ -122,7 +122,6 @@ public class NodePion extends Parent {
                         i = c.getImage("pionFourmiW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
-
                     break;
 
                 default:

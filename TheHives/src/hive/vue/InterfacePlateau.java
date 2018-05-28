@@ -68,7 +68,7 @@ public class InterfacePlateau extends Interface {
     HBox droite;
     String j1;
     String j2;
-    
+
     boolean onDrag = false;
 
     public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
@@ -100,7 +100,7 @@ public class InterfacePlateau extends Interface {
 
         mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetonb.png");
+        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
@@ -127,17 +127,46 @@ public class InterfacePlateau extends Interface {
 
         scrollPane.setHvalue(0.5);
         scrollPane.setVvalue(0.5);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
-        BorderPane.setMargin(scrollPane, new Insets(20, 20, 48, 20));
-        BorderPane.setMargin(centerMainG, new Insets(20, 20, 48, 20));
-        BorderPane.setMargin(centerMainD, new Insets(20, 20, 48, 20));
+        HBox bottom = new HBox(5);
+        BorderPane.setMargin(bottom, new Insets(0, 0, 48, 0));
+
+        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        boutonCentrer.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            recentrer();
+        });
+
+        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        boutonTailleAug.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
+            recentrer();
+            this.ruche.majTaille(5);
+            recentrer();
+        });
+
+        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Ampoule.png"), primaryStage);
+        boutonTailleDim.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
+            recentrer();
+            this.ruche.majTaille(- 5);
+            recentrer();
+        });
+
+        bottom.setAlignment(Pos.CENTER);
+
+        bottom.getChildren().add(boutonTailleAug);
+        bottom.getChildren().add(boutonCentrer);
+        bottom.getChildren().add(boutonTailleDim);
+
+        BorderPane.setMargin(scrollPane, new Insets(20, 20, 10, 20));
+        BorderPane.setMargin(centerMainG, new Insets(20, 20, 10, 20));
+        BorderPane.setMargin(centerMainD, new Insets(20, 20, 10, 20));
 
         borderPane.setCenter(scrollPane);
         borderPane.setTop(tool);
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
+        borderPane.setBottom(bottom);
         setRucheHandler();
 
         this.panePrincipale.getChildren().add(borderPane);
@@ -159,11 +188,11 @@ public class InterfacePlateau extends Interface {
         ruche.setOnDragDetected((value) -> {
             this.onDrag = true;
         });
-        ruche.setOnDragDone((value)->{
+        ruche.setOnDragDone((value) -> {
             this.onDrag = false;
         });
-        ruche.setOnMouseMoved((value)->{
-            if(this.onDrag){
+        ruche.setOnMouseMoved((value) -> {
+            if (this.onDrag) {
                 System.out.println("value");
             }
         });
@@ -187,61 +216,41 @@ public class InterfacePlateau extends Interface {
         boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), primaryStage);
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), primaryStage);
         boutonRegle = new HiveBouton(c.getImage(repertoire + "Boutonlivre.png"), primaryStage);
-        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "replay.png"), primaryStage);
+        boutonRecommencer = new HiveBouton(c.getImage(repertoire + "BoutonRestart.png"), primaryStage);
 
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
             quitStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopup root = new NodePopup("Etes vous sur de vouloir quitter la partie ?", "Quitter", "Annuler", "Sauvegarder et quitter");
+            NodePopup root = new NodePopup(controller, quitStage, game, gameController);
             quitStage.setScene(new Scene(root));
             quitStage.show();
-
-            root.valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-
-                quitStage.close();
-                gameController.stop();
-                controller.goToMenu();
-
-            });
-
-            root.quitter.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-                quitStage.close();
-            });
-
-            root.validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-                Stage saveStage = new Stage();
-                saveStage.initModality(Modality.APPLICATION_MODAL);
-                NodePopupSave rootSave = new NodePopupSave(controller, saveStage, game);
-                saveStage.setScene(new Scene(rootSave));
-                saveStage.show();
-
-            });
 
         });
 
         boutonSave.setOnMouseClicked(value -> {
-            Stage primaryStage = new Stage();
-            primaryStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopupSave root = new NodePopupSave(controller, primaryStage, game);
-            primaryStage.setScene(new Scene(root));
-            primaryStage.show();
+            Stage savaStage = new Stage();
+            savaStage.initModality(Modality.APPLICATION_MODAL);
+            NodePopupSave root = new NodePopupSave(controller, savaStage, game);
+            savaStage.setScene(new Scene(root));
+            savaStage.show();
         });
 
         boutonRegle.setOnMouseClicked(value
                 -> {
 
             Stage primaryStage = new Stage();
-            Parent root;
-            root = new InterfaceRegles(primaryStage, controller, c, true);
-            primaryStage.setTitle("Regles");
+            Parent root = new Group();
             primaryStage.setScene(new Scene(root, 800, 600));
+            primaryStage.setTitle("Regles");
             primaryStage.show();
+            
+            primaryStage.setScene(new Scene(new InterfaceRegles(primaryStage, controller, c, true), 800, 600));
         });
 
         boutonRecommencer.setOnMouseClicked(value
                 -> {
-//            gameController.restart();
-            this.finPartie("vbfidqodifg");
+            gameController.restart();
+            //this.finPartie("vbfidqodifg");
         });
 
         boutonAnnuler.setOnMouseClicked(value
@@ -271,7 +280,7 @@ public class InterfacePlateau extends Interface {
         Tooltip sauvegarderTip = new Tooltip("Sauvergarder");
         Tooltip recommencerTip = new Tooltip("Recommencer");
         Tooltip regleTip = new Tooltip("Règles");
-        Tooltip annulerTip = new Tooltip("Annuller un coup");
+        Tooltip annulerTip = new Tooltip("Annuler un coup");
         Tooltip conseilTip = new Tooltip("Conseil");
         Tooltip replayTip = new Tooltip("Refaire le coup annuler");
 
@@ -326,9 +335,13 @@ public class InterfacePlateau extends Interface {
     public void message(String titre, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(titre);
-
-        alert.setContentText(message);
+        alert.setHeaderText(message);
         alert.show();
+    }
+
+    private void recentrer() {
+        scrollPane.setHvalue(0.5);
+        scrollPane.setVvalue(0.5);
     }
 
 }

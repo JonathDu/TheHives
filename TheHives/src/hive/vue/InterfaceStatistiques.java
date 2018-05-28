@@ -27,22 +27,22 @@ public class InterfaceStatistiques extends Interface
 
     private final Label stat;
 
-    public InterfaceStatistiques(Stage primaryStage, Controller controller, CacheImage c)
-    {
+    public InterfaceStatistiques(Stage primaryStage, Controller controller, CacheImage c) {
         super(primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
         pane.prefWidthProperty().bind(primaryStage.widthProperty());
         pane.prefHeightProperty().bind(primaryStage.heightProperty());
 
-        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 15);
-        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-        pane.getChildren().add(boutonPreference);
+        HBox droite = new HBox(5);
 
-        AnchorPane.setRightAnchor(boutonPleinEcran, (double) 10);
-        AnchorPane.setTopAnchor(boutonPleinEcran, (double) 5);
-        pane.getChildren().add(boutonPleinEcran);
 
+        droite.getChildren().add(boutonPleinEcran);
+        droite.getChildren().add(boutonPreference);
+        AnchorPane.setRightAnchor(droite, (double) 5);
+        AnchorPane.setTopAnchor(droite, (double) 5);
+
+        pane.getChildren().add(droite);
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
         pane.getChildren().add(boutonRetourMenu);
@@ -66,7 +66,7 @@ public class InterfaceStatistiques extends Interface
         {
             String playerName = entry.getKey();
             Integer playerScore = entry.getValue();
-            
+
             Label playerNameScore = new Label(playerName + "   =   " + String.valueOf(playerScore));
             liste.getItems().add(playerNameScore);
         }
@@ -81,8 +81,7 @@ public class InterfaceStatistiques extends Interface
     }
 
     @Override
-    public void setTextWithCurrentLanguage()
-    {
+    public void setTextWithCurrentLanguage() {
         stat.setText(controller.gestionnaireLangage.getText("text_statistiques"));
     }
 }
