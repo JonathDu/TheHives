@@ -11,18 +11,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -62,7 +54,7 @@ public class FinPartie extends Parent {
         image = new HBox();
         ImageView im = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
         im.setPreserveRatio(true);
-        im.fitHeightProperty().bind(primaryStage.heightProperty().divide(3));
+        im.fitHeightProperty().bind(primaryStage.heightProperty().divide(2));
         image.getChildren().add(im);
         
         
@@ -73,8 +65,8 @@ public class FinPartie extends Parent {
         message = new Label();
         
         Rectangle rec = new Rectangle();
-        rec.setHeight(Integer.MAX_VALUE);
-        rec.setWidth(Integer.MAX_VALUE);
+        rec.widthProperty().bind(primaryStage.widthProperty());
+        rec.heightProperty().bind(primaryStage.heightProperty());
         rec.setFill(Color.BLACK);
         rec.setOpacity(0.6);
         rec.setSmooth(true);
@@ -125,27 +117,28 @@ public class FinPartie extends Parent {
         message.setTextFill(Color.WHITE);
         message.setAlignment(Pos.CENTER);
         message.setPadding(new Insets(30));
-        message.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        message.prefHeightProperty().bind(ecran.heightProperty().divide(4));
 
-        principal.getChildren().add(message);
+       
 
-        recommencer.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(15));
-        retourMenu.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(15));
+        recommencer.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
+        retourMenu.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
         
         bouton.getChildren().add(recommencer);
         bouton.getChildren().add(retourMenu);
         
         bouton.setAlignment(Pos.BOTTOM_CENTER);
-        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(4));
         bouton.setPadding(new Insets(30));
 
         image.setAlignment(Pos.CENTER);
-        image.prefHeightProperty().bind(ecran.heightProperty().divide(3));
+        image.prefHeightProperty().bind(ecran.heightProperty().divide(2));
         
         recommencer.setAlignment(Pos.CENTER);
         retourMenu.setAlignment(Pos.CENTER);
         
         principal.getChildren().add(image);
+         principal.getChildren().add(message);
         principal.getChildren().add(bouton);
 
 
