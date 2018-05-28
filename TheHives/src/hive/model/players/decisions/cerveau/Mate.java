@@ -49,7 +49,7 @@ public final class Mate {
         int alea;
         int aleaStat;
         for (int i = from; i < (nbSon+from); i++) { // pour chaque enfant
-            for (int j = 0; j < 27; j++) { //pour chaque allèles
+            for (int j = 0; j < 80; j++) { //pour chaque allèles
                 alea = rnd.nextInt(100);
                 if (alea <= 9) { // mutation
                     aleaStat = rnd.nextInt(101);

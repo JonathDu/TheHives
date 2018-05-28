@@ -11,13 +11,16 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Parent;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -32,7 +35,7 @@ public abstract class Interface extends Parent {
     Pane panePrincipale;
     Background background;
     private DoubleProperty fontSize = new SimpleDoubleProperty(10);
-    
+
     int height;
     int width;
     String police;
@@ -48,6 +51,8 @@ public abstract class Interface extends Parent {
     HiveBouton boutonPleinEcran;
     HiveBouton boutonRetourMenu;
 
+    HBox droite;
+
     public Interface(Stage primaryStage, Controller controller, CacheImage cacheImage) {
 
         /* INITIALISATION DES OBJETS */
@@ -57,10 +62,6 @@ public abstract class Interface extends Parent {
         c = cacheImage;
         panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
         panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
-        
-        fontSize.bind(primaryStage.heightProperty().divide(30));
-        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
-                                                  
 
         height = (int) primaryStage.getHeight();
         width = (int) primaryStage.getWidth();
@@ -73,9 +74,27 @@ public abstract class Interface extends Parent {
 
         police = "Papyrus";
 
+        fontSize.bind(primaryStage.heightProperty().divide(30));
+        this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
+                "-fx-font-family: ", police, ";"));
+
+        Tooltip t = new Tooltip("Retour au menu");
+        Tooltip t1 = new Tooltip("Plein écran");
+        Tooltip t2 = new Tooltip("Réglages");
+
         boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
         boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
         boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
+        Tooltip.install(boutonRetourMenu, t);
+        Tooltip.install(boutonPleinEcran, t1);
+        Tooltip.install(boutonPreference, t2);
+
+        droite = new HBox(5);
+
+        AnchorPane.setRightAnchor(droite, (double) 5);
+        AnchorPane.setTopAnchor(droite, (double) 5);
+        droite.getChildren().add(boutonPreference);
+        droite.getChildren().add(boutonPleinEcran);
 
         setBackground();
 

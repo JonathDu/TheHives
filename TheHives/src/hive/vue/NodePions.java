@@ -27,15 +27,7 @@ public class NodePions extends Parent {
         socle = new NodePion(null, null, c);
         pions = new ArrayList<>();
         this.c = c;
-        Group g = new Group();
-        g.getChildren().add(socle);
-        for (int i = 0; i < nbPions; i++) {
-            NodePion pion = new NodePion(couleur, typePions, c);
-            pion.setLayoutX(i * 10);
-            g.getChildren().add(pion);
-            pions.add(pion);
-        }
-        this.getChildren().add(g);
+        maj(couleur, nbPions, typePions);
     }
 
     public void setSelected(Color couleur) {

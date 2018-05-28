@@ -23,55 +23,51 @@ public class AffichagBoss {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, FileNotFoundException {
-        try {
-            // TODO code application logic here
-            AdamEtEve AE = new AdamEtEve(3);
-            ArrayList<Integer> boss;
-            int victory [] = new int[9];
-            for(int j = 0; j<9;j++){
-                victory[j]=0;
-            }
-            EvaluationLearning [] dreamTeam = new EvaluationLearning[9];
-            for(int i=0 ; i <5;i++){
-                try {
-                    boss = AE.dlBoss("CoralieTheBoss"+i+".txt");
-                    System.out.println("CoralieTheBoss"+i+".txt \n"+boss);
-                    
-                    
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-            }
-            for(int i=0 ; i <2;i++){            
-                try {
-                    boss = AE.dlBoss("LucasTheBoss"+i+".txt");
-                    System.out.println("LucasTheBoss"+i+".txt \n"+boss);
-                    
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            for(int i=0 ; i <2;i++){
-                try {
-                    boss = AE.dlBoss("AdelinaTheBoss"+i+".txt");
-                    System.out.println("AdelinaTheBoss"+i+".txt \n"+boss);
-                    
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            boss = AE.dlBoss("TheBigBossCoralie");
-            System.out.println("TheBigBoss \n"+boss);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AffichagBoss.class.getName()).log(Level.SEVERE, null, ex);
+        // TODO code application logic here
+        AdamEtEve AE = new AdamEtEve(3);
+        ArrayList<Integer> boss;
+        int victory [] = new int[9];
+        for(int j = 0; j<9;j++){
+            victory[j]=0;
         }
+        EvaluationLearning [] dreamTeam = new EvaluationLearning[9];
+        for(int i=0 ; i <7;i++){
+            try {
+                boss = AE.dlBoss("CoralieBoss"+i+".txt");
+                System.out.println("CoralieBoss"+i+".txt \n"+boss);
+                
+                
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }/*
+        for(int i=0 ; i <2;i++){
+        try {
+        boss = AE.dlBoss("LucasTheBoss"+i+".txt");
+        System.out.println("LucasTheBoss"+i+".txt \n"+boss);
+        
+        } catch (FileNotFoundException ex) {
+        Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        for(int i=0 ; i <2;i++){
+        try {
+        boss = AE.dlBoss("AdelinaTheBoss"+i+".txt");
+        System.out.println("AdelinaTheBoss"+i+".txt \n"+boss);
+        
+        } catch (FileNotFoundException ex) {
+        Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+        Logger.getLogger(BattleRoyal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+        boss = AE.dlBoss("TheBigBossCoralie");
+        System.out.println("TheBigBoss \n"+boss);*/
     }
     
 }

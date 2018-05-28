@@ -5,12 +5,16 @@
  */
 package hive.controller;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Properties;
-import java.util.Set;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,45 +23,84 @@ import java.util.Set;
 public class ScoresGesture
 {
 
-    private final String scoresPropertiesPath;
-    private final Properties properties;
+    private static final String SCORES_PATH = "src/properties/scores/scores.txt";
 
-    public ScoresGesture() throws FileNotFoundException, IOException
+    private final File file;
+    private final HashMap<String, Integer> scorePerPlayer;
+
+    public ScoresGesture()
     {
-        scoresPropertiesPath = "properties/scores/scores.properties";
-        properties = new Properties();
-        properties.load(new FileInputStream(scoresPropertiesPath));
+        file = new File(SCORES_PATH);
+        scorePerPlayer = readScorePerPlayer();
     }
 
-    public int getScoreFor(String playerName)
+    public void setScoreFor(String playerName)
     {
-        return Integer.parseInt(properties.getProperty(playerName));
+        int score = scorePerPlayer.getOrDefault(playerName, 0) + 1;
+        scorePerPlayer.put(playerName, score);
+        writeScorePerPlayer();
     }
 
-    public void setScoreFor(String playerName, int playerScore)
+    public HashMap<String, Integer> getScorePerPlayer()
     {
-        if (getPlayersNames().contains(playerName))
+        return scorePerPlayer;
+    }
+
+    private HashMap<String, Integer> readScorePerPlayer()
+    {
+        HashMap<String, Integer> _scorePerPlayers = new HashMap<>();
+        BufferedReader reader = null;
+        try
         {
-            properties.setProperty(playerName, String.valueOf(playerName));
-        } else
+            reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null)
+            {
+                _scorePerPlayers.put(line.split("=")[0], Integer.valueOf(line.split("=")[1]));
+                line = reader.readLine();
+            }
+            return _scorePerPlayers;
+        } catch (IOException ex)
         {
-            properties.put(playerName, String.valueOf(playerName));
+            Logger.getLogger(ScoresGesture.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            try
+            {
+                reader.close();
+            } catch (IOException ex)
+            {
+                Logger.getLogger(ScoresGesture.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return _scorePerPlayers;
         }
     }
 
-    public HashMap<String, String> getScores()
+    private void writeScorePerPlayer()
     {
-        HashMap<String, String> map = new HashMap<>();
-        getPlayersNames().forEach((name) ->
+        BufferedWriter writer = null;
+        try
         {
-            map.put(name, properties.getProperty(name));
-        });
-        return map;
+            writer = new BufferedWriter(new FileWriter(file));
+            for (Map.Entry<String, Integer> entry : scorePerPlayer.entrySet())
+            {
+                String key = entry.getKey();
+                Integer value = entry.getValue();
+                String line = key + "=" + String.valueOf(value) + "\n";
+                writer.write(line);
+            }
+        } catch (IOException ex)
+        {
+            Logger.getLogger(ScoresGesture.class.getName()).log(Level.SEVERE, null, ex);
+        } finally
+        {
+            try
+            {
+                writer.close();
+            } catch (IOException ex)
+            {
+                Logger.getLogger(ScoresGesture.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
-
-    private Set<String> getPlayersNames()
-    {
-        return properties.stringPropertyNames();
-    }
-
 }
