@@ -33,7 +33,7 @@ public class HardIA implements IA{
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int depth = 3;
         init(depth+1);
-        hia.currentPlayerPossibilities(state,actionList[depth]);
+        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
         if(actionList[depth].isEmpty()){
             return new NoAction();
         }

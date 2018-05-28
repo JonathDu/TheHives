@@ -17,29 +17,40 @@ import java.util.Random;
  * @author Coralie
  */
 public class MediumIA implements IA{
+     ArrayList<Action> [] actionList;
+    //mettre évaluation + construteur
     
+    private void init(int taille){
+        actionList = new ArrayList[taille];
+        for(int i=0;i<taille;i++){
+            actionList[i]=new ArrayList<>(300);
+        }
+        
+    }
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
-        if(actionList.isEmpty()){
+        init(1);
+        actionList[0] = hia.currentPlayerPossibilities2(state);
+        if(actionList[0].isEmpty()){
             return new NoAction();
         }
         int value=0, nbValue=0, res;
         Action currentAction;
         int i=0;
-        while(i<actionList.size()){
-            currentAction = actionList.get(i);
+        int max = -50000;
+        while(i<actionList[0].size()){
+            currentAction = actionList[0].get(i);
             hia.doAction(state, currentAction);
-            res = Evaluation.evaluation(state);
+            res = MiniMax.miniMaxOpponent(state, 1, max,actionList);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 return currentAction;
             }
             else if(hia.winCurrent(state)){
                 hia.undoAction(state);
-                actionList.remove(i);
-                if(actionList.isEmpty())
+                actionList[0].remove(i);
+                if(actionList[0].isEmpty())
                     return currentAction;
             }
             else{
@@ -50,11 +61,11 @@ public class MediumIA implements IA{
             }
         }
         Random rnd = new Random();
-        currentAction = actionList.get(rnd.nextInt(actionList.size()));
+        currentAction = actionList[0].get(rnd.nextInt(actionList[0].size()));
         hia.doAction(state, currentAction);
         while(Evaluation.evaluation(state)<(value/nbValue)){
             hia.undoAction(state);
-            currentAction = actionList.get(rnd.nextInt(actionList.size()));
+            currentAction = actionList[0].get(rnd.nextInt(actionList[0].size()));
             hia.doAction(state, currentAction);
         }
         hia.undoAction(state);
