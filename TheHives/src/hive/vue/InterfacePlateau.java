@@ -13,7 +13,6 @@ import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -192,7 +191,7 @@ public class InterfacePlateau extends Interface {
         });
         ruche.setOnMouseMoved((value) -> {
             if (this.onDrag) {
-                System.out.println("value");
+                //System.out.println("value");
             }
         });
     }

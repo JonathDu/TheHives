@@ -98,7 +98,6 @@ public class InterfaceJoueurs extends Interface {
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         top.prefWidthProperty().bind(bp.widthProperty());
 
-
         top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
@@ -937,7 +936,7 @@ public class InterfaceJoueurs extends Interface {
                         level2 = Level.MEDIUM;
                     }
 
-                    controller.goToPlateau(joueur_1, null, null, level2);
+                    controller.goToPlateau(joueur_1, creerNomIA(level2), null, level2);
 
                 } else if (est_ai_h == 1) {
                     joueur_2 = Name2.getCharacters().toString();
@@ -954,7 +953,7 @@ public class InterfaceJoueurs extends Interface {
                         level1 = Level.MEDIUM;
                     }
 
-                    controller.goToPlateau(null, joueur_2, level1, null);
+                    controller.goToPlateau(creerNomIA(level1), joueur_2, level1, null);
 
                 } else if (est_ia_ia == 1) {
                     if (est_f1 == 1) {
@@ -976,7 +975,7 @@ public class InterfaceJoueurs extends Interface {
                         level2 = Level.MEDIUM;
                     }
 
-                    controller.goToPlateau(null, null, level1, level2);
+                    controller.goToPlateau(creerNomIA(level1), creerNomIA(level2), level1, level2);
                 }   //controller.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
 
                 System.out.println(joueur_1 + " " + joueur_2);
@@ -1000,14 +999,30 @@ public class InterfaceJoueurs extends Interface {
             return null;
         }
         switch (joueur) {
-            case "facile":
+            case "Facile":
                 return Level.EASY;
-            case "moyenne":
+            case "Moyenne":
                 return Level.MEDIUM;
-            case "difficile":
+            case "Difficile":
                 return Level.HARD;
             default:
                 return Level.EASY;
+        }
+    }
+
+    public String creerNomIA(Level ia) {
+        if (ia == null) {
+            return null;
+        }
+        switch (ia) {
+            case EASY:
+                return "facile";
+            case MEDIUM:
+                return "moyenne";
+            case HARD:
+                return "Difficile";
+            default:
+                return "Facile";
         }
     }
 
