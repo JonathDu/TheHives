@@ -307,9 +307,9 @@ public class InterfacePlateau extends Interface {
 
     public void majTileMain(Tile tile, int nbTiles) {
         if (tile.color == TeamColor.BLACK) {
-            mainDroite.maj(tile, nbTiles);
+            mainDroite.maj();
         } else {
-            mainGauche.maj(tile, nbTiles);
+            mainGauche.maj();
         }
     }
 

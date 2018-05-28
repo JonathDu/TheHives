@@ -12,6 +12,7 @@ import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
+import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -57,8 +58,10 @@ public class NodePlateauMain extends Parent {
         pilesPions = new EnumMap<>(InsectType.class);
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new NodePions(color, col.get(type), type, c));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, color, type));
             pions.getChildren().add(pilesPions.get(type));
+            if (col.get(type) != 0) {
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
+            }
         }
 
         pions.setPadding(new Insets(50, 20, 20, 10));
@@ -103,11 +106,10 @@ public class NodePlateauMain extends Parent {
 
     public void desurlignerTile(Tile tile) {
         pilesPions.get(tile.type).unsetSelected();
-
     }
 
-    public void maj(Tile tile, int nbTiles) {
-        pilesPions.get(tile.type).maj(this.couleur, nbTiles, tile.type);
+    public void maj() {
+        this.update(col);
     }
 
     public void setIsCourant(boolean c) {
@@ -125,8 +127,10 @@ public class NodePlateauMain extends Parent {
         pilesPions.clear();
         for (InsectType type : InsectType.implemented_insects) {
             pilesPions.put(type, new NodePions(couleur, collection.get(type), type, c));
-            pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
             pions.getChildren().add(pilesPions.get(type));
+            if (collection.get(type) != 0) {
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
+            }
         }
         pions.getChildren().add(affichageJoueur);
     }
