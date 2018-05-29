@@ -257,12 +257,9 @@ public class InterfacePlateau extends Interface {
 
         boutonConseil.setOnMouseClicked(value
                 -> {
-            if(gameController.isIAvsIA())
-            {
+            if (gameController.isIAvsIA()) {
                 gameController.playPause();
-            }
-            else
-            {
+            } else {
                 gameController.help();
             }
         });
@@ -339,10 +336,16 @@ public class InterfacePlateau extends Interface {
             StatistiqueGesture.setWinScoreFor(gagnant, perdant);
             StatistiqueGesture.setLoseScoreFor(perdant, gagnant);
         }
+        f.view.setVisible(false);
+
+        Timeline b = new Timeline(new KeyFrame(Duration.millis(1), (event) -> {
+            f.view.setVisible(true);
+        }));
         Timeline a = new Timeline(new KeyFrame(Duration.millis(5000), (event) -> {
             f.view.setVisible(false);
         }));
         a.play();
+        b.play();
 
     }
 

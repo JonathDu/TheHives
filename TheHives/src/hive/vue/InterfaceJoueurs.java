@@ -1018,9 +1018,9 @@ public class InterfaceJoueurs extends Interface {
         }
         switch (ia) {
             case EASY:
-                return "facile";
+                return "Facile";
             case MEDIUM:
-                return "moyenne";
+                return "Moyenne";
             case HARD:
                 return "Difficile";
             default:

@@ -46,6 +46,7 @@ public class FinPartie extends Parent {
 
     private final HiveBouton recommencer;
     private final HiveBouton retourMenu;
+    private final HiveBouton refaireDernier;
 
     public FinPartie(Scene _scene, Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant, TeamColor couleur) {
         primaryStage = _primaryStage;
@@ -54,9 +55,9 @@ public class FinPartie extends Parent {
         gameController = _gameController;
         i = _i;
         cacheImage = _cacheImage;
-        principal = new VBox(50);
-        bouton = new HBox(50);
-        image = new HBox();
+        principal = new VBox(30);
+        bouton = new HBox(30);
+        image = new HBox(30);
         if (couleur == TeamColor.BLACK) {
             view = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuNoir.png"));
 
@@ -70,6 +71,7 @@ public class FinPartie extends Parent {
 
         recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), scene);
         retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
+        refaireDernier = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
 
         gagnant = joueurGagnant;
         message = new Label();
@@ -83,9 +85,9 @@ public class FinPartie extends Parent {
         this.getChildren().add(rec);
 
         ecran = new GridPane();
-        ecran.prefWidthProperty().bind(scene.widthProperty());
-        ecran.prefHeightProperty().bind(scene.heightProperty());
-        ecran.minHeightProperty().bind(scene.heightProperty());
+        ecran.prefWidthProperty().bind(primaryStage.widthProperty());
+        ecran.prefHeightProperty().bind(primaryStage.heightProperty());
+        ecran.minHeightProperty().bind(primaryStage.heightProperty());
         ecran.setAlignment(Pos.CENTER);
         setTextWithCurrentLanguage();
         setHandlers();
@@ -117,30 +119,41 @@ public class FinPartie extends Parent {
             i.panePrincipale.getChildren().remove(this);
             controller.goToMenu();
         });
+        refaireDernier.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
+            for (int i = 0; i < 4; i++) {
+                gameController.undo();
+                
+            }
+            gameController.start();
+            this.setVisible(false);
+        });
     }
 
     private void placerObjetsGraphiques() {
         principal.prefWidthProperty().bind(ecran.widthProperty());
-        principal.minHeightProperty().bind(ecran.heightProperty());
+        principal.prefHeightProperty().bind(ecran.heightProperty());
 
         message.maxWidthProperty().bind(principal.widthProperty());
         message.setTextFill(Color.WHITE);
         message.setAlignment(Pos.CENTER);
-        message.setPadding(new Insets(30));
+        message.setPadding(new Insets(0));
         message.prefHeightProperty().bind(ecran.heightProperty().divide(4));
 
-        recommencer.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
-        retourMenu.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
+        recommencer.setSize(ecran.widthProperty().divide(16));
+        retourMenu.setSize(ecran.widthProperty().divide(16));
+        refaireDernier.setSize(ecran.widthProperty().divide(16));
 
         bouton.getChildren().add(recommencer);
+        bouton.getChildren().add(refaireDernier);
         bouton.getChildren().add(retourMenu);
 
+        bouton.prefWidthProperty().bind(principal.widthProperty());
         bouton.setAlignment(Pos.BOTTOM_CENTER);
-        bouton.prefHeightProperty().bind(ecran.heightProperty().divide(4));
+        bouton.prefHeightProperty().bind(principal.heightProperty().divide(4));
         bouton.setPadding(new Insets(30));
 
         image.setAlignment(Pos.CENTER);
-        image.prefHeightProperty().bind(ecran.heightProperty().divide(2));
+        image.prefHeightProperty().bind(principal.heightProperty().divide(2));
 
         recommencer.setAlignment(Pos.CENTER);
         retourMenu.setAlignment(Pos.CENTER);

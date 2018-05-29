@@ -66,7 +66,6 @@ public class NodeComb extends Parent {
         socle.hexagon.setStroke(col);
         socle.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                System.out.println("fdssdf");
                 event.acceptTransferModes(TransferMode.ANY);
 
                 event.consume();
@@ -77,7 +76,6 @@ public class NodeComb extends Parent {
             pions.get(i).hexagon.setStroke(col);
             pions.get(i).setOnDragOver(new EventHandler<DragEvent>() {
                 public void handle(DragEvent event) {
-                    System.out.println("fdssdf");
                     event.acceptTransferModes(TransferMode.ANY);
 
                     event.consume();
