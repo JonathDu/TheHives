@@ -17,4 +17,10 @@ public class SettingsGesture extends MyProperties
     {
         super(SETTINGS_PATH);
     }
+    
+    @Override
+    public String get(String key)
+    {
+        return super.map.getOrDefault(key, "true");
+    }
 }
