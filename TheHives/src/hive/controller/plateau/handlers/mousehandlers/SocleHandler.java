@@ -32,7 +32,7 @@ public class SocleHandler extends PlateauHandler
     {
         System.out.println("--- SOCLE ---");
         
-        if (event.getEventType() == DragEvent.DRAG_DROPPED || event.getEventType() == MouseEvent.MOUSE_CLICKED)
+        if (event.getEventType() == DragEvent.DRAG_DROPPED || event.getEventType() == MouseEvent.MOUSE_CLICKED || event.getEventType() == MouseEvent.MOUSE_RELEASED)
         {
             if(event.getEventType() == DragEvent.DRAG_DROPPED){
             System.out.println("yo");
@@ -83,6 +83,9 @@ public class SocleHandler extends PlateauHandler
                 case TILE_SELECTED:
                     if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).desurlignerTile(controller.builder.tile);
+                        controller.builder.setBegin();
                         System.err.println("Placement impossible"); //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
                     } else
                     {

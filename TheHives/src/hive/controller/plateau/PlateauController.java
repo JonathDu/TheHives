@@ -12,6 +12,7 @@ import hive.controller.plateau.graphicaction.ActionGraphicUpdater;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdaterDeselect;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdaterWithoutSelect;
 import hive.model.GameProgress;
+import hive.model.Match;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
@@ -36,6 +37,7 @@ public class PlateauController
 {
 
     public Game game;
+    public Match match;
     public GameProgress progress;
     public InterfacePlateau uiPlateau;
 
@@ -45,12 +47,12 @@ public class PlateauController
 
     public int nbGames;
 
-    public PlateauController(Game game, InterfacePlateau uiPlateau)
+    public PlateauController(Match match, InterfacePlateau uiPlateau)
     {
-        this.game = game;
+        this.game = match.game;
         this.progress = new GameProgress(game);
         this.uiPlateau = uiPlateau;
-
+        this.match = match;
         this.builder = new ActionBuilder();
 
         timerJouerIA = new Timeline(new KeyFrame(Duration.millis(200), new IAPlayerHandler(this)));
@@ -84,7 +86,7 @@ public class PlateauController
 
     public void playPause()
     {
-            if (timerFrame.getStatus() == Animation.Status.PAUSED)
+        if (timerFrame.getStatus() == Animation.Status.PAUSED)
         {
             //TODO : popup "reprise du jeu"
             System.out.println("reprise du jeu");
@@ -145,20 +147,26 @@ public class PlateauController
                         ActionGraphicUpdaterDeselect gUpdaterDeselect = new ActionGraphicUpdaterDeselect(uiPlateau, game);
                         progress.game.state.data.trace.peek().accept(gUpdaterDeselect);
                     }
+
                     NoAction noAction = new NoAction();
                     ((HumanDecision) game.state.turn.getCurrent().decision).setAction(noAction);
                     progress.doAction();
+                    
+                    if (!currentPlayerKnowHeCantPlay())
+                    {
+                        uiPlateau.message("Attention", "Vous ne pouvez pas jouer, passage au tour suivant");
+                    }
+                    
                     startOfTurnInfos();
-                    uiPlateau.message("Attention", "Vous ne pouvez pas jouer, passage au tour suivant");
                 }
             }
             break;
             case CURRENT_WINS:
-                uiPlateau.finPartie(game.state.turn.current.toString(), game.state.turn.opponent.toString());
+                uiPlateau.finPartie(match.getPlayerData(game.state.turn.current.color).name, match.getPlayerData(game.state.turn.opponent.color).name);
                 stop();
                 break;
             case OPPONENT_WINS:
-                uiPlateau.finPartie(game.state.turn.opponent.toString(), game.state.turn.current.toString());
+                uiPlateau.finPartie(match.getPlayerData(game.state.turn.opponent.color).name, match.getPlayerData(game.state.turn.current.color).name);
                 stop();
                 break;
             case DRAW:
@@ -166,6 +174,14 @@ public class PlateauController
                 stop();
                 break;
         }
+    }
+
+    private boolean currentPlayerKnowHeCantPlay()
+    {
+        if(game.state.data.trace.size() <= 3)
+            return false;
+        
+        return game.state.data.trace.get(game.state.data.trace.size()-3) instanceof NoAction;
     }
 
     private boolean currentPlayerCanPlay()
@@ -199,7 +215,7 @@ public class PlateauController
         ActionGraphicUpdaterWithoutSelect gUpdater = new ActionGraphicUpdaterWithoutSelect(uiPlateau, progress.game);
         game.state.data.undos.peek().accept(gUpdater);
 
-        startOfTurnInfos();
+        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
     }
 
     public void redo()
