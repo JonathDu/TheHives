@@ -95,7 +95,7 @@ public class InterfacePlateau extends Interface {
         borderPane.prefWidthProperty().bind(scene.widthProperty());
         borderPane.prefHeightProperty().bind(scene.heightProperty());
 
-        gameController = new PlateauController(match.game, this);
+        gameController = new PlateauController(match, this);
 
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, match.getPlayerData1().name, c, gameController, this, TeamColor.WHITE);
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, match.getPlayerData2().name, c, gameController, this, TeamColor.BLACK);
@@ -257,7 +257,14 @@ public class InterfacePlateau extends Interface {
 
         boutonConseil.setOnMouseClicked(value
                 -> {
-            gameController.help();
+            if(gameController.isIAvsIA())
+            {
+                gameController.playPause();
+            }
+            else
+            {
+                gameController.help();
+            }
         });
 
         pane.setPadding(new Insets(5, 5, 0, 5));

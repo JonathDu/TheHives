@@ -76,7 +76,6 @@ public final class Controller
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
         PlayersData data = new PlayersData(game.getPlayer(TeamColor.WHITE), data1, game.getPlayer(TeamColor.BLACK), data2);
         Match match = new Match(game, data);
-        System.out.println(match.getPlayerData1());
         currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, match, cacheImage));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);

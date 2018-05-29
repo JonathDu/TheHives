@@ -926,7 +926,7 @@ public class InterfaceJoueurs extends Interface {
                     if (Name2.getText() == null) {
                         joueur_2 = controller.gestionnaireLangage.getText("text_joueur2");
                     } else {
-                        joueur_2 = Name1.getCharacters().toString();
+                        joueur_2 = Name2.getCharacters().toString();
                     }
                     controller.goToPlateau(new PlayerData(joueur_1), new PlayerData(joueur_2), null, null);
                 } else if (est_h_ai == 1) {

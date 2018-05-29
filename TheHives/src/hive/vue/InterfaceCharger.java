@@ -164,7 +164,7 @@ public class InterfaceCharger extends Interface
                 }
                 if (isOk)
                 {
-                    Match match = SavesGesture.loadGame(selectedFileName);
+                    Match match = SavesGesture.loadGame(selectedFileName + ".xml");
                 controller.goToPlateau(match);
                 } else
                 {
