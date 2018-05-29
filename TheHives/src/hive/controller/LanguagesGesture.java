@@ -30,7 +30,7 @@ public final class LanguagesGesture
         {
             languages.put(currentlangue.getDisplayName(Locale.getDefault()), currentlangue);
         });
-        language = languages.get(_langue);
+        language = languages.getOrDefault(_langue, Locale.getDefault());
         bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
     }
 
