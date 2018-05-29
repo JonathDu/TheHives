@@ -38,9 +38,9 @@ public final class Controller
     Stage primaryStage;
     CacheImage cacheImage;
     public Dimension screenSize;
-
-    public LanguagesGesture gestionnaireLangage;
+    
     public SettingsGesture settingsGesture;
+    public LanguagesGesture gestionnaireLangage;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
