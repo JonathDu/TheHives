@@ -23,18 +23,18 @@ import java.util.ArrayList;
 public class Evaluation {
     //ajout atribut
     static int heuristicVal [][][];
-    static int evaluation(Game state){
-        
+    static int evaluation(Game state, int nbCoupsPossibles){
+        Heuristic.initMult(nbCoupsPossibles);
         heuristicVal = Heuristic.getHeuristic();
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
         Player opponent = hia.opponentPlayer(state);
         int value=0;
         if(hia.winOpponent(state)){
-            return -10000;
+            return -100000;
         }
         else if(hia.winCurrent(state)){
-            return 10000;
+            return 100000;
         }
         else{
             hia.setTiles(state, neighboursFree, neighboursBlock);
@@ -81,10 +81,10 @@ public class Evaluation {
         hia.setQueenNeighbors(state, opponent, neighboursFree, neighboursBlock);
         
         for(Tile tuile : neighboursFree){
-            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 4 : 2)][Heuristic.trans(tuile.type)];
+            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 4 : 2)][Heuristic.trans(tuile.type)]*Heuristic.P_J;
         }
         for(Tile tuile : neighboursBlock){
-            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 3 : 1)][Heuristic.trans(tuile.type)];
+            value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 3 : 1)][Heuristic.trans(tuile.type)]*Heuristic.P_J;
         }
         hia.setQueenNeighbors(state, current, neighboursFree, neighboursBlock);
 

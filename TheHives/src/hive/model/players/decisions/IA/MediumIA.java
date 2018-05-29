@@ -33,6 +33,8 @@ public class MediumIA implements IA{
         int depth = 2;
         init(depth+1);
         hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+        int nbCoup = actionList[depth].size();
+
         if(actionList[depth].isEmpty()){
             return new NoAction();
         }
@@ -50,7 +52,7 @@ public class MediumIA implements IA{
                 return currentAction;
             }
             else{
-                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
+                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList,nbCoup);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
