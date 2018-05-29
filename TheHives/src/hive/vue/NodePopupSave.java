@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.SavesGesture;
+import hive.model.Match;
 import hive.model.game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -28,8 +29,6 @@ public class NodePopupSave extends Parent {
 
     private final Controller controller;
     private Stage stage;
-    private final Game game;
-
     private final HBox horizontal;
     private final VBox vertical;
 
@@ -39,10 +38,9 @@ public class NodePopupSave extends Parent {
 
     public TextField field;
 
-    public NodePopupSave(Controller controller, Stage primaryStage, Game game) {
+    public NodePopupSave(Controller controller, Stage primaryStage, Match match) {
         this.controller = controller;
         this.stage = primaryStage;
-        this.game = game;
 
         horizontal = new HBox();
         vertical = new VBox();
@@ -56,12 +54,12 @@ public class NodePopupSave extends Parent {
         });
 
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            SavesGesture.saveGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(match, field.getText() + ".xml");
             stage.close();
         });
 
         validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            SavesGesture.saveGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(match, field.getText() + ".xml");
             stage.close();
             controller.goToMenu();
         });

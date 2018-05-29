@@ -6,6 +6,9 @@
 package hive.vue;
 
 import hive.controller.Controller;
+import hive.controller.SavesGesture;
+import hive.model.game.Game;
+import hive.model.players.PlayerData;
 import hive.model.players.decisions.IA.Level;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
@@ -923,7 +926,7 @@ public class InterfaceJoueurs extends Interface {
                     } else {
                         joueur_2 = Name1.getCharacters().toString();
                     }
-                    controller.goToPlateau(joueur_1, joueur_2, null, null);
+                    controller.goToPlateau(new PlayerData(joueur_1), new PlayerData(joueur_2), null, null);
                 } else if (est_h_ai == 1) {
                     joueur_1 = Name1.getCharacters().toString();
                     if (Name1.getText() == null) {
@@ -938,7 +941,9 @@ public class InterfaceJoueurs extends Interface {
                     } else {
                         level2 = Level.MEDIUM;
                     }
-                    controller.goToPlateau(joueur_1, creerNomIA(level2), null, level2);
+
+                    controller.goToPlateau(new PlayerData(joueur_1), new PlayerData(creerNomIA(level2)), null, level2);
+
 
                 } else if (est_ai_h == 1) {
                     joueur_2 = Name2.getCharacters().toString();
@@ -954,7 +959,9 @@ public class InterfaceJoueurs extends Interface {
                     } else {
                         level1 = Level.MEDIUM;
                     }
-                    controller.goToPlateau(creerNomIA(level1), joueur_2, level1, null);
+
+                    controller.goToPlateau(new PlayerData(creerNomIA(level1)), new PlayerData(joueur_2), level1, null);
+
 
                 } else if (est_ia_ia == 1) {
                     if (est_f1 == 1) {
@@ -975,8 +982,11 @@ public class InterfaceJoueurs extends Interface {
                     } else {
                         level2 = Level.MEDIUM;
                     }
-                    controller.goToPlateau(creerNomIA(level1), creerNomIA(level2), level1, level2);
-                };
+
+                    controller.goToPlateau(new PlayerData(creerNomIA(level1)), new PlayerData(creerNomIA(level2)), level1, level2);
+                }   //controller.goToPlateau(Name1.getCharacters().toString(), Name2.getCharacters().toString());
+
+
             }
         });
         bp.setBottom(valider_sp);

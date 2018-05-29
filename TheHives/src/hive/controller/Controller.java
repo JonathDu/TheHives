@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -5,8 +6,12 @@
  */
 package hive.controller;
 
+import hive.model.Match;
 import hive.model.game.Game;
 import hive.model.game.PrecalculatedGame;
+import hive.model.players.PlayerData;
+import hive.model.players.PlayersData;
+import hive.model.players.TeamColor;
 import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IADecision;
@@ -38,12 +43,14 @@ public final class Controller
     Stage primaryStage;
     CacheImage cacheImage;
     public Dimension screenSize;
-    
-    public SettingsGesture settingsGesture;
     public LanguagesGesture gestionnaireLangage;
+    public StatistiqueGesture scoresGesture;
+    public String typeTheme;
+    public SettingsGesture settingsGesture;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
+
         currentScene = _currentScene;
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
@@ -64,18 +71,20 @@ public final class Controller
         currentScene.setRoot(new InterfaceJoueurs(currentScene, primaryStage, this, cacheImage));
     }
 
-    public void goToPlateau(String nomJoueur1, String nomJoueur2, Level levelJ1, Level levelJ2)
+    public void goToPlateau(PlayerData data1, PlayerData data2, Level levelJ1, Level levelJ2)
     {
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
-
-        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2));
+        PlayersData data = new PlayersData(game.getPlayer(TeamColor.WHITE), data1, game.getPlayer(TeamColor.BLACK), data2);
+        Match match = new Match(game, data);
+        System.out.println(match.getPlayerData1());
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, match, cacheImage));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }
 
-    public void goToPlateau(Game game)
+    public void goToPlateau(Match match)
     {
-        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"));
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, match, cacheImage));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }

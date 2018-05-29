@@ -68,11 +68,18 @@ public class HexagonsIteratorsTest
     @Before
     public void setUp()
     {
-        Integer[][] tab = getConsecutives2D(1, 10, 10);
+        Integer[][] tab = 
+        {
+            {1,2,3,4},
+            {5,6,7,8},
+            {9,10,11,12},
+            {13,14,15,16}
+        };
         HiveNeighborsShifter getter = new HiveNeighborsShifter();
         
         m = new Matrix<>(tab);
         c = new CircularHexagonsGraph(m, getter, (x, y) -> new Hexagon());
+        System.out.println(c);
     }
     
     @After
@@ -98,8 +105,6 @@ public class HexagonsIteratorsTest
     @Test
     public void testLineAtSideIterator()
     {
-        System.out.println(c);
-        
         testLineAtSideIteratorForSide(HexagonSide.A, 4, "13 9 5 1 ");
         testLineAtSideIteratorForSide(HexagonSide.B, 4, "14 15 12 9 ");
         testLineAtSideIteratorForSide(HexagonSide.C, 4, "2 7 8 9 ");
@@ -111,8 +116,6 @@ public class HexagonsIteratorsTest
     @Test
     public void testNeighborsIterator()
     {
-        System.out.println(c);
-        
         NeighborsIterator<Integer> neighIterator = new NeighborsIterator<>(c.getHexagon(new Vector2i(1,1)));
         
         String chaineAttendue = "2 7 11 10 9 5 ";
@@ -129,8 +132,6 @@ public class HexagonsIteratorsTest
     @Test
     public void testBreadthIterator()
     {
-        System.out.println(c);
-        
         Predicate<Hexagon<Integer>> p = (h) -> h.value() > 0;
         
         BreadthIterator<Integer> breadthIterator = new BreadthIterator<>(c.getHexagon(new Vector2i(1,1)), p);
