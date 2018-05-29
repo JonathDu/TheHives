@@ -23,7 +23,7 @@ public class TheHives extends Application
 {
 
     public int HEIGHT = 700;
-    public int WIDTH = 800;
+    public int WIDTH = (int) ((int) 700*1.833);
     Dimension screenSize;
     Group root;
     Scene scene;
