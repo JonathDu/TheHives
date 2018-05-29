@@ -87,8 +87,8 @@ public class NodeRuche extends Parent {
             for (int x = 0; x < largeur; x++) {
                 Vector2i pos = new Vector2i(x, y);
 
-//                SocleHandler handler = new SocleHandler(plateauController, pos);
-//               tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                SocleHandler handler = new SocleHandler(plateauController, pos);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
 
             }
         }
@@ -132,7 +132,7 @@ public class NodeRuche extends Parent {
             tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb(4, 246, 118));
             SocleHandler handler = new SocleHandler(plateauController, cells.get(i).comb.pos);
             tab.getAt(cells.get(i).comb.pos).addEventFilter(DragEvent.DRAG_DROPPED, handler);
-            
+
         }
     }
 

@@ -49,7 +49,7 @@ public class NodeComb extends Parent {
         if (comb != null) {
             for (int i = 0; i < comb.value().size(); i++) {
                 pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c, longueur));
-                //pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
+                pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).addEventFilter(DragEvent.DRAG_DONE, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).setLayoutX(4 * i);

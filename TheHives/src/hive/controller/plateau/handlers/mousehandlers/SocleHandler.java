@@ -32,8 +32,9 @@ public class SocleHandler extends PlateauHandler
     {
         System.out.println("--- SOCLE ---");
         
-        if (event.getEventType() == DragEvent.DRAG_DROPPED )
+        if (event.getEventType() == DragEvent.DRAG_DROPPED || event.getEventType() == MouseEvent.MOUSE_CLICKED)
         {
+            if(event.getEventType() == DragEvent.DRAG_DROPPED){
             System.out.println("yo");
             DragEvent e = (DragEvent) event;
             Dragboard db = e.getDragboard();
@@ -48,7 +49,7 @@ public class SocleHandler extends PlateauHandler
             
           
           event.consume();
-        
+        }
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:

@@ -94,6 +94,7 @@ public class InterfacePlateau extends Interface {
 
 
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, match.getPlayerData1().name, c, gameController, this, TeamColor.WHITE);
+        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, match.getPlayerData2().name, c, gameController, this, TeamColor.BLACK);
 
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");

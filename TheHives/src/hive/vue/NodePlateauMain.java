@@ -59,7 +59,7 @@ public class NodePlateauMain extends Parent {
             pilesPions.put(type, new NodePions(color, col.get(type), type, c));
             pions.getChildren().add(pilesPions.get(type));
             if (col.get(type) != 0) {
-//                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
                 pilesPions.get(type).addEventHandler(MouseEvent.DRAG_DETECTED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
 
             }
@@ -130,7 +130,7 @@ public class NodePlateauMain extends Parent {
             pilesPions.put(type, new NodePions(couleur, collection.get(type), type, c));
             pions.getChildren().add(pilesPions.get(type));
             if (collection.get(type) != 0) {
-//                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
                 pilesPions.get(type).addEventHandler(MouseEvent.DRAG_DETECTED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
                 pilesPions.get(type).addEventHandler(DragEvent.DRAG_DONE, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
             }
