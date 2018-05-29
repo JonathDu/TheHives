@@ -9,7 +9,6 @@ import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
-import hive.model.players.decisions.IA.IA;
 import java.util.ArrayList;
 import java.util.Random;
 

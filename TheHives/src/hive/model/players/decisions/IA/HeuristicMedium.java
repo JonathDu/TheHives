@@ -22,7 +22,7 @@ import java.util.ArrayList;
     SOLDIER_ANT -> 4
 */
 
-public class HeuristicMoyenne {
+public class HeuristicMedium {
     public static final int[] NB_QUEEN_OP_POSSIBILITY = {150, 100, -166, -166, -166};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 115, 114, 200, 110};
     public static final int[] QUEEN_NEIGH_FREE_OP_OP = {50, 50, 50, 50, 50};
