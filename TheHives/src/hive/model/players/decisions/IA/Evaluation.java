@@ -51,10 +51,10 @@ public class Evaluation {
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int value = 0;
         for(Tile tuile : neighboursFree)
-                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][5][Heuristic.trans(tuile.type)];
+                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][5][Heuristic.trans(tuile.type)]*(tuile.color == hia.currentPlayer(state).color ? Heuristic.D_J : 1);
                     
         for(Tile tuile : neighboursBlock)
-                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][6][Heuristic.trans(tuile.type)];
+                value += heuristicVal[(tuile.color == hia.currentPlayer(state).color ? 1 : 0)][6][Heuristic.trans(tuile.type)]*(tuile.color == hia.currentPlayer(state).color ? Heuristic.D_J : 1);
         return value;
     }
     

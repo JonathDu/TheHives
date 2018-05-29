@@ -40,12 +40,13 @@ public class Heuristic {
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 191, 132};
     public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -40, -75, -80, -85};
-    public static final int[] IN_HAND_CUR = {20 , 20, 20, 20, 20 };
+    public static final int[] IN_HAND_CUR = {20 , 50, 20, 20, 20 };
 
     
     public static final int[] QUEEN_CRUSHED_CUR = {1000, 0};
     public static final int[] QUEEN_CRUSHED_OP = {-1000, 0};
     public static double P_J ;
+    public static double D_J ;
     
     public static final int QUEEN_BEE = 0;
     public static final int SPIDER = 1;
@@ -65,11 +66,15 @@ public class Heuristic {
     }
     
     public static final void initMult(int nbCoupPossibles){
-        if(nbCoupPossibles<=10){
-            P_J = 2;
+        if(nbCoupPossibles<=15){
+            P_J = 3;
+            D_J = 0.5;
         }
-        else
+        else{
             P_J = 1;
+            D_J = 1;
+
+        }
     }
     
     public static final int[][][] getHeuristic(){
