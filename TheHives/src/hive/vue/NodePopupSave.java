@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.SavesGesture;
+import hive.model.Match;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import javafx.event.EventType;
@@ -44,7 +45,7 @@ public class NodePopupSave extends Parent {
 
     public TextField field;
 
-    public NodePopupSave(Controller controller, Stage primaryStage, Game game) {
+    public NodePopupSave(Controller controller, Stage primaryStage, Match match) {
         this.controller = controller;
         this.stage = primaryStage;
         this.game = game;
@@ -61,12 +62,12 @@ public class NodePopupSave extends Parent {
         });
 
         valider.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            SavesGesture.saveGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(match, field.getText() + ".xml");
             stage.close();
         });
 
         validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
-            SavesGesture.saveGame(game, field.getText() + ".xml");
+            SavesGesture.saveGame(match, field.getText() + ".xml");
             stage.close();
             controller.goToMenu();
         });

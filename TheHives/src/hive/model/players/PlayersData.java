@@ -20,7 +20,7 @@ public class PlayersData extends TreeMap<Player, PlayerData>
 {
     public PlayersData()
     {
-        super((p1, p2) -> p1 != p2 ? 0 : -1);
+        super((p1, p2) -> p1 == p2 ? 0 : -1);
     }
     
     public PlayersData(Player player1, PlayerData data1, Player player2, PlayerData data2)

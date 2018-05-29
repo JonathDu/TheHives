@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateau.PlateauController;
+import hive.model.Match;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
@@ -51,7 +52,7 @@ public class InterfacePlateau extends Interface {
     ScrollPane scrollPane;
     VBox centerMainG;
     VBox centerMainD;
-    Game game;
+    Match match;
 
     HiveBouton boutonHome;
     HiveBouton boutonSave;
@@ -69,11 +70,11 @@ public class InterfacePlateau extends Interface {
 
     boolean onDrag = false;
 
-    public InterfacePlateau(Stage stage, Controller controller, Game game, CacheImage c, String joueur1, String joueur2) {
+    public InterfacePlateau(Stage stage, Controller controller, Match match, CacheImage c) {
 
         super(stage, controller, c);
 
-        this.game = game;
+        this.match = match;
         this.controller = controller;
         borderPane = new BorderPane();
         centerPane = new StackPane();
@@ -86,10 +87,10 @@ public class InterfacePlateau extends Interface {
         borderPane.prefWidthProperty().bind(stage.widthProperty());
         borderPane.prefHeightProperty().bind(stage.heightProperty());
 
-        gameController = new PlateauController(game, this);
+        gameController = new PlateauController(match.game, this);
 
-        mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, joueur1, c, gameController, this, TeamColor.WHITE);
-        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, joueur2, c, gameController, this, TeamColor.BLACK);
+        mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, stage, match.getPlayerData1().name, c, gameController, this, TeamColor.WHITE);
+        mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, stage, match.getPlayerData2().name, c, gameController, this, TeamColor.BLACK);
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
@@ -178,8 +179,8 @@ public class InterfacePlateau extends Interface {
     public void update() {
         ruche.updateTab(); //TODO !!!
         majJoueurCourant(TeamColor.WHITE);
-        mainGauche.update(game.state.players.get(0).collection);
-        mainDroite.update(game.state.players.get(1).collection);
+        mainGauche.update(match.game.state.players.get(0).collection);
+        mainDroite.update(match.game.state.players.get(1).collection);
     }
 
     private void setRucheHandler() {
@@ -218,7 +219,7 @@ public class InterfacePlateau extends Interface {
         boutonHome.setOnMouseClicked(value -> {
             Stage quitStage = new Stage();
             quitStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopup root = new NodePopup(controller, quitStage, game, gameController);
+            NodePopup root = new NodePopup(controller, quitStage, match, gameController);
             quitStage.setScene(new Scene(root));
             quitStage.show();
 
@@ -227,7 +228,7 @@ public class InterfacePlateau extends Interface {
         boutonSave.setOnMouseClicked(value -> {
             Stage savaStage = new Stage();
             savaStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopupSave root = new NodePopupSave(controller, savaStage, game);
+            NodePopupSave root = new NodePopupSave(controller, savaStage, match);
             savaStage.setScene(new Scene(root));
             savaStage.show();
         });

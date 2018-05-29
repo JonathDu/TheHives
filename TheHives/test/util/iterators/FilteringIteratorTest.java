@@ -6,14 +6,15 @@
 package util.iterators;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import testutil.TestUtil;
 
 /**
  *
@@ -46,29 +47,23 @@ public class FilteringIteratorTest
     {
     }
 
-    /**
-     * Test of next method, of class FilteringIterator.
-     */
     @Test
     public void testNext()
     {
-        Predicate<Integer> p = (t) -> t <= 5;
-        
+        Predicate<Integer> p;
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(5);
-        list.add(8);
-        list.add(2);
-        list.add(1);
-        list.add(41);
         
-        FilteringIterator<Integer> f = new FilteringIterator<>(list.iterator(), p);
-        
-        while(f.hasNext())
+        for(int i = 0; i < 100; ++i)
         {
-            //System.out.println(f.next());
-            assert p.test(f.next());
+            TestUtil.randList(list, 100, 1000);
+            p = (t) -> t <= 80;
+            FilteringIterator<Integer> it = new FilteringIterator<>(list.iterator(), p);
+            
+            while (it.hasNext())
+            {
+                Integer v = it.next();
+                assert p.test(v);
+            }
         }
-        
-        assert true;
     }
 }

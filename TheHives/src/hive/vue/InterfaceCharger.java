@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.SavesGesture;
+import hive.model.Match;
 import hive.model.game.Game;
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -154,8 +155,8 @@ public class InterfaceCharger extends Interface {
             @Override
             public void handle(MouseEvent event) {
                 String selectedFileName = ((Label)parties.getSelectionModel().getSelectedItem().getChildren().get(1)).getText();
-                Game game = SavesGesture.loadGame(selectedFileName);
-                controller.goToPlateau(game);
+                Match match = SavesGesture.loadGame(selectedFileName);
+                controller.goToPlateau(match);
             }
         });
         /*if (height == max_screen_height) {

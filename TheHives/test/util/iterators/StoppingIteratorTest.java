@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import testutil.TestUtil;
 
 /**
  *
@@ -51,25 +51,22 @@ public class StoppingIteratorTest
     @Test
     public void testNext()
     {
-        Predicate<Integer> p = (t) -> t <= 5;
-
+        Predicate<Integer> p;
         ArrayList<Integer> list = new ArrayList<>();
-        list.add(5);
-        list.add(2);
-        list.add(8);
-        list.add(1);
-        list.add(41);
-
-        StoppingIterator<Integer> it = new StoppingIterator<>(list.iterator(), p);
-
-        while (it.hasNext())
-        {
-            //System.out.println(f.next());
-            assert p.test(it.next());
-        }
         
-        assert it.getStoppingValue() == 8;
-
-        assert true;
+        for(int k = 0; k < 100; ++k)
+        {
+            TestUtil.randList(list, 100, 1000);
+            p = (t) -> t <= 80;
+            StoppingIterator<Integer> it = new StoppingIterator<>(list.iterator(), p);
+            
+            int idx = 0;
+            while (it.hasNext())
+            {
+                Integer v = it.next();
+                assert p.test(v);
+                assert v.equals(list.get(idx++));
+            }
+        }
     }
 }

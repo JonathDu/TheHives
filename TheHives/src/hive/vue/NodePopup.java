@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateau.PlateauController;
+import hive.model.Match;
 import hive.model.game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -33,7 +34,7 @@ public class NodePopup extends Parent {
 
     private final Controller controller;
     private final Stage stage;
-    private final Game game;
+    private final Match match;
     private final PlateauController plateauController;
 
     private final HBox horizontal;
@@ -43,10 +44,10 @@ public class NodePopup extends Parent {
     public Button quitter;
     public Button validerSave;
 
-    public NodePopup(Controller controller, Stage primaryStage, Game game, PlateauController plateauController) {
+    public NodePopup(Controller controller, Stage primaryStage, Match match, PlateauController plateauController) {
         this.controller = controller;
         this.stage = primaryStage;
-        this.game = game;
+        this.match = match;
         this.plateauController = plateauController;
 
         message = "Etes vous sur de vouloir quitter la partie ?";
@@ -92,7 +93,7 @@ public class NodePopup extends Parent {
         validerSave.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             Stage saveStage = new Stage();
             saveStage.initModality(Modality.APPLICATION_MODAL);
-            NodePopupSave rootSave = new NodePopupSave(controller, saveStage, game);
+            NodePopupSave rootSave = new NodePopupSave(controller, saveStage, match);
             saveStage.setScene(new Scene(rootSave));
             saveStage.show();
 

@@ -5,8 +5,9 @@
  */
 package hive.controller;
 
+import hive.model.Match;
+import hive.model.MatchLoader;
 import hive.model.game.Game;
-import hive.model.game.GameLoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,26 +20,26 @@ import util.LoaderXML;
  */
 public class SavesGesture
 {
-    public static Game loadGame(String fileName)
+    public static Match loadGame(String fileName)
     {
-        LoaderXML<Game> loader = new GameLoader();
-        Game game = null;
+        LoaderXML<Match> loader = new MatchLoader();
+        Match match = null;
         try
         {
-            game = loader.loadFromFile("savefiles/" + fileName);
+            match = loader.loadFromFile("savefiles/" + fileName);
         } catch (FileNotFoundException ex)
         {
             System.err.println("PAS DE FICHIER TROUVE");
         }
-        return game;
+        return match;
     }
 
-    public static void saveGame(Game game, String fileName)
+    public static void saveGame(Match match, String fileName)
     {
-        LoaderXML<Game> loader = new GameLoader();
+        LoaderXML<Match> loader = new MatchLoader();
         try
         {
-            loader.loadInFile(game, "savefiles/" + fileName);
+            loader.loadInFile(match, "savefiles/" + fileName);
         } catch (IOException ex)
         {
             System.err.println("PAS DE FICHIER TROUVE");
