@@ -28,7 +28,7 @@ public final class LanguagesGesture
         languages = new HashMap<>();
         getImplementedLanguages().forEach((currentlangue) ->
         {
-            languages.put(currentlangue.getDisplayName(), currentlangue);
+            languages.put(currentlangue.getDisplayName(Locale.getDefault()), currentlangue);
         });
         language = languages.get(_langue);
         bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
