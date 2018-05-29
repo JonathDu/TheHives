@@ -8,12 +8,17 @@ package hive.vue;
 import hive.controller.Controller;
 import hive.controller.StatistiqueGesture;
 import hive.controller.plateau.PlateauController;
+import hive.controller.plateau.handlers.IAPlayerHandler;
 import hive.model.Match;
 import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.players.TeamColor;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -39,6 +44,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -75,7 +81,6 @@ public class InterfacePlateau extends Interface {
 
     public InterfacePlateau(Scene scene, Stage stage, Controller controller, Match match, CacheImage c) {
         super(scene, stage, controller, c);
-    
 
         this.match = match;
         this.controller = controller;
@@ -92,10 +97,8 @@ public class InterfacePlateau extends Interface {
 
         gameController = new PlateauController(match.game, this);
 
-
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, match.getPlayerData1().name, c, gameController, this, TeamColor.WHITE);
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, match.getPlayerData2().name, c, gameController, this, TeamColor.BLACK);
-
 
         Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
@@ -187,8 +190,6 @@ public class InterfacePlateau extends Interface {
         mainDroite.update(match.game.state.players.get(1).collection);
     }
 
-
-
     private BorderPane setTool() {
         width = (int) scene.getWidth();
 
@@ -230,11 +231,13 @@ public class InterfacePlateau extends Interface {
 
             Stage primaryStage = new Stage();
             Parent root = new Group();
-            primaryStage.setScene(new Scene(root, 800, 600));
+            Scene s = new Scene(root, 800, 600);
+            primaryStage.setScene(s);
             primaryStage.setTitle("Regles");
+            primaryStage.sizeToScene();
+            primaryStage.getScene().setRoot(new InterfaceRegles(primaryStage.getScene(), primaryStage, controller, c, true));
             primaryStage.show();
 
-            primaryStage.setScene(new Scene(new InterfaceRegles(scene, primaryStage, controller, c, true), 800, 600));
         });
 
         boutonRecommencer.setOnMouseClicked(value
@@ -279,7 +282,7 @@ public class InterfacePlateau extends Interface {
         Tooltip.install(boutonSave, sauvegarderTip);
         gauche.getChildren().add(boutonRecommencer);
         Tooltip.install(boutonRecommencer, recommencerTip);
-        droite.getChildren().add(0,boutonRegle);
+        droite.getChildren().add(0, boutonRegle);
         Tooltip.install(boutonRegle, regleTip);
         centre.getChildren().add(boutonAnnuler);
         Tooltip.install(boutonAnnuler, annulerTip);
@@ -315,12 +318,25 @@ public class InterfacePlateau extends Interface {
     }
 
     public void finPartie(String gagnant, String perdant) {
-        this.panePrincipale.getChildren().add(new FinPartie(scene, primaryStage, controller, c, gameController, this, gagnant));
-        if(gagnant != null && perdant != null) //TODO : comment gérer ?
+        TeamColor couleur;
+        if (gagnant.equals(match.getPlayerData(TeamColor.BLACK).name)) {
+            couleur = TeamColor.BLACK;
+        } else {
+            couleur = TeamColor.WHITE;
+
+        }
+        FinPartie f = new FinPartie(scene, primaryStage, controller, c, gameController, this, gagnant, couleur);
+        this.panePrincipale.getChildren().add(f);
+        if (gagnant != null && perdant != null) //TODO : comment gérer ?
         {
             StatistiqueGesture.setWinScoreFor(gagnant, perdant);
             StatistiqueGesture.setLoseScoreFor(perdant, gagnant);
         }
+        Timeline a = new Timeline(new KeyFrame(Duration.millis(3000), (event) -> {
+            f.view.setVisible(false);
+        }));
+        a.play();
+
     }
 
     public void message(String titre, String message) {
@@ -336,7 +352,8 @@ public class InterfacePlateau extends Interface {
     }
 
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
-        if(controller.settingsGesture.get("aide").equals("true"))
+        if (controller.settingsGesture.get("aide").equals("true")) {
             ruche.surlignerDestinationsPossibles(cells);
+        }
     }
 }

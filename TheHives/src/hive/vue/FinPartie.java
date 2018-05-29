@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.plateau.PlateauController;
+import hive.model.players.TeamColor;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -36,8 +37,9 @@ public class FinPartie extends Parent {
     private final Interface i;
     private final HBox bouton;
     private final VBox principal;
-    private final HBox image;
+    public final HBox image;
     private final GridPane ecran;
+    public ImageView view;
 
     private final Label message;
     private final String gagnant;
@@ -45,7 +47,7 @@ public class FinPartie extends Parent {
     private final HiveBouton recommencer;
     private final HiveBouton retourMenu;
 
-    public FinPartie(Scene _scene, Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant) {
+    public FinPartie(Scene _scene, Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant, TeamColor couleur) {
         primaryStage = _primaryStage;
         scene = _scene;
         controller = _controller;
@@ -55,18 +57,23 @@ public class FinPartie extends Parent {
         principal = new VBox(50);
         bouton = new HBox(50);
         image = new HBox();
-        ImageView im = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
-        im.setPreserveRatio(true);
-        im.fitHeightProperty().bind(scene.heightProperty().divide(2));
-        image.getChildren().add(im);
-        
-        
+        if (couleur == TeamColor.BLACK) {
+            view = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuNoir.png"));
+
+        } else {
+            view = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
+
+        }
+        view.setPreserveRatio(true);
+        view.fitHeightProperty().bind(scene.heightProperty().divide(2));
+        image.getChildren().add(view);
+
         recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), scene);
         retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
 
         gagnant = joueurGagnant;
         message = new Label();
-        
+
         Rectangle rec = new Rectangle();
         rec.widthProperty().bind(scene.widthProperty());
         rec.heightProperty().bind(scene.heightProperty());
@@ -83,7 +90,7 @@ public class FinPartie extends Parent {
         setTextWithCurrentLanguage();
         setHandlers();
         placerObjetsGraphiques();
-        
+
         ecran.getChildren().add(principal);
         principal.setAlignment(Pos.TOP_CENTER);
         this.getChildren().add(ecran);
@@ -122,28 +129,25 @@ public class FinPartie extends Parent {
         message.setPadding(new Insets(30));
         message.prefHeightProperty().bind(ecran.heightProperty().divide(4));
 
-       
-
         recommencer.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
         retourMenu.setSize(ecran.widthProperty().add(ecran.heightProperty()).divide(16));
-        
+
         bouton.getChildren().add(recommencer);
         bouton.getChildren().add(retourMenu);
-        
+
         bouton.setAlignment(Pos.BOTTOM_CENTER);
         bouton.prefHeightProperty().bind(ecran.heightProperty().divide(4));
         bouton.setPadding(new Insets(30));
 
         image.setAlignment(Pos.CENTER);
         image.prefHeightProperty().bind(ecran.heightProperty().divide(2));
-        
+
         recommencer.setAlignment(Pos.CENTER);
         retourMenu.setAlignment(Pos.CENTER);
-        
-        principal.getChildren().add(image);
-         principal.getChildren().add(message);
-        principal.getChildren().add(bouton);
 
+        principal.getChildren().add(image);
+        principal.getChildren().add(message);
+        principal.getChildren().add(bouton);
 
     }
 }

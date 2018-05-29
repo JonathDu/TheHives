@@ -29,6 +29,7 @@ public class NodePion extends Parent {
 
         Group g = new Group();
         hexagon = createHexagon(LONGUEUR);
+        hexagon.setStrokeWidth(5);
         ImagePattern img = createImage(typePions, LONGUEUR, c, couleur);
         if (img != null) {
             hexagon.setFill(img);
@@ -44,7 +45,7 @@ public class NodePion extends Parent {
     public NodePion(TeamColor couleur, InsectType typePions, CacheImage c, int longueur) {
         Group g = new Group();
         hexagon = createHexagon(longueur);
-
+        hexagon.setStrokeWidth(5);
         ImagePattern img = createImage(typePions, longueur, c, couleur);
         if (img != null) {
             hexagon.setFill(img);

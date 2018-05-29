@@ -44,8 +44,7 @@ public class TilePlateauHandler extends PlateauHandler
             
             if(event.getEventType() == MouseEvent.DRAG_DETECTED){
                 Dragboard db = source.startDragAndDrop(TransferMode.ANY);
-          
-                /* Put a string on a dragboard */
+
                 ClipboardContent content = new ClipboardContent();
                 content.putString("coucou");
                 db.setContent(content);

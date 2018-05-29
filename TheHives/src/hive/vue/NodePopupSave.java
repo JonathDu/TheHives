@@ -36,7 +36,7 @@ public class NodePopupSave extends Parent {
     public Button quitter;
     public Button validerSave;
 
-    public TextField field;
+    public RestrictiveTextField field;
 
     public NodePopupSave(Controller controller, Stage primaryStage, Match match) {
         this.controller = controller;
@@ -64,7 +64,9 @@ public class NodePopupSave extends Parent {
             controller.goToMenu();
         });
 
-        field = new TextField("Nom de la sauvegarde");
+        field = new RestrictiveTextField();
+        field.setText("Nom de la sauvegarde");
+        field.setMaxLength(20);
 
         horizontal.getChildren().add(quitter);
         horizontal.getChildren().add(valider);

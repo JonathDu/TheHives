@@ -89,6 +89,7 @@ public class NodeRuche extends Parent {
 
                 SocleHandler handler = new SocleHandler(plateauController, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_RELEASED, handler);
 
             }
         }
