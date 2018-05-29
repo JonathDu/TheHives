@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -43,30 +44,31 @@ public final class Controller
     CacheImage cacheImage;
     public Dimension screenSize;
     public LanguagesGesture gestionnaireLangage;
-    public ScoresGesture scoresGesture;
+    public StatistiqueGesture scoresGesture;
     public String typeTheme;
+    public SettingsGesture settingsGesture;
 
     public Controller(Stage _primaryStage, Scene _currentScene, CacheImage _cacheImage, Dimension _screenSize)
     {
+
         currentScene = _currentScene;
         primaryStage = _primaryStage;
         cacheImage = _cacheImage;
         screenSize = _screenSize;
-        gestionnaireLangage = new LanguagesGesture(Locale.FRENCH);
-        scoresGesture = new ScoresGesture();
-        typeTheme = "Jour";
+        settingsGesture = new SettingsGesture();
+        gestionnaireLangage = new LanguagesGesture(settingsGesture.get("langue"));
         primaryStage.setScene(currentScene);
         goToMenu();
     }
 
     public void goToMenu()
     {
-        currentScene.setRoot(new InterfaceMenu(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceMenu(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToChoixJoueur()
     {
-        currentScene.setRoot(new InterfaceJoueurs(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceJoueurs(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToPlateau(PlayerData data1, PlayerData data2, Level levelJ1, Level levelJ2)
@@ -75,36 +77,36 @@ public final class Controller
         PlayersData data = new PlayersData(game.getPlayer(TeamColor.WHITE), data1, game.getPlayer(TeamColor.BLACK), data2);
         Match match = new Match(game, data);
         System.out.println(match.getPlayerData1());
-        currentScene.setRoot(new InterfacePlateau(primaryStage, this, match, cacheImage));
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, match, cacheImage));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }
 
     public void goToPlateau(Match match)
     {
-        currentScene.setRoot(new InterfacePlateau(primaryStage, this, match, cacheImage));
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, match, cacheImage));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene.setRoot(new InterfaceCharger(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceCharger(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToRegles()
     {
-        currentScene.setRoot(new InterfaceRegles(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceRegles(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToStat()
     {
-        currentScene.setRoot(new InterfaceStatistiques(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceStatistiques(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToCredits()
     {
-        currentScene.setRoot(new InterfaceCredits(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceCredits(currentScene, primaryStage, this, cacheImage));
     }
 
     private Decision getDecision(Level level)
@@ -114,14 +116,16 @@ public final class Controller
 
     public Preferences getPreferences()
     {
-        return new Preferences(primaryStage, this, cacheImage);
+        return new Preferences(currentScene, this, cacheImage);
     }
 
     public void validerParametres(String nomLangue, boolean activerAide, String nomTheme)
     {
         Locale newLangue = gestionnaireLangage.languages.get(nomLangue);
         gestionnaireLangage.setLanguage(newLangue);
-        typeTheme = nomTheme;
+        settingsGesture.set("langue", nomLangue);
+        settingsGesture.set("aide", activerAide ? "true" : "false");
+        settingsGesture.set("theme", nomTheme);
         ((Interface) currentScene.getRoot()).majRetourPreference();
     }
 }

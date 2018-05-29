@@ -16,48 +16,58 @@ import java.util.Random;
  *
  * @author Coralie
  */
-public class MediumIA implements IA{
+public class MediumIA implements IA{   
+    ArrayList<Action> [] actionList;
+    //mettre évaluation + construteur
     
+    private void init(int taille){
+        actionList = new ArrayList[taille];
+        for(int i=0;i<taille;i++){
+            actionList[i]=new ArrayList<>(300);
+        }
+        
+    }
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        ArrayList<Action> actionList = hia.currentPlayerPossibilities2(state);
-        if(actionList.isEmpty()){
+        int depth = 3;
+        init(depth+1);
+        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+
+        if(actionList[depth].isEmpty()){
             return new NoAction();
         }
-        int value=0, nbValue=0, res;
+        ArrayList<Action> maxActionList = new ArrayList<>();
+        int max=-500000, tmp;
         Action currentAction;
-        int i=0;
-        while(i<actionList.size()){
-            currentAction = actionList.get(i);
+
+        while(!actionList[depth].isEmpty()){
+            currentAction = actionList[depth].remove(0);
+
             hia.doAction(state, currentAction);
-            res = Evaluation.evaluation(state);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
+                actionList[depth].clear();
                 return currentAction;
             }
-            else if(hia.winCurrent(state)){
-                hia.undoAction(state);
-                actionList.remove(i);
-                if(actionList.isEmpty())
-                    return currentAction;
-            }
             else{
+                tmp = MiniMaxMedium.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
-                value += res;
-                nbValue++;
-                i++; 
+                if(tmp > max){
+                    max = tmp;
+                    maxActionList.clear();
+                    maxActionList.add(currentAction);
+                }
+                else if(tmp == max){
+                    maxActionList.add(currentAction);
+                }
+                
             }
         }
         Random rnd = new Random();
-        currentAction = actionList.get(rnd.nextInt(actionList.size()));
-        hia.doAction(state, currentAction);
-        while(Evaluation.evaluation(state)<(value/nbValue)){
-            hia.undoAction(state);
-            currentAction = actionList.get(rnd.nextInt(actionList.size()));
-            hia.doAction(state, currentAction);
-        }
-        hia.undoAction(state);
+        assert !maxActionList.isEmpty();
+        currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
+        assert currentAction !=null;
         return currentAction;
     }
 }

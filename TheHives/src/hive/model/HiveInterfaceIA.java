@@ -36,24 +36,23 @@ public class HiveInterfaceIA implements InterfaceIA
 {
     // deprecated
     @Override
-    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game)
+    public int queenFreeNeighbour(Player p, Game game)
     {
-        ArrayList<Tile> freeNeighbours = new ArrayList<>();
         HashSet<Cell> queen_positions = game.state.data.tiles.get(p.color).get(InsectType.QUEEN_BEE);
         if (queen_positions.isEmpty())
         {
-            return freeNeighbours;
+            return 4;
         }
         NeighborsIterator<TilesStack> neighIter = new NeighborsIterator<>(queen_positions.iterator().next().comb);
         int nbNeighbor = 0;
         while (neighIter.hasNext())
         {
-            /*if (game.rules.isFree(state, cell)
+            if (neighIter.next().hexagon.value.isEmpty())
             {
                 nbNeighbor++;
-            }*/
+            }
         }
-        return null;
+        return nbNeighbor;
     }
     
     // deprecated
@@ -202,6 +201,15 @@ public class HiveInterfaceIA implements InterfaceIA
         actions.clear();
         HiveUtil.setPutActions(game, actions);
         HiveUtil.setMoveActions(game, actions);
+    }
+    
+    // does not treat NoAction case
+    @Override
+    public void currentPlayerPossibilities(Game game, ArrayList<Action> actions, ArrayList<InsectType> insects)
+    {
+        actions.clear();
+        HiveUtil.setMoveActions(game, actions, insects);
+        HiveUtil.setPutActions(game, actions);
     }
     
     @Override

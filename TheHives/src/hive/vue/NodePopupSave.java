@@ -9,8 +9,6 @@ import hive.controller.Controller;
 import hive.controller.SavesGesture;
 import hive.model.Match;
 import hive.model.game.Game;
-import hive.model.players.TeamColor;
-import javafx.event.EventType;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -28,16 +26,11 @@ import javafx.stage.Stage;
 public class NodePopupSave extends Parent {
 
     private String message;
-    private String messageValider;
-    private String messageQuitter;
-    private String messageValiderQuitter;
 
-    private Controller controller;
+    private final Controller controller;
     private Stage stage;
-    private Game game;
-
-    private HBox horizontal;
-    private VBox vertical;
+    private final HBox horizontal;
+    private final VBox vertical;
 
     public Button valider;
     public Button quitter;
@@ -48,7 +41,6 @@ public class NodePopupSave extends Parent {
     public NodePopupSave(Controller controller, Stage primaryStage, Match match) {
         this.controller = controller;
         this.stage = primaryStage;
-        this.game = game;
 
         horizontal = new HBox();
         vertical = new VBox();

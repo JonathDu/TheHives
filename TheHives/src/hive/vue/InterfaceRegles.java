@@ -7,9 +7,9 @@ package hive.vue;
 
 import hive.controller.Controller;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
@@ -19,7 +19,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -31,7 +30,7 @@ import javafx.stage.Stage;
  */
 public class InterfaceRegles extends Interface {
 
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private Label regles;
     private Label but;
     private Label debut;
@@ -46,42 +45,42 @@ public class InterfaceRegles extends Interface {
     private Label jeu;
     private Label insecte;
     private String rep;
-    private AnchorPane top;
+    private final AnchorPane top;
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c) {
-        super(primaryStage, controller, c);
+    public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
+        super(scene, primaryStage, controller, c);
         top = new AnchorPane();
         rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
         
 
         top.getChildren().add(droite);
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
-        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 5);
+        AnchorPane.setTopAnchor(boutonRetourMenu, (double) 0);
         AnchorPane.setBottomAnchor(boutonRetourMenu, (double) 5);
         top.getChildren().add(boutonRetourMenu);
-        regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
+        regles(police, tailleDeCase,rep);
 
     }
 
-    public InterfaceRegles(Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
-        super(primaryStage, controller, c);
+    public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
+        super(scene, primaryStage, controller, c);
         top = new AnchorPane();
 
         rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
 
-        regles(police, width, height, tailleDeCase, maxJoueur, minJoueur, rep);
+        regles(police,  tailleDeCase, rep);
     }
 
-    private void regles(String police, int width, int height, int tailleDeCase, int maxJoueur, int minJoueur, String rep) {
+    private void regles(String police, int tailleDeCase, String rep) {
         regles = new Label();
         but = new Label();
         debut = new Label();
@@ -100,15 +99,15 @@ public class InterfaceRegles extends Interface {
         setTextWithCurrentLanguage();
 
         BorderPane bp = new BorderPane();
-        bp.prefHeightProperty().bind(primaryStage.heightProperty());
-        bp.prefWidthProperty().bind(primaryStage.widthProperty());
+        bp.prefHeightProperty().bind(scene.heightProperty());
+        bp.prefWidthProperty().bind(scene.widthProperty());
 
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
         top.prefWidthProperty().bind(bp.widthProperty());
 
         StackPane spR = new StackPane();
         spR.prefWidthProperty().bind(bp.widthProperty().multiply(0.7));
-        spR.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
+        spR.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundFond = new BackgroundImage(pancarte, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
@@ -132,26 +131,27 @@ public class InterfaceRegles extends Interface {
         Image regle = c.getImage("Regles/PanneauAfficheRegle1.png");
 
         StackPane regles1 = new StackPane();
+        
         regles1.prefWidthProperty().bind(bp.widthProperty().multiply(0.25));
-        regles1.prefHeightProperty().bind(bp.heightProperty());
+        regles1.prefHeightProperty().bind(bp.widthProperty().multiply(0.25).multiply(2.77));
+        regles1.prefWidthProperty().bind(bp.widthProperty().multiply(0.82).multiply(0.36));
+        regles1.prefHeightProperty().bind(bp.heightProperty().multiply(0.82));
         BackgroundSize regle1Size = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage regle1Fond = new BackgroundImage(regle, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, regle1Size);
         background = new Background(regle1Fond);
         regles1.setBackground(background);
 
         GridPane placement = new GridPane();
-        int ligne = 100 / 9;
+        int ligne = (100-100/7-100/15-100/30)/5 ;
+        //int ligne = 100 / 9;
         int colonne = 100 / 1;
-        Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne);
+        Outils.fixerRepartition(placement, Outils.HORIZONTAL, 100/15, 100/7, 100/30, ligne, ligne, ligne, ligne, ligne);
+        //Outils.fixerRepartition(placement, Outils.HORIZONTAL, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne, ligne);
         Outils.fixerRepartition(placement, Outils.VERTICAL, colonne);
-        /*placement.setMaxWidth(width*0.99 * 0.2);
-        placement.setMinWidth(width*0.99 * 0.2);
-        placement.setMaxHeight(tailleDeCase * 3.6);
-        placement.setMinHeight(tailleDeCase * 3.6);*/
+
+        
         placement.prefWidthProperty().bind(regles1.widthProperty().multiply(0.8));
         placement.prefHeightProperty().bind(regles1.heightProperty().multiply(0.5));
-        double hauteurDeGrille = tailleDeCase * 2.4;
-        double hauteurDeLigne = hauteurDeGrille / 4;
 
         jeu.setFont(new Font(police, tailleLettres + 5));
         jeu.setAlignment(Pos.CENTER);
@@ -169,15 +169,15 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/butDuJeu.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
             sp.setBackground(background);
             bp.setCenter(sp);
         });
-        placement.add(b, 0, 2);
+        placement.add(b, 0, 3);
         debut.setFont(new Font(police, tailleLettres));
         debut.setAlignment(Pos.CENTER);
         debut.setTextFill(Color.web("#fbe5b5"));
@@ -188,15 +188,15 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Début de partie.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
             sp.setBackground(background);
             bp.setCenter(sp);
         });
-        placement.add(d, 0, 3);
+        placement.add(d, 0, 4);
         deplacement.setFont(new Font(police, tailleLettres));
         deplacement.setAlignment(Pos.CENTER);
         deplacement.setTextFill(Color.web("#fbe5b5"));
@@ -207,15 +207,15 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Déplacement.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
             sp.setBackground(background);
             bp.setCenter(sp);
         });
-        placement.add(de, 0, 4);
+        placement.add(de, 0, 5);
         tour.setFont(new Font(police, tailleLettres));
         tour.setAlignment(Pos.CENTER);
         tour.setTextFill(Color.web("#fbe5b5"));
@@ -228,34 +228,41 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/deroulementTour.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
             sp.setBackground(background);
             bp.setCenter(sp);
         });
-        placement.add(t, 0, 5);
+        placement.add(t, 0, 6);
         regles1.getChildren().add(placement);
         bp.setLeft(regles1);
 
         StackPane regles2 = new StackPane();
+//        regles2.prefWidthProperty().bind(bp.widthProperty().multiply(0.25));
+//        regles2.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
         regles2.prefWidthProperty().bind(bp.widthProperty().multiply(0.25));
-        regles2.prefHeightProperty().bind(bp.heightProperty());
+        regles2.prefHeightProperty().bind(bp.widthProperty().multiply(0.25).multiply(2.77));
+        regles2.prefWidthProperty().bind(bp.widthProperty().multiply(0.82).multiply(0.36));
+        regles2.prefHeightProperty().bind(bp.heightProperty().multiply(0.82));
         BackgroundSize regle2Size = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage regle2Fond = new BackgroundImage(regle, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, regle2Size);
         background = new Background(regle2Fond);
         regles2.setBackground(background);
 
         GridPane insectes = new GridPane();
-        int ligne2 = 100 / 10;
-        Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
+        int ligne2 = (100-100/15) / 9;
+        //int ligne2 = (100-100/7-100/15-100/30)/7   ;
+        //int ligne = 100 / 9;
+        //Outils.fixerRepartition(insectes, Outils.HORIZONTAL, 100/15, 100/7, 100/30, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
+        //Outils.fixerRepartition(insectes, Outils.HORIZONTAL, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
+        Outils.fixerRepartition(insectes, Outils.HORIZONTAL, 100/15, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2, ligne2);
         Outils.fixerRepartition(insectes, Outils.VERTICAL, colonne);
 
         insectes.prefWidthProperty().bind(regles2.widthProperty().multiply(0.8));
         insectes.prefHeightProperty().bind(regles2.heightProperty().multiply(0.5));
-        double hauteurDeLigne2 = hauteurDeGrille / 6;
 
         insecte.setFont(new Font(police, tailleLettres + 5));
         insecte.setAlignment(Pos.CENTER);
@@ -274,8 +281,8 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Araignée.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
@@ -293,8 +300,8 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Fourmis.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
@@ -312,7 +319,7 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Reine.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
             sp.prefHeightProperty().bind(bp.heightProperty());
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
@@ -333,7 +340,7 @@ public class InterfaceRegles extends Interface {
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Sauterelle.png");
             sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
@@ -351,8 +358,8 @@ public class InterfaceRegles extends Interface {
             bp.getChildren().remove(bp.getChildren().size() - 1);
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Scarabee.png");
-            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
@@ -371,7 +378,7 @@ public class InterfaceRegles extends Interface {
             StackPane sp = new StackPane();
             Image image = c.getImage("Regles/" + rep + "/Exception.png");
             sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.5));
-            sp.prefHeightProperty().bind(bp.heightProperty());
+            sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
             BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
             BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
             background = new Background(spFond);
@@ -384,13 +391,19 @@ public class InterfaceRegles extends Interface {
         bp.setRight(regles2);
         StackPane sp = new StackPane();
         Image image = c.getImage("Regles/" + rep + "/butDuJeu.png");
-        sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.3));
-        sp.prefHeightProperty().bind(bp.heightProperty());
+        sp.prefWidthProperty().bind(bp.widthProperty().multiply(0.4));
+        sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.8));
         BackgroundSize spSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage spFond = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, spSize);
         background = new Background(spFond);
         sp.setBackground(background);
         bp.setCenter(sp);
+        
+        StackPane bottom = new StackPane();
+        bottom.prefWidthProperty().bind(bp.widthProperty().multiply(0.9));
+        bottom.prefHeightProperty().bind(bp.heightProperty().multiply(0.05));
+        bp.setBottom(bottom);
+        
         AnchorPane.setTopAnchor(bp, (double) 0);
         AnchorPane.setBottomAnchor(bp, (double) 0);
         AnchorPane.setLeftAnchor(bp, (double) 0);

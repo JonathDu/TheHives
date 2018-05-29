@@ -9,7 +9,6 @@ import hive.model.HiveInterfaceIA;
 import hive.model.game.Game;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
-import hive.model.players.decisions.IA.IA;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -33,12 +32,14 @@ public class HardIA implements IA{
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int depth = 3;
         init(depth+1);
-        hia.currentPlayerPossibilities(state,actionList[depth]);
+        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+        int nbCoup = actionList[depth].size();
+
         if(actionList[depth].isEmpty()){
             return new NoAction();
         }
         ArrayList<Action> maxActionList = new ArrayList<>();
-        int max=-50000, tmp;
+        int max=-5000000, tmp;
         Action currentAction;
 
         while(!actionList[depth].isEmpty()){
@@ -51,7 +52,7 @@ public class HardIA implements IA{
                 return currentAction;
             }
             else{
-                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
+                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList, nbCoup);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;
@@ -65,6 +66,7 @@ public class HardIA implements IA{
             }
         }
         Random rnd = new Random();
+        
         assert !maxActionList.isEmpty();
         currentAction = maxActionList.get(rnd.nextInt(maxActionList.size()));
         assert currentAction !=null;

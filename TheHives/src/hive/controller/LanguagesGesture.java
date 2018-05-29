@@ -16,21 +16,22 @@ import java.util.ResourceBundle;
  */
 public final class LanguagesGesture
 {
+
     private final String languagePropertiesPath;
     private Locale language;
     private ResourceBundle bundle;
     public HashMap<String, Locale> languages;
 
-    public LanguagesGesture(Locale _langue)
+    public LanguagesGesture(String _langue)
     {
         languagePropertiesPath = "properties/languages/text";
-        language = _langue;
-        bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
         languages = new HashMap<>();
         getImplementedLanguages().forEach((currentlangue) ->
         {
-            languages.put(currentlangue.getDisplayName(), currentlangue);
+            languages.put(currentlangue.getDisplayName(Locale.getDefault()), currentlangue);
         });
+        language = languages.get(_langue);
+        bundle = ResourceBundle.getBundle(languagePropertiesPath, language);
     }
 
     public Locale getLanguage()
