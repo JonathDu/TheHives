@@ -10,6 +10,7 @@ import hive.controller.plateau.PlateauController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +31,7 @@ public class FinPartie extends Parent {
     private final Stage primaryStage;
     private final Controller controller;
     private final CacheImage cacheImage;
+    private final Scene scene;
     private final PlateauController gameController;
     private final Interface i;
     private final HBox bouton;
@@ -43,8 +45,9 @@ public class FinPartie extends Parent {
     private final HiveBouton recommencer;
     private final HiveBouton retourMenu;
 
-    public FinPartie(Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant) {
+    public FinPartie(Scene _scene, Stage _primaryStage, Controller _controller, CacheImage _cacheImage, PlateauController _gameController, Interface _i, String joueurGagnant) {
         primaryStage = _primaryStage;
+        scene = _scene;
         controller = _controller;
         gameController = _gameController;
         i = _i;
@@ -54,28 +57,28 @@ public class FinPartie extends Parent {
         image = new HBox();
         ImageView im = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
         im.setPreserveRatio(true);
-        im.fitHeightProperty().bind(primaryStage.heightProperty().divide(2));
+        im.fitHeightProperty().bind(scene.heightProperty().divide(2));
         image.getChildren().add(im);
         
         
-        recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), primaryStage);
-        retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
+        recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), scene);
+        retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
 
         gagnant = joueurGagnant;
         message = new Label();
         
         Rectangle rec = new Rectangle();
-        rec.widthProperty().bind(primaryStage.widthProperty());
-        rec.heightProperty().bind(primaryStage.heightProperty());
+        rec.widthProperty().bind(scene.widthProperty());
+        rec.heightProperty().bind(scene.heightProperty());
         rec.setFill(Color.BLACK);
         rec.setOpacity(0.6);
         rec.setSmooth(true);
         this.getChildren().add(rec);
 
         ecran = new GridPane();
-        ecran.prefWidthProperty().bind(primaryStage.widthProperty());
-        ecran.prefHeightProperty().bind(primaryStage.heightProperty());
-        ecran.minHeightProperty().bind(primaryStage.heightProperty());
+        ecran.prefWidthProperty().bind(scene.widthProperty());
+        ecran.prefHeightProperty().bind(scene.heightProperty());
+        ecran.minHeightProperty().bind(scene.heightProperty());
         ecran.setAlignment(Pos.CENTER);
         setTextWithCurrentLanguage();
         setHandlers();

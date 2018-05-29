@@ -13,6 +13,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -33,8 +34,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  *
@@ -43,7 +42,7 @@ import javafx.stage.Stage;
 public class Preferences extends Parent
 {
 
-    private final Stage primaryStage;
+    private final Scene scene;
     private final Controller controller;
 
     private final String police;
@@ -61,18 +60,18 @@ public class Preferences extends Parent
     private final RadioButton radioButtonJour;
     private final Button buttonValider;
     private final StackPane stackAnnuler;
-    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+    private final DoubleProperty fontSize = new SimpleDoubleProperty(10);
 
-    public Preferences(Stage _primaryStage, Controller _controller, CacheImage _cacheImage)
+    public Preferences(Scene _scene, Controller _controller, CacheImage _cacheImage)
     {
-        primaryStage = _primaryStage;
+        scene = _scene;
         controller = _controller;
 
 
         cacheImage = _cacheImage;
         police = "Papyrus";
 
-        fontSize.bind(primaryStage.heightProperty().divide(25));
+        fontSize.bind(scene.heightProperty().divide(25));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                 "-fx-font-family: ", police, ";"));
         imageFond = new ImageView();
@@ -179,19 +178,19 @@ public class Preferences extends Parent
     {
         Pane panePrincipale = new Pane();
        
-        panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
-        panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
+        panePrincipale.prefWidthProperty().bind(scene.widthProperty());
+        panePrincipale.prefHeightProperty().bind(scene.heightProperty());
 
         AnchorPane p = new AnchorPane();
-        p.prefWidthProperty().bind(primaryStage.widthProperty());
-        p.prefHeightProperty().bind(primaryStage.heightProperty());
+        p.prefWidthProperty().bind(scene.widthProperty());
+        p.prefHeightProperty().bind(scene.heightProperty());
         AnchorPane.setTopAnchor(stackAnnuler, 10.0);
         AnchorPane.setRightAnchor(stackAnnuler, 10.0);
-        p.setPadding(new Insets(30,30, 52, 30));
+        p.setPadding(new Insets(30,30, 30, 30));
 
         GridPane gridPane = new GridPane();
-        gridPane.prefWidthProperty().bind(primaryStage.widthProperty());
-        gridPane.prefHeightProperty().bind(primaryStage.heightProperty());
+        gridPane.prefWidthProperty().bind(scene.widthProperty());
+        gridPane.prefHeightProperty().bind(scene.heightProperty());
         Outils.fixerRepartition(gridPane, Outils.HORIZONTAL, 20, 20, 20, 20, 20);
         Outils.fixerRepartition(gridPane, Outils.VERTICAL, 33, 33, 33);
         gridPane.setPadding(new Insets(30));

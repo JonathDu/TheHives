@@ -18,9 +18,8 @@ import javafx.scene.paint.Color;
  */
 public class NodePions extends Parent {
 
-    private int type;
-    private ArrayList<NodePion> pions;
-    private NodePion socle;
+    private final ArrayList<NodePion> pions;
+    private final NodePion socle;
     CacheImage c;
 
     public NodePions(TeamColor couleur, int nbPions, InsectType typePions, CacheImage c) {

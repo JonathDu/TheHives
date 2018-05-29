@@ -7,14 +7,13 @@ package hive.vue;
 
 import java.util.Hashtable;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 /**
  *
  * @author jonathan
  */
 public class CacheImage {
-    private Hashtable<String, Image> table;
+    private final Hashtable<String, Image> table;
     
     public CacheImage(){
         this.table = new Hashtable();

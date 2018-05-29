@@ -56,48 +56,48 @@ public final class Controller
 
     public void goToMenu()
     {
-        currentScene.setRoot(new InterfaceMenu(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceMenu(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToChoixJoueur()
     {
-        currentScene.setRoot(new InterfaceJoueurs(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceJoueurs(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToPlateau(String nomJoueur1, String nomJoueur2, Level levelJ1, Level levelJ2)
     {
         Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, getDecision(levelJ1), getDecision(levelJ2));
 
-        currentScene.setRoot(new InterfacePlateau(primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2));
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, game, cacheImage, nomJoueur1, nomJoueur2));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }
 
     public void goToPlateau(Game game)
     {
-        currentScene.setRoot(new InterfacePlateau(primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"));
+        currentScene.setRoot(new InterfacePlateau(currentScene, primaryStage, this, game, cacheImage, "TODOj1", "TODOj1"));
         String css = this.getClass().getResource("/hive/vue/style.css").toExternalForm();
         currentScene.getStylesheets().add(css);
     }
 
     public void goToChargerPartie() throws IOException
     {
-        currentScene.setRoot(new InterfaceCharger(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceCharger(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToRegles()
     {
-        currentScene.setRoot(new InterfaceRegles(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceRegles(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToStat()
     {
-        currentScene.setRoot(new InterfaceStatistiques(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceStatistiques(currentScene, primaryStage, this, cacheImage));
     }
 
     public void goToCredits()
     {
-        currentScene.setRoot(new InterfaceCredits(primaryStage, this, cacheImage));
+        currentScene.setRoot(new InterfaceCredits(currentScene, primaryStage, this, cacheImage));
     }
 
     private Decision getDecision(Level level)
@@ -107,7 +107,7 @@ public final class Controller
 
     public Preferences getPreferences()
     {
-        return new Preferences(primaryStage, this, cacheImage);
+        return new Preferences(currentScene, this, cacheImage);
     }
 
     public void validerParametres(String nomLangue, boolean activerAide, String nomTheme)

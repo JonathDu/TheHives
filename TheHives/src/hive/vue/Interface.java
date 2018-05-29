@@ -11,6 +11,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -31,10 +32,11 @@ import javafx.stage.Stage;
 public abstract class Interface extends Parent {
 
     Controller controller;
+    Scene scene;
     Stage primaryStage;
     Pane panePrincipale;
     Background background;
-    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+    private final DoubleProperty fontSize = new SimpleDoubleProperty(10);
 
     int height;
     int width;
@@ -44,8 +46,7 @@ public abstract class Interface extends Parent {
     double max_screen_height;
     double max_screen_width;
     int tailleDeCase;
-    int maxJoueur;
-    int minJoueur;
+
 
     HiveBouton boutonPreference;
     HiveBouton boutonPleinEcran;
@@ -53,28 +54,28 @@ public abstract class Interface extends Parent {
 
     HBox droite;
 
-    public Interface(Stage primaryStage, Controller controller, CacheImage cacheImage) {
+    public Interface(Scene scene, Stage primaryStage, Controller controller, CacheImage cacheImage) {
 
         /* INITIALISATION DES OBJETS */
         this.controller = controller;
+        this.scene = scene;
         this.primaryStage = primaryStage;
         panePrincipale = new Pane();
         c = cacheImage;
-        panePrincipale.prefHeightProperty().bind(primaryStage.heightProperty());
-        panePrincipale.prefWidthProperty().bind(primaryStage.widthProperty());
+        panePrincipale.prefHeightProperty().bind(scene.heightProperty());
+        panePrincipale.prefWidthProperty().bind(scene.widthProperty());
 
-        height = (int) primaryStage.getHeight();
-        width = (int) primaryStage.getWidth();
+        height = (int) scene.getHeight();
+        width = (int) scene.getWidth();
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         max_screen_height = dimension.getHeight();
         max_screen_width = dimension.getWidth();
         tailleDeCase = (width / 8 > height / 6) ? height / 6 : width / 8;
-        maxJoueur = (int) ((int) width / 2.5);
-        minJoueur = maxJoueur / 2;
+
 
         police = "Papyrus";
 
-        fontSize.bind(primaryStage.heightProperty().divide(30));
+        fontSize.bind(scene.heightProperty().divide(30));
         this.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";",
                 "-fx-font-family: ", police, ";"));
 
@@ -82,9 +83,9 @@ public abstract class Interface extends Parent {
         Tooltip t1 = new Tooltip("Plein écran");
         Tooltip t2 = new Tooltip("Réglages");
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), primaryStage);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), primaryStage);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), primaryStage);
+        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), scene);
+        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), scene);
+        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
         Tooltip.install(boutonRetourMenu, t);
         Tooltip.install(boutonPleinEcran, t1);
         Tooltip.install(boutonPreference, t2);

@@ -18,8 +18,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -34,19 +34,16 @@ public class InterfaceMenu extends Interface {
     private final Label credits;
     private final Label regles;
 
-    public InterfaceMenu(Stage primaryStage, Controller controller, CacheImage c) {
-        super(primaryStage, controller, c);
+    public InterfaceMenu(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
+        super(scene, primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
 
         Image hive = c.getImage("Design/MenuPrincipaux/TheHives.png");
         ImageView hiveIm = new ImageView(hive);
-//        hiveIm.setFitHeight(tailleDeCase * 1.3);
-//        hiveIm.setFitWidth(tailleDeCase * 1.3 * 1.59);
-
-        hiveIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(5));
+        hiveIm.fitWidthProperty().bind(scene.widthProperty().divide(5));
         hiveIm.setPreserveRatio(true);
 
         AnchorPane.setLeftAnchor(hiveIm, (double) 5);
@@ -54,12 +51,12 @@ public class InterfaceMenu extends Interface {
         pane.getChildren().add(hiveIm);
 
         StackPane hex = new StackPane();
-        hex.prefHeightProperty().bind(primaryStage.heightProperty());
-        hex.prefWidthProperty().bind(primaryStage.widthProperty());
+        hex.prefHeightProperty().bind(scene.heightProperty());
+        hex.prefWidthProperty().bind(scene.widthProperty());
         Image hexagone = c.getImage("Design/MenuPrincipaux/Hexagone.png");
         ImageView hexagoneIm = new ImageView(hexagone);
         hexagoneIm.setPreserveRatio(true);
-        hexagoneIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(3));
+        hexagoneIm.fitWidthProperty().bind(scene.widthProperty().divide(3));
         hex.getChildren().add(hexagoneIm);
 
         newGame = new Label();
@@ -72,19 +69,18 @@ public class InterfaceMenu extends Interface {
 
 
         VBox menu_hex = new VBox(15);
-        menu_hex.prefWidthProperty().bind(primaryStage.widthProperty());
-        menu_hex.prefHeightProperty().bind(primaryStage.heightProperty());
+        menu_hex.prefWidthProperty().bind(scene.widthProperty());
+        menu_hex.prefHeightProperty().bind(scene.heightProperty());
         menu_hex.setAlignment(Pos.CENTER);
         StackPane NewGame = new StackPane();
 
         Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView flecheImNG = new ImageView(fleche);
-        flecheImNG.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImNG.fitWidthProperty().bind(scene.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
 
 
 
-        //newGame.setFont(new Font(police));
         newGame.setTextFill(Color.web("#fbe5b5"));
         newGame.setAlignment(CENTER);
         NewGame.getChildren().add(flecheImNG);
@@ -95,10 +91,9 @@ public class InterfaceMenu extends Interface {
         menu_hex.getChildren().add(NewGame);
         StackPane ChargerPartie = new StackPane();
         ImageView flecheImCP = new ImageView(fleche);
-        flecheImCP.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImCP.fitWidthProperty().bind(scene.widthProperty().divide(3).subtract(20));
         flecheImCP.setPreserveRatio(true);
 
-        //chargerPartie.setFont(new Font(police, 20));
         chargerPartie.setTextFill(Color.web("#fbe5b5"));
         chargerPartie.setAlignment(CENTER);
         ChargerPartie.getChildren().add(flecheImCP);
@@ -114,10 +109,9 @@ public class InterfaceMenu extends Interface {
         StackPane Regles = new StackPane();
         ImageView flecheImR = new ImageView(fleche);
 
-        flecheImR.fitWidthProperty().bind(primaryStage.widthProperty().divide(3).subtract(20));
+        flecheImR.fitWidthProperty().bind(scene.widthProperty().divide(3).subtract(20));
         flecheImR.setPreserveRatio(true);
 
-        //regles.setFont(new Font(police, 20));
         regles.setTextFill(Color.web("#fbe5b5"));
         regles.setAlignment(CENTER);
         Regles.getChildren().add(flecheImR);
@@ -135,10 +129,9 @@ public class InterfaceMenu extends Interface {
         Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
         ImageView gaucheIm = new ImageView(gauche);
 
-        gaucheIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        gaucheIm.fitWidthProperty().bind(scene.widthProperty().divide(4));
         gaucheIm.setPreserveRatio(true);
 
-        //statistiques.setFont(new Font(police,20));
         statistiques.setTextFill(Color.web("#fbe5b5"));
         statistiques.setAlignment(CENTER);
         Statistiques.getChildren().add(gaucheIm);
@@ -147,16 +140,15 @@ public class InterfaceMenu extends Interface {
             controller.goToStat();
         });
         AnchorPane.setLeftAnchor(Statistiques, (double) 5);
-        AnchorPane.setBottomAnchor(Statistiques, (double) height * 0.12);
+        AnchorPane.setBottomAnchor(Statistiques, (double) 30);
         pane.getChildren().add(Statistiques);
 
         StackPane Credits = new StackPane();
         Image droite = c.getImage("Design/MenuPrincipaux/FlecheEnBasDroite.png");
         ImageView droiteIm = new ImageView(droite);
-        droiteIm.fitWidthProperty().bind(primaryStage.widthProperty().divide(4));
+        droiteIm.fitWidthProperty().bind(scene.widthProperty().divide(4));
         droiteIm.setPreserveRatio(true);
 
-        //credits.setFont(new Font(police, 20));
         credits.setTextFill(Color.web("#fbe5b5"));
         credits.setAlignment(CENTER);
 
@@ -166,14 +158,9 @@ public class InterfaceMenu extends Interface {
             controller.goToCredits();
         });
         AnchorPane.setRightAnchor(Credits, (double) 5);
-        AnchorPane.setBottomAnchor(Credits, (double) height * 0.12);
+        AnchorPane.setBottomAnchor(Credits, (double) 30);
         pane.getChildren().add(Credits);
 
-
-
-//        AnchorPane.setRightAnchor(boutonPreference, (double) tailleDeCase / 2 * 1.07 + 10);
-//        AnchorPane.setTopAnchor(boutonPreference, (double) 5);
-//        pane.getChildren().add(boutonPreference);
         AnchorPane.setRightAnchor(this.droite, (double) 5);
         AnchorPane.setTopAnchor(this.droite, (double) 5);
         pane.getChildren().add(this.droite);
