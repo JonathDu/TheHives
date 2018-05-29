@@ -18,38 +18,38 @@ import util.Vector2i;
  */
 public class SocleHandler extends PlateauHandler
 {
-    
+
     Honeycomb combClicked;
-    
+
     public SocleHandler(PlateauController controller, Vector2i pos)
     {
         super(controller);
         combClicked = game.state.board.getHexagon(pos);
     }
-    
+
     @Override
     public void handlePlateau(Event event)
     {
         System.out.println("--- SOCLE ---");
-        
+
         if (event.getEventType() == DragEvent.DRAG_DROPPED || event.getEventType() == MouseEvent.MOUSE_CLICKED || event.getEventType() == MouseEvent.MOUSE_RELEASED)
         {
-            if(event.getEventType() == DragEvent.DRAG_DROPPED){
-            System.out.println("yo");
-            DragEvent e = (DragEvent) event;
-            Dragboard db = e.getDragboard();
-            boolean success = false;
-            if (db.hasString()) {
-                success = true;
-            }
-            /* let the source know whether the string was successfully 
+            if (event.getEventType() == DragEvent.DRAG_DROPPED)
+            {
+                System.out.println("yo");
+                DragEvent e = (DragEvent) event;
+                Dragboard db = e.getDragboard();
+                boolean success = false;
+                if (db.hasString())
+                {
+                    success = true;
+                }
+                /* let the source know whether the string was successfully 
             * transferred and used */
-            e.setDropCompleted(success);
-            
-            
-          
-          event.consume();
-        }
+                e.setDropCompleted(success);
+
+                event.consume();
+            }
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
@@ -70,6 +70,9 @@ public class SocleHandler extends PlateauHandler
                             return;
                         } else
                         {
+                            uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                            uiPlateau.ruche.deselectCell(combClicked.pos);
+                            controller.builder.setBegin();
                             System.err.println("Destination impossible");
                         }
                     } else
@@ -98,28 +101,28 @@ public class SocleHandler extends PlateauHandler
             }
         }
     }
-    
+
     public void moveOnBoard(Cell destination)
     {
         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-        
+
         controller.builder.setDestination(destination);
         controller.doProducedAction();
-        
+
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
         game.state.data.trace.peek().accept(gUpdater);
     }
-    
+
     public void putOnBoard(Cell placement)
     {
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-        
+
         controller.builder.setPlacement(placement);
         controller.doProducedAction();
-        
+
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
         game.state.data.trace.peek().accept(gUpdater);
     }
-    
+
 }
