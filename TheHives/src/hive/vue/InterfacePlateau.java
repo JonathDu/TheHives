@@ -169,7 +169,6 @@ public class InterfacePlateau extends Interface {
         borderPane.setLeft(centerMainG);
         borderPane.setRight(centerMainD);
         borderPane.setBottom(bottom);
-        setRucheHandler();
 
         this.panePrincipale.getChildren().add(borderPane);
 
@@ -186,19 +185,7 @@ public class InterfacePlateau extends Interface {
         mainDroite.update(game.state.players.get(1).collection);
     }
 
-    private void setRucheHandler() {
-        ruche.setOnDragDetected((value) -> {
-            this.onDrag = true;
-        });
-        ruche.setOnDragDone((value) -> {
-            this.onDrag = false;
-        });
-        ruche.setOnMouseMoved((value) -> {
-            if (this.onDrag) {
-                //System.out.println("value");
-            }
-        });
-    }
+
 
     private BorderPane setTool() {
         width = (int) scene.getWidth();

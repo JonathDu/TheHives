@@ -8,7 +8,12 @@ package hive.controller.plateau.handlers.mousehandlers;
 import hive.controller.plateau.PlateauController;
 import hive.model.board.Cell;
 import hive.model.game.rules.HiveUtil;
+import hive.vue.NodeComb;
+import javafx.event.Event;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 /**
  * Fait une action lorsque l'on selectionne la source
@@ -19,20 +24,34 @@ public class TilePlateauHandler extends PlateauHandler
 {
 
     Cell cellClicked;
+    NodeComb source;
 
-    public TilePlateauHandler(PlateauController controller, Cell cellClicked)
+    public TilePlateauHandler(PlateauController controller, Cell cellClicked, NodeComb source)
     {
         super(controller);
         this.cellClicked = cellClicked;
+        this.source = source;
     }
+    
 
     @Override
-    public void handlePlateau(MouseEvent event)
+    public void handlePlateau(Event event)
     {
         System.out.println("--- TILE PLATEAU ---");
 
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED || event.getEventType() == MouseEvent.DRAG_DETECTED)
         {
+            
+            if(event.getEventType() == MouseEvent.DRAG_DETECTED){
+                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+          
+                /* Put a string on a dragboard */
+                ClipboardContent content = new ClipboardContent();
+                content.putString("coucou");
+                db.setContent(content);
+          
+                event.consume();
+            }
             switch (controller.builder.getState())
             {
                 case BEGIN:

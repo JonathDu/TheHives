@@ -10,8 +10,14 @@ import hive.model.board.Tile;
 import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
 import hive.model.players.TeamColor;
+import hive.vue.NodePions;
 import hive.vue.NodePlateauMain;
+import javafx.event.Event;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 
 /**
  * Appelé lorque que l'on clique sur une tile d'une des pioches du joueur
@@ -24,21 +30,34 @@ public class TileMainHandler extends PlateauHandler
     TeamColor color;
     NodePlateauMain uiMain;
     Tile tileClicked;
+    NodePions source;
 
-    public TileMainHandler(PlateauController controller, TeamColor color, InsectType insectType)
+    public TileMainHandler(PlateauController controller, TeamColor color, InsectType insectType, NodePions source)
     {
         super(controller);
         tileClicked = new Tile(insectType, color);
         this.color = color;
+        this.source = source;
     }
 
     @Override
-    public void handlePlateau(MouseEvent event)
+    public void handlePlateau(Event event)
     {
         System.out.println("--- TILE MAIN ---");
 
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
+        if (event.getEventType() == MouseEvent.MOUSE_CLICKED || event.getEventType() == MouseEvent.DRAG_DETECTED)
         {
+            if(event.getEventType() == MouseEvent.DRAG_DETECTED){
+                Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+          
+                /* Put a string on a dragboard */
+                ClipboardContent content = new ClipboardContent();
+                content.putString("coucou");
+                db.setContent(content);
+          
+                event.consume();
+            }
+            
             uiMain = uiPlateau.getInterfacePlateauMain(color);
 
             if (tileClicked.color != game.state.turn.getCurrent().color)

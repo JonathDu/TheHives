@@ -4,6 +4,9 @@ import hive.controller.plateau.PlateauController;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdater;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
+import javafx.event.Event;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -25,12 +28,27 @@ public class SocleHandler extends PlateauHandler
     }
     
     @Override
-    public void handlePlateau(MouseEvent event)
+    public void handlePlateau(Event event)
     {
         System.out.println("--- SOCLE ---");
         
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
+        if (event.getEventType() == DragEvent.DRAG_DROPPED )
         {
+            System.out.println("yo");
+            DragEvent e = (DragEvent) event;
+            Dragboard db = e.getDragboard();
+            boolean success = false;
+            if (db.hasString()) {
+                success = true;
+            }
+            /* let the source know whether the string was successfully 
+            * transferred and used */
+            e.setDropCompleted(success);
+            
+            
+          
+          event.consume();
+        }
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
