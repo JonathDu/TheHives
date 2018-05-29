@@ -339,7 +339,7 @@ public class InterfacePlateau extends Interface {
             StatistiqueGesture.setWinScoreFor(gagnant, perdant);
             StatistiqueGesture.setLoseScoreFor(perdant, gagnant);
         }
-        Timeline a = new Timeline(new KeyFrame(Duration.millis(3000), (event) -> {
+        Timeline a = new Timeline(new KeyFrame(Duration.millis(5000), (event) -> {
             f.view.setVisible(false);
         }));
         a.play();
