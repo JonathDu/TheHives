@@ -48,7 +48,7 @@ public class SocleHandler extends PlateauHandler
             
           
           event.consume();
-        }
+        
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
