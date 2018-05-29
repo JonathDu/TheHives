@@ -23,19 +23,20 @@ public class MiniMax{
     static ArrayList<Tile> neighboursBlock = new ArrayList(22);
     static ArrayList<Tile> neighboursFree = new ArrayList(22) ;
     
-    static public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList){
+    static public int miniMaxCurrentPlayer(Game state, int depth, int min, ArrayList<Action>[] actionList, int nbCoupPossibles){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state) || hia.winOpponent(state)){
-            return evaluation(state);
+            return evaluation(state, nbCoupPossibles);
         }
         else{
-            int vMax = -50000;
+            int vMax = -5000000;
             hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_min);
+            int nbCoup = actionList[depth].size();
             int tmp;
             Action currentAction;
             if(actionList[depth].isEmpty()){
                 hia.doAction(state, new NoAction());
-                vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList),vMax);
+                vMax=max(miniMaxOpponent(state, depth-1, vMax,actionList, nbCoup),vMax);
                 hia.undoAction(state);
                 
             }
@@ -44,7 +45,7 @@ public class MiniMax{
                     currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxOpponent(state, depth-1, vMax,actionList);
+                    tmp = miniMaxOpponent(state, depth-1, vMax,actionList, nbCoup);
                     hia.undoAction(state);
                     vMax = max(tmp,vMax);
                     if(vMax > min){
@@ -56,19 +57,20 @@ public class MiniMax{
             return vMax;
         }
     }
-    static public int miniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList){
+    static public int miniMaxOpponent(Game state, int depth, int max,ArrayList<Action>[] actionList, int nbCoupPossibles){
         HiveInterfaceIA hia = new HiveInterfaceIA();
         if(depth == 0 || hia.winCurrent(state)|| hia.winOpponent(state)){
-            return -(evaluation(state));
+            return -(evaluation(state, nbCoupPossibles));
         }
         else{
-            int vMin = 50000;
+            int vMin = 5000000;
             hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_max);
             int tmp;
+            int nbCoup = actionList[depth].size();
             Action currentAction;
             if(actionList[depth].isEmpty()){
                 hia.doAction(state, new NoAction());
-                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList),vMin);
+                vMin=min(miniMaxCurrentPlayer(state, depth-1, vMin, actionList, nbCoup),vMin);
                 hia.undoAction(state);
                 
             }
@@ -77,7 +79,7 @@ public class MiniMax{
                     currentAction = actionList[depth].remove(actionList[depth].size()-1);
                     assert currentAction!=null;
                     hia.doAction(state,currentAction);
-                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList);
+                    tmp = miniMaxCurrentPlayer(state, depth-1, vMin,actionList, nbCoup);
                     hia.undoAction(state);
                     vMin = min(tmp,vMin);
                     if(vMin < max){

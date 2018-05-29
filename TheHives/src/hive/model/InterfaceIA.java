@@ -26,7 +26,7 @@ import java.util.ArrayList;
  */
 public interface InterfaceIA
 {
-    public ArrayList<Tile> queenFreeNeighbour(Player p, Game game); // deprecated
+    public int queenFreeNeighbour(Player p, Game game); // deprecated
     public ArrayList<Tile> queenNeighbours(Player p, Game game); // deprecated
     public ArrayList<Action> currentPlayerPossibilities2(Game game); // deprecated
     public ArrayList<Tile> freeTiles(Game game, Player p); // deprecated

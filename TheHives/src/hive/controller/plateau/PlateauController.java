@@ -84,7 +84,7 @@ public class PlateauController
 
     public void playPause()
     {
-        if (timerFrame.getStatus() == Animation.Status.PAUSED)
+            if (timerFrame.getStatus() == Animation.Status.PAUSED)
         {
             //TODO : popup "reprise du jeu"
             System.out.println("reprise du jeu");

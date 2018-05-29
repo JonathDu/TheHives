@@ -7,6 +7,7 @@ package hive.vue;
 
 import hive.controller.Controller;
 import hive.controller.SavesGesture;
+import hive.model.Match;
 import hive.model.game.Game;
 import java.io.IOException;
 import javafx.event.EventHandler;
@@ -34,12 +35,14 @@ import javafx.scene.paint.Color;
  *
  * @author Adeline
  */
-public class InterfaceCharger extends Interface {
+public class InterfaceCharger extends Interface
+{
 
     private final Label choix;
     private final Button valider;
 
-    public InterfaceCharger(Scene scene, Stage primaryStage, Controller controller, CacheImage c) throws IOException {
+    public InterfaceCharger(Scene scene, Stage primaryStage, Controller controller, CacheImage c) throws IOException
+    {
         super(scene, primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
@@ -80,7 +83,7 @@ public class InterfaceCharger extends Interface {
         choix.setTextFill(Color.web("#fbe5b5"));
         spR.getChildren().add(choix);
 
-         AnchorPane.setLeftAnchor(spR, (double) tailleDeCase + 15);
+        AnchorPane.setLeftAnchor(spR, (double) tailleDeCase + 15);
         AnchorPane.setRightAnchor(spR, (double) tailleDeCase + 15);
         AnchorPane.setTopAnchor(spR, (double) 5);
         AnchorPane.setBottomAnchor(spR, (double) 5);
@@ -106,7 +109,8 @@ public class InterfaceCharger extends Interface {
         text_sp.getChildren().add(fleche_Im);
         text_sp.getChildren().add(text);
 
-        for (String fileName : SavesGesture.getSavedFileNames()) {
+        for (String fileName : SavesGesture.getSavedFileNames())
+        {
             ImageView flecheIm = new ImageView(fleche);
             flecheIm.setPreserveRatio(true);
             flecheIm.fitWidthProperty().bind(scene.widthProperty().divide(3));
@@ -142,23 +146,32 @@ public class InterfaceCharger extends Interface {
         valider.setTextFill(Color.web("#fbe5b5"));
         valider.setBackground(Background.EMPTY);
         valider_sp.getChildren().add(valider);
-        valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>()
+        {
             @Override
-            public void handle(MouseEvent event) {
-                boolean isOk = false;
+            public void handle(MouseEvent event)
+            {
+
                 String selectedFileName = ((Label) parties.getSelectionModel().getSelectedItem().getChildren().get(1)).getText();
-                for (String fileName : SavesGesture.getSavedFileNames()) {
-                    if ((selectedFileName + ".xml").equals(fileName)) {
+                
+                boolean isOk = false;
+                for (String fileName : SavesGesture.getSavedFileNames())
+                {
+                    if ((selectedFileName + ".xml").equals(fileName))
+                    {
                         isOk = true;
                     }
                 }
-                if (isOk) {
-                    Game game = SavesGesture.loadGame(selectedFileName + ".xml");
-                    controller.goToPlateau(game);
-                } else {
+                if (isOk)
+                {
+                    Match match = SavesGesture.loadGame(selectedFileName);
+                controller.goToPlateau(match);
+                } else
+                {
                     Alert a = new Alert(Alert.AlertType.ERROR, "Veuillez séléctionner une partie");
                     a.show();
                 }
+
             }
         });
 
@@ -174,7 +187,8 @@ public class InterfaceCharger extends Interface {
     }
 
     @Override
-    public void setTextWithCurrentLanguage() {
+    public void setTextWithCurrentLanguage()
+    {
         valider.setText(controller.gestionnaireLangage.getText("text_valider"));
         choix.setText(controller.gestionnaireLangage.getText("text_choisir_partie"));
     }

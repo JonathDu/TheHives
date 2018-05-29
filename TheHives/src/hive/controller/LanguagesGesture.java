@@ -24,11 +24,11 @@ public final class LanguagesGesture
 
     public LanguagesGesture(String _langue)
     {
-        languagePropertiesPath = "properties/languages/text";
+        languagePropertiesPath = "properties/text";
         languages = new HashMap<>();
         getImplementedLanguages().forEach((currentlangue) ->
         {
-            languages.put(currentlangue.getDisplayName(), currentlangue);
+            languages.put(currentlangue.getDisplayName(Locale.getDefault()), currentlangue);
         });
         language = languages.get(_langue);
         bundle = ResourceBundle.getBundle(languagePropertiesPath, language);

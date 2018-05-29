@@ -30,14 +30,15 @@ public class MediumIA implements IA{
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        int depth = 2;
+        int depth = 3;
         init(depth+1);
         hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+
         if(actionList[depth].isEmpty()){
             return new NoAction();
         }
         ArrayList<Action> maxActionList = new ArrayList<>();
-        int max=-50000, tmp;
+        int max=-500000, tmp;
         Action currentAction;
 
         while(!actionList[depth].isEmpty()){
@@ -50,7 +51,7 @@ public class MediumIA implements IA{
                 return currentAction;
             }
             else{
-                tmp = MiniMax.miniMaxOpponent(state, depth-1, max,actionList);
+                tmp = MiniMaxMedium.miniMaxOpponent(state, depth-1, max,actionList);
                 hia.undoAction(state);
                 if(tmp > max){
                     max = tmp;

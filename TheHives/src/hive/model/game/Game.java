@@ -6,6 +6,8 @@
 package hive.model.game;
 
 import hive.model.game.rules.HiveRules;
+import hive.model.players.Player;
+import hive.model.players.TeamColor;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -24,6 +26,11 @@ public class Game implements Serializable
     {
         this.state = state;
         this.rules = rules;
+    }
+    
+    public Player getPlayer(TeamColor color)
+    {
+        return state.players.get(color == TeamColor.WHITE ? 0 : 1);
     }
 
     @Override
