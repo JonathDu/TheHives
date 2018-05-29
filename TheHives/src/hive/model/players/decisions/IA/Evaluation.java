@@ -79,6 +79,7 @@ public class Evaluation {
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
         hia.setQueenNeighbors(state, opponent, neighboursFree, neighboursBlock);
+        
         for(Tile tuile : neighboursFree){
             value += heuristicVal[0][((tuile.color == hia.currentPlayer(state).color) ? 4 : 2)][Heuristic.trans(tuile.type)];
         }

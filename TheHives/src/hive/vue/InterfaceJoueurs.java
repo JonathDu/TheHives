@@ -6,8 +6,6 @@
 package hive.vue;
 
 import hive.controller.Controller;
-import hive.controller.SavesGesture;
-import hive.model.game.Game;
 import hive.model.players.decisions.IA.Level;
 import javafx.geometry.Pos;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -33,7 +32,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
 /**
@@ -53,29 +51,15 @@ public class InterfaceJoueurs extends Interface {
     private final Label joueur2;
     private final Button valider;
 
-    public InterfaceJoueurs(Stage primaryStage, Controller controller, CacheImage c) {
-        super(primaryStage, controller, c);
+    public InterfaceJoueurs(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
+        super(scene, primaryStage, controller, c);
 
         AnchorPane pane = new AnchorPane();
-        pane.prefWidthProperty().bind(primaryStage.widthProperty());
-        pane.prefHeightProperty().bind(primaryStage.heightProperty());
+        pane.prefWidthProperty().bind(scene.widthProperty());
+        pane.prefHeightProperty().bind(scene.heightProperty());
 
-        double hauteurDeGrille = tailleDeCase * 4.2;
-        double hauteurDeLigne = hauteurDeGrille / 4;
-        double largeurDeGrille = width - 50;
-        double largeurDeColonne = largeurDeGrille / 3;
 
-        double largeurBouton;
-        double hauteurBouton;
-        if (width > max_screen_width * 0.75) {
-            largeurBouton = largeurDeColonne * 0.6;
-        } else {
-            largeurBouton = largeurDeColonne;
-        }
-        hauteurBouton = largeurBouton / 7.2375;
 
-        double flecheLargeur = tailleDeCase * 4 - 30;
-        double flecheHauteur = flecheLargeur / 7.24;
 
         joueur1 = new Label();
         joueur2 = new Label();
@@ -140,7 +124,7 @@ public class InterfaceJoueurs extends Interface {
         final ToggleGroup ia1 = new ToggleGroup();
         final ToggleGroup ia2 = new ToggleGroup();
         final ToggleGroup j = new ToggleGroup();
-        MyRadioBouton bouton = new MyRadioBouton(primaryStage, controller);
+        MyRadioBouton bouton = new MyRadioBouton(scene, controller);
         
         StackPane grille_l1_sp = new StackPane();
         grille_l1_sp.prefHeightProperty().bind(grille.heightProperty().divide(3));
@@ -165,7 +149,6 @@ public class InterfaceJoueurs extends Interface {
         BackgroundImage h_h_imFond = new BackgroundImage(h_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_h_imSize);
         background = new Background(h_h_imFond);
         humains.setBackground(background);
-        //humains.setBackground(Background.EMPTY);
         humains.setToggleGroup(j);
         hh.getChildren().add(humains);
         grille_l1.add(hh, 0, 0);
@@ -186,7 +169,6 @@ public class InterfaceJoueurs extends Interface {
         BackgroundImage h_ia_imFond = new BackgroundImage(h_ia_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_ia_imSize);
         background = new Background(h_ia_imFond);
         hIA.setBackground(background);
-        //hIA.setBackground(Background.EMPTY);
         hIA.setToggleGroup(j);
         hIA.setSelected(true);
         est_h_ai = 1;
@@ -374,13 +356,11 @@ public class InterfaceJoueurs extends Interface {
                             est_m2 = 0;
                             est_d1 = 0;
                             est_d2 = 0;
-                            //grille.getChildren().remove(grille.getChildren().size() - 6, grille.getChildren().size());
                             ia_ia.setBackground(Background.EMPTY);
                             est_ia_ia = 0;
                             versionIA1 = null;
                             versionIA2 = null;
                         } else if (est_h_ai == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             est_f2 = 0;
                             est_m2 = 0;
                             est_d2 = 0;
@@ -389,7 +369,6 @@ public class InterfaceJoueurs extends Interface {
                             versionIA2 = null;
                             Name1.setText(null);
                         }else if (est_ai_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             est_f1 = 0;
                             est_m1 = 0;
                             est_d1 = 0;
@@ -431,19 +410,16 @@ public class InterfaceJoueurs extends Interface {
                             est_m2 = 0;
                             est_d1 = 0;
                             est_d2 = 0;
-                            //grille.getChildren().remove(grille.getChildren().size() - 6, grille.getChildren().size());
                             ia_ia.setBackground(Background.EMPTY);
                             est_ia_ia = 0;
                             versionIA1 = null;
                             versionIA2 = null;
                         } else if (est_h_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             hh.setBackground(Background.EMPTY);
                             est_h_h = 0;
                             Name1.setText(null);
                             Name2.setText(null);
                         }else if (est_ai_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             est_f1 = 0;
                             est_m1 = 0;
                             est_d1 = 0;
@@ -565,19 +541,16 @@ public class InterfaceJoueurs extends Interface {
                             est_m2 = 0;
                             est_d1 = 0;
                             est_d2 = 0;
-                            //grille.getChildren().remove(grille.getChildren().size() - 6, grille.getChildren().size());
                             ia_ia.setBackground(Background.EMPTY);
                             est_ia_ia = 0;
                             versionIA1 = null;
                             versionIA2 = null;
                         } else if (est_h_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             hh.setBackground(Background.EMPTY);
                             est_h_h = 0;
                             Name1.setText(null);
                             Name2.setText(null);
                         }else if (est_h_ai == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             est_f2 = 0;
                             est_m2 = 0;
                             est_d2 = 0;
@@ -693,7 +666,6 @@ public class InterfaceJoueurs extends Interface {
                         }
                     } else if (IAs.isSelected()) {
                         if (est_h_ai == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 4, grille.getChildren().size());
                             est_f2 = 0;
                             est_m2 = 0;
                             est_d2 = 0;
@@ -702,13 +674,11 @@ public class InterfaceJoueurs extends Interface {
                             versionIA2 = null;
                             Name1.setText(null);
                         } else if (est_h_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 2, grille.getChildren().size());
                             hh.setBackground(Background.EMPTY);
                             est_h_h = 0;
                             Name1.setText(null);
                             Name2.setText(null);
                         }else if (est_ai_h == 1) {
-                            //grille.getChildren().remove(grille.getChildren().size() - 3, grille.getChildren().size());
                             est_f1 = 0;
                             est_m1 = 0;
                             est_d1 = 0;
@@ -931,8 +901,8 @@ public class InterfaceJoueurs extends Interface {
         valider_sp.prefWidthProperty().bind(bp.widthProperty());
         Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView valIm = new ImageView(val);
-        valIm.setFitHeight(flecheHauteur);
-        valIm.setFitWidth(flecheLargeur * 0.6);
+        valIm.fitHeightProperty().bind(scene.heightProperty().divide(20));
+        valIm.setPreserveRatio(true);
         valider_sp.getChildren().add(valIm);
         valider.setTextFill(Color.web("#fbe5b5"));
         valider.setBackground(Background.EMPTY);
@@ -940,7 +910,6 @@ public class InterfaceJoueurs extends Interface {
         valider_sp.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                //System.out.println(est_h_h + " " + est_h_ai + " " + est_ia_ia + " " + est_f1 + " " + est_m1 + " " + est_d1 + " " + est_f2 + " " + est_m2 + " " + est_d2);
                 String joueur_1 = new String();
                 String joueur_2 = new String();
                 if (est_h_h == 1) {

@@ -1,0 +1,3 @@
+aide=true
+theme=Jour
+langue=français

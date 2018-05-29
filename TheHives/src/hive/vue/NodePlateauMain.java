@@ -12,7 +12,6 @@ import hive.model.insects.InsectType;
 import hive.model.players.PlayerCollection;
 import hive.model.players.TeamColor;
 import java.util.EnumMap;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,7 +23,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 /**
  *
@@ -45,7 +43,7 @@ public class NodePlateauMain extends Parent {
 
     CacheImage c;
 
-    public NodePlateauMain(PlayerCollection col, Stage stage, String nomJoueur, CacheImage c, PlateauController plateauController, InterfacePlateau plateau, TeamColor color) {
+    public NodePlateauMain(PlayerCollection col, String nomJoueur, CacheImage c, PlateauController plateauController, InterfacePlateau plateau, TeamColor color) {
         pions = new VBox();
         this.c = c;
         this.couleur = color;

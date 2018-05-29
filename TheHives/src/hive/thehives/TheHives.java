@@ -32,7 +32,7 @@ public class TheHives extends Application
 
     @Override
     public void start(Stage _primaryStage) throws Exception
-    {
+    {          
         cache = new CacheImage();
         root = new Group();
         scene = new Scene(root, WIDTH, HEIGHT);

@@ -268,6 +268,18 @@ public class HiveUtil
         }
     }
     
+    public static void setMoveActions(Game game, ArrayList<Action> actions, ArrayList<InsectType> insects)
+    {
+        for (InsectType type : insects)
+        {
+            HashSet<Cell> sources = game.state.data.tiles.get(game.state.turn.getCurrent().color).get(type);
+            for(Cell source : sources)
+            {
+                setMoveActions(game, source, actions);
+            }
+        }
+    }
+    
     // does not treat NoAction case
     public static void setActions(Game game, ArrayList<Action> actions)
     {

@@ -204,6 +204,15 @@ public class HiveInterfaceIA implements InterfaceIA
         HiveUtil.setMoveActions(game, actions);
     }
     
+    // does not treat NoAction case
+    @Override
+    public void currentPlayerPossibilities(Game game, ArrayList<Action> actions, ArrayList<InsectType> insects)
+    {
+        actions.clear();
+        HiveUtil.setMoveActions(game, actions, insects);
+        HiveUtil.setPutActions(game, actions);
+    }
+    
     @Override
     public int nbPossibilitiesQueen(Game game, Player player)
     {

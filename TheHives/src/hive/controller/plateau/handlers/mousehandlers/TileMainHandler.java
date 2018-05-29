@@ -46,42 +46,33 @@ public class TileMainHandler extends PlateauHandler
                 System.err.println("Vous n'avez pas selectionné un pion de votre couleur");
                 return;
             }
+            if (game.rules.queenMustBePut(game.state) && tileClicked.type != InsectType.QUEEN_BEE)
+            {
+                uiPlateau.message("Attention", "Vous devez posez votre reine");
+            }
             switch (controller.builder.getState())
             {
                 case BEGIN:
                     System.out.println("Tile selectionnée");
+                    setTileAndPlacements();
 
-                    controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-
-                    uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
                 case SOURCE_SELECTED:
                     System.out.println("Tile selectionnée");
-
                     uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
                     uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                    setTileAndPlacements();
 
-                    controller.builder.setTile(tileClicked);
-                    controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-
-                    uiMain.surlignerTile(controller.builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
                     event.consume();
                     break;
                 case TILE_SELECTED:
                     if (tileClicked.type != controller.builder.tile.type)
                     {
                         System.out.println("Changement de tile");
-
                         uiMain.desurlignerTile(controller.builder.tile);
                         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-                        controller.builder.setTile(tileClicked);
-                        controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-                        uiMain.surlignerTile(controller.builder.tile);
-                        uiPlateau.ruche.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        setTileAndPlacements();
                     } else
                     {
                         System.err.println("Annuler la selection de la tile");
@@ -93,5 +84,14 @@ public class TileMainHandler extends PlateauHandler
                     break;
             }
         }
+    }
+
+    private void setTileAndPlacements()
+    {
+        controller.builder.setTile(tileClicked);
+        controller.builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
+
+        uiMain.surlignerTile(controller.builder.tile);
+        uiPlateau.surlignerDestinationsPossibles(controller.builder.possibleDestinations);
     }
 }

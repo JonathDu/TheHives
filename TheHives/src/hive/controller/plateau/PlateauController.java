@@ -140,33 +140,29 @@ public class PlateauController
                 }
                 if (!currentPlayerCanPlay())
                 {
+                    if (!progress.game.state.data.trace.isEmpty())
+                    {
+                        ActionGraphicUpdaterDeselect gUpdaterDeselect = new ActionGraphicUpdaterDeselect(uiPlateau, game);
+                        progress.game.state.data.trace.peek().accept(gUpdaterDeselect);
+                    }
                     NoAction noAction = new NoAction();
                     ((HumanDecision) game.state.turn.getCurrent().decision).setAction(noAction);
                     progress.doAction();
                     startOfTurnInfos();
                     uiPlateau.message("Attention", "Vous ne pouvez pas jouer, passage au tour suivant");
                 }
-                if (game.rules.queenMustBePut(game.state))
-                {
-                    Tile tileClicked = new Tile(InsectType.QUEEN_BEE, game.state.turn.getCurrent().color);
-                    builder.setTile(tileClicked);
-                    builder.setDestinations(HiveUtil.getPlacements(game, tileClicked.type));
-                    uiPlateau.getInterfacePlateauMain(builder.tile.color).surlignerTile(builder.tile);
-                    uiPlateau.ruche.surlignerDestinationsPossibles(builder.possibleDestinations);
-                    uiPlateau.message("Attention", "Vous devez posez votre reine");
-                }
             }
             break;
             case CURRENT_WINS:
-                uiPlateau.finPartie(game.state.turn.current.toString());
+                uiPlateau.finPartie(game.state.turn.current.toString(), game.state.turn.opponent.toString());
                 stop();
                 break;
             case OPPONENT_WINS:
-                uiPlateau.finPartie(game.state.turn.opponent.toString());
+                uiPlateau.finPartie(game.state.turn.opponent.toString(), game.state.turn.current.toString());
                 stop();
                 break;
             case DRAW:
-                uiPlateau.finPartie(null);
+                uiPlateau.finPartie(null, null);
                 stop();
                 break;
         }
@@ -174,7 +170,19 @@ public class PlateauController
 
     private boolean currentPlayerCanPlay()
     {
-        return !game.state.data.placements.isEmpty() || !HiveUtil.getDestinations(game).isEmpty(); //TODO : ne marche pas
+        boolean hasPlacement = false;
+        for (InsectType type : InsectType.implemented_insects)
+        {
+            if (game.state.turn.getCurrent().collection.get(type) > 0)
+            {
+                if (!HiveUtil.getPlacements(game, type).isEmpty())
+                {
+                    hasPlacement = true;
+                    break;
+                }
+            }
+        }
+        return hasPlacement || !HiveUtil.getDestinations(game).isEmpty();
     }
 
     public void undo()

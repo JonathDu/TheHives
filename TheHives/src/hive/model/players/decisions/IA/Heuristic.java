@@ -6,6 +6,8 @@
 package hive.model.players.decisions.IA;
 
 import hive.model.insects.InsectType;
+import static hive.model.insects.InsectType.implemented_insects;
+import java.util.ArrayList;
 
 /**
  *
@@ -37,12 +39,13 @@ public class Heuristic {
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 191, 132};
-    public static final int[] INSECT_BLOCK_VALUE_CUR = {-85, -75, -95, -98, -100};
+    public static final int[] INSECT_BLOCK_VALUE_CUR = {-185, -75, -95, -98, -100};
     public static final int[] IN_HAND_CUR = {0 , 20, 20, 30, 20 };
 
     
     public static final int[] QUEEN_CRUSHED_CUR = {500, 0};
     public static final int[] QUEEN_CRUSHED_OP = {-500, 0};
+    public static double Q_Next_Q;
     
     public static final int QUEEN_BEE = 0;
     public static final int SPIDER = 1;
@@ -86,7 +89,23 @@ public class Heuristic {
     }
     
     
+    public static final ArrayList<InsectType> insects_min;
+    public static final ArrayList<InsectType> insects_max;
     
-    
-    
+    static
+    {
+        insects_max = new ArrayList<>(5);
+        insects_max.add(InsectType.QUEEN_BEE);
+        insects_max.add(InsectType.SOLDIER_ANT);
+        insects_max.add(InsectType.BEETLE);
+        insects_max.add(InsectType.GRASSHOPPER);
+        insects_max.add(InsectType.SPIDER);
+        
+        insects_min = new ArrayList<>(5);
+        insects_min.add(InsectType.QUEEN_BEE);
+        insects_min.add(InsectType.SPIDER);
+        insects_min.add(InsectType.GRASSHOPPER);
+        insects_min.add(InsectType.BEETLE);
+        insects_min.add(InsectType.SOLDIER_ANT);
+    }
 }
