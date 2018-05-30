@@ -62,13 +62,13 @@ public class Evaluation {
         int values=0;
         Player opponent = hia.opponentPlayer(state);
         Player current = hia.currentPlayer(state);
-        int queenOpponentPossibilities = hia.nbPossibilitiesQueen(state, opponent);
-        int queenCurrentPossibilities = hia.nbPossibilitiesQueen(state, current);
+        /*int queenOpponentPossibilities = hia.nbPossibilitiesQueen(state, opponent);
+        int queenCurrentPossibilities = hia.nbPossibilitiesQueen(state, current);*/
         
         values+=QUEEN_CRUSHED_CUR[(hia.queenIsCurshed(current, state) ? 1 : 0)];
         values+=QUEEN_CRUSHED_OP[(hia.queenIsCurshed(opponent, state) ? 1 : 0)];
-        values+= heuristicVal[0][0][queenOpponentPossibilities];
-        values+= heuristicVal[1][0][queenCurrentPossibilities];
+        values+= heuristicVal[0][0][hia.queenFreeNeighbour(opponent, state)];
+        values+= heuristicVal[1][0][hia.queenFreeNeighbour(current, state)];
         return values;
     }
     

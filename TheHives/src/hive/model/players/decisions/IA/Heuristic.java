@@ -22,23 +22,23 @@ import java.util.ArrayList;
 */
 
 public class Heuristic {
-    public static final int[] NB_QUEEN_OP_POSSIBILITY = {150, 100, -166, -180, -200};
-    public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 115, 114, 200, 110};
-    public static final int[] QUEEN_NEIGH_FREE_OP_OP = {50, 50, 50, 50, 50};
+    public static final int[] NB_QUEEN_OP_POSSIBILITY = {550, 400, 366, 220, 0,-50};
+    public static final int[] QUEEN_NEIGH_BLOCK_OP_OP = {16, 145, 144, 200, 140};
+    public static final int[] QUEEN_NEIGH_FREE_OP_OP = {75, 75, 75, 75, 75};
     public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 335, 334, 390, 310};
-    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 355, 354, 300, 320};
-    public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -191, -132};
+    public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 555, 554, 500, 520};
+    public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -141, -132};
     public static final int[] INSECT_BLOCK_VALUE_OP = {130, 80, 80, 85, 90};
     public static final int[] IN_HAND_OP = {-20 , -20, -20, -20, -20 };
     
     
-    public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-300, -200, 200, 250, 300};
+    public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-300, -200, 200, 250, 300, 250};
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-136, -180, -200, -180, -180};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-100, -100, -100, -100, -100};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-150, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
-    public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 191, 132};
-    public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -20, -25, -40, -25};
+    public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 171, 132};
+    public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -70, -75, -80, -75};
     public static final int[] IN_HAND_CUR = {20 , 50, 20, 20, 20 };
 
     
@@ -77,7 +77,7 @@ public class Heuristic {
     }
     
     public static final int[][][] getHeuristic(){
-        int [][][] heuristicValues = new int [2][8][5];
+        int [][][] heuristicValues = new int [2][8][6];
         
         heuristicValues[0][0] = NB_QUEEN_OP_POSSIBILITY;
         heuristicValues[0][1] = QUEEN_NEIGH_BLOCK_OP_OP;
