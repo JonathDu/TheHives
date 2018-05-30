@@ -73,7 +73,7 @@ public class FinPartie extends Parent {
 
         recommencer = new HiveBouton(cacheImage.getImage("FenetrePlateau/BoutonRestart.png"), scene);
         retourMenu = new HiveBouton(cacheImage.getImage("MenuPrincipaux/bouttonRetourMenu.png"), scene);
-        refaireDernier = new HiveBouton(cacheImage.getImage("MenuPrincipaux/bouttonRetourMenu.png"), scene);
+        refaireDernier = new HiveBouton(cacheImage.getImage("FenetrePlateau/FlecheUndo.png"), scene);
 
         gagnant = joueurGagnant;
         message = new Label();
