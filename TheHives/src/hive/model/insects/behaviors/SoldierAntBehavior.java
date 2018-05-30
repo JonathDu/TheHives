@@ -33,6 +33,11 @@ public class SoldierAntBehavior implements InsectBehavior
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return;
         
+        consumeDestinations(cell, consumer);
+    }
+    
+    public void consumeDestinations(Cell cell, Consumer<Cell> consumer)
+    {
         Tile tmp = cell.comb.value().pop();
         
         // breadth first search on neighbors of the cell,

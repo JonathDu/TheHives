@@ -78,6 +78,11 @@ public class HiveUtil
         return new Cell((Honeycomb)cell.comb.getNeighbor(side), cell.level);
     }
     
+    public static Cell topCell(Honeycomb comb)
+    {
+        return new Cell((Honeycomb)comb, comb.value().size() - 1);
+    }
+    
     // check if the cell has at least two open spaces
     public static boolean isFreeAtSide(Cell cell, HexagonSide side)
     {
