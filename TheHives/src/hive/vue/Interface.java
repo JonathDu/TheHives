@@ -46,8 +46,8 @@ public abstract class Interface extends Parent {
     double max_screen_height;
     double max_screen_width;
     int tailleDeCase;
-
-
+    
+    
     HiveBouton boutonPreference;
     HiveBouton boutonPleinEcran;
     HiveBouton boutonRetourMenu;

@@ -14,6 +14,11 @@ public class PlayerData
     public String name;
     public int score;
     
+    public PlayerData() // for serialization
+    {
+        
+    }
+    
     public PlayerData(String name)
     {
         this(name, 0);

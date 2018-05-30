@@ -51,7 +51,6 @@ public class NodeComb extends Parent {
                 pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c, longueur));
                 pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
-                pions.get(i).addEventFilter(DragEvent.DRAG_DONE, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).setLayoutX(4 * i);
                 pions.get(i).setLayoutY(4 * i);
                 this.getChildren().add(pions.get(i));
@@ -67,18 +66,16 @@ public class NodeComb extends Parent {
         socle.hexagon.setStroke(col);
         socle.setOnDragOver(new EventHandler<DragEvent>() {
             public void handle(DragEvent event) {
-                System.out.println("fdssdf");
                 event.acceptTransferModes(TransferMode.ANY);
 
                 event.consume();
             }
         });
         for (int i = 0; i < pions.size(); i++) {
-            pions.get(i).hexagon.setStrokeWidth(3);
+            
             pions.get(i).hexagon.setStroke(col);
             pions.get(i).setOnDragOver(new EventHandler<DragEvent>() {
                 public void handle(DragEvent event) {
-                    System.out.println("fdssdf");
                     event.acceptTransferModes(TransferMode.ANY);
 
                     event.consume();

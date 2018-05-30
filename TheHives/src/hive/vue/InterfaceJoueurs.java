@@ -46,8 +46,8 @@ public class InterfaceJoueurs extends Interface {
     String versionIA1;
     String versionIA2;
     int est_ia_ia = 0, est_h_ai = 0, est_ai_h = 0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
-    TextField Name1 = new TextField();
-    TextField Name2 = new TextField();
+    RestrictiveTextField Name1 = new RestrictiveTextField();
+    RestrictiveTextField Name2 = new RestrictiveTextField();
     Level level1 = null;
     Level level2 = null;
     private final Label joueur1;
@@ -73,6 +73,8 @@ public class InterfaceJoueurs extends Interface {
 
         Name1.setFont(new Font(15));
         Name2.setFont(new Font(15));
+        Name1.setMaxLength(10);
+        Name2.setMaxLength(10);
         Name1.setText(null);
         Name2.setText(null);
         setTextWithCurrentLanguage();
@@ -924,7 +926,7 @@ public class InterfaceJoueurs extends Interface {
                     if (Name2.getText() == null) {
                         joueur_2 = controller.gestionnaireLangage.getText("text_joueur2");
                     } else {
-                        joueur_2 = Name1.getCharacters().toString();
+                        joueur_2 = Name2.getCharacters().toString();
                     }
                     controller.goToPlateau(new PlayerData(joueur_1), new PlayerData(joueur_2), null, null);
                 } else if (est_h_ai == 1) {
@@ -1016,9 +1018,9 @@ public class InterfaceJoueurs extends Interface {
         }
         switch (ia) {
             case EASY:
-                return "facile";
+                return "Facile";
             case MEDIUM:
-                return "moyenne";
+                return "Moyenne";
             case HARD:
                 return "Difficile";
             default:
