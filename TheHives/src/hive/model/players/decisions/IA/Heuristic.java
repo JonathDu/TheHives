@@ -35,7 +35,7 @@ public class Heuristic {
     
     public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-300, -200, 200, 250, 300, 250};
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-136, -180, -200, -180, -180};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-150, -150, -150, -150, -150};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-150, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 171, 132};
