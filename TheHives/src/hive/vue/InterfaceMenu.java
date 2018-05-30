@@ -41,7 +41,7 @@ public class InterfaceMenu extends Interface {
         pane.prefWidthProperty().bind(scene.widthProperty());
         pane.prefHeightProperty().bind(scene.heightProperty());
 
-        Image hive = c.getImage("Design/MenuPrincipaux/TheHives.png");
+        Image hive = c.getImage("MenuPrincipaux/TheHives.png");
         ImageView hiveIm = new ImageView(hive);
         hiveIm.fitWidthProperty().bind(scene.widthProperty().divide(5));
         hiveIm.setPreserveRatio(true);
@@ -53,7 +53,7 @@ public class InterfaceMenu extends Interface {
         StackPane hex = new StackPane();
         hex.prefHeightProperty().bind(scene.heightProperty());
         hex.prefWidthProperty().bind(scene.widthProperty());
-        Image hexagone = c.getImage("Design/MenuPrincipaux/Hexagone.png");
+        Image hexagone = c.getImage("MenuPrincipaux/Hexagone.png");
         ImageView hexagoneIm = new ImageView(hexagone);
         hexagoneIm.setPreserveRatio(true);
         hexagoneIm.fitWidthProperty().bind(scene.widthProperty().divide(3));
@@ -74,7 +74,7 @@ public class InterfaceMenu extends Interface {
         menu_hex.setAlignment(Pos.CENTER);
         StackPane NewGame = new StackPane();
 
-        Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        Image fleche = c.getImage("MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView flecheImNG = new ImageView(fleche);
         flecheImNG.fitWidthProperty().bind(scene.widthProperty().divide(3).subtract(20));
         flecheImNG.setPreserveRatio(true);
@@ -126,7 +126,7 @@ public class InterfaceMenu extends Interface {
         pane.getChildren().add(hex);
 
         StackPane Statistiques = new StackPane();
-        Image gauche = c.getImage("Design/MenuPrincipaux/FlecheEnBasGauche.png");
+        Image gauche = c.getImage("MenuPrincipaux/FlecheEnBasGauche.png");
         ImageView gaucheIm = new ImageView(gauche);
 
         gaucheIm.fitWidthProperty().bind(scene.widthProperty().divide(4));
@@ -144,7 +144,7 @@ public class InterfaceMenu extends Interface {
         pane.getChildren().add(Statistiques);
 
         StackPane Credits = new StackPane();
-        Image droite = c.getImage("Design/MenuPrincipaux/FlecheEnBasDroite.png");
+        Image droite = c.getImage("MenuPrincipaux/FlecheEnBasDroite.png");
         ImageView droiteIm = new ImageView(droite);
         droiteIm.fitWidthProperty().bind(scene.widthProperty().divide(4));
         droiteIm.setPreserveRatio(true);

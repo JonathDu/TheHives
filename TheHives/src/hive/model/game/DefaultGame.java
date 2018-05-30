@@ -48,7 +48,7 @@ public class DefaultGame
 
     public static Board getBoard()
     {
-        int size = nbTiles * nbPlayers + 2;
+        int size = nbTiles * nbPlayers + 18;
         Matrix<TilesStack> m = new Matrix<>(size, size);
         m.setAll(() -> new TilesStack());
         return new Board(m);

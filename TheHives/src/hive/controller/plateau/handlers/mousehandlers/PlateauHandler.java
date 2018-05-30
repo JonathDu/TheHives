@@ -9,14 +9,16 @@ import hive.controller.plateau.PlateauController;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdaterDeselect;
 import hive.controller.plateau.handlers.PlateauHandlerData;
 import hive.model.players.decisions.HumanDecision;
+import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
  *
  * @author lucas
  */
-public abstract class PlateauHandler extends PlateauHandlerData implements EventHandler<MouseEvent>
+public abstract class PlateauHandler extends PlateauHandlerData implements EventHandler<Event>
 {
 
     public PlateauHandler(PlateauController controller)
@@ -25,10 +27,11 @@ public abstract class PlateauHandler extends PlateauHandlerData implements Event
     }
 
     @Override
-    public void handle(MouseEvent event)
+    public void handle(Event event)
     {
         if (!(game.state.turn.getCurrent().decision instanceof HumanDecision))
         {
+            System.out.println("fgds");
             return;
         }
 
@@ -41,5 +44,5 @@ public abstract class PlateauHandler extends PlateauHandlerData implements Event
         handlePlateau(event);
     }
     
-    public abstract void handlePlateau(MouseEvent event);
+    public abstract void handlePlateau(Event event);
 }

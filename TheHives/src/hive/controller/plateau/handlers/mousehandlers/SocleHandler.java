@@ -4,6 +4,9 @@ import hive.controller.plateau.PlateauController;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdater;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
+import javafx.event.Event;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import util.Vector2i;
 
@@ -15,22 +18,38 @@ import util.Vector2i;
  */
 public class SocleHandler extends PlateauHandler
 {
-    
+
     Honeycomb combClicked;
-    
+
     public SocleHandler(PlateauController controller, Vector2i pos)
     {
         super(controller);
         combClicked = game.state.board.getHexagon(pos);
     }
-    
+
     @Override
-    public void handlePlateau(MouseEvent event)
+    public void handlePlateau(Event event)
     {
         System.out.println("--- SOCLE ---");
-        
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED)
+
+        if (event.getEventType() == DragEvent.DRAG_DROPPED || event.getEventType() == MouseEvent.MOUSE_CLICKED || event.getEventType() == MouseEvent.MOUSE_RELEASED)
         {
+            if (event.getEventType() == DragEvent.DRAG_DROPPED)
+            {
+                System.out.println("yo");
+                DragEvent e = (DragEvent) event;
+                Dragboard db = e.getDragboard();
+                boolean success = false;
+                if (db.hasString())
+                {
+                    success = true;
+                }
+                /* let the source know whether the string was successfully 
+            * transferred and used */
+                e.setDropCompleted(success);
+
+                event.consume();
+            }
             switch (controller.builder.getState())
             {
                 case SOURCE_SELECTED:
@@ -51,6 +70,9 @@ public class SocleHandler extends PlateauHandler
                             return;
                         } else
                         {
+                            uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                            uiPlateau.ruche.deselectCell(combClicked.pos);
+                            controller.builder.setBegin();
                             System.err.println("Destination impossible");
                         }
                     } else
@@ -64,6 +86,9 @@ public class SocleHandler extends PlateauHandler
                 case TILE_SELECTED:
                     if (!controller.builder.possibleDestinations.contains(new Cell(combClicked)))
                     {
+                        uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
+                        uiPlateau.getInterfacePlateauMain(game.state.turn.getCurrent().color).desurlignerTile(controller.builder.tile);
+                        controller.builder.setBegin();
                         System.err.println("Placement impossible"); //on laisse passer l'event pour que TilePlateauHandler traite le coup ou on selectionne une source au lieu d'un placement
                     } else
                     {
@@ -76,28 +101,28 @@ public class SocleHandler extends PlateauHandler
             }
         }
     }
-    
+
     public void moveOnBoard(Cell destination)
     {
         uiPlateau.ruche.deselectCell(controller.builder.source.comb.pos);
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-        
+
         controller.builder.setDestination(destination);
         controller.doProducedAction();
-        
+
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
         game.state.data.trace.peek().accept(gUpdater);
     }
-    
+
     public void putOnBoard(Cell placement)
     {
         uiPlateau.ruche.desurlignerDestinationsPossibles(controller.builder.possibleDestinations);
-        
+
         controller.builder.setPlacement(placement);
         controller.doProducedAction();
-        
+
         ActionGraphicUpdater gUpdater = new ActionGraphicUpdater(uiPlateau, game);
         game.state.data.trace.peek().accept(gUpdater);
     }
-    
+
 }

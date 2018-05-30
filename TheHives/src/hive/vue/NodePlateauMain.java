@@ -18,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -58,15 +59,17 @@ public class NodePlateauMain extends Parent {
             pilesPions.put(type, new NodePions(color, col.get(type), type, c));
             pions.getChildren().add(pilesPions.get(type));
             if (col.get(type) != 0) {
-                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+                pilesPions.get(type).addEventHandler(MouseEvent.DRAG_DETECTED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+
             }
         }
 
         pions.setPadding(new Insets(50, 20, 20, 10));
         pions.setAlignment(Pos.TOP_CENTER);
 
-        panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
-        afficheTour = new ImageView(c.getImage("bee.png"));
+        panneau = new ImageView(c.getImage("FenetrePlateau/nom.png"));
+        afficheTour = new ImageView(c.getImage("FenetrePlateau/bee.png"));
 
         afficheTour.setFitWidth(30);
         afficheTour.setPreserveRatio(true);
@@ -127,9 +130,15 @@ public class NodePlateauMain extends Parent {
             pilesPions.put(type, new NodePions(couleur, collection.get(type), type, c));
             pions.getChildren().add(pilesPions.get(type));
             if (collection.get(type) != 0) {
-                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type));
+                pilesPions.get(type).addEventHandler(MouseEvent.MOUSE_CLICKED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+                pilesPions.get(type).addEventHandler(MouseEvent.DRAG_DETECTED, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
+                pilesPions.get(type).addEventHandler(DragEvent.DRAG_DONE, new TileMainHandler(plateauController, couleur, type, pilesPions.get(type)));
             }
         }
         pions.getChildren().add(affichageJoueur);
+    }
+    
+    public void changerNom(String nom){
+        this.labelNomJoueur.setText(nom);
     }
 }

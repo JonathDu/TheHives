@@ -45,6 +45,7 @@ public class InterfaceRegles extends Interface {
     private Label jeu;
     private Label insecte;
     private String rep;
+    BorderPane bp;
     private final AnchorPane top;
 
     public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c) {
@@ -58,6 +59,10 @@ public class InterfaceRegles extends Interface {
         
 
         top.getChildren().add(droite);
+        
+        bp = new BorderPane();
+        bp.prefHeightProperty().bind(scene.heightProperty());
+        bp.prefWidthProperty().bind(scene.widthProperty());
 
         AnchorPane.setLeftAnchor(boutonRetourMenu, (double) 5);
         AnchorPane.setTopAnchor(boutonRetourMenu, (double) 0);
@@ -70,12 +75,16 @@ public class InterfaceRegles extends Interface {
     public InterfaceRegles(Scene scene, Stage primaryStage, Controller controller, CacheImage c, boolean fenetre) {
         super(scene, primaryStage, controller, c);
         top = new AnchorPane();
-
+        
         rep = controller.gestionnaireLangage.getText("text_regle_image_rep");
 
         pane = new AnchorPane();
         pane.prefWidthProperty().bind(scene.widthProperty());
         pane.prefHeightProperty().bind(scene.heightProperty());
+        
+        bp = new BorderPane();
+        bp.prefHeightProperty().bind(scene.heightProperty());
+        bp.prefWidthProperty().bind(scene.widthProperty());
 
         regles(police,  tailleDeCase, rep);
     }
@@ -98,9 +107,7 @@ public class InterfaceRegles extends Interface {
         double tailleLettres = tailleDeCase * 0.2;
         setTextWithCurrentLanguage();
 
-        BorderPane bp = new BorderPane();
-        bp.prefHeightProperty().bind(scene.heightProperty());
-        bp.prefWidthProperty().bind(scene.widthProperty());
+        
 
         top.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
         top.prefWidthProperty().bind(bp.widthProperty());
@@ -108,7 +115,7 @@ public class InterfaceRegles extends Interface {
         StackPane spR = new StackPane();
         spR.prefWidthProperty().bind(bp.widthProperty().multiply(0.7));
         spR.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
-        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
+        Image pancarte = c.getImage("MenuJoueurs/Pancarte.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundFond = new BackgroundImage(pancarte, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundFond);

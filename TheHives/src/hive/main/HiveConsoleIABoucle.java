@@ -55,7 +55,7 @@ public class HiveConsoleIABoucle {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        int i = 20;
+        int i = 0;
         Game game;
         while (i < 60) {
             if (i < 10) {
@@ -74,7 +74,7 @@ public class HiveConsoleIABoucle {
             printWhich(i);
             GameProgress progress = new GameProgress(game);
             Player player = null;
-            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES) {
+            while (game.rules.getStatus(game.state) == GameStatus.CONTINUES && HiveUtil.nbTurns(game.state)<50) {
                 player = game.state.turn.getCurrent();
 
                 progress.doAction();

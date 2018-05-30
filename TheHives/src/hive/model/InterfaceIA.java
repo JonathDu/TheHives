@@ -5,16 +5,9 @@
  */
 package hive.model;
 
-import hive.model.board.Cell;
 import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.insects.InsectType;
-import static hive.model.insects.InsectType.BEETLE;
-import static hive.model.insects.InsectType.GRASSHOPPER;
-import static hive.model.insects.InsectType.QUEEN_BEE;
-import static hive.model.insects.InsectType.SOLDIER_ANT;
-import static hive.model.insects.InsectType.SPIDER;
-import static hive.model.insects.InsectType.implemented_insects;
 import hive.model.players.Player;
 import hive.model.players.actions.Action;
 import hive.model.players.decisions.Decision;

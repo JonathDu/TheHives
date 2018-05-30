@@ -46,8 +46,8 @@ public abstract class Interface extends Parent {
     double max_screen_height;
     double max_screen_width;
     int tailleDeCase;
-
-
+    
+    
     HiveBouton boutonPreference;
     HiveBouton boutonPleinEcran;
     HiveBouton boutonRetourMenu;
@@ -83,9 +83,9 @@ public abstract class Interface extends Parent {
         Tooltip t1 = new Tooltip("Plein écran");
         Tooltip t2 = new Tooltip("Réglages");
 
-        boutonPreference = new HiveBouton(c.getImage("Design/MenuPrincipaux/BouttonParametre.png"), scene);
-        boutonPleinEcran = new HiveBouton(c.getImage("Design/MenuPrincipaux/pleinEcran.png"), scene);
-        boutonRetourMenu = new HiveBouton(c.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
+        boutonPreference = new HiveBouton(c.getImage("MenuPrincipaux/BouttonParametre.png"), scene);
+        boutonPleinEcran = new HiveBouton(c.getImage("MenuPrincipaux/pleinEcran.png"), scene);
+        boutonRetourMenu = new HiveBouton(c.getImage("MenuPrincipaux/bouttonRetourMenu.png"), scene);
         Tooltip.install(boutonRetourMenu, t);
         Tooltip.install(boutonPleinEcran, t1);
         Tooltip.install(boutonPreference, t2);
@@ -122,7 +122,7 @@ public abstract class Interface extends Parent {
     }
 
     private void setBackground() {
-        Image fond = controller.settingsGesture.get("theme").equals("Jour") ? c.getImage("MaquetteFond.png") : c.getImage("Design/Fond/fondNuit.png");
+        Image fond = controller.settingsGesture.get("theme").equals("Jour") ? c.getImage("Fond/fondJour.png") : c.getImage("Fond/fondNuit.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage backgroundFond = new BackgroundImage(fond, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundFond);

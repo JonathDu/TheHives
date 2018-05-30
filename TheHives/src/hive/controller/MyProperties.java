@@ -25,7 +25,7 @@ public class MyProperties
 
     private static String PROPERTIES_PATH;
     private final File file;
-    private final HashMap<String, String> map;
+    protected final HashMap<String, String> map;
 
     public MyProperties(String filePath)
     {

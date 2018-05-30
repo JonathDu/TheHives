@@ -46,8 +46,8 @@ public class InterfaceJoueurs extends Interface {
     String versionIA1;
     String versionIA2;
     int est_ia_ia = 0, est_h_ai = 0, est_ai_h = 0, est_h_h = 0, est_f1 = 0, est_f2 = 0, est_m1 = 0, est_m2 = 0, est_d1 = 0, est_d2 = 0;
-    TextField Name1 = new TextField();
-    TextField Name2 = new TextField();
+    RestrictiveTextField Name1 = new RestrictiveTextField();
+    RestrictiveTextField Name2 = new RestrictiveTextField();
     Level level1 = null;
     Level level2 = null;
     private final Label joueur1;
@@ -68,11 +68,13 @@ public class InterfaceJoueurs extends Interface {
         joueur2 = new Label();
         valider = new Button();
 
-        Image hexagone = c.getImage("niveau/hexagoneCoupé.png");
-        Image rectangle = c.getImage("niveau/RectangleCoupé.png");
+        Image hexagone = c.getImage("MenuJoueurs/hexagoneCoupé.png");
+        Image rectangle = c.getImage("MenuJoueurs/RectangleCoupé.png");
 
         Name1.setFont(new Font(15));
         Name2.setFont(new Font(15));
+        Name1.setMaxLength(10);
+        Name2.setMaxLength(10);
         Name1.setText(null);
         Name2.setText(null);
         setTextWithCurrentLanguage();
@@ -106,7 +108,7 @@ public class InterfaceJoueurs extends Interface {
         Image difficile_im = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
         BackgroundSize difficile_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage difficile_imFond = new BackgroundImage(difficile_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, difficile_imSize);
-        Image change_im = c.getImage("exchange1.png");
+        Image change_im = c.getImage("MenuJoueurs/exchange1.png");
         BackgroundSize change_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage change_imFond = new BackgroundImage(change_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, change_imSize);
         
@@ -147,7 +149,7 @@ public class InterfaceJoueurs extends Interface {
         humains = bouton.creer("humains");
         humains.prefHeightProperty().bind(hh.heightProperty().multiply(0.8));
         humains.prefWidthProperty().bind(hh.widthProperty().multiply(0.8));
-        Image h_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonHumainVsHumain.png");
+        Image h_h_im = c.getImage("MenuJoueurs/BoutonHumainVsHumain.png");
         BackgroundSize h_h_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage h_h_imFond = new BackgroundImage(h_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_h_imSize);
         background = new Background(h_h_imFond);
@@ -167,7 +169,7 @@ public class InterfaceJoueurs extends Interface {
         h_ia.setBackground(background);
         hIA.prefHeightProperty().bind(h_ia.heightProperty().multiply(0.8));
         hIA.prefWidthProperty().bind(h_ia.widthProperty().multiply(0.8));
-        Image h_ia_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonIAVsHumain.png");
+        Image h_ia_im = c.getImage("MenuJoueurs/BoutonIAVsHumain.png");
         BackgroundSize h_ia_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage h_ia_imFond = new BackgroundImage(h_ia_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, h_ia_imSize);
         background = new Background(h_ia_imFond);
@@ -185,7 +187,7 @@ public class InterfaceJoueurs extends Interface {
         IAh = bouton.creer("IA_h");
         IAh.prefHeightProperty().bind(ia_h.heightProperty().multiply(0.8));
         IAh.prefWidthProperty().bind(ia_h.widthProperty().multiply(0.8));
-        Image ia_h_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonInverse.png");
+        Image ia_h_im = c.getImage("MenuJoueurs/BoutonInverse.png");
         BackgroundSize ia_h_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage ia_h_imFond = new BackgroundImage(ia_h_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, ia_h_imSize);
         background = new Background(ia_h_imFond);
@@ -201,7 +203,7 @@ public class InterfaceJoueurs extends Interface {
         IAs = bouton.creer("IAs");
         IAs.prefHeightProperty().bind(ia_ia.heightProperty().multiply(0.8));
         IAs.prefWidthProperty().bind(ia_ia.widthProperty().multiply(0.8));
-        Image ia_ia_im = c.getImage("plusDeBoutons/plusDeBoutons/BoutonPersoRobotVsRobo.png");
+        Image ia_ia_im = c.getImage("MenuJoueurs/BoutonPersoRobotVsRobo.png");
         BackgroundSize ia_ia_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage ia_ia_imFond = new BackgroundImage(ia_ia_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, ia_ia_imSize);
         background = new Background(ia_ia_imFond);
@@ -902,7 +904,7 @@ public class InterfaceJoueurs extends Interface {
         StackPane valider_sp = new StackPane();
         valider_sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.27));
         valider_sp.prefWidthProperty().bind(bp.widthProperty());
-        Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        Image val = c.getImage("MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView valIm = new ImageView(val);
         valIm.fitHeightProperty().bind(scene.heightProperty().divide(20));
         valIm.setPreserveRatio(true);
@@ -924,7 +926,7 @@ public class InterfaceJoueurs extends Interface {
                     if (Name2.getText() == null) {
                         joueur_2 = controller.gestionnaireLangage.getText("text_joueur2");
                     } else {
-                        joueur_2 = Name1.getCharacters().toString();
+                        joueur_2 = Name2.getCharacters().toString();
                     }
                     controller.goToPlateau(new PlayerData(joueur_1), new PlayerData(joueur_2), null, null);
                 } else if (est_h_ai == 1) {
@@ -1016,9 +1018,9 @@ public class InterfaceJoueurs extends Interface {
         }
         switch (ia) {
             case EASY:
-                return "facile";
+                return "Facile";
             case MEDIUM:
-                return "moyenne";
+                return "Moyenne";
             case HARD:
                 return "Difficile";
             default:
@@ -1033,6 +1035,7 @@ public class InterfaceJoueurs extends Interface {
         Name1.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
         Name2.setPromptText(controller.gestionnaireLangage.getText("text_nom"));
         valider.setText(controller.gestionnaireLangage.getText("text_valider"));
+        
     }
 
 }

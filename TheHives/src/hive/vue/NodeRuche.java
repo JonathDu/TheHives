@@ -12,7 +12,10 @@ import hive.model.board.Cell;
 import javafx.scene.Parent;
 import static java.lang.Math.sqrt;
 import java.util.ArrayList;
+import javafx.event.EventHandler;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 import util.Matrix;
 import util.Vector2i;
@@ -86,6 +89,7 @@ public class NodeRuche extends Parent {
 
                 SocleHandler handler = new SocleHandler(plateauController, pos);
                 tab.getAt(pos).addEventFilter(MouseEvent.MOUSE_CLICKED, handler);
+                tab.getAt(pos).addEventFilter(DragEvent.DRAG_DROPPED, handler);
 
             }
         }
@@ -109,12 +113,14 @@ public class NodeRuche extends Parent {
 
     public void majDestination(Cell destination) {
         tab.getAt(destination.comb.pos).majComb(destination.comb, plateau, plateauController, longueurPion);
+
     }
 
     public void majDestinations(ArrayList<Cell> destinations) {
         destinations.forEach((destination)
                 -> {
             majDestination(destination);
+
         });
     }
 
@@ -125,12 +131,16 @@ public class NodeRuche extends Parent {
     public void surlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             tab.getAt(cells.get(i).comb.pos).setSelected(Color.rgb(4, 246, 118));
+            SocleHandler handler = new SocleHandler(plateauController, cells.get(i).comb.pos);
+            tab.getAt(cells.get(i).comb.pos).addEventFilter(DragEvent.DRAG_DROPPED, handler);
+
         }
     }
 
     public void desurlignerDestinationsPossibles(ArrayList<Cell> cells) {
         for (int i = 0; i < cells.size(); i++) {
             tab.getAt(cells.get(i).comb.pos).setNotSelected();
+
         }
     }
 

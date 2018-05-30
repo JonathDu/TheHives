@@ -71,7 +71,7 @@ public class InterfaceCharger extends Interface
         spR.prefWidthProperty().bind(bp.widthProperty().multiply(0.3));
         spR.prefHeightProperty().bind(bp.heightProperty().multiply(0.13));
         //TODO a modifier
-        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
+        Image pancarte = c.getImage("MenuJoueurs/Pancarte.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundFond = new BackgroundImage(pancarte, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundFond);
@@ -94,7 +94,7 @@ public class InterfaceCharger extends Interface
         StackPane parties_sp = new StackPane();
         parties_sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.1));
         parties_sp.prefWidthProperty().bind(bp.widthProperty());
-        Image fleche = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        Image fleche = c.getImage("MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView partiesIm = new ImageView(fleche);
         partiesIm.setPreserveRatio(true);
         partiesIm.fitWidthProperty().bind(scene.widthProperty().divide(15));
@@ -137,7 +137,7 @@ public class InterfaceCharger extends Interface
         StackPane valider_sp = new StackPane();
         valider_sp.prefHeightProperty().bind(bp.heightProperty().multiply(0.3));
         valider_sp.prefWidthProperty().bind(bp.widthProperty());
-        Image val = c.getImage("Design/MenuPrincipaux/FlecheDuMenuDansHexagone.png");
+        Image val = c.getImage("MenuPrincipaux/FlecheDuMenuDansHexagone.png");
         ImageView valIm = new ImageView(val);
 
         valIm.setPreserveRatio(true);
@@ -164,7 +164,7 @@ public class InterfaceCharger extends Interface
                 }
                 if (isOk)
                 {
-                    Match match = SavesGesture.loadGame(selectedFileName);
+                    Match match = SavesGesture.loadGame(selectedFileName + ".xml");
                 controller.goToPlateau(match);
                 } else
                 {

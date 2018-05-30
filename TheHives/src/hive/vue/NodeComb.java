@@ -10,8 +10,11 @@ import hive.controller.plateau.handlers.mousehandlers.TilePlateauHandler;
 import hive.model.board.Cell;
 import hive.model.board.Honeycomb;
 import java.util.ArrayList;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
+import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.paint.Color;
 
 /**
@@ -46,13 +49,13 @@ public class NodeComb extends Parent {
         if (comb != null) {
             for (int i = 0; i < comb.value().size(); i++) {
                 pions.add(i, new NodePion(comb.value().get(i).color, comb.value().get(i).type, c, longueur));
-                pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i)));
+                pions.get(i).addEventFilter(MouseEvent.MOUSE_CLICKED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
+                pions.get(i).addEventFilter(MouseEvent.DRAG_DETECTED, new TilePlateauHandler(plateauController, new Cell(comb, i), this));
                 pions.get(i).setLayoutX(4 * i);
                 pions.get(i).setLayoutY(4 * i);
                 this.getChildren().add(pions.get(i));
             }
         }
-
     }
 
     public void removeTile() {
@@ -61,16 +64,40 @@ public class NodeComb extends Parent {
 
     public void setSelected(Color col) {
         socle.hexagon.setStroke(col);
+        socle.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                event.acceptTransferModes(TransferMode.ANY);
+
+                event.consume();
+            }
+        });
         for (int i = 0; i < pions.size(); i++) {
-            pions.get(i).hexagon.setStrokeWidth(3);
+            
             pions.get(i).hexagon.setStroke(col);
+            pions.get(i).setOnDragOver(new EventHandler<DragEvent>() {
+                public void handle(DragEvent event) {
+                    event.acceptTransferModes(TransferMode.ANY);
+
+                    event.consume();
+                }
+            });
         }
     }
 
     public void setNotSelected() {
         socle.hexagon.setStroke(Color.TRANSPARENT);
+        socle.setOnDragOver(new EventHandler<DragEvent>() {
+            public void handle(DragEvent event) {
+                event.consume();
+            }
+        });
         for (int i = 0; i < pions.size(); i++) {
             pions.get(i).hexagon.setStroke(Color.TRANSPARENT);
+            pions.get(i).setOnDragOver(new EventHandler<DragEvent>() {
+                public void handle(DragEvent event) {
+                    event.consume();
+                }
+            });
         }
     }
 
