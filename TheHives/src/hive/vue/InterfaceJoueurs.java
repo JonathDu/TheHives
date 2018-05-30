@@ -108,7 +108,7 @@ public class InterfaceJoueurs extends Interface {
         Image difficile_im = c.getImage(controller.gestionnaireLangage.getText("image_difficile"));
         BackgroundSize difficile_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage difficile_imFond = new BackgroundImage(difficile_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, difficile_imSize);
-        Image change_im = c.getImage("exchange1.png");
+        Image change_im = c.getImage("MenuJoueurs/exchange1.png");
         BackgroundSize change_imSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage change_imFond = new BackgroundImage(change_im, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, change_imSize);
         
