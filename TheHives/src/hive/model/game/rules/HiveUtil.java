@@ -363,7 +363,9 @@ public class HiveUtil
     public static boolean tooMuchNoAction(GameState state, int max)
     {
         assert max >= 1;
-        for(int i = state.data.trace.size() - 2; i >= Math.max(0, state.data.trace.size() - max * state.players.size()); i -= state.players.size())
+        if(state.data.trace.size() - max * state.players.size() < 0)
+            return false;
+        for(int i = state.data.trace.size() - 2; i >= state.data.trace.size() - max * state.players.size(); i -= state.players.size())
         {
             if(!(state.data.trace.get(i) instanceof NoAction))
                 return false;
