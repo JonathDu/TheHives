@@ -32,7 +32,7 @@ public class MediumIA implements IA{
         HiveInterfaceIA hia = new HiveInterfaceIA();
         int depth = 3;
         init(depth+1);
-        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_min);
 
         if(actionList[depth].isEmpty()){
             return new NoAction();
@@ -42,13 +42,19 @@ public class MediumIA implements IA{
         Action currentAction;
 
         while(!actionList[depth].isEmpty()){
-            currentAction = actionList[depth].remove(0);
-
+            currentAction = actionList[depth].remove(actionList[depth].size()-1);
             hia.doAction(state, currentAction);
             if(hia.winOpponent(state)){
                 hia.undoAction(state);
                 actionList[depth].clear();
                 return currentAction;
+            }
+            else if(hia.winCurrent(state)){
+                if(actionList[depth].isEmpty() && maxActionList.isEmpty()){
+                    hia.undoAction(state);
+                    return currentAction;
+                }
+                hia.undoAction(state);
             }
             else{
                 tmp = MiniMaxMedium.miniMaxOpponent(state, depth-1, max,actionList);

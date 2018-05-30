@@ -23,11 +23,11 @@ public class Evaluation {
     //ajout atribut
     static int heuristicVal [][][];
     static int evaluation(Game state, int nbCoupsPossibles){
-        Heuristic.initMult(nbCoupsPossibles);
         heuristicVal = Heuristic.getHeuristic();
         HiveInterfaceIA hia = new HiveInterfaceIA();
         Player current = hia.currentPlayer(state);
         Player opponent = hia.opponentPlayer(state);
+        Heuristic.initMult(nbCoupsPossibles, hia.nbPossibilitiesQueen(state, current), hia.queenFreeNeighbour(current, state));
         int value=0;
         if(hia.winOpponent(state)){
             return -100000;
@@ -68,7 +68,7 @@ public class Evaluation {
         values+=QUEEN_CRUSHED_CUR[(hia.queenIsCurshed(current, state) ? 1 : 0)];
         values+=QUEEN_CRUSHED_OP[(hia.queenIsCurshed(opponent, state) ? 1 : 0)];
         values+= heuristicVal[0][0][hia.queenFreeNeighbour(opponent, state)];
-        values+= heuristicVal[1][0][hia.queenFreeNeighbour(current, state)];
+        values+= heuristicVal[1][0][hia.queenFreeNeighbour(current, state)]*Heuristic.D_J;
         return values;
     }
     

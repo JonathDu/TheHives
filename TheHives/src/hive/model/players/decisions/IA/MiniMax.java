@@ -30,7 +30,7 @@ public class MiniMax{
         }
         else{
             int vMax = -5000000;
-            hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_min);
+            hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_max);
             int nbCoup = actionList[depth].size();
             int tmp;
             Action currentAction;
@@ -64,7 +64,7 @@ public class MiniMax{
         }
         else{
             int vMin = 5000000;
-            hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_max);
+            hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_min);
             int tmp;
             int nbCoup = actionList[depth].size();
             Action currentAction;

@@ -66,7 +66,6 @@ public class MiniMaxMedium{
             int vMin = 5000000;
             hia.currentPlayerPossibilities(state,actionList[depth], Heuristic.insects_max);
             int tmp;
-            int nbCoup = actionList[depth].size();
             Action currentAction;
             if(actionList[depth].isEmpty()){
                 hia.doAction(state, new NoAction());

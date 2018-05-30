@@ -28,14 +28,14 @@ public class Heuristic {
     public static final int[] QUEEN_NEIGH_BLOCK_OP_CUR = {6, 335, 334, 390, 310};
     public static final int[] QUEEN_NEIGH_FREE_OP_CUR = {26, 555, 554, 500, 520};
     public static final int[] INSECT_VALUE_OP = {-50, -56, -50, -141, -132};
-    public static final int[] INSECT_BLOCK_VALUE_OP = {130, 80, 80, 85, 90};
+    public static final int[] INSECT_BLOCK_VALUE_OP = {150, 180, 200, 185, 190};
     public static final int[] IN_HAND_OP = {-20 , -20, -20, -20, -20 };
     
     
-    public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-300, -200, 200, 250, 300, 250};
+    public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-400, -100, 200, 250, 300, 250};
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-136, -180, -200, -180, -180};
     public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-150, -180, -200, -180, -180};
-    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -180, -200, -180, -180};
+    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -80, -100, -80, -80};
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 171, 132};
     public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -70, -75, -80, -75};
@@ -64,10 +64,10 @@ public class Heuristic {
         return 0;
     }
     
-    public static final void initMult(int nbCoupPossibles){
-        if(nbCoupPossibles<=15){
-            P_J = 3;
-            D_J = 0.5;
+    public static final void initMult(int nbCoupPossibles, int freeQueen, int freeNeighbours){
+        if(nbCoupPossibles<=10 || (freeQueen !=0 && freeNeighbours > 3)){
+            P_J = 4;
+            D_J = 0.6;
         }
         else{
             P_J = 1;
