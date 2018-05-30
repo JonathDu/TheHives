@@ -66,11 +66,14 @@ public class FinPartie extends Parent {
                 view = new ImageView(cacheImage.getImage("FenetrePlateau/VictoireDuBlanc.png"));
 
             }
-            view.setPreserveRatio(true);
-            view.fitHeightProperty().bind(scene.heightProperty().divide(2));
-            image.getChildren().add(view);
-        }
 
+        } else {
+            view = new ImageView(cacheImage.getImage("FenetrePlateau/draw.png"));
+
+        }
+        view.setPreserveRatio(true);
+        view.fitHeightProperty().bind(scene.heightProperty().divide(2));
+        image.getChildren().add(view);
         recommencer = new HiveBouton(cacheImage.getImage("FenetrePlateau/BoutonRestart.png"), scene);
         retourMenu = new HiveBouton(cacheImage.getImage("MenuPrincipaux/bouttonRetourMenu.png"), scene);
         refaireDernier = new HiveBouton(cacheImage.getImage("FenetrePlateau/FlecheUndo.png"), scene);
