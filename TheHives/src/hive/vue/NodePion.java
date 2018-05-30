@@ -83,44 +83,44 @@ public class NodePion extends Parent {
             switch (type) {
                 case QUEEN_BEE:
                     if (couleur == TeamColor.BLACK) {
-                        i = c.getImage("pionQueenB.png");
+                        i = c.getImage("FenetrePlateau/pionQueenB.png");
                     } else {
-                        i = c.getImage("pionQueenW.png");
+                        i = c.getImage("FenetrePlateau/pionQueenW.png");
                     }
 
                     v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case GRASSHOPPER:
                     if (couleur == TeamColor.BLACK) {
-                        i = c.getImage("pionSauterelleB.png");
+                        i = c.getImage("FenetrePlateau/pionSauterelleB.png");
                     } else {
-                        i = c.getImage("pionSauterelleW.png");
+                        i = c.getImage("FenetrePlateau/pionSauterelleW.png");
                     }
                     v = new ImagePattern(i, 0, 0, 1, 1, true);
                     break;
                 case BEETLE:
                     if (couleur == TeamColor.BLACK) {
-                        i = c.getImage("pionScarabeB.png");
+                        i = c.getImage("FenetrePlateau/pionScarabeB.png");
                     } else {
-                        i = c.getImage("pionScarabeW.png");
+                        i = c.getImage("FenetrePlateau/pionScarabeW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
 
                     break;
                 case SPIDER:
                     if (couleur == TeamColor.BLACK) {
-                        i = c.getImage("pionAraigneeB.png");
+                        i = c.getImage("FenetrePlateau/pionAraigneeB.png");
                     } else {
-                        i = c.getImage("pionAraigneeW.png");
+                        i = c.getImage("FenetrePlateau/pionAraigneeW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
 
                     break;
                 case SOLDIER_ANT:
                     if (couleur == TeamColor.BLACK) {
-                        i = c.getImage("pionFourmiB.png");
+                        i = c.getImage("FenetrePlateau/pionFourmiB.png");
                     } else {
-                        i = c.getImage("pionFourmiW.png");
+                        i = c.getImage("FenetrePlateau/pionFourmiW.png");
                     }
                     v = new ImagePattern(i, 1, 1, 1, 1, true);
                     break;

@@ -1,3 +1,3 @@
 aide=true
 theme=Jour
-langue=français
+langue=anglais

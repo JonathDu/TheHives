@@ -58,7 +58,7 @@ public final class InterfaceStatistiques extends Interface
     {
         stat.setTextFill(Color.web("#fbe5b5"));
 
-        Image pancarte = c.getImage("plusDeBoutons/plusDeBoutons/Pancarte.png");
+        Image pancarte = c.getImage("MenuJoueurs/Pancarte.png");
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
         BackgroundImage backgroundFond = new BackgroundImage(pancarte, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         Background _background = new Background(backgroundFond);
