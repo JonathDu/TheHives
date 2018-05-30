@@ -49,10 +49,11 @@ public class NodePopup extends Parent {
         this.match = match;
         this.plateauController = plateauController;
 
-        message = "Etes vous sur de vouloir quitter la partie ?";
-        messageValider = "Quitter";
-        messageQuitter = "Annuler";
-        messageValiderQuitter = "Sauvegarder et quitter";
+        message = controller.gestionnaireLangage.getText("text_question_quitter");
+        messageValider = controller.gestionnaireLangage.getText("text_quitter");
+        messageQuitter = controller.gestionnaireLangage.getText("text_annuler");
+        messageValiderQuitter = controller.gestionnaireLangage.getText("text_quitter_et_sauvegarder");
+
 
         horizontal = new HBox();
         vertical = new VBox();

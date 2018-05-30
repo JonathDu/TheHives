@@ -56,6 +56,7 @@ public final class LanguagesGesture
         retLangues.add(new Locale("pt"));
         retLangues.add(new Locale("ru"));
         retLangues.add(new Locale("ar"));
+        retLangues.add(Locale.CHINESE);
         return retLangues;
     }
 

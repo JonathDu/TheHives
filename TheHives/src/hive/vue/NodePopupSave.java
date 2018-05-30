@@ -44,8 +44,8 @@ public class NodePopupSave extends Parent {
 
         horizontal = new HBox();
         vertical = new VBox();
-
-        quitter = new Button("Annuler");
+        
+        quitter = new Button(controller.gestionnaireLangage.getText("text_annuler"));
         valider = new Button("Sauvegarder");
         validerSave = new Button("Sauvegarder et quitter");
 
