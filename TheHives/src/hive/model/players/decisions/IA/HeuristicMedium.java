@@ -6,7 +6,6 @@
 package hive.model.players.decisions.IA;
 
 import hive.model.insects.InsectType;
-import static hive.model.insects.InsectType.implemented_insects;
 import java.util.ArrayList;
 
 /**

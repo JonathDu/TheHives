@@ -14,7 +14,6 @@ import static hive.model.players.decisions.IA.Heuristic.QUEEN_CRUSHED_CUR;
 import static hive.model.players.decisions.IA.Heuristic.QUEEN_CRUSHED_OP;
 import static hive.model.players.decisions.IA.MiniMax.neighboursBlock;
 import static hive.model.players.decisions.IA.MiniMax.neighboursFree;
-import java.util.ArrayList;
 
 /**
  *
