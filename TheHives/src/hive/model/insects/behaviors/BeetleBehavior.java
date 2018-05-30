@@ -30,6 +30,11 @@ public class BeetleBehavior implements InsectBehavior
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return;
         
+        consumeDestinations(cell, consumer);
+    }
+    
+    public void consumeDestinations(Cell cell, Consumer<Cell> consumer)
+    {
         NeighborsIterator neighbors = new NeighborsIterator(cell.comb);
         
         // for each neighbor

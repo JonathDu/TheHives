@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package util.hexagons.iterators;
+package util.hexagons;
 
 import hive.model.board.HiveNeighborsShifter;
 import java.util.function.Predicate;
@@ -18,6 +18,9 @@ import util.Vector2i;
 import util.hexagons.CircularHexagonsGraph;
 import util.hexagons.Hexagon;
 import util.hexagons.HexagonSide;
+import util.hexagons.iterators.BreadthIterator;
+import util.hexagons.iterators.LineAtSideIterator;
+import util.hexagons.iterators.NeighborsIterator;
 
 /**
  *
@@ -79,7 +82,6 @@ public class HexagonsIteratorsTest
         
         m = new Matrix<>(tab);
         c = new CircularHexagonsGraph(m, getter, (x, y) -> new Hexagon());
-        System.out.println(c);
     }
     
     @After
@@ -136,14 +138,15 @@ public class HexagonsIteratorsTest
         
         BreadthIterator<Integer> breadthIterator = new BreadthIterator<>(c.getHexagon(new Vector2i(1,1)), p);
         
-        String chaineAttendue = "2 7 11 10 9 5 ";
+        String chaineAttendue = "6 2 7 11 10 9 5 14 3 1 4 8 12 15 13 16 ";
         String chaineObtenue = "";
         
         while (breadthIterator.hasNext())
         {
-            chaineObtenue += breadthIterator.next().toString() + " ";
+            Hexagon<Integer> hexagon = breadthIterator.next();
+            chaineObtenue += hexagon.value().toString() + " ";
         }
         
-        assert true;
+        Assert.assertEquals(chaineAttendue, chaineObtenue);
     }
 }

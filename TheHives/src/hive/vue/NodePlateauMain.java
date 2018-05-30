@@ -137,4 +137,8 @@ public class NodePlateauMain extends Parent {
         }
         pions.getChildren().add(affichageJoueur);
     }
+    
+    public void changerNom(String nom){
+        this.labelNomJoueur.setText(nom);
+    }
 }

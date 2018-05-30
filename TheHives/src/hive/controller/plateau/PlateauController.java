@@ -13,13 +13,16 @@ import hive.controller.plateau.graphicaction.ActionGraphicUpdaterDeselect;
 import hive.controller.plateau.graphicaction.ActionGraphicUpdaterWithoutSelect;
 import hive.model.GameProgress;
 import hive.model.Match;
-import hive.model.board.Tile;
 import hive.model.game.Game;
 import hive.model.game.rules.GameStatus;
 import hive.model.game.rules.HiveUtil;
 import hive.model.insects.InsectType;
+import hive.model.players.Player;
+import hive.model.players.PlayersData;
+import hive.model.players.TeamColor;
 import hive.model.players.actions.Action;
 import hive.model.players.actions.NoAction;
+import hive.model.players.decisions.Decision;
 import hive.model.players.decisions.HumanDecision;
 import hive.model.players.decisions.IA.Level;
 import hive.model.players.decisions.IADecision;
@@ -88,12 +91,10 @@ public class PlateauController
     {
         if (timerFrame.getStatus() == Animation.Status.PAUSED)
         {
-            //TODO : popup "reprise du jeu"
             System.out.println("reprise du jeu");
             timerFrame.play();
         } else
         {
-            //TODO : popup "pause"
             System.out.println("pause");
             timerFrame.pause();
         }
@@ -106,7 +107,7 @@ public class PlateauController
         timerJouerIA.stop();
     }
 
-    public void restart() //TODO : changer les deux joueurs
+    public void restart()
     {
         timerFrame.stop();
         while (!game.state.data.trace.isEmpty())
@@ -114,10 +115,23 @@ public class PlateauController
             undo();
         }
         game.state.data.undos.clear();
-        nbGames++;
-        game.state.turn.current = game.state.players.get(nbGames % 2);
-        game.state.turn.opponent = game.state.players.get((nbGames + 1) % 2);
-        uiPlateau.majJoueurCourant(game.state.turn.current.color);
+        
+        Player p1 = game.state.players.get(0);
+        Player p2 = game.state.players.get(1);
+        
+        Decision tmp = p1.decision;
+        p1.decision = p2.decision;
+        p2.decision = tmp;
+        
+        match.data = new PlayersData(p1, match.getPlayerData2(), p2, match.getPlayerData1());
+        
+        uiPlateau.majJoueurCourant(game.state.turn.getCurrent().color);
+        
+        uiPlateau.mainGauche.changerNom(match.getPlayerData1().name);
+        uiPlateau.mainDroite.changerNom(match.getPlayerData2().name);
+        
+        builder.setBegin();
+        
         timerFrame.play();
     }
 
@@ -151,12 +165,12 @@ public class PlateauController
                     NoAction noAction = new NoAction();
                     ((HumanDecision) game.state.turn.getCurrent().decision).setAction(noAction);
                     progress.doAction();
-                    
+
                     if (!currentPlayerKnowHeCantPlay())
                     {
                         uiPlateau.message("Attention", "Vous ne pouvez pas jouer, passage au tour suivant");
                     }
-                    
+
                     startOfTurnInfos();
                 }
             }
@@ -178,10 +192,12 @@ public class PlateauController
 
     private boolean currentPlayerKnowHeCantPlay()
     {
-        if(game.state.data.trace.size() <= 3)
+        if (game.state.data.trace.size() <= 3)
+        {
             return false;
-        
-        return game.state.data.trace.get(game.state.data.trace.size()-3) instanceof NoAction;
+        }
+
+        return game.state.data.trace.get(game.state.data.trace.size() - 3) instanceof NoAction;
     }
 
     private boolean currentPlayerCanPlay()

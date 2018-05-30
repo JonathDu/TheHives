@@ -14,6 +14,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import testutil.RandomUtil;
 import testutil.TestUtil;
 
 /**
@@ -55,7 +56,7 @@ public class FilteringIteratorTest
         
         for(int i = 0; i < 100; ++i)
         {
-            TestUtil.randList(list, 100, 1000);
+            RandomUtil.nextList(list, () -> RandomUtil.nextInt(100), 1000);
             p = (t) -> t <= 80;
             FilteringIterator<Integer> it = new FilteringIterator<>(list.iterator(), p);
             

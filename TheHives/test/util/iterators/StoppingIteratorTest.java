@@ -12,6 +12,8 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import testutil.RandomUtil;
+import testutil.TestUtil;
 
 /**
  *
@@ -55,7 +57,7 @@ public class StoppingIteratorTest
         
         for(int k = 0; k < 100; ++k)
         {
-            TestUtil.randList(list, 100, 1000);
+            RandomUtil.nextList(list, () -> RandomUtil.nextInt(100), 1000);
             p = (t) -> t <= 80;
             StoppingIterator<Integer> it = new StoppingIterator<>(list.iterator(), p);
             

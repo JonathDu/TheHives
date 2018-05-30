@@ -34,6 +34,11 @@ public class GrasshopperBehavior implements InsectBehavior
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return;
         
+        consumeDestinations(cell, consumer);
+    }
+    
+    public void consumeDestinations(Cell cell, Consumer<Cell> consumer)
+    {
         // for each side
         for(HexagonSide side : HexagonSide.values())
         {

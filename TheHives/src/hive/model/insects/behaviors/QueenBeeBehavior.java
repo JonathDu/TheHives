@@ -32,6 +32,11 @@ public class QueenBeeBehavior implements InsectBehavior
         if(HiveUtil.isCrushed(cell) || !HiveUtil.isConnexWithout(state, cell))
             return;
         
+        consumeDestinations(cell, consumer);
+    }
+
+    public void consumeDestinations(Cell cell, Consumer<Cell> consumer)
+    {
         NeighborsIterator<TilesStack> neighbors = new NeighborsIterator<>(cell.comb);
         
         // for each neighbor
@@ -48,7 +53,7 @@ public class QueenBeeBehavior implements InsectBehavior
                 consumer.accept(new Cell((Honeycomb)neighbor.hexagon));
         }
     }
-
+    
     @Override
     public Info consumeDestinations(GameState state, Cell cell, Consumer<Cell> consumer, Consumer<CombData> info_giver)
     {

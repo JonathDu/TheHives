@@ -184,7 +184,7 @@ public class InterfacePlateau extends Interface {
     }
 
     public void update() {
-        ruche.updateTab(); //TODO !!!
+        ruche.updateTab();
         majJoueurCourant(TeamColor.WHITE);
         mainGauche.update(match.game.state.players.get(0).collection);
         mainDroite.update(match.game.state.players.get(1).collection);

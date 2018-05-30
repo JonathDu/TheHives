@@ -30,4 +30,25 @@ public class RandomDecision implements Decision
             actions.add(new NoAction());
         return actions.get(rand.nextInt(actions.size()));
     }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        return true;
+    }
 }
