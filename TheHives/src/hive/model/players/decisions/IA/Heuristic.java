@@ -38,7 +38,7 @@ public class Heuristic {
     public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -80, -100, -80, -80};
     public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
     public static final int[] INSECT_VALUE_CUR = {50, 56, 50, 171, 132};
-    public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -70, -75, -80, -75};
+    public static final int[] INSECT_BLOCK_VALUE_CUR = {-225, -70, -70, -80, -70};
     public static final int[] IN_HAND_CUR = {20 , 50, 20, 20, 20 };
 
     
