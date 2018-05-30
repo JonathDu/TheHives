@@ -31,19 +31,19 @@ public class HiveConsoleIABoucle {
             case 0:
                 System.out.println("Hard vs Medium");
                 break;
-            case 10:
+            case 20:
                 System.out.println("Medium vs Hard");
                 break;
-            case 20:
+            case 40:
                 System.out.println("Easy vs Hard");
                 break;
-            case 30:
+            case 60:
                 System.out.println("Hard vs Easy");
                 break;
-            case 40:
+            case 80:
                 System.out.println("Medium vs Easy");
                 break;
-            case 50:
+            case 100:
                 System.out.println("Easy vs Medium");
                 break;
             default:
@@ -57,16 +57,16 @@ public class HiveConsoleIABoucle {
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
         int i = 0;
         Game game;
-        while (i < 60) {
-            if (i < 10) {
+        while (i < 120) {
+            if (i < 20) {
                 game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
-            } else if (i < 20) {
-                game = DefaultGame.get(new IADecision(Level.MEDIUM)/*white*/, new IADecision(Level.HARD)/*black*/);
-            } else if (i < 30) {
-                game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.HARD)/*black*/);
             } else if (i < 40) {
+                game = DefaultGame.get(new IADecision(Level.MEDIUM)/*white*/, new IADecision(Level.HARD)/*black*/);
+            } else if (i < 60) {
+                game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.HARD)/*black*/);
+            } else if (i < 80) {
                 game = DefaultGame.get(new IADecision(Level.HARD)/*white*/, new IADecision(Level.EASY)/*black*/);
-            } else if (i < 50) {
+            } else if (i < 100) {
                 game = DefaultGame.get(new IADecision(Level.MEDIUM)/*white*/, new IADecision(Level.EASY)/*black*/);
             } else {
                 game = DefaultGame.get(new IADecision(Level.EASY)/*white*/, new IADecision(Level.MEDIUM)/*black*/);
@@ -82,19 +82,19 @@ public class HiveConsoleIABoucle {
                 // mettre un sleep ici ?
             }
             System.out.println("Turn : " + HiveUtil.nbTurns(game.state));
-            if (game.rules.getStatus(game.state) != GameStatus.CURRENT_WINS) {
-                if (player == game.state.players.get(0)) {
-                    System.out.println("Joueur 1 a gagné");
-                } else {
-                    System.out.println("Joueur 2 a gagné");
-                }
-            } else {
-                if (player == game.state.players.get(0)) {
-                    System.out.println("Joueur 1 s'est fait perdre");
-                } else {
-                    System.out.println("Joueur 2 s'est fait perdre");
-                }
+            switch(game.rules.getStatus(game.state))
+            {
+                case DRAW:
+                    System.out.println("Match nul");
+                    break;
+                case CURRENT_WINS:
+                    System.out.println(game.state.turn.getCurrent().color);
+                    break;
+                case OPPONENT_WINS:
+                    System.out.println(game.state.turn.getOpponent().color);
+                    break;
             }
+            
 
             //System.out.println(game.state.board);
             i++;
