@@ -90,7 +90,7 @@ public class InterfaceCredits extends Interface {
         StackPane bois = new StackPane();
         bois.prefWidthProperty().bind(bp.widthProperty().multiply(0.9));
         bois.prefHeightProperty().bind(bp.heightProperty().multiply(0.77));
-        Image plateau = c.getImage("PlateauCentral.png");
+        Image plateau = c.getImage("MenuPrincipaux/PlateauCentral.png");
         BackgroundImage backgroundPlateau = new BackgroundImage(plateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         background = new Background(backgroundPlateau);
         bois.setBackground(background);
