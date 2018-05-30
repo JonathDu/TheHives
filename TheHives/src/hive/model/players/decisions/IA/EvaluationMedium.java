@@ -29,10 +29,10 @@ public class EvaluationMedium {
         Player opponent = hia.opponentPlayer(state);
         int value=0;
         if(hia.winOpponent(state)){
-            return -100000;
+            return -1000000;
         }
         else if(hia.winCurrent(state)){
-            return 100000;
+            return 1000000;
         }
         else{
             hia.setTiles(state, neighboursFree, neighboursBlock);

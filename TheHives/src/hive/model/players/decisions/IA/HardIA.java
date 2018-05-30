@@ -30,9 +30,9 @@ public class HardIA implements IA{
     @Override
     public Action SearchAction(Game state){
         HiveInterfaceIA hia = new HiveInterfaceIA();
-        int depth = 3;
+        int depth = 4;
         init(depth+1);
-        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_max);
+        hia.currentPlayerPossibilities(state,actionList[depth],Heuristic.insects_min);
         int nbCoup = actionList[depth].size();
 
         if(actionList[depth].isEmpty()){
@@ -43,7 +43,7 @@ public class HardIA implements IA{
         Action currentAction;
 
         while(!actionList[depth].isEmpty()){
-            currentAction = actionList[depth].remove(0);
+            currentAction = actionList[depth].remove(actionList[depth].size()-1);
 
             hia.doAction(state, currentAction);
             if(hia.winOpponent(state)){

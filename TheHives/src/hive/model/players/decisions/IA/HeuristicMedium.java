@@ -33,10 +33,10 @@ public class HeuristicMedium {
     
     
     public static final int[] NB_QUEEN_CUR_POSSIBILITY = {-194, -170, 150, 150, 150};
-    public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-136, -180, -200, -180, -180};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-100, -100, -100, -100, -100};
-    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-156, -180, -200, -180, -180};
-    public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-16, -180, -200, -180, -180};
+    public static final int[] QUEEN_NEIGH_BLOCK_CUR_CUR = {-50, -60, -70, -60, -60};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_CUR = {-40, -50, -60, -50, -50};
+    public static final int[] QUEEN_NEIGH_BLOCK_CUR_OP = {-50, -60, -70, -60, -60};
+    public static final int[] QUEEN_NEIGH_FREE_CUR_OP = {-50, -60, -70, -60, -60};
     public static final int[] INSECT_VALUE_CUR = {150, 156, 150, 191, 132};
     public static final int[] INSECT_BLOCK_VALUE_CUR = {-185, -75, -95, -98, -100};
     public static final int[] IN_HAND_CUR = {0 , 20, 20, 30, 20 };
