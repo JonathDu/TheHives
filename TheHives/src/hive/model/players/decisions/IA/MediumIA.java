@@ -38,7 +38,7 @@ public class MediumIA implements IA{
             return new NoAction();
         }
         ArrayList<Action> maxActionList = new ArrayList<>();
-        int max=-500000, tmp;
+        int max=-50000000, tmp;
         Action currentAction;
 
         while(!actionList[depth].isEmpty()){
