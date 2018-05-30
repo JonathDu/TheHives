@@ -72,6 +72,7 @@ public class FinPartie extends Parent {
 
         }
         view.setPreserveRatio(true);
+        view.setVisible(false);
         view.fitHeightProperty().bind(scene.heightProperty().divide(2));
         image.getChildren().add(view);
         recommencer = new HiveBouton(cacheImage.getImage("FenetrePlateau/BoutonRestart.png"), scene);
