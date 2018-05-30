@@ -323,6 +323,7 @@ public class HiveUtil
         return list;
     }
     
+    // test if actions are repeated on 2 or several turns
     public static boolean sameTurns(GameState state)
     {
         if(nbTurns(state) >= 4)
@@ -331,7 +332,6 @@ public class HiveUtil
             return false;
     }
     
-    //
     public static boolean sameTurns(GameState state, int max_depth, int idx)
     {
         assert max_depth >= 2;
@@ -354,11 +354,23 @@ public class HiveUtil
         return true;
     }
     
-    // check if actions are the same, looking depth actions of a player before
-    // max_depth = 2 : A A' B B' A A' B B' = true
     public static boolean sameAction(GameState state, int depth, int p)
     {
         return state.data.trace.get(p).equals(state.data.trace.get(p - state.players.size() * depth));
+    }
+    
+    // test if the one who just played is playing "alone" since max turns
+    public static boolean tooMuchNoAction(GameState state, int max)
+    {
+        assert max >= 1;
+        if(state.data.trace.size() - max * state.players.size() < 0)
+            return false;
+        for(int i = state.data.trace.size() - 2; i >= state.data.trace.size() - max * state.players.size(); i -= state.players.size())
+        {
+            if(!(state.data.trace.get(i) instanceof NoAction))
+                return false;
+        }
+        return true;
     }
 }
 

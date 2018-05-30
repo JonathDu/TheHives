@@ -40,7 +40,7 @@ public class HiveConsoleIA {
         // choisir les décisions qu'il faut ICI
         // si il y a un humain, s'inspirer du shéma de HiveConsoleHuman dans le corps du while
         // (il faut setAction avant de doAction() quand c'est à un humain de jouer)
-        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.EASY), new IADecision(Level.EASY));
+        Game game = PrecalculatedGame.get(PrecalculatedGame.Id.DEFAULT, new IADecision(Level.HARD), new IADecision(Level.HARD));
 
         GameProgress progress = new GameProgress(game);
 
@@ -59,16 +59,6 @@ public class HiveConsoleIA {
             progress.doAction();
             
             System.out.println(game.state.board);
-            
-            System.out.println("Free and blocked");
-            ia.setTiles(game, free, blocked);
-            System.out.println(free);
-            System.out.println(blocked);
-            
-            System.out.println("Free and blocked of current queen");
-            ia.setQueenNeighbors(game, game.state.turn.getCurrent(), free_queen, blocked_queen);
-            System.out.println(free_queen);
-            System.out.println(blocked_queen);
         }
 
         switch(status)
