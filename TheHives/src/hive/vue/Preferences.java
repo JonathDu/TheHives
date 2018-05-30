@@ -97,7 +97,7 @@ public class Preferences extends Parent
 
     private void setObjetsGraphiques()
     {
-        imageFond.setImage(cacheImage.getImage("Design/FenetrePlateau/fond.jpg"));
+        imageFond.setImage(cacheImage.getImage("MenuPrincipaux/fond.jpg"));
         
 
         labelPreferences.setTextFill(Color.web("#ffff66"));
@@ -128,7 +128,7 @@ public class Preferences extends Parent
 
         buttonValider.setMinHeight(20);
         
-        Image imageQ = cacheImage.getImage("exit3.png");
+        Image imageQ = cacheImage.getImage("MenuPrincipaux/exit3.png");
         ImageView ImQ = new ImageView(imageQ);
         ImQ.setFitHeight(40);
         ImQ.setPreserveRatio(true);

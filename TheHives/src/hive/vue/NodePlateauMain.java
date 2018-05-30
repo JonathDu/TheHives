@@ -68,8 +68,8 @@ public class NodePlateauMain extends Parent {
         pions.setPadding(new Insets(50, 20, 20, 10));
         pions.setAlignment(Pos.TOP_CENTER);
 
-        panneau = new ImageView(c.getImage("Design/FenetrePlateau/nom.png"));
-        afficheTour = new ImageView(c.getImage("bee.png"));
+        panneau = new ImageView(c.getImage("FenetrePlateau/nom.png"));
+        afficheTour = new ImageView(c.getImage("FenetrePlateau/bee.png"));
 
         afficheTour.setFitWidth(30);
         afficheTour.setPreserveRatio(true);

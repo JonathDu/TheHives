@@ -100,14 +100,14 @@ public class InterfacePlateau extends Interface {
         mainGauche = new NodePlateauMain(gameController.game.state.players.get(0).collection, match.getPlayerData1().name, c, gameController, this, TeamColor.WHITE);
         mainDroite = new NodePlateauMain(gameController.game.state.players.get(1).collection, match.getPlayerData2().name, c, gameController, this, TeamColor.BLACK);
 
-        Image bimMainauche = c.getImage("Design/FenetrePlateau/poseJetona.png");
+        Image bimMainauche = c.getImage("FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainGauche = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainGauche = new BackgroundImage(bimMainauche, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainGauche);
         Background backgroundMainGauche = new Background(baimMainGauche);
 
         mainGauche.pions.setBackground(backgroundMainGauche);
 
-        Image bimMainDroite = c.getImage("Design/FenetrePlateau/poseJetona.png");
+        Image bimMainDroite = c.getImage("FenetrePlateau/poseJetona.png");
         BackgroundSize bsiMainDroite = new BackgroundSize(100, 100, true, true, true, true);
         BackgroundImage baimMainDroite = new BackgroundImage(bimMainDroite, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, bsiMainDroite);
         Background backgroundMainDroite = new Background(baimMainDroite);
@@ -117,7 +117,7 @@ public class InterfacePlateau extends Interface {
         centerMainD.getChildren().add(mainDroite);
         centerMainG.getChildren().add(mainGauche);
 
-        Image bimPlateau = c.getImage("Design/FenetrePlateau/Plateau.png");
+        Image bimPlateau = c.getImage("FenetrePlateau/Plateau.png");
         BackgroundSize bsiPlateau = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage baimPlateau = new BackgroundImage(bimPlateau, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, bsiPlateau);
         Background backgroundPlateau = new Background(baimPlateau);
@@ -140,19 +140,19 @@ public class InterfacePlateau extends Interface {
         HBox bottom = new HBox(5);
         BorderPane.setMargin(bottom, new Insets(0, 0, 20, 0));
 
-        HiveBouton boutonCentrer = new HiveBouton(c.getImage("Design/FenetrePlateau/Recentrer.png"), scene);
+        HiveBouton boutonCentrer = new HiveBouton(c.getImage("FenetrePlateau/Recentrer.png"), scene);
         boutonCentrer.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             recentrer();
         });
 
-        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("Design/FenetrePlateau/+.png"), scene);
+        HiveBouton boutonTailleAug = new HiveBouton(c.getImage("FenetrePlateau/+.png"), scene);
         boutonTailleAug.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(5);
             recentrer();
         });
 
-        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("Design/FenetrePlateau/-.png"), scene);
+        HiveBouton boutonTailleDim = new HiveBouton(c.getImage("FenetrePlateau/-.png"), scene);
         boutonTailleDim.addEventHandler(MouseEvent.MOUSE_CLICKED, (value) -> {
             recentrer();
             this.ruche.majTaille(- 5);
@@ -193,7 +193,7 @@ public class InterfacePlateau extends Interface {
     private BorderPane setTool() {
         width = (int) scene.getWidth();
 
-        String repertoire = "Design/FenetrePlateau/";
+        String repertoire = "FenetrePlateau/";
 
         pane = new BorderPane();
         pane.prefWidthProperty().bind(scene.widthProperty());
@@ -202,7 +202,7 @@ public class InterfacePlateau extends Interface {
         centre = new HBox(5);
 
         boutonSave = new HiveBouton(c.getImage(repertoire + "BoutonDisquette.png"), scene);
-        boutonHome = new HiveBouton(c.getImage(repertoire + "bouttonRetourMenu.png"), scene);
+        boutonHome = new HiveBouton(c.getImage("MenuPrincipaux/" + "bouttonRetourMenu.png"), scene);
         boutonAnnuler = new HiveBouton(c.getImage(repertoire + "FlecheUndo.png"), scene);
         boutonConseil = new HiveBouton(c.getImage(repertoire + "Ampoule.png"), scene);
         boutonReplay = new HiveBouton(c.getImage(repertoire + "FlecheRedo.png"), scene);
@@ -323,11 +323,16 @@ public class InterfacePlateau extends Interface {
 
     public void finPartie(String gagnant, String perdant) {
         TeamColor couleur;
-        if (gagnant.equals(match.getPlayerData(TeamColor.BLACK).name)) {
-            couleur = TeamColor.BLACK;
-        } else {
-            couleur = TeamColor.WHITE;
+        if (gagnant != null) {
+            if (gagnant.equals(match.getPlayerData(TeamColor.BLACK).name)) {
+                couleur = TeamColor.BLACK;
+            } else {
+                couleur = TeamColor.WHITE;
 
+            }
+        }
+        else{
+            couleur = null;
         }
         FinPartie f = new FinPartie(scene, primaryStage, controller, c, gameController, this, gagnant, couleur);
         this.panePrincipale.getChildren().add(f);

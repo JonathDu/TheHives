@@ -58,20 +58,22 @@ public class FinPartie extends Parent {
         principal = new VBox(30);
         bouton = new HBox(30);
         image = new HBox(30);
-        if (couleur == TeamColor.BLACK) {
-            view = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuNoir.png"));
+        if (couleur != null) {
+            if (couleur == TeamColor.BLACK) {
+                view = new ImageView(cacheImage.getImage("FenetrePlateau/VictoireDuNoir.png"));
 
-        } else {
-            view = new ImageView(cacheImage.getImage("Design/MenuPrincipaux/VictoireDuBlanc.png"));
+            } else {
+                view = new ImageView(cacheImage.getImage("FenetrePlateau/VictoireDuBlanc.png"));
 
+            }
+            view.setPreserveRatio(true);
+            view.fitHeightProperty().bind(scene.heightProperty().divide(2));
+            image.getChildren().add(view);
         }
-        view.setPreserveRatio(true);
-        view.fitHeightProperty().bind(scene.heightProperty().divide(2));
-        image.getChildren().add(view);
 
-        recommencer = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/BoutonRestart.png"), scene);
-        retourMenu = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
-        refaireDernier = new HiveBouton(cacheImage.getImage("Design/FenetrePlateau/bouttonRetourMenu.png"), scene);
+        recommencer = new HiveBouton(cacheImage.getImage("FenetrePlateau/BoutonRestart.png"), scene);
+        retourMenu = new HiveBouton(cacheImage.getImage("FenetrePlateau/bouttonRetourMenu.png"), scene);
+        refaireDernier = new HiveBouton(cacheImage.getImage("FenetrePlateau/bouttonRetourMenu.png"), scene);
 
         gagnant = joueurGagnant;
         message = new Label();
@@ -122,7 +124,7 @@ public class FinPartie extends Parent {
         refaireDernier.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             for (int i = 0; i < 4; i++) {
                 gameController.undo();
-                
+
             }
             gameController.start();
             this.setVisible(false);
