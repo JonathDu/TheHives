@@ -1,0 +1,3 @@
+aide=true
+theme=Nuit
+langue=français

@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class StatistiqueGesture
 {
     
-    private static final String SCORES_DIR_PATH = System.getProperty("user.dir") + "/conf/scores";
+    private static final String SCORES_DIR_PATH = System.getProperty("user.dir") + "/src/conf/scores";
     
     public static HashMap<String, String> getScoresFor(String playerName)
     {

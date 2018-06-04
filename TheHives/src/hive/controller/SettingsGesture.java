@@ -11,7 +11,7 @@ package hive.controller;
  */
 public class SettingsGesture extends MyProperties
 {
-    private static final String SETTINGS_PATH = System.getProperty("user.dir") + "/conf/settings.txt";
+    private static final String SETTINGS_PATH = System.getProperty("user.dir") + "/src/conf/settings.txt";
     
     public SettingsGesture()
     {

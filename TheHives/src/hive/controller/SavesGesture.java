@@ -20,7 +20,7 @@ import util.LoaderXML;
  */
 public class SavesGesture
 {
-    private static final String SAVES_DIR_PATH = System.getProperty("user.dir") + "/savefiles/";
+    private static final String SAVES_DIR_PATH = System.getProperty("user.dir") + "/src/savefiles/";
 
     
     public static Match loadGame(String fileName)
